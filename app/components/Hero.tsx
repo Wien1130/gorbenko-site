@@ -6,6 +6,7 @@ export default function Hero() {
 
       <div className="relative mx-auto max-w-6xl px-6 w-full">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Left: text */}
           <div>
             <p className="mb-5 text-sm font-medium uppercase tracking-[0.2em] text-[var(--accent)]">
               KI-Automatisierung &middot; Wien
@@ -19,7 +20,8 @@ export default function Hero() {
             </h1>
             <p className="mt-6 max-w-lg text-lg leading-relaxed text-[var(--muted)]">
               Auf Facebook &amp; Instagram. Nimmt Bestellungen an, beantwortet
-              Fragen, qualifiziert Leads&nbsp;&mdash; automatisch und in Ihrem Ton.
+              Fragen, qualifiziert Leads&nbsp;&mdash; automatisch und in Ihrem
+              Ton.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <a
@@ -44,30 +46,10 @@ export default function Hero() {
               <span>&lt;10 Sek. Antwortzeit</span>
             </div>
           </div>
-        </div>
 
-        {/* Trust bar */}
-        <div className="mt-20 border-t border-[var(--border)] pt-8">
-          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-[var(--muted)]">
-            <span className="flex items-center gap-2">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-              Powered by Claude AI
-            </span>
-            <span className="flex items-center gap-2">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
-              Meta Business Integration
-            </span>
-            <span className="flex items-center gap-2">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              Made in Wien, &Ouml;sterreich
-            </span>
-          </div>
-          </div>
-
-          {/* Chat demo */}
+          {/* Right: chat demo */}
           <div className="relative mx-auto w-full max-w-md lg:max-w-none">
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] overflow-hidden shadow-2xl shadow-black/40">
-              {/* Chat header */}
               <div className="flex items-center gap-3 border-b border-[var(--border)] bg-[var(--card)] px-5 py-3.5">
                 <div className="relative h-9 w-9 rounded-full bg-[var(--accent)]/15 flex items-center justify-center text-xs font-bold text-[var(--accent)]">
                   BH
@@ -84,7 +66,6 @@ export default function Hero() {
                 </span>
               </div>
 
-              {/* Messages */}
               <div className="space-y-3 p-5 min-h-[320px]">
                 <div className="chat-msg flex justify-end">
                   <div className="max-w-[80%] rounded-2xl rounded-br-md bg-white/10 px-4 py-2.5 text-sm">
@@ -94,9 +75,9 @@ export default function Hero() {
 
                 <div className="chat-msg flex justify-start">
                   <div className="max-w-[80%] rounded-2xl rounded-bl-md bg-[var(--accent)]/10 border border-[var(--accent)]/15 px-4 py-2.5 text-sm">
-                    Willkommen bei BlinHaus! Nat&uuml;rlich helfe ich
-                    Ihnen gerne. Unsere beliebtesten Blini: Lachs, K&auml;se,
-                    Pilze. Was darf es sein?
+                    Willkommen bei BlinHaus! Nat&uuml;rlich helfe ich Ihnen
+                    gerne. Unsere beliebtesten Blini: Lachs, K&auml;se, Pilze.
+                    Was darf es sein?
                   </div>
                 </div>
 
@@ -132,6 +113,34 @@ export default function Hero() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Trust bar */}
+        <div className="mt-20 border-t border-[var(--border)] pt-8">
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-[var(--muted)]">
+            <span className="flex items-center gap-2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+              </svg>
+              Powered by Claude AI
+            </span>
+            <span className="flex items-center gap-2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2">
+                <path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
+                <line x1="6" y1="1" x2="6" y2="4" />
+                <line x1="10" y1="1" x2="10" y2="4" />
+                <line x1="14" y1="1" x2="14" y2="4" />
+              </svg>
+              Meta Business Integration
+            </span>
+            <span className="flex items-center gap-2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              Made in Wien, &Ouml;sterreich
+            </span>
           </div>
         </div>
       </div>
