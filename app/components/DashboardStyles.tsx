@@ -188,6 +188,37 @@ export default function DashboardStyles() {
       .fear-log-bot { font-style: italic; }
       .fear-log-outcome { color: #4ade80; font-weight: 700; font-size: 12px; margin-top: 2px; }
 
+      .callout-info {
+        background: rgba(96,165,250,0.1); border: 1px solid rgba(96,165,250,0.3);
+        color: var(--text-2); font-size: 13px; padding: 14px 16px; border-radius: 10px; line-height: 1.6;
+      }
+      .callout-info a { color: #60a5fa; font-weight: 700; }
+
+      .live-route { border-color: #2a4a3f; background: linear-gradient(150deg, #142a22, var(--surface) 55%); }
+      .live-route-sub { font-size: 13px; color: var(--text-2); line-height: 1.6; margin-top: 6px; }
+      .live-route-sub code { background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 5px; font-size: 12px; }
+      .live-route-controls { display: flex; gap: 10px; flex-wrap: wrap; margin: 14px 0; }
+      .live-route-results { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+      .live-route-item {
+        background: rgba(0,0,0,0.18); border: 1px solid var(--border-light);
+        border-radius: 10px; padding: 12px; font-size: 13px;
+      }
+      .live-route-item-name { font-weight: 700; color: var(--text); margin-bottom: 4px; }
+      .live-route-item-meta { color: var(--text-3); font-size: 12px; margin-bottom: 4px; }
+      .live-route-item-pain { color: #4ade80; font-size: 12.5px; margin-bottom: 4px; }
+      .live-route-item-addr { color: var(--text-3); font-size: 12px; }
+      .live-route-note { font-size: 11.5px; color: var(--text-3); margin-top: 4px; }
+
+      .calendar-showcase {
+        border-color: #3f3a2a; background: linear-gradient(150deg, #2a2414, var(--surface) 55%);
+      }
+      .calendar-showcase-sub { font-size: 13px; color: var(--text-2); line-height: 1.6; margin: 6px 0 14px; }
+      .calendar-showcase-stat {
+        display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--text-2);
+        background: rgba(0,0,0,0.18); border-radius: 10px; padding: 12px 14px;
+      }
+      .calendar-showcase-num { font-size: 26px; font-weight: 800; color: #facc15; flex-shrink: 0; }
+
       .saas-teaser {
         border-color: #2a3f52; background: linear-gradient(150deg, #142230, var(--surface) 55%);
         display: flex; flex-direction: column; gap: 16px;

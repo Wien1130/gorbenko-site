@@ -7,6 +7,8 @@ import PromoBanner from "../components/PromoBanner";
 import ConsultationForm from "../components/ConsultationForm";
 import FearCard from "../components/FearCard";
 import SaasBotTeaser from "../components/SaasBotTeaser";
+import LiveRouteDemo from "../components/LiveRouteDemo";
+import CalendarShowcase from "../components/CalendarShowcase";
 
 export const revalidate = 60;
 
@@ -15,6 +17,7 @@ export default async function ColdSalesPage() {
   const stats = computeColdSalesStats(rows);
   const hasData = stats.total > 0;
   const resistanceWithContext = matchResistanceContext(resistance, rows);
+  const confirmedCount = rows.filter((r) => r.stage === "meeting_confirmed" || r.stage === "meeting_done").length;
 
   return (
     <main className="dash-main">
@@ -34,9 +37,11 @@ export default async function ColdSalesPage() {
       {hasData ? (
         <>
           <ColdSalesOverview stats={stats} />
+          <LeadsTable rows={rows} masked />
+          <LiveRouteDemo />
+          <CalendarShowcase confirmedCount={confirmedCount} />
           <FearCard count={resistance.length} entries={resistanceWithContext} variant="public" />
           <SaasBotTeaser />
-          <LeadsTable rows={rows} masked />
           <ConsultationForm />
         </>
       ) : (
