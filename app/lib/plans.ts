@@ -58,6 +58,42 @@ function actualHoursByDay(rows: LeadRow[]): Record<string, number> {
   return result;
 }
 
+/** Понедельник-воскресенье недели, содержащей today (или today+offset*7 дней). */
+export function getWeekDates(offset = 0): string[] {
+  const today = new Date();
+  today.setDate(today.getDate() + offset * 7);
+  const dow = today.getDay(); // 0=Sun..6=Sat
+  const mondayOffset = dow === 0 ? -6 : 1 - dow;
+  const monday = new Date(today);
+  monday.setDate(today.getDate() + mondayOffset);
+
+  return Array.from({ length: 7 }, (_, i) => {
+    const d = new Date(monday);
+    d.setDate(monday.getDate() + i);
+    return d.toISOString().slice(0, 10);
+  });
+}
+
+export interface UpcomingMeeting {
+  date: string;
+  business_name: string;
+  meeting_datetime: string;
+  stage: string;
+}
+
+/** Встречи с назначенным/предварительным временем — для информационного блока в недельном плане. */
+export function extractUpcomingMeetings(rows: LeadRow[]): UpcomingMeeting[] {
+  return rows
+    .filter((r) => r.meeting_datetime && (r.stage === "meeting_confirmed" || r.stage === "meeting_tentative"))
+    .map((r) => ({
+      date: r.date,
+      business_name: r.business_name,
+      meeting_datetime: r.meeting_datetime,
+      stage: r.stage,
+    }))
+    .sort((a, b) => a.meeting_datetime.localeCompare(b.meeting_datetime));
+}
+
 /** Сопоставляет запланированные часы/касания с реальными по датам, где был хотя бы план или касание. */
 export function computePlanVsActual(plans: DailyPlan[], rows: LeadRow[]): DayComparison[] {
   const hoursByDay = actualHoursByDay(rows);

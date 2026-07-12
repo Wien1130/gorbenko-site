@@ -31,7 +31,7 @@ export default async function CrmPage() {
     <main className="dash-main">
       <div className="dash-header">
         <span className="page-label">Gorbenko · закрытая CRM</span>
-        <span className="badge red">🔒 приватно</span>
+        <a href="/crm/plan" className="badge red" style={{ textDecoration: "none" }}>🗓 план на неделю →</a>
       </div>
       <h1 className="page-title">🗂 Холодные продажи — вся картина</h1>
       <p className="page-sub">
