@@ -17,7 +17,7 @@ export default async function ColdSalesPage() {
   return (
     <main className="dash-main">
       <div className="dash-header">
-        <span className="page-label">Gorbenko · публичный трекер</span>
+        <a href="/" className="page-label page-label-link">Gorbenko · публичный трекер</a>
         <span className="badge green">🔴 live</span>
       </div>
       <h1 className="page-title">🎯 100 холодных касаний</h1>

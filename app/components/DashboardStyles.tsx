@@ -74,16 +74,18 @@ export default function DashboardStyles() {
         background: linear-gradient(120deg, var(--accent-dim), var(--surface));
         border: 1px solid var(--accent); border-radius: 14px;
         padding: 18px 22px; margin-bottom: 24px;
-        text-decoration: none; transition: transform .15s, box-shadow .15s;
       }
-      .promo-banner:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(124,106,240,0.25); }
       .promo-banner-title { font-size: 15px; font-weight: 800; color: var(--text); }
       .promo-banner-sub { font-size: 12.5px; color: var(--text-2); margin-top: 3px; }
       .promo-btn {
         flex-shrink: 0; background: var(--accent); color: #0d0d0d;
         font-size: 13px; font-weight: 700; padding: 9px 18px; border-radius: 999px;
-        white-space: nowrap;
+        white-space: nowrap; text-decoration: none; display: inline-block;
+        transition: transform .15s, box-shadow .15s;
       }
+      .promo-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(124,106,240,0.35); }
+      .page-label-link { color: inherit; text-decoration: none; transition: opacity .15s; }
+      .page-label-link:hover { opacity: 0.75; }
       @media (max-width: 600px) {
         .promo-banner { flex-direction: column; align-items: flex-start; }
         .promo-btn { align-self: flex-start; }
