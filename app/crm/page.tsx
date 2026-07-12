@@ -3,8 +3,8 @@ import { redirect } from "next/navigation";
 import { CRM_COOKIE, crmToken } from "../lib/crm-auth";
 import { fetchLeadRows } from "../lib/cold-leads";
 import { computeColdSalesStats } from "../lib/cold-leads-stats";
-import { fetchDailyPlans, computePlanVsActual } from "../lib/plans";
-import { fetchResistanceLog } from "../lib/resistance";
+import { fetchDailyPlans, computePlanVsActual, averagePlanMatch } from "../lib/plans";
+import { fetchResistanceLog, matchResistanceContext } from "../lib/resistance";
 import ColdSalesOverview from "../components/ColdSalesOverview";
 import LeadsTable from "../components/LeadsTable";
 import PlanVsActual from "../components/PlanVsActual";
@@ -26,6 +26,8 @@ export default async function CrmPage() {
   ]);
   const stats = computeColdSalesStats(rows);
   const comparisons = computePlanVsActual(plans, rows);
+  const planMatchPct = averagePlanMatch(comparisons);
+  const resistanceWithContext = matchResistanceContext(resistance, rows);
 
   return (
     <main className="dash-main">
@@ -38,11 +40,11 @@ export default async function CrmPage() {
         Полная версия с именами, контактами и заметками. Не для шаринга.
       </p>
 
-      <FearCard count={resistance.length} variant="private" />
+      <FearCard count={resistance.length} entries={resistanceWithContext} variant="private" />
 
       {stats.total > 0 ? (
         <>
-          <ColdSalesOverview stats={stats} />
+          <ColdSalesOverview stats={stats} planMatchPct={planMatchPct} />
           <PlanVsActual comparisons={comparisons} />
           <LeadsTable rows={rows} masked={false} />
         </>

@@ -94,13 +94,21 @@ export function extractUpcomingMeetings(rows: LeadRow[]): UpcomingMeeting[] {
     .sort((a, b) => a.meeting_datetime.localeCompare(b.meeting_datetime));
 }
 
+/** Среднее % совпадения план/факт по касаниям среди дней, где план был задан. Null, если планов ещё не было. */
+export function averagePlanMatch(comparisons: DayComparison[]): number | null {
+  const withPlan = comparisons.filter((c) => c.touchesMatch !== null);
+  if (withPlan.length === 0) return null;
+  const sum = withPlan.reduce((acc, c) => acc + Math.min(c.touchesMatch as number, 100), 0);
+  return Math.round(sum / withPlan.length);
+}
+
 /** Сопоставляет запланированные часы/касания с реальными по датам, где был хотя бы план или касание. */
 export function computePlanVsActual(plans: DailyPlan[], rows: LeadRow[]): DayComparison[] {
-  const hoursByDay = actualHoursByDay(rows);
+  const hoursByDay = actualHoursByDay(rows); // часы — по ВСЕМ сообщениям, письмо/звонок тоже время
   const touchesByDay: Record<string, number> = {};
   for (const r of rows) {
-    if (!r.date) continue;
-    touchesByDay[r.date] = (touchesByDay[r.date] ?? 0) + 1;
+    if (!r.date || (r.entry_type || "cold_touch") === "followup") continue;
+    touchesByDay[r.date] = (touchesByDay[r.date] ?? 0) + 1; // касания — только новые холодные заходы
   }
 
   const planByDate = new Map(plans.map((p) => [p.date, p]));

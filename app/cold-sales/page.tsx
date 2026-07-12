@@ -1,11 +1,12 @@
 import { fetchLeadRows } from "../lib/cold-leads";
 import { computeColdSalesStats } from "../lib/cold-leads-stats";
-import { fetchResistanceLog } from "../lib/resistance";
+import { fetchResistanceLog, matchResistanceContext } from "../lib/resistance";
 import ColdSalesOverview from "../components/ColdSalesOverview";
 import LeadsTable from "../components/LeadsTable";
 import PromoBanner from "../components/PromoBanner";
 import ConsultationForm from "../components/ConsultationForm";
 import FearCard from "../components/FearCard";
+import SaasBotTeaser from "../components/SaasBotTeaser";
 
 export const revalidate = 60;
 
@@ -13,6 +14,7 @@ export default async function ColdSalesPage() {
   const [rows, resistance] = await Promise.all([fetchLeadRows(), fetchResistanceLog()]);
   const stats = computeColdSalesStats(rows);
   const hasData = stats.total > 0;
+  const resistanceWithContext = matchResistanceContext(resistance, rows);
 
   return (
     <main className="dash-main">
@@ -32,7 +34,8 @@ export default async function ColdSalesPage() {
       {hasData ? (
         <>
           <ColdSalesOverview stats={stats} />
-          <FearCard count={resistance.length} variant="public" />
+          <FearCard count={resistance.length} entries={resistanceWithContext} variant="public" />
+          <SaasBotTeaser />
           <LeadsTable rows={rows} masked />
           <ConsultationForm />
         </>

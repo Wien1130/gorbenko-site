@@ -33,7 +33,7 @@ export default function DashboardStyles() {
       .badge.green { background: var(--green-bg); color: var(--green); }
       .badge.red { background: var(--red-bg); color: var(--red); }
 
-      .stat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 24px; }
+      .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 24px; }
       @media (max-width: 900px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
       .stat-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
       .stat-label { font-size: 11px; color: var(--text-3); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
@@ -154,21 +154,75 @@ export default function DashboardStyles() {
 
       .fear-card {
         border-color: #3a2a52; background: linear-gradient(150deg, #241a38, var(--surface) 55%);
-        display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap;
+        display: flex; flex-direction: column; gap: 14px;
       }
+      .fear-top { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
       .fear-text { flex: 1; min-width: 220px; }
       .fear-title { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 5px; }
       .fear-sub { font-size: 13px; color: var(--text-2); line-height: 1.5; }
       .fear-count { font-size: 28px; font-weight: 800; color: #c084fc; }
+      .fear-actions { display: flex; flex-direction: column; gap: 8px; }
       .fear-btn {
         flex-shrink: 0; display: inline-flex; align-items: center; gap: 8px;
         background: #7c3aed; color: #fff; font-weight: 700; font-size: 14px;
         padding: 13px 22px; border-radius: 999px; text-decoration: none;
-        transition: transform .15s, box-shadow .15s;
+        transition: transform .15s, box-shadow .15s; white-space: nowrap;
       }
       .fear-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(124,58,237,0.35); }
+      .fear-btn-alt { background: #1a1330; border: 1px solid #7c3aed; color: #c084fc; }
+      .fear-toggle {
+        align-self: flex-start; background: none; border: 1px solid var(--border-light);
+        color: var(--text-2); font-size: 12.5px; font-weight: 600; padding: 8px 14px;
+        border-radius: 999px; cursor: pointer; font-family: inherit; transition: border-color .15s;
+      }
+      .fear-toggle:hover { border-color: #7c3aed; color: var(--text); }
+      .fear-log { display: flex; flex-direction: column; gap: 10px; max-height: 420px; overflow-y: auto; }
+      .fear-log-item {
+        display: flex; gap: 12px; padding: 12px; background: rgba(0,0,0,0.18);
+        border: 1px solid var(--border-light); border-radius: 10px;
+      }
+      .fear-log-time { flex-shrink: 0; font-size: 11.5px; color: var(--text-3); white-space: nowrap; padding-top: 2px; }
+      .fear-log-body { display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; color: var(--text-2); line-height: 1.5; }
+      .fear-log-label { color: var(--text-3); font-weight: 600; }
+      .fear-log-context { color: #a78bfa; font-size: 12px; }
+      .fear-log-bot { font-style: italic; }
+      .fear-log-outcome { color: #4ade80; font-weight: 700; font-size: 12px; margin-top: 2px; }
+
+      .saas-teaser {
+        border-color: #2a3f52; background: linear-gradient(150deg, #142230, var(--surface) 55%);
+        display: flex; flex-direction: column; gap: 16px;
+      }
+      .saas-title { font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+      .saas-sub { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+      .saas-cta {
+        align-self: flex-start; background: #0ea5e9; color: #06202e; font-weight: 800; font-size: 14px;
+        padding: 13px 22px; border-radius: 999px; border: none; cursor: pointer; font-family: inherit;
+        transition: transform .15s, box-shadow .15s;
+      }
+      .saas-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(14,165,233,0.3); }
+      .saas-body { display: flex; flex-direction: column; gap: 16px; }
+      .saas-plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+      .saas-plan {
+        position: relative; text-align: left; background: rgba(0,0,0,0.2); border: 1px solid var(--border-light);
+        border-radius: 12px; padding: 16px; cursor: pointer; font-family: inherit; transition: border-color .15s, transform .15s;
+      }
+      .saas-plan:hover { border-color: #0ea5e9; transform: translateY(-1px); }
+      .saas-plan-selected { border-color: #0ea5e9; background: rgba(14,165,233,0.1); }
+      .saas-plan-highlight { border-color: #38bdf8; }
+      .saas-plan-badge {
+        position: absolute; top: -9px; right: 12px; background: #0ea5e9; color: #06202e;
+        font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em;
+        padding: 3px 8px; border-radius: 999px;
+      }
+      .saas-plan-label { font-size: 12.5px; color: var(--text-3); font-weight: 600; margin-bottom: 6px; }
+      .saas-plan-price { font-size: 24px; font-weight: 800; color: var(--text); }
+      .saas-plan-period { font-size: 13px; color: var(--text-3); font-weight: 500; }
+      .saas-plan-note { font-size: 11.5px; color: var(--text-3); margin-top: 6px; line-height: 1.4; }
+      .saas-form { gap: 10px; }
+      .saas-form-hint { font-size: 12.5px; color: var(--text-2); margin: 0; }
 
       .plan-card { margin-top: 8px; }
+      .plan-hint { font-size: 12px; color: var(--text-3); line-height: 1.5; margin: -4px 0 16px; }
       .plan-form { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 18px; }
       .plan-form .form-input { width: auto; min-width: 120px; }
       .plan-field { display: flex; flex-direction: column; gap: 5px; }

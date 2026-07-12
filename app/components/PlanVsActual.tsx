@@ -48,6 +48,12 @@ export default function PlanVsActual({ comparisons }: { comparisons: DayComparis
   return (
     <div className="card plan-card">
       <div className="card-title">📅 План vs факт</div>
+      <p className="plan-hint">
+        Факт часов = от первого до последнего сообщения боту за день (это уже включает дорогу
+        и паузы между заходами — ты пишешь боту только реально что-то сделав). В касания
+        считаются только новые холодные заходы — письма и повторные встречи по уже
+        существующим лидам на счётчик не влияют, но всё равно занимают часы факта.
+      </p>
 
       <form className="plan-form" onSubmit={submit}>
         <div className="plan-field">
