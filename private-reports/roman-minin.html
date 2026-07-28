@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roman Minin — Plan · Gorbenko</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #faf9f7;
+      --surface: #ffffff;
+      --border: #e7e5e4;
+      --border-light: #f0edea;
+      --text: #1c1917;
+      --text-2: #44403c;
+      --text-3: #78716c;
+      --text-4: #a8a29e;
+      --accent: #c75b39;
+      --accent-light: #fdf2ee;
+      --green: #166534;
+      --green-bg: #f0fdf4;
+      --green-border: #bbf7d0;
+      --amber: #92400e;
+      --amber-bg: #fffbeb;
+      --amber-border: #fde68a;
+      --blue: #1e3a5f;
+      --blue-bg: #eff6ff;
+      --blue-border: #bfdbfe;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .page { max-width: 900px; margin: 0 auto; padding: 48px 24px 80px; }
+
+    /* ── Header ── */
+    .header { margin-bottom: 48px; }
+    .header-label {
+      font-size: 11px; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 8px;
+    }
+    .header h1 { font-size: 32px; font-weight: 800; color: var(--text); line-height: 1.2; }
+    .header-sub { font-size: 15px; color: var(--text-3); margin-top: 8px; }
+
+    /* ── Section ── */
+    .section { margin-bottom: 48px; }
+    .section-title {
+      font-size: 18px; font-weight: 700; color: var(--text);
+      margin-bottom: 20px; padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── Callout ── */
+    .callout {
+      border-radius: 10px; padding: 14px 16px;
+      font-size: 14px; line-height: 1.65; margin-bottom: 16px;
+    }
+    .callout strong { display: block; margin-bottom: 3px; font-size: 13px; font-weight: 700; }
+    .callout.green  { background: var(--green-bg);  border: 1px solid var(--green-border);  color: var(--green); }
+    .callout.amber  { background: var(--amber-bg);  border: 1px solid var(--amber-border);  color: var(--amber); }
+    .callout.blue   { background: var(--blue-bg);   border: 1px solid var(--blue-border);   color: var(--blue);  }
+    .callout.neutral{ background: #f5f5f4; border: 1px solid var(--border); color: var(--text-2); }
+
+    /* ── Grid ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .grid-4c { display: grid; grid-template-columns: 3fr 1fr; gap: 24px; }
+    @media (max-width: 640px) {
+      .grid-2, .grid-3, .grid-4c { grid-template-columns: 1fr; }
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden;
+    }
+    .card-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 12px; font-weight: 600; color: var(--text-2);
+      background: #faf9f7;
+    }
+    .card-body { padding: 16px; }
+    .card-body p { font-size: 14px; color: var(--text-2); line-height: 1.65; }
+    .card-body p + p { margin-top: 6px; }
+
+    /* ── Stat strip ── */
+    .stat-strip { display: flex; gap: 16px; flex-wrap: wrap; }
+    .stat-box {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 14px 18px; flex: 1; min-width: 120px;
+    }
+    .stat-value { font-size: 22px; font-weight: 800; color: var(--text); line-height: 1.1; }
+    .stat-value.green { color: #16a34a; }
+    .stat-label { font-size: 11px; color: var(--text-4); margin-top: 4px; text-transform: uppercase; letter-spacing: .07em; }
+
+    /* ── Table ── */
+    .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    th {
+      background: #faf9f7; font-weight: 600; font-size: 11.5px;
+      color: var(--text-3); text-transform: uppercase; letter-spacing: .06em;
+      padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border);
+    }
+    td { padding: 11px 14px; color: var(--text-2); vertical-align: top; }
+    tr:not(:last-child) td { border-bottom: 1px solid var(--border-light); }
+    tr:nth-child(even) td { background: #faf9f7; }
+    td strong { color: var(--text); }
+    td .note { font-size: 12px; color: var(--text-4); margin-top: 2px; }
+    td .highlight { color: #16a34a; font-weight: 600; }
+
+    /* ── Tag / pill ── */
+    .tag {
+      display: inline-block; font-size: 11.5px; font-weight: 600;
+      padding: 2px 9px; border-radius: 20px; border: 1px solid var(--border);
+      color: var(--text-2); background: var(--surface); margin: 2px 2px 2px 0;
+    }
+    .tag.accent { background: var(--accent-light); border-color: #f5c4b2; color: var(--accent); }
+
+    /* ── Profile ── */
+    .profile-bio { font-size: 14.5px; line-height: 1.75; color: var(--text-2); }
+    .profile-bio strong { color: var(--text); }
+    .highlights-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; margin-top: 14px;
+    }
+    .hl-item { font-size: 13px; color: var(--text-3); line-height: 1.5; }
+    .hl-item::before { content: "—  "; color: var(--accent); }
+    @media (max-width: 560px) { .highlights-grid { grid-template-columns: 1fr; } }
+
+    /* ── Day card ── */
+    .day-card { margin-bottom: 12px; }
+    .day-head {
+      display: flex; align-items: center; gap: 10px;
+      background: #faf9f7; border: 1px solid var(--border);
+      border-bottom: none; border-radius: 10px 10px 0 0;
+      padding: 10px 16px;
+    }
+    .day-name { font-weight: 700; font-size: 14px; color: var(--text); }
+    .day-hours {
+      font-size: 11px; font-weight: 600; padding: 2px 8px;
+      border-radius: 20px; background: var(--accent-light);
+      color: var(--accent); border: 1px solid #f5c4b2;
+    }
+    .day-body {
+      border: 1px solid var(--border); border-radius: 0 0 10px 10px;
+      display: grid; grid-template-columns: 3fr 1fr; overflow: hidden;
+    }
+    @media (max-width: 560px) { .day-body { grid-template-columns: 1fr; } }
+    .day-roman { padding: 14px 16px; border-right: 1px solid var(--border-light); }
+    .day-andrii { padding: 14px 16px; background: var(--blue-bg); }
+    .day-col-label {
+      font-size: 10.5px; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+    .day-roman .day-col-label { color: var(--text-3); }
+    .day-andrii .day-col-label { color: var(--blue); }
+    .day-task { font-size: 13px; color: var(--text-2); margin-bottom: 5px; line-height: 1.55; }
+    .day-task::before { content: attr(data-n) ". "; font-weight: 600; color: var(--text); }
+    .andrii-text { font-size: 13px; color: var(--blue); line-height: 1.55; }
+
+    /* ── Message block ── */
+    .message-box {
+      background: var(--surface); border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 10px 10px 0;
+      padding: 20px 24px;
+      font-size: 14.5px; line-height: 1.85;
+      color: var(--text-2);
+      white-space: pre-line;
+    }
+
+    /* ── Divider ── */
+    hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    /* ── Link list ── */
+    .link-item { margin-bottom: 12px; }
+    .link-name { font-size: 14px; font-weight: 600; color: var(--text); }
+    .link-note { font-size: 13px; color: var(--text-3); margin-top: 1px; }
+
+    /* ── Footer ── */
+    .footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--border); }
+    .footer p { font-size: 12px; color: var(--text-4); }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-label">Gorbenko · Закрытый план</div>
+    <h1>Роман Минин — €1800/месяц</h1>
+    <div class="header-sub">Июль — Август 2026 · 2–3 часа в день · Шарлеруа, Бельгия</div>
+  </div>
+
+  <!-- Profile -->
+  <div class="section">
+    <div class="section-title">Кто такой Роман Минин</div>
+    <div class="grid-4c">
+      <div>
+        <p class="profile-bio">
+          Родился в 1981 году в Мирнограде (Донецкая область). Выпускник <strong>Харьковской академии дизайна и искусств</strong> (монументальная живопись, 2008). Основатель направления <strong>трансмонументализм</strong> — синтез монументального искусства с VR/AR-технологиями.
+        </p>
+        <p class="profile-bio" style="margin-top:10px">
+          С июля 2022 года живёт в Бельгии, на ферме Martinrou в Флёрюсе — у мастера-витражиста <strong>Бернара Тиртьо</strong>. Вместе создали совместную скульптуру, выставленную на <strong>ST-ART Strasbourg 2024</strong>. Представлен <strong>Galerie mhaata (Париж)</strong> — директор Jacques-Antoine Tanner. В 2019 году провёл персональную выставку <strong>"Minin'g Charleroi"</strong> в Musée du Bois du Cazier — музее шахтёрского наследия ЮНЕСКО прямо в Шарлеруа. Работы продавались на <strong>Sotheby's и Phillips</strong>.
+        </p>
+        <div style="margin-top:12px">
+          <span class="tag">Живопись</span><span class="tag">Стрит-арт</span><span class="tag">Графика</span><span class="tag">Фотография</span><span class="tag">VR/AR</span><span class="tag">Керамика</span><span class="tag">Инсталляция</span>
+        </div>
+        <div class="highlights-grid" style="margin-top:16px">
+          <div class="hl-item">Saatchi Gallery London — 2013, 2015, 2016</div>
+          <div class="hl-item">Sotheby's и Phillips аукционы</div>
+          <div class="hl-item">Европейский Парламент, Страсбург — 2018</div>
+          <div class="hl-item">Art fair Miami, Tokyo, Antwerpen — 2018</div>
+          <div class="hl-item">Musée du Bois du Cazier, Шарлеруа — 2019</div>
+          <div class="hl-item">Artup Lille — соло 2023, новые работы 2025</div>
+          <div class="hl-item">ST-ART Strasbourg 2024 (с Bernard Tirtiaux)</div>
+          <div class="hl-item">PinchukArtCentre Prize 2013, Malevich Prize 2016</div>
+          <div class="hl-item">Repin Prize 2021</div>
+          <div class="hl-item">Мексика, Польша, Монако, Франция, Великобритания</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="stat-box">
+          <div class="stat-value">2022</div>
+          <div class="stat-label">В Бельгии с</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="font-size:16px">mhaata</div>
+          <div class="stat-label">Галерея · Париж</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value">14+</div>
+          <div class="stat-label">Стран показов</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="font-size:14px">Sotheby's</div>
+          <div class="stat-label">Аукционная история</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Legal -->
+  <div class="section">
+    <div class="section-title">Правовая ситуация</div>
+    <div class="callout green" style="margin-bottom:14px">
+      <strong>Временная защита продлена до 4 марта 2027</strong>
+      Бельгия продлила статус 27 мая 2026. Конец строительного контракта в сентябре — не потеря права на проживание. Нужно только обновить карту А лично в мэрии Флёрюса.
+    </div>
+    <div class="grid-2" style="margin-bottom:16px">
+      <div class="card">
+        <div class="card-head">Первый приоритет <span class="tag accent">Срочно</span></div>
+        <div class="card-body">
+          <p>Прийти лично в мэрию Флёрюса с паспортом и текущей картой А. Карту продлевают до 4 марта 2027. Без этого шага всё остальное невозможно.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head">Открыть indépendant (аналог ФОП) <span class="tag">После карты А</span></div>
+        <div class="card-body">
+          <p>Украинцы с временной защитой <strong>освобождены от professional card</strong> — регистрация без барьеров. Пока есть стройка: вторичная самозанятость (взносы €0). С октября: основная.</p>
+        </div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Статус самозанятости</th>
+            <th>Взносы / квартал</th>
+            <th>В месяц</th>
+            <th>Когда</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Вторичная</strong> (пока есть стройка)</td>
+            <td><strong>€0</strong></td>
+            <td>€0</td>
+            <td>До конца сентября</td>
+          </tr>
+          <tr>
+            <td><strong>Primostarter</strong> — 1-й квартал</td>
+            <td>€341</td>
+            <td>~€114</td>
+            <td>С октября (+ Attestation Arts)</td>
+          </tr>
+          <tr>
+            <td><strong>Primostarter</strong> — 2–8 кварталы</td>
+            <td>€460</td>
+            <td>~€153</td>
+            <td>Первые ~2 года</td>
+          </tr>
+          <tr>
+            <td><strong>Стандарт</strong> (&gt; €17 400/год)</td>
+            <td>20.5% дохода</td>
+            <td>~€300–500</td>
+            <td>При росте дохода</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:12px;color:var(--text-4);margin-top:8px">
+      ucm.be — Guichet d'Entreprise Charleroi · workinthearts.be — Attestation of Work in the Arts
+    </p>
+  </div>
+
+  <hr>
+
+  <!-- Income -->
+  <div class="section">
+    <div class="section-title">Источники дохода — реалистичная оценка</div>
+    <div class="callout amber" style="margin-bottom:16px">
+      <strong>Честно о деньгах</strong>
+      €1800/месяц с нуля за 2 месяца — сложно, но реально при 1–2 мурал-заказах + активной галерее. Проблема не в таланте — он уже представлен в Париже, выставлялся в Лондоне и Шарлеруа. Проблема в том, что продажи сейчас не идут активно. Это меняется за одну неделю.
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Источник</th>
+            <th>Доход / мес</th>
+            <th>До первых денег</th>
+            <th>Что нужно сделать</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Galerie mhaata (Париж)</strong><div class="note">Директор: Jacques-Antoine Tanner</div></td>
+            <td><span class="highlight">€600–1500</span></td>
+            <td>1–2 недели</td>
+            <td>1 письмо Таннеру — попросить продвинуть продажи в июле. Галерея берёт 40–50%.</td>
+          </tr>
+          <tr>
+            <td><strong>Мурал-заказы</strong><div class="note">Брюссель / Намюр / Льеж (30–60 км)</div></td>
+            <td><span class="highlight">€800–2000</span></td>
+            <td>2–4 недели</td>
+            <td>bookanartist.co + 5–7 холодных писем компаниям с пустыми стенами. €50–100/кв.м.</td>
+          </tr>
+          <tr>
+            <td><strong>Saatchi Art (онлайн)</strong></td>
+            <td>€200–600</td>
+            <td>3–6 недель</td>
+            <td>Загрузить 8–10 работ. История с London Saatchi Gallery = ценообразование выше.</td>
+          </tr>
+          <tr>
+            <td><strong>Воркшопы</strong><div class="note">CSC Les Hirondelles, Шарлеруа</div></td>
+            <td>€300–600</td>
+            <td>3–5 недель</td>
+            <td>2 воркшопа/нед × 8 чел × €35 = €560. Звонок в центр — 10 минут.</td>
+          </tr>
+          <tr>
+            <td><strong>Le Vecteur — резиденция</strong><div class="note">Август 2026</div></td>
+            <td>Студия + продажи с выставки</td>
+            <td>Август</td>
+            <td>Подать заявку на этой неделе (vecteur.be). Витрина + новые контакты региона.</td>
+          </tr>
+          <tr>
+            <td><strong>Culture Helps Solidarity (грант EU)</strong></td>
+            <td>До €7000 разово</td>
+            <td>3–6 месяцев</td>
+            <td>culturehelpssolidarity.eu — для украинских художников в Европе. Следующий раунд 2026/2027.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="stat-strip" style="margin-top:16px">
+      <div class="stat-box">
+        <div class="stat-value">€1800</div>
+        <div class="stat-label">Цель в месяц</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value green">€1200–2000</div>
+        <div class="stat-label">Реалистично к августу</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value">5 дней</div>
+        <div class="stat-label">До первых действий</div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Week 1 plan -->
+  <div class="section">
+    <div class="section-title">Неделя 1: 29 июня — 4 июля · по 2–3 часа в день</div>
+    <div class="callout blue" style="margin-bottom:20px">
+      Всё это Роман делает после рабочей смены. Цель недели: запустить все каналы и выйти на контакт с галереей и первыми мурал-клиентами.
+    </div>
+
+    <div class="day-card">
+      <div class="day-head">
+        <span class="day-name">Понедельник, 29 июня</span>
+        <span class="day-hours">2 часа</span>
+      </div>
+      <div class="day-body">
+        <div class="day-roman">
+          <div class="day-col-label">Роман</div>
+          <div class="day-task" data-n="1">Собрать 10–15 лучших работ: фото ≥300 DPI (живопись, стрит-арт, керамика)</div>
+          <div class="day-task" data-n="2">Записать для каждой: размер, год, материал, предполагаемую цену</div>
+          <div class="day-task" data-n="3">Найти фото с "Minin'g Charleroi" 2019 — пригодится для Saatchi Art bio</div>
+        </div>
+        <div class="day-andrii">
+          <div class="day-col-label">Андрий (20 мин)</div>
+          <div class="andrii-text">Попросить Романа прислать фотографии работ в Telegram / WhatsApp</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-head">
+        <span class="day-name">Вторник, 30 июня</span>
+        <span class="day-hours">2 часа</span>
+      </div>
+      <div class="day-body">
+        <div class="day-roman">
+          <div class="day-col-label">Роман</div>
+          <div class="day-task" data-n="1">Написать Jacques-Antoine Tanner (mhaata) — попросить продвинуть продажи в июле</div>
+          <div class="day-task" data-n="2">Зарегистрироваться на Saatchi Art: saatchiart.com</div>
+          <div class="day-task" data-n="3">Зарегистрироваться на Artfinder: artfinder.com</div>
+        </div>
+        <div class="day-andrii">
+          <div class="day-col-label">Андрий (20 мин)</div>
+          <div class="andrii-text">Написать письмо Таннеру по-французски через ChatGPT + отредактировать</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-head">
+        <span class="day-name">Среда, 1 июля</span>
+        <span class="day-hours">3 часа</span>
+      </div>
+      <div class="day-body">
+        <div class="day-roman">
+          <div class="day-col-label">Роман</div>
+          <div class="day-task" data-n="1">Загрузить 6–8 работ на Saatchi Art с bio: "exhibited at Saatchi Gallery London, Sotheby's..."</div>
+          <div class="day-task" data-n="2">Подать заявку в Le Vecteur на резиденцию август 2026 (vecteur.be)</div>
+          <div class="day-task" data-n="3">Написать в Musée du Bois du Cazier — они уже знают его! Спросить о новой выставке</div>
+        </div>
+        <div class="day-andrii">
+          <div class="day-col-label">Андрий (20 мин)</div>
+          <div class="andrii-text">Написать bio и описания работ для Saatchi Art на английском (ChatGPT)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-head">
+        <span class="day-name">Четверг, 2 июля</span>
+        <span class="day-hours">2 часа</span>
+      </div>
+      <div class="day-body">
+        <div class="day-roman">
+          <div class="day-col-label">Роман</div>
+          <div class="day-task" data-n="1">Зарегистрироваться на bookanartist.co — мурал-платформа Бельгии</div>
+          <div class="day-task" data-n="2">Найти 5–7 компаний/ресторанов с пустыми стенами: Брюссель, Намюр, Льеж</div>
+          <div class="day-task" data-n="3">Написать письмо-предложение: мурал, €50–100/кв.м, ссылка на портфолио</div>
+        </div>
+        <div class="day-andrii">
+          <div class="day-col-label">Андрий (20 мин)</div>
+          <div class="andrii-text">Перевести мурал-предложение на французский (ChatGPT)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-head">
+        <span class="day-name">Пятница, 3 июля</span>
+        <span class="day-hours">2 часа</span>
+      </div>
+      <div class="day-body">
+        <div class="day-roman">
+          <div class="day-col-label">Роман</div>
+          <div class="day-task" data-n="1">Instagram: 3 поста с работами · #UkrainianArtist #CharleroisArt #MuralBelgique</div>
+          <div class="day-task" data-n="2">Написать в CSC Les Hirondelles — предложить арт-воркшоп для украинцев</div>
+          <div class="day-task" data-n="3">Написать Bernard Tirtiaux: есть ли ещё совместные работы для продажи через mhaata?</div>
+        </div>
+        <div class="day-andrii">
+          <div class="day-col-label">Андрий (20 мин)</div>
+          <div class="andrii-text">Сделать 3 Instagram-поста по шаблону (тексты + хэштеги)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Month roadmap -->
+  <div class="section">
+    <div class="section-title">Дорожная карта: июль — август 2026</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Период</th>
+            <th>Цель</th>
+            <th>Прогноз дохода</th>
+            <th>Ключевое действие</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Нед. 1</strong><div class="note">29 июня – 4 июля</div></td>
+            <td>Запуск платформ + первые контакты</td>
+            <td>€0 (подготовка)</td>
+            <td>Письмо mhaata + Saatchi Art загружен</td>
+          </tr>
+          <tr>
+            <td><strong>Нед. 2</strong><div class="note">7–11 июля</div></td>
+            <td>Первые отклики на муралы</td>
+            <td>€0–600</td>
+            <td>5+ мурал-предложений отправлено</td>
+          </tr>
+          <tr>
+            <td><strong>Нед. 3–4</strong><div class="note">14–25 июля</div></td>
+            <td>Первый мурал или продажа через галерею</td>
+            <td><span class="highlight">€600–1500</span></td>
+            <td>Встреча с мурал-клиентом</td>
+          </tr>
+          <tr>
+            <td><strong>Август</strong></td>
+            <td>Стабильный доход: мурал + онлайн + воркшоп</td>
+            <td><span class="highlight">€1500–2500</span></td>
+            <td>Резиденция Le Vecteur + выставка</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Links -->
+  <div class="section">
+    <div class="section-title">Ключевые ресурсы</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-head">Продажи и платформы</div>
+        <div class="card-body">
+          <div class="link-item">
+            <div class="link-name">mhaata.com — Galerie mhaata (Париж)</div>
+            <div class="link-note">Написать Jacques-Antoine Tanner. Первый и главный шаг.</div>
+          </div>
+          <div class="link-item">
+            <div class="link-name">saatchiart.com</div>
+            <div class="link-note">Международная платформа. История с Saatchi Gallery London = ценообразование выше.</div>
+          </div>
+          <div class="link-item">
+            <div class="link-name">artfinder.com</div>
+            <div class="link-note">Европейский contemporary art рынок, активная аудитория.</div>
+          </div>
+          <div class="link-item">
+            <div class="link-name">bookanartist.co</div>
+            <div class="link-note">Мурал-заказы по Бельгии. €50–300/кв.м.</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head">Шарлеруа и регион</div>
+        <div class="card-body">
+          <div class="link-item">
+            <div class="link-name">vecteur.be — Le Vecteur</div>
+            <div class="link-note">Резиденция август 2026. Заявку подать на этой неделе.</div>
+          </div>
+          <div class="link-item">
+            <div class="link-name">leboisducazier.be — Musée du Bois du Cazier</div>
+            <div class="link-note">Уже знают Романа! Написать о новой выставке.</div>
+          </div>
+          <div class="link-item">
+            <div class="link-name">CSC Les Hirondelles (Шарлеруа)</div>
+            <div class="link-note">Украинский соцкультурный центр. Арт-воркшопы для общины.</div>
+          </div>
+          <div class="link-item">
+            <div class="link-name">Bernard Tirtiaux (Флёрюс — сосед)</div>
+            <div class="link-note">Уже работают вместе. Больше совместных продаж через mhaata.</div>
+          </div>
+          <div class="link-item">
+            <div class="link-name">bps22.be — BPS22 Museum</div>
+            <div class="link-note">Главный музей современного искусства провинции Эно.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Murals parallel track -->
+  <div class="section">
+    <div class="section-title">Параллельный трек — Муралы</div>
+
+    <div class="callout green" style="margin-bottom:20px">
+      <strong>Это личная инициатива Андрия — и он в неё очень верит</strong>
+      Первый трек (галерея, Saatchi Art, воркшопы) — это фундамент. Этот трек — ускоритель. Мурал = самый большой разовый чек. Один заказ закрывает месяц. Андрий берёт на себя сайт, бота и поиск первых стен. С Романа — ответы на 12 вопросов и работа.
+    </div>
+
+    <div style="margin-bottom:28px">
+      <div class="section-title" style="font-size:15px;margin-bottom:14px">Юридический вопрос — ноль взносов подтверждено</div>
+      <div class="callout blue" style="margin-bottom:12px">
+        Пока есть трудовой договор на стройке — открывается <strong>indépendant à titre complémentaire</strong> (вторичная самозанятость). По бельгийскому закону (AR du 19 décembre 1967, art. 37, источник: inasti.be): если доход ниже €1 922/квартал — социальные взносы равны нулю. Никакого риска штрафа за нелегальную деятельность.
+      </div>
+      <div class="card">
+        <div class="card-head">Понедельник утром — первый шаг</div>
+        <div class="card-body">
+          <p><strong>UCM Charleroi</strong> — Rue de Montigny 42 · ucm.be</p>
+          <p>Взять паспорт + карту А. Занимает 1–2 часа. После этого Роман официально и легально предлагает муралы в Бельгии.</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:28px">
+      <div class="section-title" style="font-size:15px;margin-bottom:14px">Сегодня вечером — 1 час с Андрием (список вопросов)</div>
+      <p style="font-size:14px;color:var(--text-2);margin-bottom:14px">Ответы на эти вопросы = сайт по муралам готов за вечер.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>#</th><th>Вопрос</th><th>Зачем</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Есть фото уже сделанных муралов? (нужно 5–8 штук)</td><td>Портфолио — основа сайта</td></tr>
+            <tr><td>2</td><td>Самый большой по площади — сколько кв.м?</td><td>Показывает масштаб</td></tr>
+            <tr><td>3</td><td>Делаешь интерьер / фасад / оба?</td><td>Фильтр клиентов</td></tr>
+            <tr><td>4</td><td>Сколько времени занимает мурал ~20 кв.м?</td><td>Для прайса и сроков</td></tr>
+            <tr><td>5</td><td>Нужны леса — ты привозишь или клиент?</td><td>Логистика и цена</td></tr>
+            <tr><td>6</td><td>Едешь до Брюсселя / Льежа? За чей счёт дорога?</td><td>Зона охвата</td></tr>
+            <tr><td>7</td><td>Цена — за кв.м или за проект? Какая цифра комфортна?</td><td>Прайс-лист</td></tr>
+            <tr><td>8</td><td>Минимальный размер стены, с которого берёшься?</td><td>Фильтр запросов</td></tr>
+            <tr><td>9</td><td>Берёшь предоплату? Сколько %?</td><td>Условия договора</td></tr>
+            <tr><td>10</td><td>Ссылка на Instagram (там будут смотреть портфолио)</td><td>Основной канал</td></tr>
+            <tr><td>11</td><td>На каких языках комфортно общаться с клиентом?</td><td>Французский / английский</td></tr>
+            <tr><td>12</td><td>Название для бизнеса — просто "Roman Minin Murals"?</td><td>Сайт и визитка</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div style="margin-bottom:28px">
+      <div class="section-title" style="font-size:15px;margin-bottom:14px">Система поиска стен — Telegram-бот</div>
+      <p style="font-size:14px;color:var(--text-2);margin-bottom:14px">Цель: отправлять <strong>минимум 3 предложения в день</strong>. 100 отправленных → 5–10 ответов → 1–2 заказа в месяц.</p>
+
+      <div class="grid-2" style="margin-bottom:16px">
+        <div class="card">
+          <div class="card-head">Как работает бот</div>
+          <div class="card-body">
+            <p><strong>1.</strong> Человек находит стену → отправляет в Telegram адрес + фото</p>
+            <p><strong>2.</strong> Бот ищет по Google Maps: название, сайт, Instagram заведения</p>
+            <p><strong>3.</strong> ИИ генерирует готовое письмо на французском с именем ресторана</p>
+            <p><strong>4.</strong> Человек получает текст → копирует → отправляет сам</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head">Кто ищет стены</div>
+          <div class="card-body">
+            <p><strong>Поначалу — Андрий.</strong> 15 минут в Google Maps = 5–10 адресов. Этого хватает на 2–3 дня рассылки.</p>
+            <p style="margin-top:8px"><strong>Потом — нужен свой человек.</strong> Это может быть сын Романа, кто-то из украинской общины или волонтёр. Романа задача: найти такого человека в своём окружении. Платить ему не надо — это 30 минут в день в телефоне.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout neutral">
+        <strong>Что делает Андрий технически:</strong> сайт по муралам + Telegram-бот (Python + Claude API + Railway). Готово за 1 вечер разработки. Роману нужно только: ответить на 12 вопросов выше и прислать фото работ.
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title" style="font-size:15px;margin-bottom:14px">Разбивка действий до завтра</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Кто</th><th>Когда</th><th>Действие</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Роман + Андрий</strong></td>
+              <td>Сегодня вечером · 1 час</td>
+              <td>Ответить на 12 вопросов выше. Прислать Андрию 5–8 фото муралов.</td>
+            </tr>
+            <tr>
+              <td><strong>Андрий</strong></td>
+              <td>Сегодня / ночью</td>
+              <td>Собрать сайт по муралам на основе ответов Романа.</td>
+            </tr>
+            <tr>
+              <td><strong>Роман</strong></td>
+              <td>Понедельник утром</td>
+              <td>UCM Charleroi → зарегистрировать indépendant complémentaire. Паспорт + карта А.</td>
+            </tr>
+            <tr>
+              <td><strong>Андрий</strong></td>
+              <td>Понедельник</td>
+              <td>Запустить Telegram-бот для поиска стен. Первые 10 адресов — сам.</td>
+            </tr>
+            <tr>
+              <td><strong>Роман</strong></td>
+              <td>Понедельник–пятница</td>
+              <td>Найти в окружении человека, который будет по 30 мин/день искать стены через Google Maps.</td>
+            </tr>
+            <tr>
+              <td><strong>Все</strong></td>
+              <td>Со вторника</td>
+              <td>3+ адреса в день → в бот → готовые письма → Роман отправляет.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>Закрытый документ · Gorbenko Agency · gorbenko.at · Только для личного использования</p>
+  </div>
+
+</div>
+</body>
+</html>

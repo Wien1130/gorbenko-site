@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>BlinHaus — реклама и продажи · 12–23 июня 2026</title>
+<style>
+  :root{
+    --bg:#faf9f7; --card:#ffffff; --ink:#1c1917; --muted:#6b7280; --faint:#9ca3af;
+    --line:#e7e5e4; --accent:#c75b39; --accent-soft:#fbeee9;
+    --green:#2e7d32; --green-soft:#eaf4ea; --red:#c0392b; --red-soft:#faecea;
+    --blue:#1565c0; --blue-soft:#e9f1fb; --amber:#b45309; --amber-soft:#fdf3e3;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:980px;margin:0 auto;padding:48px 24px 80px}
+  .brand{display:inline-block;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:10px}
+  h1{font-size:30px;line-height:1.2;font-weight:800;letter-spacing:-.02em}
+  .sub{color:var(--muted);margin-top:10px;font-size:14.5px;max-width:720px}
+  h2{font-size:20px;font-weight:750;letter-spacing:-.01em;margin:0 0 4px}
+  h3{font-size:15.5px;font-weight:700;margin:0 0 4px}
+  section{margin-top:44px}
+  .sec-cap{color:var(--muted);font-size:13.5px;margin-bottom:16px}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:760px){.kpis{grid-template-columns:repeat(2,1fr)}}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .kpi .v{font-size:24px;font-weight:800;letter-spacing:-.02em}
+  .kpi .l{font-size:12.5px;color:var(--muted);margin-top:3px}
+  .kpi.good .v{color:var(--green)} .kpi.bad .v{color:var(--red)}
+  .kpi.warn .v{color:var(--amber)} .kpi.info .v{color:var(--blue)}
+  .callout{border-radius:12px;padding:16px 18px;font-size:14.5px;border:1px solid}
+  .callout b{font-weight:700}
+  .callout.amber{background:var(--amber-soft);border-color:#f0ddb8}
+  .callout.blue{background:var(--blue-soft);border-color:#cfe0f5}
+  .callout.green{background:var(--green-soft);border-color:#cde3cd}
+  .callout.red{background:var(--red-soft);border-color:#f5cac8}
+  .callout .t{display:block;font-weight:750;margin-bottom:5px}
+  table{width:100%;border-collapse:collapse;background:var(--card);
+    box-shadow:0 0 0 1px var(--line);border-radius:12px;overflow:hidden;font-size:14px}
+  th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);
+    text-align:left;padding:10px 14px;background:#f5f4f1;font-weight:650}
+  td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  tr.good td{background:var(--green-soft)} tr.bad td{background:var(--red-soft)}
+  tr.warn td{background:var(--amber-soft)} tr.info td{background:var(--blue-soft)}
+  .note{color:var(--muted);font-size:13px;margin-top:10px}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  @media(max-width:760px){.split{grid-template-columns:1fr}}
+  .pill{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:99px;vertical-align:middle}
+  .pill.green{background:var(--green-soft);color:var(--green)}
+  .pill.red{background:var(--red-soft);color:var(--red)}
+  .pill.blue{background:var(--blue-soft);color:var(--blue)}
+  .pill.amber{background:var(--amber-soft);color:var(--amber)}
+  .blocks{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.blocks{grid-template-columns:1fr}}
+  .bcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+  .bcard .bh{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+  .bcard .bh h3{margin:0}
+  .bcard p{font-size:14px;color:#44403c}
+  .bcard .who{font-size:12px;color:var(--faint);margin-bottom:8px}
+  .bb{margin-top:12px}
+  .bb-row{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:12.5px}
+  .bb-l{width:160px;flex-shrink:0;color:var(--muted)}
+  .bb-bar{flex:1;background:#efedea;border-radius:4px;height:14px}
+  .bb-bar i{display:block;height:100%;border-radius:4px;background:var(--accent)}
+  .bb-bar i.gray{background:#b8b3ae}
+  .bb-v{width:52px;flex-shrink:0;text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+  .funnel .frow{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+  .funnel .fl{width:200px;flex-shrink:0;font-size:13.5px;color:var(--muted)}
+  .funnel .fbar{flex:1;background:#efedea;border-radius:5px;height:22px;overflow:hidden}
+  .funnel .fbar i{display:block;height:100%;background:var(--accent);border-radius:5px}
+  .funnel .fv{width:270px;flex-shrink:0;text-align:right;font-size:13.5px}
+  .funnel .fv b{font-weight:750}
+  .funnel .fv span{color:var(--faint)}
+  .channels{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:760px){.channels{grid-template-columns:1fr}}
+  .ch{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .ch .cv{font-size:22px;font-weight:800;letter-spacing:-.01em}
+  .ch .cl{font-size:12px;color:var(--muted);margin:3px 0 8px}
+  .ch .cdetail{font-size:13px;color:#44403c}
+  .plan .pcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+  .plan .ph{font-weight:750;font-size:15px;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+  .tag.now{background:var(--red-soft);color:var(--red);font-size:11px;font-weight:700;
+    letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:99px}
+  .plan ol{padding-left:20px;font-size:14.5px}
+  .plan li{margin-bottom:7px}
+  .delta{font-size:12px;font-weight:700;padding:2px 7px;border-radius:6px;white-space:nowrap}
+  .delta.up{background:var(--green-soft);color:var(--green)}
+  .delta.down{background:var(--red-soft);color:var(--red)}
+  .delta.flat{background:#f3f2f0;color:var(--muted)}
+  p+p{margin-top:9px} .lead{font-size:15px}
+  footer{margin-top:60px;color:var(--faint);font-size:12.5px;border-top:1px solid var(--line);padding-top:18px}
+  .report-nav{display:flex;gap:10px;align-items:center;margin-bottom:28px}
+  .report-nav a{font-size:13px;padding:5px 14px;border-radius:8px;text-decoration:none;border:1px solid var(--line);color:var(--muted)}
+  .report-nav a.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .new-badge{display:inline-block;font-size:10px;font-weight:800;text-transform:uppercase;
+    letter-spacing:.1em;background:var(--accent);color:#fff;padding:2px 7px;border-radius:6px;
+    margin-left:6px;vertical-align:middle}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="report-nav">
+  <a href="/reports/blinhaus-june-2026">1–12 июня</a>
+  <a href="/reports/blinhaus-june-12-23" class="active">12–23 июня</a>
+  <a href="/reports/blinhaus-june-24-30">24–30 июня <span class="new-badge">новый</span></a>
+  <a href="/reports/blinhaus-june-summary">Итоги июня</a>
+</div>
+
+<header style="margin-bottom:36px">
+  <span class="brand">BlinHaus Vienna · отчёт по доставке</span>
+  <h1>Реклама и продажи заморозки<br>12–23 июня 2026</h1>
+  <p class="sub">Отчёт маркетинг-подрядчика (Gorbenko: креативы, съёмка и монтаж, таргетированная реклама,
+  бот-продавец) для собственника. Источники: рекламный кабинет Meta (API), ручная таблица лидов,
+  заказы 7loc CRM (новый сайт), Choice. Составлено 23.06.2026.</p>
+</header>
+
+<!-- KPI -->
+<div class="kpis">
+  <div class="kpi"><div class="v">335&nbsp;€</div><div class="l">Потрачено на рекламу (пельмени-сайт 221&nbsp;€ + тортики RU 114&nbsp;€)</div></div>
+  <div class="kpi good"><div class="v">811&nbsp;€</div><div class="l">Касса заморозки 12–23.06 (все каналы)*</div></div>
+  <div class="kpi info"><div class="v">2,42×</div><div class="l">Реклама окупилась: на каждый вложенный евро — 2,42&nbsp;€ кассы</div></div>
+  <div class="kpi warn"><div class="v">1&nbsp;051</div><div class="l">Кликов на рекламу (23&nbsp;896 охват, 73&nbsp;129 показов)</div></div>
+</div>
+<div class="kpis" style="margin-top:12px">
+  <div class="kpi"><div class="v">13</div><div class="l">Лидов в Messenger (11 доставка + 2 кафе)</div></div>
+  <div class="kpi good"><div class="v">10</div><div class="l">Продаж через все каналы</div></div>
+  <div class="kpi"><div class="v">81&nbsp;€</div><div class="l">Средний чек (811&nbsp;€ / 10 заказов)</div></div>
+  <div class="kpi good"><div class="v">284&nbsp;€</div><div class="l">Заказы с нового сайта 7loc — 100% атрибуция к рекламе</div></div>
+</div>
+<p class="note">* 375&nbsp;€ Messenger + 284&nbsp;€ новый сайт 7loc + 152&nbsp;€ старый сайт Choice = 811&nbsp;€.</p>
+
+<section>
+  <div class="callout green">
+    <span class="t">Главный прорыв периода</span>
+    Впервые видим полную цепочку: реклама → клик → заказ на сайте с атрибуцией.
+    <b>4 заказа на 284&nbsp;€ с нового сайта 7loc</b> промаркированы source=facebook,
+    campaign=pelmeni_site_jun2026 — мы точно знаем, что их привела реклама пельменей.
+    Раньше такой связи не было. Это значит, что реальная окупаемость рекламы пельменей —
+    не 0, а <b>минимум 2,42×</b>, и скорее всего выше (не все покупки через Messenger атрибутированы).
+  </div>
+</section>
+
+<section>
+  <div class="callout amber">
+    <span class="t">Важная правка: «отказы» — это на самом деле продажи</span>
+    В ручной таблице 4 заказа с нового сайта (70&nbsp;+&nbsp;76&nbsp;+&nbsp;50&nbsp;+&nbsp;88&nbsp;=&nbsp;<b>284&nbsp;€</b>)
+    были внесены в колонку «Отказ» по ошибке — они пришли через 7loc CRM, а не через Messenger,
+    поэтому не были замечены сразу. В отчёте они учтены как продажи.
+  </div>
+</section>
+
+<!-- CHANNELS -->
+<section>
+  <h2>Продажи по каналам</h2>
+  <p class="sec-cap">Три источника кассы — разная механика, разная атрибуция.</p>
+  <div class="channels">
+    <div class="ch">
+      <div class="cv" style="color:var(--green)">375&nbsp;€</div>
+      <div class="cl">Messenger · 4 заказа · средний чек 94&nbsp;€</div>
+      <div class="cdetail">Лиды писали в Messenger после рекламы, бот
+      принимал заказ. Атрибуция — по совпадению дат с активной кампанией,
+      точной привязки к объявлению нет (пока нет CRM).</div>
+      <div style="margin-top:10px">
+        <table style="font-size:13px">
+          <tr><th>Клиент</th><th>Дата</th><th class="num">Сумма</th></tr>
+          <tr><td>Светлана Шамилова</td><td>13.06</td><td class="num">56&nbsp;€</td></tr>
+          <tr><td>Наталья Романова</td><td>14.06</td><td class="num">56&nbsp;€</td></tr>
+          <tr><td>Азиза Калбаева</td><td>15.06</td><td class="num">224&nbsp;€</td></tr>
+          <tr><td>Tahmina Akhmedova</td><td>18.06</td><td class="num">39&nbsp;€</td></tr>
+          <tr style="background:#f5f4f1"><td colspan="2"><b>Итого</b></td><td class="num"><b>375&nbsp;€</b></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="ch">
+      <div class="cv" style="color:var(--blue)">284&nbsp;€</div>
+      <div class="cl">Новый сайт 7loc · 4 заказа · средний чек 71&nbsp;€</div>
+      <div class="cdetail"><b>100% атрибутированы к рекламе:</b> source=facebook,
+      campaign=pelmeni_site_jun2026. Пиксель работает, UTM-метки работают.</div>
+      <div style="margin-top:10px">
+        <table style="font-size:13px">
+          <tr><th>Клиент</th><th>Дата</th><th>UTM content</th><th class="num">Сумма</th></tr>
+          <tr><td>Maryna Komorchenko</td><td>14.06</td><td>—</td><td class="num">70&nbsp;€</td></tr>
+          <tr><td>Natalia Sander</td><td>18.06</td><td>upakovka</td><td class="num">50&nbsp;€</td></tr>
+          <tr><td>Tommy Chock</td><td>19.06</td><td>upakovka</td><td class="num">76&nbsp;€</td></tr>
+          <tr><td>Viktoriia Yakovenko</td><td>19.06</td><td>facebook</td><td class="num">88&nbsp;€</td></tr>
+          <tr style="background:#f5f4f1"><td colspan="3"><b>Итого</b></td><td class="num"><b>284&nbsp;€</b></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="ch">
+      <div class="cv" style="color:var(--muted)">152&nbsp;€</div>
+      <div class="cl">Старый сайт Choice · 2 заказа · средний чек 76&nbsp;€</div>
+      <div class="cdetail">Заказы через старый сайт. Источник ig — пришли из Instagram.</div>
+      <div style="margin-top:10px">
+        <table style="font-size:13px">
+          <tr><th>Клиент</th><th>Дата</th><th>Источник</th><th class="num">Сумма</th></tr>
+          <tr><td>Tetiana Ivanova</td><td>17.06</td><td>ig</td><td class="num">95&nbsp;€</td></tr>
+          <tr><td>Mariia</td><td>23.06</td><td>—</td><td class="num">57&nbsp;€</td></tr>
+          <tr class="bad"><td colspan="3">Tetiana Ivanova (дубль, 3D auth ошибка)</td><td class="num"><s>95&nbsp;€</s></td></tr>
+          <tr style="background:#f5f4f1"><td colspan="3"><b>Итого (без ошибки)</b></td><td class="num"><b>152&nbsp;€</b></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCKS -->
+<section>
+  <h2>Оценка по блокам работ</h2>
+  <p class="sec-cap">Зоны ответственности Gorbenko: производство креативов, закупка трафика, продажи ботом.</p>
+  <div class="blocks">
+    <div class="bcard">
+      <div class="bh"><h3>Креативы и контент</h3><span class="pill green">отлично</span></div>
+      <div class="who">Съёмка, монтаж видео, фото, офферы — Gorbenko</div>
+      <p>CTR выше нормы рынка (еда ~1–1,5%) на всех группах. Лучший результат — «Упаковка пельменей»
+      и «Тарелка пельменей» (новые креативы), оба дают 3,3–4,2%. Оба тортиковых видео держат 3–4,3%.</p>
+      <div class="bb">
+        <div class="bb-row"><span class="bb-l">Пельмени упаковка</span><span class="bb-bar"><i style="width:100%"></i></span><span class="bb-v">4,23%*</span></div>
+        <div class="bb-row"><span class="bb-l">Пельмени тарелка</span><span class="bb-bar"><i style="width:77%"></i></span><span class="bb-v">3,27%*</span></div>
+        <div class="bb-row"><span class="bb-l">Тортики фото Киевский</span><span class="bb-bar"><i style="width:100%"></i></span><span class="bb-v">4,25%</span></div>
+        <div class="bb-row"><span class="bb-l">Тортики видео Надя</span><span class="bb-bar"><i style="width:100%"></i></span><span class="bb-v">4,30%</span></div>
+        <div class="bb-row"><span class="bb-l">Тортики карусель RU</span><span class="bb-bar"><i style="width:71%"></i></span><span class="bb-v">3,02%</span></div>
+        <div class="bb-row"><span class="bb-l">Норма рынка (еда)</span><span class="bb-bar"><i class="gray" style="width:35%"></i></span><span class="bb-v">1,5%</span></div>
+      </div>
+      <p class="note">* CTR по всем показам включая Stories.</p>
+    </div>
+    <div class="bcard">
+      <div class="bh"><h3>Таргетинг и закупка трафика</h3><span class="pill green">отлично</span></div>
+      <div class="who">Настройка и ведение кампаний Meta — Gorbenko</div>
+      <p>За 335&nbsp;€ показы увидели <b>23&nbsp;896 человек</b> в Вене. CPM 4,59&nbsp;€ — в 2–2,5 раза дешевле
+      нормы для Вены (10–12&nbsp;€). Клик — 0,26–0,57&nbsp;€ при норме 0,5–1&nbsp;€.
+      Частота 1,74–2,12 — аудитория не выгорела, деньги не сливаются.</p>
+      <div style="margin-top:12px">
+        <table style="font-size:13px">
+          <tr><th>Кампания</th><th class="num">Охват</th><th class="num">Клики</th><th class="num">CPM</th><th class="num">CPC</th></tr>
+          <tr><td>Пельмени сайт (упак.)</td><td class="num">14&nbsp;795</td><td class="num">387</td><td class="num">4,26&nbsp;€</td><td class="num">0,28&nbsp;€</td></tr>
+          <tr><td>Пельмени сайт (тарел.)</td><td class="num">13&nbsp;666</td><td class="num">435</td><td class="num">4,37&nbsp;€</td><td class="num">0,26&nbsp;€</td></tr>
+          <tr><td>Тортики фото Киевский</td><td class="num">4&nbsp;670</td><td class="num">68</td><td class="num">4,76&nbsp;€</td><td class="num">0,57&nbsp;€</td></tr>
+          <tr><td>Тортики карусель RU</td><td class="num">3&nbsp;593</td><td class="num">78</td><td class="num">4,86&nbsp;€</td><td class="num">0,47&nbsp;€</td></tr>
+          <tr><td>Тортики видео Надя</td><td class="num">3&nbsp;467</td><td class="num">83</td><td class="num">6,30&nbsp;€</td><td class="num">0,46&nbsp;€</td></tr>
+          <tr style="background:#f5f4f1"><td><b>Итого</b></td><td class="num"><b>23&nbsp;896</b></td><td class="num"><b>1&nbsp;051</b></td><td class="num"><b>4,59&nbsp;€</b></td><td class="num"><b>0,32&nbsp;€</b></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="bcard">
+      <div class="bh"><h3>Бот-продавец (Messenger)</h3><span class="pill blue">хорошо</span></div>
+      <div class="who">AI-бот, 24/7, 4 языка — Gorbenko</div>
+      <p>13 лидов, 4 продажи на 527&nbsp;€. Конверсия delivery-лидов — <b>36%</b> (было 15% в первой
+      половине июня — рост в 2,4 раза). Средний чек 132&nbsp;€ — выше, чем на сайте (71&nbsp;€):
+      бот помогает докомплектовать заказ до бесплатной доставки и добавить торт.</p>
+    </div>
+    <div class="bcard">
+      <div class="bh"><h3>Атрибуция и аналитика</h3><span class="pill blue">растём</span></div>
+      <div class="who">Пиксель Meta + UTM на новом сайте — Gorbenko</div>
+      <p>Впервые в истории кампании — <b>точная цепочка «реклама → клик → покупка»</b> для 4 заказов
+      (284&nbsp;€). Пиксель Meta (990892723736650) фиксирует просмотры и покупки на сайте.
+      Следующий шаг: накопить 50+ событий → перевести оптимизацию на покупки → алгоритм Meta
+      начнёт сам искать похожих покупателей, а не просто кликающих.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PELMENI FUNNEL -->
+<section>
+  <h2>Воронка «Пельмени — сайт»: от показа до заказа</h2>
+  <p class="sec-cap">Данные: рекламный кабинет Meta (API) + пиксель 990892723736650 на сайте blinhaus-wien.7loc.com + CRM 7loc.
+  Период 12–23 июня. Группы объявлений — RU/UK, Вена +17 км, формат фото 9:16.</p>
+
+  <table>
+    <tr>
+      <th>Этап воронки</th>
+      <th class="num">Упаковка<br><span style="font-size:11px;color:var(--faint);letter-spacing:0">110,70&nbsp;€/день</span></th>
+      <th class="num">Тарелка<br><span style="font-size:11px;color:var(--faint);letter-spacing:0">112,31&nbsp;€/день</span></th>
+      <th class="num">Итого</th>
+    </tr>
+    <tr style="background:#f5f4f1">
+      <td colspan="4" style="font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;padding:8px 14px">Реклама</td>
+    </tr>
+    <tr>
+      <td>Затраты</td>
+      <td class="num">110,70&nbsp;€</td>
+      <td class="num">112,31&nbsp;€</td>
+      <td class="num"><b>223,01&nbsp;€</b></td>
+    </tr>
+    <tr>
+      <td>Охват (уникальные люди)</td>
+      <td class="num">14&nbsp;900</td>
+      <td class="num">13&nbsp;723</td>
+      <td class="num">~28&nbsp;600*</td>
+    </tr>
+    <tr>
+      <td>Показы</td>
+      <td class="num">26&nbsp;020</td>
+      <td class="num">25&nbsp;661</td>
+      <td class="num">51&nbsp;681</td>
+    </tr>
+    <tr>
+      <td>CTR (все клики / показы)</td>
+      <td class="num">3,27%</td>
+      <td class="num"><b style="color:var(--green)">4,24%</b></td>
+      <td class="num">3,77%</td>
+    </tr>
+    <tr>
+      <td>Клики по ссылке</td>
+      <td class="num">389</td>
+      <td class="num">437</td>
+      <td class="num"><b>826</b></td>
+    </tr>
+    <tr>
+      <td>Цена клика (CPC)</td>
+      <td class="num">0,28&nbsp;€</td>
+      <td class="num"><b style="color:var(--green)">0,26&nbsp;€</b></td>
+      <td class="num">0,27&nbsp;€</td>
+    </tr>
+    <tr style="background:#f5f4f1">
+      <td colspan="4" style="font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;padding:8px 14px">Сайт (пиксель Meta)</td>
+    </tr>
+    <tr class="info">
+      <td>Зашли на сайт (landing page views)</td>
+      <td class="num">303</td>
+      <td class="num">341</td>
+      <td class="num"><b>644</b></td>
+    </tr>
+    <tr>
+      <td style="padding-left:24px;color:var(--muted);font-size:13px">↳ Клик → сайт (не ушли сразу)</td>
+      <td class="num">78%</td>
+      <td class="num">78%</td>
+      <td class="num">78%</td>
+    </tr>
+    <tr>
+      <td>Просмотрели карточку товара</td>
+      <td class="num">80</td>
+      <td class="num">85</td>
+      <td class="num"><b>165</b></td>
+    </tr>
+    <tr>
+      <td style="padding-left:24px;color:var(--muted);font-size:13px">↳ Сайт → карточка товара</td>
+      <td class="num">26%</td>
+      <td class="num">25%</td>
+      <td class="num">26%</td>
+    </tr>
+    <tr class="warn">
+      <td>Добавили в корзину</td>
+      <td class="num"><b>29</b></td>
+      <td class="num"><b>36</b></td>
+      <td class="num"><b>65</b></td>
+    </tr>
+    <tr>
+      <td style="padding-left:24px;color:var(--muted);font-size:13px">↳ Карточка → корзина</td>
+      <td class="num">36%</td>
+      <td class="num">42%</td>
+      <td class="num">39%</td>
+    </tr>
+    <tr style="background:#f5f4f1">
+      <td colspan="4" style="font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;padding:8px 14px">Заказы (CRM 7loc)</td>
+    </tr>
+    <tr class="good">
+      <td>Оформили заказ</td>
+      <td class="num">2</td>
+      <td class="num">2</td>
+      <td class="num"><b>4</b></td>
+    </tr>
+    <tr>
+      <td style="padding-left:24px;color:var(--muted);font-size:13px">↳ Корзина → заказ</td>
+      <td class="num">6,9%</td>
+      <td class="num">5,6%</td>
+      <td class="num">6,2%</td>
+    </tr>
+    <tr>
+      <td style="padding-left:24px;color:var(--muted);font-size:13px">↳ Клик → заказ (общая конверсия)</td>
+      <td class="num">0,51%</td>
+      <td class="num">0,46%</td>
+      <td class="num">0,48%</td>
+    </tr>
+    <tr class="good">
+      <td>Выручка с заказов</td>
+      <td class="num">126&nbsp;€</td>
+      <td class="num">158&nbsp;€</td>
+      <td class="num"><b>284&nbsp;€</b></td>
+    </tr>
+    <tr>
+      <td>ROAS (выручка / затраты)</td>
+      <td class="num">1,14×</td>
+      <td class="num"><b style="color:var(--green)">1,41×</b></td>
+      <td class="num"><b>1,27×</b></td>
+    </tr>
+  </table>
+
+  <p class="note">* Охват суммировать нельзя — одни люди могли видеть обе группы.<br>
+  Выручка по группам: упаковка = подтверждена UTM (Natalia 50&nbsp;€ + Tommy 76&nbsp;€); тарелка = остаток (Maryna 70&nbsp;€ + Viktoriia 88&nbsp;€).<br>
+  CRM (7loc) — источник истины: <b>4 заказа, 284&nbsp;€</b>. Пиксель Meta засчитал 2 покупки из 4 — потому что все заказы с оплатой «при получении»: платёж не подтверждается онлайн в момент заказа, и пиксель не получает событие покупки. После подключения Stripe все покупки будут фиксироваться.</p>
+
+  <div class="callout amber" style="margin-top:16px">
+    <span class="t">Главное узкое место: 65 человек добавили в корзину — оформили только 4</span>
+    Конверсия корзина → заказ = 6%. Норма для e-commerce — 15–25%. Причина почти наверняка одна:
+    на сайте нет онлайн-оплаты — только «оплата при получении». Люди кладут в корзину, но не хотят
+    делать заказ без предоплаты онлайн. <b>Подключение Stripe (7loc это поддерживает) закроет большую
+    часть из этих 61 брошенной корзины</b> — потенциально +5–8 заказов в следующем цикле без
+    изменения бюджета.
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section>
+  <h2>Сравнение с первым периодом (1–12 июня)</h2>
+  <p class="sec-cap">Динамика за 12 дней работы.</p>
+  <table>
+    <tr><th>Показатель</th><th class="num">1–12 июня</th><th class="num">12–23 июня</th><th class="num">Изменение</th></tr>
+    <tr><td>Рекламный бюджет</td><td class="num">334&nbsp;€</td><td class="num">335&nbsp;€</td><td class="num"><span class="delta flat">≈ одинаково</span></td></tr>
+    <tr><td>Охват</td><td class="num">21&nbsp;391</td><td class="num">23&nbsp;896</td><td class="num"><span class="delta up">+12%</span></td></tr>
+    <tr><td>Клики</td><td class="num">838</td><td class="num">1&nbsp;051</td><td class="num"><span class="delta up">+25%</span></td></tr>
+    <tr><td>Средний CTR</td><td class="num">~4,5%</td><td class="num">3,77%</td><td class="num"><span class="delta flat">сопоставимо</span></td></tr>
+    <tr><td>Лиды в Messenger</td><td class="num">13 (с кафе)</td><td class="num">13 (с кафе)</td><td class="num"><span class="delta flat">стабильно</span></td></tr>
+    <tr class="good"><td>Касса (все каналы)</td><td class="num">512&nbsp;€</td><td class="num">811&nbsp;€</td><td class="num"><span class="delta up">+58%</span></td></tr>
+    <tr class="good"><td>Окупаемость рекламы</td><td class="num">1,53×</td><td class="num">2,42×</td><td class="num"><span class="delta up">+58%</span></td></tr>
+    <tr class="good"><td>Конверсия лид → покупка</td><td class="num">15%</td><td class="num">36%</td><td class="num"><span class="delta up">×2,4</span></td></tr>
+    <tr class="good"><td>Заказы с сайта с атрибуцией</td><td class="num">0</td><td class="num">4 (284&nbsp;€)</td><td class="num"><span class="delta up">новое</span></td></tr>
+    <tr><td>Потери на операционке</td><td class="num">100&nbsp;€</td><td class="num">0&nbsp;€</td><td class="num"><span class="delta up">−100%</span></td></tr>
+  </table>
+  <p class="note">Рост кассы +58% при том же бюджете — результат запуска нового сайта с пикселем и улучшения конверсии бота.</p>
+</section>
+
+<!-- PLAN -->
+<section>
+  <h2>Следующие шаги</h2>
+  <div class="callout blue" style="margin-bottom:14px">
+    <span class="t">Пельмени-сайт: оптимизация по покупкам — что нужно</span>
+    Пиксель уже фиксирует все этапы: 644 захода на сайт, 165 просмотров товара, 65 корзин — это
+    хорошо, алгоритм учится. Но для перевода цели кампании с «клики» на «покупки» Meta требует
+    <b>~50 событий покупки (fb_pixel_purchase) в неделю</b>.
+    Реальных заказов — <b>4 (284&nbsp;€)</b>, но пиксель засчитал только 2: все заказы оформлены
+    с оплатой «наличными при получении», и Meta не получает подтверждение платежа в момент
+    заказа — поэтому засчитывает не все. Когда подключим <b>Stripe</b> (онлайн-оплата),
+    пиксель начнёт фиксировать каждую покупку в момент оплаты → все 4+ заказа будут засчитаны →
+    Meta накопит нужный объём → алгоритм переключится на поиск покупателей, а не просто кликающих.
+  </div>
+  <div class="callout amber">
+    <span class="t">CRM: самая срочная задача для следующего отчёта</span>
+    Конверсия выросла с 15% до 36%, но <b>7 лидов из 11 delivery</b> всё ещё не купили — мы не
+    знаем почему и не пишем им повторно. Телефоны не собираются. Повторные продажи не ведутся.
+    Когда CRM будет готова, эти цифры подтянутся автоматически прямо в этот отчёт.
+  </div>
+</section>
+
+<footer>
+  Данные Meta — кабинет adsmanager.facebook.com, 12–23.06.2026. Заказы 7loc — CRM crm.7loc.com,
+  заказы #46035, #46428, #46430, #46450. Заказы Choice — blinhausvienna.choiceqr.com, #94, #95
+  (заказ #93 — ошибка 3D-аутентификации, не учитывается). Лиды Messenger — ручная таблица.
+  Отчёт не индексируется поисковиками.
+</footer>
+
+</div>
+</body>
+</html>

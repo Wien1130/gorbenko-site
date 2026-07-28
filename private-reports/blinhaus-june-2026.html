@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>BlinHaus — реклама и продажи доставки · 1–12 июня 2026</title>
+<style>
+  :root{
+    --bg:#faf9f7; --card:#ffffff; --ink:#1c1917; --muted:#6b7280; --faint:#9ca3af;
+    --line:#e7e5e4; --accent:#c75b39; --accent-soft:#fbeee9;
+    --green:#2e7d32; --green-soft:#eaf4ea; --red:#c0392b; --red-soft:#faecea;
+    --blue:#1565c0; --blue-soft:#e9f1fb; --amber:#b45309; --amber-soft:#fdf3e3;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding:48px 24px 80px}
+  header.hero{margin-bottom:36px}
+  .brand{display:inline-block;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:10px}
+  h1{font-size:30px;line-height:1.2;font-weight:800;letter-spacing:-.02em}
+  .sub{color:var(--muted);margin-top:10px;font-size:14.5px;max-width:680px}
+  h2{font-size:20px;font-weight:750;letter-spacing:-.01em;margin:0 0 4px}
+  h3{font-size:15.5px;font-weight:700;margin:0 0 4px}
+  section{margin-top:44px}
+  .sec-cap{color:var(--muted);font-size:13.5px;margin-bottom:16px}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:760px){.kpis{grid-template-columns:repeat(2,1fr)}}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .kpi .v{font-size:24px;font-weight:800;letter-spacing:-.02em}
+  .kpi .l{font-size:12.5px;color:var(--muted);margin-top:3px}
+  .kpi.good .v{color:var(--green)} .kpi.bad .v{color:var(--red)} .kpi.warn .v{color:var(--amber)} .kpi.info .v{color:var(--blue)}
+  .callout{border-radius:12px;padding:16px 18px;font-size:14.5px;border:1px solid}
+  .callout b{font-weight:700}
+  .callout.amber{background:var(--amber-soft);border-color:#f0ddb8}
+  .callout.blue{background:var(--blue-soft);border-color:#cfe0f5}
+  .callout.green{background:var(--green-soft);border-color:#cde3cd}
+  .callout .t{display:block;font-weight:750;margin-bottom:5px}
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);
+    border-radius:12px;overflow:hidden;font-size:14px}
+  table{border-style:hidden;box-shadow:0 0 0 1px var(--line);border-radius:12px}
+  th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);
+    text-align:left;padding:10px 14px;background:#f5f4f1;font-weight:650}
+  td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  tr.good td{background:var(--green-soft)} tr.bad td{background:var(--red-soft)}
+  tr.warn td{background:var(--amber-soft)} tr.info td{background:var(--blue-soft)}
+  .note{color:var(--muted);font-size:13px;margin-top:10px}
+  .funnel .frow{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+  .funnel .fl{width:190px;flex-shrink:0;font-size:13.5px;color:var(--muted)}
+  .funnel .fbar{flex:1;background:#efedea;border-radius:5px;height:22px;overflow:hidden}
+  .funnel .fbar i{display:block;height:100%;background:var(--accent);border-radius:5px}
+  .funnel .fv{width:250px;flex-shrink:0;text-align:right;font-size:13.5px}
+  .funnel .fv b{font-weight:750}
+  .funnel .fv span{color:var(--faint)}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  @media(max-width:760px){.split{grid-template-columns:1fr}.funnel .fv{width:auto}}
+  .legend{list-style:none;font-size:13.5px}
+  .legend li{display:flex;align-items:baseline;gap:8px;padding:4px 0}
+  .legend .dot{width:10px;height:10px;border-radius:3px;flex-shrink:0;position:relative;top:1px}
+  .legend .lv{margin-left:auto;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .donutbox{display:flex;gap:22px;align-items:center}
+  .plan{counter-reset:step}
+  .plan .pcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+  .plan .ph{font-weight:750;font-size:15px;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+  .plan .tag{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    padding:3px 9px;border-radius:99px}
+  .tag.now{background:var(--red-soft);color:var(--red)}
+  .tag.soon{background:var(--amber-soft);color:var(--amber)}
+  .tag.month{background:var(--blue-soft);color:var(--blue)}
+  .plan ol{padding-left:20px;font-size:14.5px}
+  .plan li{margin-bottom:7px}
+  .pill{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:99px;vertical-align:middle}
+  .pill.green{background:var(--green-soft);color:var(--green)}
+  .pill.red{background:var(--red-soft);color:var(--red)}
+  .pill.blue{background:var(--blue-soft);color:var(--blue)}
+  .pill.amber{background:var(--amber-soft);color:var(--amber)}
+  .blocks{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.blocks{grid-template-columns:1fr}}
+  .bcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+  .bcard .bh{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+  .bcard .bh h3{margin:0}
+  .bcard p{font-size:14px;color:#44403c}
+  .bcard .who{font-size:12px;color:var(--faint);margin-bottom:8px}
+  .bb{margin-top:12px}
+  .bb-row{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:12.5px}
+  .bb-l{width:150px;flex-shrink:0;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bb-bar{flex:1;background:#efedea;border-radius:4px;height:14px}
+  .bb-bar i{display:block;height:100%;border-radius:4px;background:var(--accent)}
+  .bb-bar i.gray{background:#b8b3ae}
+  .bb-v{width:52px;flex-shrink:0;text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+  footer{margin-top:60px;color:var(--faint);font-size:12.5px;border-top:1px solid var(--line);padding-top:18px}
+  p+p{margin-top:10px}
+  .lead{font-size:15px}
+  .report-nav{display:flex;gap:10px;align-items:center;margin-bottom:28px}
+  .report-nav a{font-size:13px;padding:5px 14px;border-radius:8px;text-decoration:none;border:1px solid var(--line);color:var(--muted)}
+  .report-nav a.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .new-badge{display:inline-block;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;background:var(--accent);color:#fff;padding:2px 7px;border-radius:6px;margin-left:6px;vertical-align:middle}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="report-nav">
+  <a href="/reports/blinhaus-june-2026" class="active">1–12 июня</a>
+  <a href="/reports/blinhaus-june-12-23">12–23 июня</a>
+  <a href="/reports/blinhaus-june-24-30">24–30 июня <span class="new-badge">новый</span></a>
+  <a href="/reports/blinhaus-june-summary">Итоги июня</a>
+</div>
+
+<header class="hero">
+  <span class="brand">BlinHaus Vienna · отчёт по доставке</span>
+  <h1>Реклама и продажи заморозки<br>1–12 июня 2026</h1>
+  <p class="sub">Отчёт маркетинг-подрядчика (Gorbenko: креативы, съёмка и монтаж, таргетированная реклама,
+  бот-продавец) для собственника. Источники: рекламный кабинет Meta (API), ручная таблица лидов Messenger,
+  заказы сайта Choice. Составлено 12.06.2026.</p>
+</header>
+
+<!-- KPI -->
+<div class="kpis">
+  <div class="kpi"><div class="v">334&nbsp;€</div><div class="l">Потрачено на рекламу (тортики 331&nbsp;€ + пельмени-сайт 3&nbsp;€)</div></div>
+  <div class="kpi good"><div class="v">512,20&nbsp;€</div><div class="l">Касса заморозки 1–12.06 (все каналы)*</div></div>
+  <div class="kpi info"><div class="v">+190&nbsp;€</div><div class="l">Предзаказ A.&nbsp;Bayer, доставка 20.06</div></div>
+  <div class="kpi warn"><div class="v">1,53</div><div class="l">Касса / реклама (с предзаказом — 2,10)</div></div>
+</div>
+<div class="kpis" style="margin-top:12px">
+  <div class="kpi"><div class="v">29</div><div class="l">Лидов в Messenger (26 доставка + 3 кафе)</div></div>
+  <div class="kpi warn"><div class="v">4 + 3</div><div class="l">Продаж: Messenger 249,50&nbsp;€ + сайт Choice 262,70&nbsp;€</div></div>
+  <div class="kpi"><div class="v">11,5&nbsp;€</div><div class="l">Цена лида в Messenger</div></div>
+  <div class="kpi bad"><div class="v">100&nbsp;€</div><div class="l">Потеряно на операционке (суббота 61&nbsp;€ + недожим 39&nbsp;€)</div></div>
+</div>
+<p class="note">* 249,50&nbsp;€ Messenger + 262,70&nbsp;€ Choice (дубль заказа Margarita Lechner на 68&nbsp;€ отменён и исключён).</p>
+
+<section>
+  <div class="callout amber">
+    <span class="t">Главный вывод</span>
+    Маркетинг отработал сильно: креативы цепляют в 2–4 раза лучше нормы, трафик закуплен вдвое дешевле
+    рынка, бот обработал все 29 лидов без участия человека. Вместе с заказами сайта реклама уже
+    окупается (1,53×). Деньги теряются после передачи лида: <b>16 лидам никто не написал второй раз —
+    это ~1&nbsp;000&nbsp;€ потенциальной кассы</b>, плюс 100&nbsp;€ операционных потерь. Рост до
+    5&nbsp;000&nbsp;€/мес лежит не в бюджете рекламы, а в дожиме, повторных продажах и учёте — это
+    закрывает CRM.
+  </div>
+</section>
+
+<!-- BLOCKS -->
+<section>
+  <h2>Оценка по блокам работ</h2>
+  <p class="sec-cap">Зоны ответственности отдельно: производство креативов, закупка трафика, продажи ботом —
+  и этап после лида, где сейчас главная точка роста.</p>
+  <div class="blocks">
+    <div class="bcard">
+      <div class="bh"><h3>Креативы и контент</h3><span class="pill green">отлично</span></div>
+      <div class="who">Съёмка, монтаж видео, фото, офферы — Gorbenko</div>
+      <p>Качество креатива измеряется CTR — долей людей, которые отреагировали на объявление.
+      Норма для еды в Meta ~1–1,5%. Все четыре наших креатива выше нормы в 2–4 раза;
+      лучший — оффер «Киевский&nbsp;+&nbsp;орешки за 39&nbsp;€».</p>
+      <div class="bb">
+        <div class="bb-row"><span class="bb-l">Фото «Киевский 39 €»</span><span class="bb-bar"><i style="width:100%"></i></span><span class="bb-v">5,94%</span></div>
+        <div class="bb-row"><span class="bb-l">Видео с Надей</span><span class="bb-bar"><i style="width:88%"></i></span><span class="bb-v">5,23%</span></div>
+        <div class="bb-row"><span class="bb-l">Карусель тортов RU</span><span class="bb-bar"><i style="width:67%"></i></span><span class="bb-v">4,00%</span></div>
+        <div class="bb-row"><span class="bb-l">Карусель тортов DE</span><span class="bb-bar"><i style="width:58%"></i></span><span class="bb-v">3,44%</span></div>
+        <div class="bb-row"><span class="bb-l">Норма рынка (еда)</span><span class="bb-bar"><i class="gray" style="width:25%"></i></span><span class="bb-v">1,5%</span></div>
+      </div>
+    </div>
+    <div class="bcard">
+      <div class="bh"><h3>Таргетинг и закупка трафика</h3><span class="pill green">отлично</span></div>
+      <div class="who">Настройка и ведение кампаний Meta — Gorbenko</div>
+      <p>1&nbsp;000 показов обошлись в среднем в <b>4,6&nbsp;€</b> — по Вене для еды обычно 8–12&nbsp;€.
+      Клик по ссылке — <b>0,22–0,59&nbsp;€</b> при норме 0,5–1&nbsp;€. Частота 2,4 — аудитория не
+      выгорела. За 331&nbsp;€ рекламу увидел <b>21&nbsp;391 человек</b> в Вене.
+      Слабая DE-группа остановлена вовремя, бюджет не сливался.</p>
+    </div>
+    <div class="bcard">
+      <div class="bh"><h3>Бот-продавец (первое касание)</h3><span class="pill blue">хорошо</span></div>
+      <div class="who">AI-бот в Messenger, 24/7, 4 языка — Gorbenko</div>
+      <p>Все 29 лидов получили мгновенный ответ в любое время суток без участия человека.
+      Результат: <b>4 продажи на 249,50&nbsp;€ + предзаказ на 190&nbsp;€</b>, конверсия первого
+      касания 15% — нормальный уровень для холодного трафика. Потолок выше: бот пока не
+      берёт телефон у каждого лида и не возвращается к замолчавшим.</p>
+    </div>
+    <div class="bcard">
+      <div class="bh"><h3>Процесс после лида</h3><span class="pill amber">главная зона роста</span></div>
+      <div class="who">Дожим, повторные продажи, учёт — строим (CRM)</div>
+      <p>Здесь теряются деньги, которые маркетинг уже оплатил: <b>16 лидов без второго
+      касания (~1&nbsp;000&nbsp;€)</b>, 100&nbsp;€ операционных потерь, повторные продажи базе
+      не ведутся, LTV не считается. Это не проблема рекламы — это отсутствие системы.
+      Решение и план — в конце отчёта.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FUNNEL -->
+<section>
+  <h2>Воронка «Тортики — июнь 2026»</h2>
+  <p class="sec-cap">Кампания активна с 3 июня, 40&nbsp;€/день, 4 группы. DE-группа отключена 10.06.</p>
+  <div class="funnel">
+    <div class="frow"><div class="fl">Показы</div><div class="fbar"><i style="width:100%"></i></div>
+      <div class="fv"><b>72&nbsp;401</b> <span>· охват 21&nbsp;391, частота 2,4</span></div></div>
+    <div class="frow"><div class="fl">Клики по ссылке</div><div class="fbar"><i style="width:62%"></i></div>
+      <div class="fv"><b>838</b> <span>· клик ~0,40&nbsp;€</span></div></div>
+    <div class="frow"><div class="fl">Написали в Messenger</div><div class="fbar"><i style="width:28%"></i></div>
+      <div class="fv"><b>29</b> <span>· 3,5% от кликов — утечка №1</span></div></div>
+    <div class="frow"><div class="fl">Купили</div><div class="fbar"><i style="width:10%"></i></div>
+      <div class="fv"><b>4 · 249,50&nbsp;€</b> <span>· 15% из лидов — утечка №2</span></div></div>
+  </div>
+  <p class="note">Ширина полос условная, цифры точные. Meta с 17.03.2026 не отдаёт «начатые переписки»
+  в отчётах — лиды посчитаны вручную по таблице.</p>
+</section>
+
+<!-- ADSETS -->
+<section>
+  <h2>Группы объявлений — что сработало</h2>
+  <p class="sec-cap">Данные Meta API, 1–12 июня.</p>
+  <table>
+    <tr><th>Группа</th><th class="num">Потрачено</th><th class="num">Охват</th><th class="num">CTR (все)</th><th class="num">Клики</th><th class="num">Цена клика</th><th>Вывод</th></tr>
+    <tr class="good"><td>Фото «Киевский + орешки 39&nbsp;€»</td><td class="num">86,18&nbsp;€</td><td class="num">7&nbsp;399</td><td class="num">5,94%</td><td class="num">146</td><td class="num">0,59&nbsp;€</td><td>Лучший оффер — оставить</td></tr>
+    <tr class="good"><td>Видео с Надей (RU/UK)</td><td class="num">86,35&nbsp;€</td><td class="num">6&nbsp;348</td><td class="num">5,23%</td><td class="num">164</td><td class="num">0,53&nbsp;€</td><td>Работает — оставить</td></tr>
+    <tr><td>Карусель тортов RU/UK</td><td class="num">87,39&nbsp;€</td><td class="num">6&nbsp;317</td><td class="num">4,00%</td><td class="num">211</td><td class="num">0,41&nbsp;€</td><td>Средне</td></tr>
+    <tr class="bad"><td>Карусель тортов DE</td><td class="num">71,24&nbsp;€</td><td class="num">10&nbsp;109</td><td class="num">3,44%</td><td class="num">317</td><td class="num">0,22&nbsp;€</td><td>Отключена 10.06 — верно</td></tr>
+  </table>
+  <p class="note">DE-группа дала 38% всех кликов по самой низкой цене — и ни одной опознаваемой продажи: в лидах
+  только славянские имена. Немецкая аудитория кликала из любопытства, «Киевский» ей ни о чём не говорит.
+  DE тестировать позже на пельменях/обедах с немецким лендингом, не на ностальгическом продукте.</p>
+</section>
+
+<!-- LEADS + LOSSES -->
+<section class="split">
+  <div>
+    <h2>Судьба 29 лидов</h2>
+    <p class="sec-cap">Ручная таблица, 1–12 июня.</p>
+    <div class="donutbox">
+      <svg width="170" height="170" viewBox="0 0 170 170" style="flex-shrink:0">
+        <g transform="rotate(-90 85 85)">
+          <circle r="62" cx="85" cy="85" fill="none" stroke="#2e7d32" stroke-width="30" pathLength="100" stroke-dasharray="13.79 86.21" stroke-dashoffset="0"/>
+          <circle r="62" cx="85" cy="85" fill="none" stroke="#1565c0" stroke-width="30" pathLength="100" stroke-dasharray="3.45 96.55" stroke-dashoffset="-13.79"/>
+          <circle r="62" cx="85" cy="85" fill="none" stroke="#c0392b" stroke-width="30" pathLength="100" stroke-dasharray="6.90 93.10" stroke-dashoffset="-17.24"/>
+          <circle r="62" cx="85" cy="85" fill="none" stroke="#9ca3af" stroke-width="30" pathLength="100" stroke-dasharray="10.34 89.66" stroke-dashoffset="-24.14"/>
+          <circle r="62" cx="85" cy="85" fill="none" stroke="#d6d3d1" stroke-width="30" pathLength="100" stroke-dasharray="10.34 89.66" stroke-dashoffset="-34.48"/>
+          <circle r="62" cx="85" cy="85" fill="none" stroke="#e0a93d" stroke-width="30" pathLength="100" stroke-dasharray="55.18 44.82" stroke-dashoffset="-44.82"/>
+        </g>
+        <text x="85" y="80" text-anchor="middle" font-size="26" font-weight="800" fill="#1c1917">29</text>
+        <text x="85" y="100" text-anchor="middle" font-size="11" fill="#6b7280">лидов</text>
+      </svg>
+      <ul class="legend">
+        <li><span class="dot" style="background:#2e7d32"></span>Купили (249,50&nbsp;€)<span class="lv">4</span></li>
+        <li><span class="dot" style="background:#1565c0"></span>Предзаказ 20.06 (190&nbsp;€)<span class="lv">1</span></li>
+        <li><span class="dot" style="background:#c0392b"></span>Отказы с суммой (100&nbsp;€)<span class="lv">2</span></li>
+        <li><span class="dot" style="background:#9ca3af"></span>Прочие отказы (фундук, воскресенье, конкурент)<span class="lv">3</span></li>
+        <li><span class="dot" style="background:#d6d3d1"></span>Лиды кафе — не отслеживаем<span class="lv">3</span></li>
+        <li><span class="dot" style="background:#e0a93d"></span>Не дожаты — без второго касания<span class="lv">16</span></li>
+      </ul>
+    </div>
+  </div>
+  <div>
+    <h2>Потерянные и отложенные деньги</h2>
+    <p class="sec-cap">Каждая строка — действие, не просто факт.</p>
+    <table>
+      <tr><th>Что</th><th class="num">Сумма</th><th>Действие</th></tr>
+      <tr class="bad"><td>Заказ принят на субботу (доставки нет)</td><td class="num">61&nbsp;€</td><td>Правило выходных в бот добавлено</td></tr>
+      <tr class="bad"><td>Клиентка передумала</td><td class="num">39&nbsp;€</td><td>Вернуться с предложением, ввести подтверждение заказа</td></tr>
+      <tr class="info"><td>Предзаказ A.&nbsp;Bayer</td><td class="num">190&nbsp;€</td><td>В кассу — 20.06 по факту доставки; источник: «Тортики»</td></tr>
+      <tr class="warn"><td>16 лидов без второго касания</td><td class="num">~1&nbsp;000&nbsp;€</td><td>Написать всем на этой неделе</td></tr>
+    </table>
+    <p class="note">Операционные потери (100&nbsp;€) = 40% кассы Messenger. Это дороже любой оптимизации рекламы.</p>
+  </div>
+</section>
+
+<!-- CHOICE -->
+<section>
+  <h2>Заказы сайта Choice — второй канал кассы <span class="pill blue">без атрибуции</span></h2>
+  <p class="sec-cap">Старый сайт blinhausvienna.choiceqr.com, 1–12 июня: 3 заказа на 262,70&nbsp;€
+  (отменённый дубль на 68&nbsp;€ исключён).</p>
+  <table>
+    <tr><th>№</th><th>Дата</th><th>Клиент</th><th>Тип</th><th>Оплата</th><th class="num">Сумма</th><th>UTM / источник</th></tr>
+    <tr><td>89</td><td>05.06</td><td>Sofiya</td><td>Самовывоз</td><td>Наличные</td><td class="num">108,90&nbsp;€</td><td>ig — пришла из Instagram</td></tr>
+    <tr><td>90</td><td>05.06</td><td>Vadim Araslanov</td><td>Самовывоз</td><td>Наличные</td><td class="num">85,80&nbsp;€</td><td>не размечен</td></tr>
+    <tr><td>92</td><td>11.06</td><td>Margarita Lechner</td><td>Доставка</td><td>Онлайн</td><td class="num">68,00&nbsp;€</td><td>не размечен</td></tr>
+  </table>
+  <div class="callout blue" style="margin-top:14px">
+    <span class="t">Как учитывать</span>
+    В кассу заморозки июня — <b>да, полностью</b>. В эффективность конкретных кампаний — <b>нет</b>:
+    источник не зафиксирован, приписывать «Тортикам» нельзя. В отчёте это отдельная строка
+    «Сайт Choice — без атрибуции». Честная логика: реклама греет аудиторию, часть людей покупает
+    не через Messenger, а где удобнее — это «эхо» рекламы, и его видно по совпадению дат с активной кампанией.
+    Чтобы догадки стали данными: (1)&nbsp;все ссылки на сайты — только с UTM-метками (заказ Sofiya показывает,
+    что разметка работает); (2)&nbsp;новый сайт 7loc уже с пикселем Meta — там покупки привяжутся к рекламе
+    автоматически; (3)&nbsp;на старом Choice добавить обязательное поле «Откуда о нас узнали?» или постепенно
+    переводить все ссылки на новый сайт, чтобы канал без атрибуции отмер сам.
+  </div>
+</section>
+
+<!-- PELMENI -->
+<section>
+  <h2>Кампания «Пельмени — сайт» <span class="pill amber">запущена 12.06 — не для выводов</span></h2>
+  <p class="sec-cap">Новая механика: трафик на сайт blinhaus-wien.7loc.com с пикселем Meta. 2 группы × 10&nbsp;€/день, RU/UK, Вена +17&nbsp;км.</p>
+  <table>
+    <tr><th>Группа</th><th class="num">Потрачено</th><th class="num">CTR (все)</th><th class="num">Клики</th><th class="num">Цена клика</th><th class="num">Просмотры лендинга</th></tr>
+    <tr><td>Упаковка 9:16</td><td class="num">1,46&nbsp;€</td><td class="num">7,59%</td><td class="num">17</td><td class="num">0,08&nbsp;€</td><td class="num">11</td></tr>
+    <tr><td>Тарелка 9:16</td><td class="num">1,81&nbsp;€</td><td class="num">6,45%</td><td class="num">7</td><td class="num">0,26&nbsp;€</td><td class="num">8</td></tr>
+  </table>
+  <p class="note">Стартовый CTR выше тортов. Через 7–10 дней при накоплении событий пикселя — перевести оптимизацию
+  на просмотры лендинга, дальше на покупки. Слабое место: на сайте нет онлайн-оплаты (только при получении) — нужен Stripe.</p>
+</section>
+
+<!-- 5K -->
+<section>
+  <h2>Путь к кассе 5&nbsp;000&nbsp;€/мес с доставки</h2>
+  <p class="lead">При среднем чеке ~65&nbsp;€ это ~80 заказов в месяц (текущий темп — ~20 со всех каналов).
+  Только закупкой трафика не дойти: при конверсии 15% нужно ~530 лидов ≈ 6&nbsp;000&nbsp;€ бюджета.
+  Дойти можно тремя рычагами одновременно:</p>
+  <table style="margin-top:14px">
+    <tr><th>Рычаг</th><th>Сейчас</th><th>Цель</th><th>Что даёт при бюджете ~900&nbsp;€/мес</th></tr>
+    <tr><td>Конверсия лид → продажа (дожим, CRM)</td><td>15%</td><td>30–35%</td><td>~75 лидов → 22–26 заказов ≈ 1&nbsp;500&nbsp;€</td></tr>
+    <tr><td>Повторные покупки (база + LTV)</td><td>не считаем</td><td>30+ заказов/мес из базы</td><td>клиенты ноября–июня + рассылка ≈ 2&nbsp;000&nbsp;€</td></tr>
+    <tr><td>Средний чек и крупные заказы</td><td>62–83&nbsp;€</td><td>70&nbsp;€ + 5–7 предзаказов типа Bayer</td><td>кросс-сейл до 39&nbsp;€+ и торты к датам ≈ 1&nbsp;500&nbsp;€</td></tr>
+  </table>
+  <div class="callout green" style="margin-top:14px">
+    <span class="t">Итого сценарий</span>
+    ~900&nbsp;€ рекламы + дожим + работа с базой = 4&nbsp;900–5&nbsp;200&nbsp;€ кассы.
+    Без CRM и повторных продаж та же касса стоила бы ~6&nbsp;000&nbsp;€ рекламного бюджета — экономика не сходится.
+  </div>
+</section>
+
+<!-- LTV -->
+<section>
+  <h2>LTV — почему без него цифры выглядят хуже, чем есть</h2>
+  <p>Цена покупателя из Messenger — 83&nbsp;€ при чеке 62&nbsp;€. Если клиент покупает один раз — убыток.
+  Но заморозка — продукт регулярного спроса: клиент возвращается раз в 3–6 недель. При 4 покупках в год
+  его ценность ~250&nbsp;€, и тогда 83&nbsp;€ — нормальная цена. Проблема: мы этого не знаем, потому что не считаем.</p>
+  <p><b>Что делать уже сейчас, до CRM:</b> в таблицу лидов добавить колонки «телефон», «источник»,
+  «повторная покупка (дата, сумма)» и раз в месяц смотреть возвраты за 30/60/90 дней. Заказы Choice — туда же:
+  там есть телефоны, это готовая база. И главное — LTV не появляется сам: через 7–10 дней после доставки
+  клиенту нужно написать («как вам пельмени? собрать ещё набор?»), плюс одно предложение базе в месяц.</p>
+</section>
+
+<!-- DASHBOARD NEXT -->
+<section>
+  <h2>Следующий шаг — живой дашборд вместо ручного отчёта</h2>
+  <p>Этот отчёт собран вручную на дату 12.06. Целевая картина: страница на gorbenko.at, где период
+  выбирается календарём, а данные обновляются сами каждый день — затраты и охваты подтягиваются из
+  рекламного кабинета Meta (API уже подключён), продажи — из Messenger-бота (база Postgres уже стоит
+  на Railway) и с нового сайта 7loc (API-токен есть), LTV и повторные покупки считаются автоматически.</p>
+  <p><b>Порядок строительства:</b> сначала CRM — единая база лидов и заказов со статусами и источниками
+  (без неё дашборду нечего показывать), затем автосбор данных из трёх источников, затем сам дашборд
+  с календарём. Пока CRM строится, этот отчёт обновляется по запросу за минуты, а в конце каждого
+  месяца фиксируется как сводка для собственника.</p>
+</section>
+
+<!-- PLAN -->
+<section class="plan">
+  <h2 style="margin-bottom:16px">План действий</h2>
+  <div class="pcard">
+    <div class="ph"><span class="tag now">Эта неделя</span> Вернуть деньги, которые уже оплачены рекламой</div>
+    <ol>
+      <li>Второе сообщение всем 16 недожатым лидам июня (~1&nbsp;000&nbsp;€ потенциала): напомнить + собрать заказ до бесплатной доставки от 39&nbsp;€.</li>
+      <li>Подтвердить предзаказ A.&nbsp;Bayer на 20.06 (190&nbsp;€) за 2–3 дня до доставки.</li>
+      <li>Включить Telegram-уведомления бота (переменные в Railway пустые) — карточки заказов и ежедневный отчёт уже написаны в коде, но никуда не приходят.</li>
+      <li>Вернуться к отказам: Alina (39&nbsp;€) и Елена (хотела воскресенье) — предложить будний день.</li>
+    </ol>
+  </div>
+  <div class="pcard">
+    <div class="ph"><span class="tag soon">2 недели</span> Заткнуть утечки воронки</div>
+    <ol>
+      <li>CRM: лид из бота → статус (новый / диалог / заказ / доставлен / отказ / повтор) → авто-второе сообщение в пределах 24-часового окна Messenger → ежедневная статистика автоматически вместо ручной таблицы.</li>
+      <li>Бот собирает телефон у каждого лида — без него нет ни дожима после 24 часов, ни базы для повторных продаж.</li>
+      <li>Ретаргетинг: 838 кликнувших + взаимодействия со страницей — отдельная дешёвая группа с оффером «Киевский 39&nbsp;€».</li>
+      <li>Stripe на сайте 7loc — онлайн-оплата снимает часть «передумала».</li>
+    </ol>
+  </div>
+  <div class="pcard">
+    <div class="ph"><span class="tag month">До конца июня</span> Система</div>
+    <ol>
+      <li>Пельмени-сайт: после ~50 событий пикселя перевести оптимизацию на просмотры лендинга → покупки; масштабировать победителя (упаковка vs тарелка).</li>
+      <li>Тортики: оставить «Киевский 39&nbsp;€» + «Видео с Надей», бюджет DE-группы — на ретаргетинг.</li>
+      <li>Учёт LTV (колонки в таблице → потом CRM) и первая рассылка по базе купивших, включая клиентов Choice.</li>
+      <li>Повторная подача App Review на Instagram DM — органические лиды из Instagram сейчас уходят в тишину.</li>
+    </ol>
+  </div>
+</section>
+
+<footer>
+  Цифры Meta — по API за 01–12.06.2026, могут незначительно вырасти задним числом из-за атрибуции.
+  Продажи и лиды Messenger — ручная таблица Андрея. Заказы Choice — админка blinhausvienna.choiceqr.com.
+  Отчёт не индексируется поисковиками.
+</footer>
+
+</div>
+</body>
+</html>

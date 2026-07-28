@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kaiserkrone — Lokale Kurzanalyse</title>
+  <style>
+    :root {
+      --ink: #1a1a1a;
+      --muted: #5c5c5c;
+      --line: #e5e5e5;
+      --bg: #f7f5f2;
+      --card: #ffffff;
+      --accent: #8b1e1e;
+      --ok: #1f6b4a;
+      --warn: #9a3412;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.35;
+    }
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+    .brand {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    h1 {
+      font-size: 26px;
+      line-height: 1.15;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .sub {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+    .wow {
+      background: var(--card);
+      border-left: 4px solid var(--accent);
+      padding: 14px 16px;
+      margin-bottom: 18px;
+      font-size: 16px;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .stat {
+      background: var(--card);
+      padding: 12px 10px;
+      text-align: center;
+    }
+    .stat b {
+      display: block;
+      font-size: 28px;
+      line-height: 1;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+    }
+    .stat span {
+      display: block;
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--muted);
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    .stat.ok b { color: var(--ok); }
+    h2 {
+      font-size: 15px;
+      margin: 0 0 8px;
+      letter-spacing: 0.02em;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card);
+      font-size: 13px;
+      margin-bottom: 18px;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+    th {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    tr.you td { background: #faf0f0; font-weight: 600; }
+    ul {
+      margin: 0 0 18px;
+      padding-left: 18px;
+      font-size: 14px;
+    }
+    li { margin-bottom: 6px; }
+    .box {
+      background: var(--card);
+      padding: 14px 16px;
+      margin-bottom: 14px;
+    }
+    .box p { margin: 0 0 8px; font-size: 14px; }
+    .box p:last-child { margin-bottom: 0; }
+    .label {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+    .foot {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+    @media print {
+      body { background: white; }
+      .wrap { padding: 0; max-width: none; }
+      .stat, .wow, .box, table { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">Kurzanalyse · Juli 2026</div>
+    <h1>Apotheke Zur Kaiserkrone</h1>
+    <div class="sub">Mariahilfer Straße 110, 1070 Wien · Lokales Vertrauen & Sichtbarkeit</div>
+
+    <div class="wow">
+      Physisch sind Sie auf der Mariahilfer Straße unübersehbar.
+      Digital fehlt dem Standort Vertrauen: <b>3,3 Sterne bei ca. 472 Google-Bewertungen</b>
+      — klar unter dem Apotheken-Schnitt in Österreich (~4,1).
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <b>3,3</b>
+        <span>Ihr Google-Schnitt<br>~472 Bewertungen</span>
+      </div>
+      <div class="stat ok">
+        <b>~4,1</b>
+        <span>Ø Österreich<br>Apotheken*</span>
+      </div>
+      <div class="stat">
+        <b>0</b>
+        <span>Instagram<br>aktuell nicht sichtbar</span>
+      </div>
+    </div>
+
+    <h2>Lokaler Vergleich (Auszug)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Apotheke</th>
+          <th>Google</th>
+          <th>Social</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="you">
+          <td>Zur Kaiserkrone<br><span style="font-weight:400;color:#5c5c5c">Mariahilfer 110</span></td>
+          <td>3,3 / ~472</td>
+          <td>kein IG</td>
+        </tr>
+        <tr>
+          <td>Essenz Mariahilf<br><span style="color:#5c5c5c">Mariahilfer 55</span></td>
+          <td>~4,2+ / 200+</td>
+          <td>IG + FB aktiv</td>
+        </tr>
+        <tr>
+          <td>Essenz Neubau<br><span style="color:#5c5c5c">Mariahilfer 72</span></td>
+          <td>~4,5+ / 50+</td>
+          <td>gleiche Netz-Präsenz</td>
+        </tr>
+        <tr>
+          <td>Marien-Apotheke<br><span style="color:#5c5c5c">1060, nah</span></td>
+          <td>~4,7 / 100+</td>
+          <td>aktiv</td>
+        </tr>
+        <tr>
+          <td>Saint Charles<br><span style="color:#5c5c5c">Gumpendorfer Str.</span></td>
+          <td>~4,2 / 1000+</td>
+          <td>starke IG-Marke</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Was die Bewertungen sagen</h2>
+    <ul>
+      <li><b>Kritik:</b> Wartezeiten / Abwicklung an den Kassen</li>
+      <li><b>Lob:</b> Sortiment, Beratung, Naturheilkunde / TCM-Kompetenz</li>
+      <li><b>Paradox:</b> Viele zufriedene Kunden schreiben nicht — Unzufriedene schon</li>
+    </ul>
+
+    <h2>Was braucht es, um den Schnitt zu heben?</h2>
+    <p style="font-size:13px;color:#5c5c5c;margin:0 0 10px;font-family:system-ui,-apple-system,sans-serif;">
+      Rechenmodell ab heute: <b>3,3 ★ · 472 Bewertungen</b>.
+      Annahme: jede <b>neue</b> Bewertung ist eine <b>5★</b>, und es kommen keine neuen 1★ dazu.
+      So viele zusätzliche 5★-Bewertungen wären nötig:
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Ziel-Schnitt</th>
+          <th>Zusätzliche 5★ nötig</th>
+          <th>Einordnung</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>3,4</b></td>
+          <td>~30</td>
+          <td>erster sichtbarer Schritt</td>
+        </tr>
+        <tr>
+          <td><b>3,5</b></td>
+          <td>~63</td>
+          <td>solide Trendwende</td>
+        </tr>
+        <tr>
+          <td><b>3,6</b></td>
+          <td>~101</td>
+          <td>mehrere Monate Arbeit</td>
+        </tr>
+        <tr>
+          <td><b>3,7</b></td>
+          <td>~145</td>
+          <td>langfristig realistisch</td>
+        </tr>
+        <tr>
+          <td><b>3,8</b></td>
+          <td>~197</td>
+          <td>starkes Programm</td>
+        </tr>
+        <tr>
+          <td><b>4,0</b></td>
+          <td>~330</td>
+          <td>große Kampagne über Zeit</td>
+        </tr>
+        <tr class="you">
+          <td><b>4,1</b><br><span style="font-weight:400;color:#5c5c5c">≈ AT-Schnitt</span></td>
+          <td>~420</td>
+          <td>Zielbild Markt — nicht in 30 Tagen</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:#5c5c5c;margin:-8px 0 18px;font-family:system-ui,-apple-system,sans-serif;">
+      Deshalb: in 30 Tagen kein Sprung auf 4,1 versprechen — sondern <b>Trend neuer Bewertungen drehen</b>,
+      Profil stärken und zufriedene Kunden systematisch aktivieren. Fake-Reviews sind tabu.
+    </p>
+
+    <div class="box">
+      <div class="label">Empfohlener erster Schritt · 30 Tage</div>
+      <p><b>Google-Reputations-Pilot</b> (bevor Instagram):</p>
+      <p>1) Profil & Fotos schärfen · 2) Kritische Reviews professionell beantworten · 3) Dezente QR-Aktivierung zufriedener Kunden an Tara/TCM</p>
+      <p><b>Realistisches Ziel:</b> Trendwende bei neuen Bewertungen + sichtbares Vertrauen — erster Schritt Richtung 3,4–3,5, nicht „über Nacht 4,1“.</p>
+    </div>
+
+    <div class="box">
+      <div class="label">Danach · Phase 2</div>
+      <p><b>Instagram</b> als Gesicht hinter der Tara: Team, Beratung, TCM — nicht als Rabattkanal. Erlaubt laut Apothekerkammer, mit klaren Werberegeln (kein Rx-Laienwerbung, keine marktschreierischen Preisaktionen).</p>
+    </div>
+
+    <p class="foot">
+      *Ø laut öffentlichen Branchensichtbarkeitsanalysen AT-Apotheken (u. a. Loyello).
+      Wettbewerbszahlen gerundet aus öffentlichen Google-/Branchenquellen, Stand Recherche Juli 2026 — vor Vertrag final gegen Maps verifizieren.
+      Erstellt als Gesprächsunterlage · Gorbenko
+    </p>
+  </div>
+</body>
+</html>

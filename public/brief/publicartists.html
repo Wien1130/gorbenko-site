@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>publicartists — Marktrecherche & Artist-Growth</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #141414;
+      --muted: #5a5a5a;
+      --hint: #8a6b4a;
+      --line: #e4ddd3;
+      --bg: #f3efe8;
+      --bg2: #ebe4d8;
+      --card: #fffdf9;
+      --accent: #b91c1c;
+      --accent-soft: #f5e4e0;
+      --ok: #1f5c45;
+      --num: #0f172a;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 500px at 10% -10%, #f7e8dc 0%, transparent 55%),
+        radial-gradient(900px 400px at 100% 0%, #e8efe9 0%, transparent 50%),
+        var(--bg);
+      font-family: "DM Sans", system-ui, sans-serif;
+      line-height: 1.45;
+      font-size: 15px;
+    }
+    .wrap { max-width: 880px; margin: 0 auto; padding: 28px 18px 72px; }
+    .topbar {
+      display: flex; justify-content: space-between; align-items: baseline;
+      gap: 12px; margin-bottom: 22px; flex-wrap: wrap;
+    }
+    .brand {
+      font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--muted); font-weight: 600;
+    }
+    .date { font-size: 12px; color: var(--muted); }
+    h1 {
+      font-family: "Newsreader", Georgia, serif;
+      font-size: clamp(28px, 5vw, 42px);
+      line-height: 1.12; margin: 0 0 10px; font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    .lead {
+      font-size: 17px; color: var(--muted); max-width: 38em; margin: 0 0 22px;
+    }
+    .hint {
+      font-size: 11px; color: var(--hint); font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+    .hint::before { content: " · "; color: #c4b09a; }
+    nav.toc {
+      display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 28px;
+    }
+    nav.toc a {
+      text-decoration: none; color: var(--ink); background: var(--card);
+      border: 1px solid var(--line); padding: 7px 11px; border-radius: 999px;
+      font-size: 12px; font-weight: 600;
+    }
+    nav.toc a:hover { border-color: #c9b8a4; }
+    .hero-card {
+      background: linear-gradient(145deg, #1c1917 0%, #2a221c 55%, #3b1d1d 100%);
+      color: #f5f0ea; border-radius: 18px; padding: 22px 22px 18px;
+      margin-bottom: 28px; position: relative; overflow: hidden;
+    }
+    .hero-card::after {
+      content: ""; position: absolute; right: -40px; top: -40px;
+      width: 180px; height: 180px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(185,28,28,.35), transparent 70%);
+    }
+    .hero-card h2 {
+      font-family: "Newsreader", Georgia, serif;
+      font-size: 22px; margin: 0 0 8px; font-weight: 600; position: relative;
+    }
+    .hero-card p { margin: 0; color: #d8cfc4; font-size: 14px; max-width: 48em; position: relative; }
+    .stats {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+      margin: 18px 0 0; position: relative;
+    }
+    .stat {
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 12px; padding: 12px 10px;
+    }
+    .stat b {
+      display: block; font-size: clamp(20px, 3vw, 26px); font-weight: 700;
+      font-variant-numeric: tabular-nums; color: #fff;
+    }
+    .stat span { display: block; margin-top: 4px; font-size: 11px; color: #c9bdb0; }
+    section {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 16px; padding: 20px 18px 18px; margin-bottom: 14px;
+    }
+    section h2 {
+      font-family: "Newsreader", Georgia, serif;
+      font-size: 22px; margin: 0 0 6px; font-weight: 600;
+    }
+    section .intro { color: var(--muted); margin: 0 0 14px; font-size: 14px; }
+    h3 {
+      font-size: 13px; text-transform: uppercase; letter-spacing: .08em;
+      margin: 18px 0 8px; color: var(--muted); font-weight: 700;
+    }
+    p { margin: 0 0 10px; }
+    ul { margin: 0 0 10px; padding-left: 1.15em; }
+    li { margin-bottom: 5px; }
+    table {
+      width: 100%; border-collapse: collapse; font-size: 13px;
+      margin: 8px 0 4px;
+    }
+    th, td {
+      text-align: left; padding: 9px 8px; border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+    th {
+      font-size: 11px; text-transform: uppercase; letter-spacing: .06em;
+      color: var(--muted); font-weight: 700;
+    }
+    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    tr:last-child td { border-bottom: 0; }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 4px; }
+    .pill {
+      background: var(--bg2); border: 1px solid var(--line);
+      border-radius: 10px; padding: 10px 12px; min-width: 140px; flex: 1;
+    }
+    .pill b { display: block; font-size: 20px; color: var(--num); font-variant-numeric: tabular-nums; }
+    .pill span { font-size: 12px; color: var(--muted); }
+    .callout {
+      background: var(--accent-soft); border-left: 3px solid var(--accent);
+      padding: 12px 14px; border-radius: 0 10px 10px 0; margin: 12px 0 4px;
+      font-size: 14px;
+    }
+    .ok { color: var(--ok); font-weight: 600; }
+    .grid-2 {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    }
+    .mini {
+      background: var(--bg); border: 1px solid var(--line);
+      border-radius: 12px; padding: 12px;
+    }
+    .mini strong { display: block; margin-bottom: 4px; }
+    .mini p { margin: 0; font-size: 13px; color: var(--muted); }
+    .funnel { display: grid; gap: 6px; margin-top: 8px; }
+    .funnel-step {
+      display: grid; grid-template-columns: 1.2fr .8fr .8fr;
+      gap: 8px; align-items: center;
+      background: var(--bg); border-radius: 10px; padding: 10px 12px;
+      font-size: 13px;
+    }
+    .funnel-step b { font-variant-numeric: tabular-nums; }
+    .footer-note {
+      margin-top: 18px; font-size: 12px; color: var(--muted); text-align: center;
+    }
+    .badge {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      letter-spacing: .04em; text-transform: uppercase;
+      background: #fff3cd; color: #7a5b00; border: 1px solid #e6d59a;
+      padding: 3px 8px; border-radius: 999px; margin-bottom: 10px;
+    }
+    @media (max-width: 720px) {
+      .stats { grid-template-columns: 1fr 1fr; }
+      .grid-2 { grid-template-columns: 1fr; }
+      .funnel-step { grid-template-columns: 1fr; gap: 2px; }
+      table { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">Gorbenko × publicartists <span class="hint">внутренняя презентация для встречи</span></div>
+      <div class="date">Wien · Juli 2026</div>
+    </div>
+
+    <h1>Marktrecherche &amp; Plan: +300 Künstler</h1>
+    <p class="lead">
+      Vertiefte Analyse für CITYgalleryVIENNA / publicartists — Unit-Economics mit CPM €10 und 70% Close nach Qualifizierung.
+      <span class="hint">пересчёт: CPM 10 € и 70% оплата → CPA ≈ 48 €</span>
+    </p>
+
+    <nav class="toc">
+      <a href="#summary">Kurzfassung <span class="hint">итог</span></a>
+      <a href="#market">Markt <span class="hint">рынок</span></a>
+      <a href="#status">Ist-Stand <span class="hint">сейчас</span></a>
+      <a href="#goal">Ziel 300 <span class="hint">цель</span></a>
+      <a href="#ads">Ads &amp; Kanäle <span class="hint">реклама</span></a>
+      <a href="#pilot">Pilot 30 Tage <span class="hint">пилот</span></a>
+      <a href="#numbers">5 Zahlen <span class="hint">цифры</span></a>
+    </nav>
+
+    <div class="hero-card" id="summary">
+      <h2>Executive Summary <span class="hint" style="color:#c9a88a;text-transform:none;letter-spacing:0;font-family:DM Sans,sans-serif;font-size:12px;font-weight:500">краткое резюме</span></h2>
+      <p>
+        Neuberechnung Base: <b>CPM €10</b> · Close-Rate Qualifiziert→Zahlung <b>70%</b>.
+        Daraus: Kosten pro zahlendem Künstler (Ads) ≈ <b>€48</b> · Ads-Summe für 300 Zahler ≈ <b>€14.300</b>.
+        Fokus: Profil → PAP / ARTVERSE → Wand nur für logistisch passende Artists.
+        <span class="hint" style="color:#c9a88a">новый расчёт: CPM 10 € · оплата 70% · CPA ≈ 48 €</span>
+      </p>
+      <div class="stats">
+        <div class="stat">
+          <b>~146k</b>
+          <span>SAM · passende Künstler <span class="hint" style="color:#b8a090">подходящий пул</span></span>
+        </div>
+        <div class="stat">
+          <b>CPM €10</b>
+          <span>Kosten / 1.000 Impressions <span class="hint" style="color:#b8a090">цена за 1000 показов</span></span>
+        </div>
+        <div class="stat">
+          <b>70%</b>
+          <span>Close Qualifiziert → Pay <span class="hint" style="color:#b8a090">оплата после квалификации</span></span>
+        </div>
+        <div class="stat">
+          <b>~€48</b>
+          <span>CPA · ein zahlender Kunde <span class="hint" style="color:#b8a090">стоимость одной оплаты</span></span>
+        </div>
+      </div>
+    </div>
+
+    <section id="market">
+      <h2>1. Marktlogik: TAM → SAM → SOM</h2>
+      <p class="intro">
+        Drei Kreise — vom großen Markt zum zahlenden Kern. Der Markt ist groß; Engpass ist Conversion + Ops, nicht „keine Künstler“.
+        <span class="hint">рынок большой; узкое место — конверсия и операционка</span>
+      </p>
+
+      <div class="grid-2">
+        <div class="mini">
+          <strong>TAM <span class="hint">весь рынок</span></strong>
+          <p>Alle visuellen Künstler + Kunststudierende in AT, DE, CH, PL, IT, CZ, SK, UA — ~364.000 (Schätzung).</p>
+        </div>
+        <div class="mini">
+          <strong>SAM <span class="hint">подходящие нам</span></strong>
+          <p>Unvertretene Künstler, die Galerie / Sichtbarkeit / Open Call suchen — <b>~145.600 ≈ 146.000</b>.</p>
+        </div>
+      </div>
+      <div class="mini" style="margin-top:10px">
+        <strong>SOM <span class="hint">реально платящие в нашем ценнике</span></strong>
+        <p>
+          Anteil des SAM, der typischerweise €150–400 für Visibility-Produkte zahlt (PAP, Modul, Virtual)
+          — Modell: ca. 5–8% Premium-Segment → <b>~10.500</b>.
+          <span class="hint">не опрос, а оценка доли рынка</span>
+        </p>
+      </div>
+
+      <div class="callout">
+        <b>Markt vs. Delivery:</b> 300 / 10.500 ≈ <span class="ok">~3% vom SOM</span> — markseitig machbar.
+        Unit-Economics unten mit <b>CPM €10</b> und <b>70% Close</b> nach Qualifizierung.
+        <span class="hint">рынок ок; CPA пересчитан по новым вводным</span>
+      </div>
+
+      <h3>Länderübersicht <span class="hint">по странам</span></h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Land</th>
+            <th class="num">TAM</th>
+            <th class="num">SAM</th>
+            <th class="num">SOM €150–400</th>
+            <th>Konfidenz <span class="hint">уверенность</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Deutschland</td><td class="num">165.000</td><td class="num">66.000</td><td class="num">4.620</td><td>High</td></tr>
+          <tr><td>Österreich</td><td class="num">18.000</td><td class="num">7.200</td><td class="num">720</td><td>High</td></tr>
+          <tr><td>Schweiz</td><td class="num">8.000</td><td class="num">3.200</td><td class="num">320</td><td>Medium</td></tr>
+          <tr><td>Polen</td><td class="num">35.000</td><td class="num">14.000</td><td class="num">1.120</td><td>Medium</td></tr>
+          <tr><td>Italien</td><td class="num">90.000</td><td class="num">36.000</td><td class="num">2.520</td><td>Medium</td></tr>
+          <tr><td>Tschechien</td><td class="num">22.000</td><td class="num">8.800</td><td class="num">616</td><td>High</td></tr>
+          <tr><td>Slowakei</td><td class="num">6.000</td><td class="num">2.400</td><td class="num">168</td><td>Medium</td></tr>
+          <tr><td>Ukraine</td><td class="num">20.000</td><td class="num">8.000</td><td class="num">400</td><td>Low</td></tr>
+          <tr>
+            <td><b>Summe</b></td>
+            <td class="num"><b>364.000</b></td>
+            <td class="num"><b>145.600</b></td>
+            <td class="num"><b>10.484</b></td>
+            <td>Medium–High</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="status">
+      <h2>2. Ist-Stand publicartists</h2>
+      <p class="intro">Öffentlich sichtbare Signale (Stand Juli 2026). <span class="hint">что видно снаружи сейчас</span></p>
+      <div class="pill-row">
+        <div class="pill"><b>~582</b><span>Online-Profile <span class="hint">карточки на сайте</span></span></div>
+        <div class="pill"><b>~25</b><span>eigene 360°-Galerien <span class="hint">виртуалки Kunstmatrix</span></span></div>
+        <div class="pill"><b>~30–50</b><span>Künstler gleichzeitig an der Wand <span class="hint">в зале сейчас</span></span></div>
+        <div class="pill"><b>~2.3k</b><span>Instagram-Follower @_publicartists</span></div>
+      </div>
+      <div class="callout" style="margin-top:14px">
+        Physische Kapazität: ~30–50 Slots. „+300“ = vor allem <b>Plattform + PAP + ARTVERSE</b>.
+        Organisch (nur IG) eher <b>2–5 neue Künstler/Monat</b> — ohne Ads/Outreach nicht skalierbar.
+        <span class="hint">без рекламы 300 не набрать</span>
+      </div>
+    </section>
+
+    <section id="goal">
+      <div class="badge">Base-Annahmen: CPM €10 · Close 70% <span class="hint" style="text-transform:none;letter-spacing:0;font-weight:500">новые вводные</span></div>
+      <h2>3. Ziel +300 — drei Szenarien</h2>
+      <p class="intro">
+        Base = unser Arbeitsplan (CPM €10, Qualifiziert→Pay 70%).
+        Konservativ = schlechtere Close/CTR. Aggressiv = etwas bessere Effizienz + höheres Monatsbudget.
+        <span class="hint">Base — главная колонка для разговора</span>
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Kennzahl <span class="hint">показатель</span></th>
+            <th class="num">Konservativ</th>
+            <th class="num">Base</th>
+            <th class="num">Aggressiv</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>300 neue Profile <span class="hint">бесплатные карточки</span></td><td class="num">8 Mon.</td><td class="num"><b>4–5 Mon.</b></td><td class="num">3 Mon.</td></tr>
+          <tr><td>300 zahlende Künstler <span class="hint">купили продукт</span></td><td class="num">16–18 Mon.</td><td class="num"><b>~10–12 Mon.</b></td><td class="num">7–8 Mon.</td></tr>
+          <tr><td>Leads / Woche</td><td class="num">15</td><td class="num"><b>~25</b></td><td class="num">45</td></tr>
+          <tr><td>Ads-Budget / Monat</td><td class="num">€1.000</td><td class="num"><b>€1.200–1.500</b></td><td class="num">€2.500</td></tr>
+          <tr><td>CPL (Lead) <span class="hint">цена заявки</span></td><td class="num">€20</td><td class="num"><b>~€13</b></td><td class="num">€10</td></tr>
+          <tr><td>CPA (Zahlung) <span class="hint">цена платящего</span></td><td class="num">€90</td><td class="num"><b>~€48</b></td><td class="num">€40</td></tr>
+          <tr><td>Ads-Summe für 300 Zahlungen</td><td class="num">€27k</td><td class="num"><b>~€14.300</b></td><td class="num">€12k</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;color:var(--muted);margin-top:8px">
+        <b>CPA ~€48</b> = reine Ads-Kosten pro bezahltem Produkt (ohne Agenturhonorar / Chatbot).
+        Rechnen wir intern mit <b>Base</b>.
+        <span class="hint">€48 — стоимость рекламы на одного оплатившего</span>
+      </p>
+
+      <h3>Empfohlener Split der 300 Zahler <span class="hint">куда вести 300 человек</span></h3>
+      <div class="pill-row">
+        <div class="pill"><b>60</b><span>Wand-Modul Wien <span class="hint">стена</span></span></div>
+        <div class="pill"><b>120</b><span>PAP-Buch <span class="hint">книга</span></span></div>
+        <div class="pill"><b>120</b><span>ARTVERSE virtual <span class="hint">виртуалка</span></span></div>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-top:8px">
+        Verhältnis physisch : digital ≈ <b>1 : 5</b> — schützt den Galerie-Status vor Überfüllung.
+      </p>
+    </section>
+
+    <section id="ads">
+      <h2>4. Meta Ads &amp; Kanäle (Base)</h2>
+      <p class="intro">
+        Funnel für <b>300 Zahlungen</b>: CPM <b>€10</b> · Qualifiziert→Pay <b>70%</b> →
+        Ads-Budget gesamt <b>~€14.300</b> · <b>CPA ~€48</b> pro zahlendem Kunden.
+        <span class="hint">главная воронка — отсюда берём стоимость клиента</span>
+      </p>
+
+      <div class="funnel">
+        <div class="funnel-step">
+          <div>Impressions <span class="hint">показы</span></div>
+          <b>~1.430.000</b>
+          <div>CPM <b>€10</b> → Budget <b>~€14.300</b></div>
+        </div>
+        <div class="funnel-step">
+          <div>Link-Klicks <span class="hint">клики</span></div>
+          <b>~14.300</b>
+          <div>CTR ~1% · CPC ~€1.00</div>
+        </div>
+        <div class="funnel-step">
+          <div>Open-Call Leads <span class="hint">заявки</span></div>
+          <b>~1.070</b>
+          <div>CVR ~7,5% · CPL ~€13</div>
+        </div>
+        <div class="funnel-step">
+          <div>Qualifiziert / Gespräch <span class="hint">квалификация</span></div>
+          <b>~430</b>
+          <div>CVR ~40% (Lead → Qualifiziert)</div>
+        </div>
+        <div class="funnel-step">
+          <div>Zahlende Produkte <span class="hint">оплата</span></div>
+          <b>300</b>
+          <div>CVR <b>70%</b> · <b>CPA ~€48</b></div>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:12px">
+        <b>Was bedeutet CPA ~€48?</b> So viel Ads-Geld brauchen wir im Schnitt, bis <i>ein</i> Künstler zahlt
+        (PAP / Wand / ARTVERSE). 300 × €48 ≈ €14.300 Gesamt-Ads.
+        <span class="hint">это стоимость привлечения одного оплатившего через рекламу</span>
+      </div>
+
+      <h3>Top-Kanäle <span class="hint">куда лить / откуда брать</span></h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Kanal</th>
+            <th>Taktik</th>
+            <th class="num">Budget / Mon.</th>
+            <th class="num">Zahler / Mon.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Meta Ads</b></td>
+            <td>Open Call Wien · 0% Provision · Lead Form / WhatsApp · Geo DE/PL/IT (+AT)</td>
+            <td class="num">€1.200–1.500</td>
+            <td class="num">20–30*</td>
+          </tr>
+          <tr>
+            <td><b>IG Outreach</b></td>
+            <td>Personalisierte DMs (Akademien-Hashtags) · langsam, aber günstig</td>
+            <td class="num">€350</td>
+            <td class="num">2–4</td>
+          </tr>
+          <tr>
+            <td><b>Reels / TikTok</b></td>
+            <td>„0% statt 50% Galerie-Provision“ · Aufbau braucht Zeit</td>
+            <td class="num">€300</td>
+            <td class="num">1–2</td>
+          </tr>
+          <tr>
+            <td><b>Telegram / FB Groups</b></td>
+            <td>Artist-Communities AT/DE/PL/UA · PAP-Fokus</td>
+            <td class="num">€150</td>
+            <td class="num">1–3</td>
+          </tr>
+          <tr>
+            <td><b>Akademien</b></td>
+            <td>Wettbewerb / Longlist → PAP-Rabatt — kampagnenweise</td>
+            <td class="num">€200</td>
+            <td class="num">2–4*</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;color:var(--muted)">* Meta-Ads allein bei CPA €48 und €1.200–1.500/Monat ≈ 25–30 Zahler/Monat rechnerisch — operativ oft langsamer (Sales-Follow-up). <span class="hint">математика vs. реальное закрытие</span></p>
+    </section>
+
+    <section id="pilot">
+      <h2>5. 30-Tage-Pilot (empfohlen)</h2>
+      <p class="intro">Kleiner Test mit klaren KPIs — bevor Jahresbudget läuft. <span class="hint">сначала тест, потом масштаб</span></p>
+      <div class="grid-2">
+        <div class="mini">
+          <strong>KPIs Pilot <span class="hint">цели теста</span></strong>
+          <p><b>60 neue Profile</b> · <b>2–3</b> erste Zahlungen (PAP / Modul / Virtual) — bewusst niedrig angesetzt</p>
+        </div>
+        <div class="mini">
+          <strong>Ads-Budget Pilot <span class="hint">рекламный бюджет</span></strong>
+          <p><b>€900</b> Meta Ads · Geo DE / PL / IT · Lead → WhatsApp / Instagram DM</p>
+        </div>
+        <div class="mini">
+          <strong>Was im Pilot steckt <span class="hint">что входит</span></strong>
+          <p>Kampagnen-Setup · Kreativ-Tests · Tracking · wöchentlicher Report · Optimierung auf Profile/Leads</p>
+        </div>
+        <div class="mini">
+          <strong>3 Hebel <span class="hint">главные рычаги</span></strong>
+          <p>1) „0% Provision“ statt „Wand mieten“ · 2) Remote → PAP/ARTVERSE · 3) Ads → Chat, kurze Qualifizierung</p>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top:14px">
+        <b>Chatbot / Messenger-Automation:</b> separate Entwicklung, <b>nicht</b> im Ads-Budget enthalten.
+        Aufwand Orientierung: ca. <b>€2.500</b> (Qualifizierung, FAQ, Weiterleitung an Thomas/Polina).
+        Kann parallel oder später kommen — optional.
+        <span class="hint">бот отдельно ~€2500, не в рекламном бюджете; можешь подарить — на сайте просто «отдельно»</span>
+      </div>
+    </section>
+
+    <section id="numbers">
+      <h2>6. Fünf Zahlen für das Gespräch</h2>
+      <p class="intro">Zum Vorlesen / Zeigen — Base / konservativ. <span class="hint">можно с экрана</span></p>
+      <table>
+        <tbody>
+          <tr>
+            <td class="num" style="font-size:22px;font-weight:700;color:var(--accent)">145.000+</td>
+            <td>SAM — unvertretene Künstler im Fokusraum Europa</td>
+          </tr>
+          <tr>
+            <td class="num" style="font-size:22px;font-weight:700;color:var(--accent)">€10</td>
+            <td>CPM — Kosten für 1.000 Impressions (unsere Annahme)</td>
+          </tr>
+          <tr>
+            <td class="num" style="font-size:22px;font-weight:700;color:var(--accent)">70%</td>
+            <td>Close-Rate: Qualifiziert → Zahlung (unsere Annahme)</td>
+          </tr>
+          <tr>
+            <td class="num" style="font-size:22px;font-weight:700;color:var(--accent)">~€48</td>
+            <td><b>CPA</b> — Ads-Kosten für <b>einen</b> zahlenden Kunden (Base)</td>
+          </tr>
+          <tr>
+            <td class="num" style="font-size:22px;font-weight:700;color:var(--accent)">€14.300</td>
+            <td>Ads-Summe für 300 Zahlungen · Pilot weiter €900 / 60 Profile / 2–3 Zahlungen</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Fragen an dich, Thomas <span class="hint">спросить у него</span></h2>
+      <ul>
+        <li>Wie ist der Umsatz-Split heute: Wand / PAP / Virtual / Kunstverkauf?</li>
+        <li>Wie hoch ist die aktuelle Conversion Free-Profil → Paid?</li>
+        <li>Welchen CAC seid ihr bereit zu reinvestieren (Orientierung ~€48 Ads / Zahler)?</li>
+        <li>COGS für eine PAP-Seite und ARTVERSE-Jahr?</li>
+        <li>CRM / Tracking — können wir Leads durchgängig messen?</li>
+      </ul>
+    </section>
+
+    <p class="footer-note">
+      Gorbenko · Wien · Vertrauliche Arbeitsfolie für publicartists / CITYgalleryVIENNA<br />
+      Unit-Economics: CPM €10 · Close 70% · CPA ~€48 · keine Erfolgsgarantie · Grundlage für Pilot-Setup
+      <span class="hint">модель для разговора, не гарантия</span>
+    </p>
+  </div>
+</body>
+</html>

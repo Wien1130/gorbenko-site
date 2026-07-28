@@ -5,9 +5,15 @@
   --foreground: #f0f0f0;
   --accent: #00d4aa;
   --accent-dim: rgba(0, 212, 170, 0.08);
-  --muted: #6b7280;
+  --muted: #9ca3af;
   --card: #0a0a0f;
   --border: #1a1a22;
+  /* service palette */
+  --c-blue: #38bdf8;
+  --c-violet: #a78bfa;
+  --c-amber: #fbbf24;
+  --c-rose: #fb7185;
+  --c-lime: #a3e635;
 }
 
 @theme inline {
@@ -82,4 +88,45 @@ body {
 @keyframes count-line {
   from { width: 0; }
   to { width: 100%; }
+}
+
+/* Infinite marquee */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 30s linear infinite;
+  will-change: transform;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* Typing dots in chat demo */
+@keyframes typing-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+.typing-dot {
+  animation: typing-bounce 1.2s ease-in-out infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.15s; }
+.typing-dot:nth-child(3) { animation-delay: 0.3s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .chat-msg,
+  .animate-fade-up,
+  .pulse-dot,
+  .typing-dot {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  .chat-msg {
+    opacity: 1;
+  }
+  html {
+    scroll-behavior: auto;
+  }
 }

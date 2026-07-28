@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>BlinHaus — Итоги июня 2026</title>
+<style>
+  :root{
+    --bg:#faf9f7;--card:#ffffff;--ink:#1c1917;--muted:#6b7280;--faint:#9ca3af;
+    --line:#e7e5e4;--accent:#c75b39;--accent-soft:#fbeee9;
+    --green:#2e7d32;--green-soft:#eaf4ea;--red:#c0392b;--red-soft:#faecea;
+    --blue:#1565c0;--blue-soft:#e9f1fb;--amber:#b45309;--amber-soft:#fdf3e3;
+    --purple:#6a1b9a;--purple-soft:#f3e8fa;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:980px;margin:0 auto;padding:48px 24px 80px}
+  .brand{display:inline-block;font-size:13px;font-weight:700;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+  h1{font-size:32px;line-height:1.2;font-weight:800;letter-spacing:-.025em}
+  h2{font-size:20px;font-weight:750;letter-spacing:-.01em;margin:0 0 4px}
+  h3{font-size:15.5px;font-weight:700;margin:0 0 4px}
+  .sub{color:var(--muted);margin-top:10px;font-size:14.5px;max-width:720px}
+  section{margin-top:48px}
+  .sec-cap{color:var(--muted);font-size:13.5px;margin-bottom:16px}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:760px){.kpis{grid-template-columns:repeat(2,1fr)}}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .kpi .v{font-size:26px;font-weight:800;letter-spacing:-.02em}
+  .kpi .l{font-size:12.5px;color:var(--muted);margin-top:3px}
+  .kpi.good .v{color:var(--green)}.kpi.bad .v{color:var(--red)}
+  .kpi.warn .v{color:var(--amber)}.kpi.info .v{color:var(--blue)}
+  .kpi.purple .v{color:var(--purple)}
+  .callout{border-radius:12px;padding:16px 18px;font-size:14.5px;border:1px solid;margin-bottom:14px}
+  .callout b{font-weight:700}
+  .callout.amber{background:var(--amber-soft);border-color:#f0ddb8}
+  .callout.blue{background:var(--blue-soft);border-color:#cfe0f5}
+  .callout.green{background:var(--green-soft);border-color:#cde3cd}
+  .callout.red{background:var(--red-soft);border-color:#f5cac8}
+  .callout.purple{background:var(--purple-soft);border-color:#ddb5f5}
+  .callout .t{display:block;font-weight:750;margin-bottom:5px}
+  table{width:100%;border-collapse:collapse;background:var(--card);
+    box-shadow:0 0 0 1px var(--line);border-radius:12px;overflow:hidden;font-size:14px}
+  th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);
+    text-align:left;padding:10px 14px;background:#f5f4f1;font-weight:650}
+  td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  tr.good td{background:var(--green-soft)}tr.bad td{background:var(--red-soft)}
+  tr.warn td{background:var(--amber-soft)}tr.info td{background:var(--blue-soft)}
+  tr.strike td{opacity:.55;text-decoration:line-through}
+  .note{color:var(--muted);font-size:13px;margin-top:10px}
+  .channels{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:760px){.channels{grid-template-columns:1fr}}
+  .ch{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .ch .cv{font-size:22px;font-weight:800;letter-spacing:-.01em}
+  .ch .cl{font-size:12px;color:var(--muted);margin:3px 0 8px}
+  .timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:4px}
+  @media(max-width:700px){.timeline{grid-template-columns:1fr}}
+  .tcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;position:relative}
+  .tcard .period{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
+  .tcard .rev{font-size:28px;font-weight:800;letter-spacing:-.02em}
+  .tcard .roas{font-size:13px;font-weight:700;margin-top:4px}
+  .tcard .roas span{display:inline-block;padding:2px 8px;border-radius:6px;font-size:12.5px}
+  .tcard .metrics{margin-top:12px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
+  .tcard .metrics b{color:var(--ink);font-weight:700}
+  .tcard .arrow{position:absolute;top:50%;right:-12px;transform:translateY(-50%);
+    font-size:18px;color:var(--faint);z-index:1}
+  .bar-chart{margin-top:12px}
+  .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:7px;font-size:13px}
+  .bar-label{width:110px;flex-shrink:0;color:var(--muted)}
+  .bar-wrap{flex:1;background:#efedea;border-radius:4px;height:16px}
+  .bar-fill{height:100%;border-radius:4px;transition:width .3s}
+  .bar-val{width:60px;flex-shrink:0;text-align:right;font-weight:700;font-size:13px}
+  .pill{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;
+    border-radius:99px;vertical-align:middle}
+  .pill.green{background:var(--green-soft);color:var(--green)}
+  .pill.red{background:var(--red-soft);color:var(--red)}
+  .pill.blue{background:var(--blue-soft);color:var(--blue)}
+  .pill.amber{background:var(--amber-soft);color:var(--amber)}
+  .delta{font-size:12px;font-weight:700;padding:2px 7px;border-radius:6px;white-space:nowrap}
+  .delta.up{background:var(--green-soft);color:var(--green)}
+  .delta.down{background:var(--red-soft);color:var(--red)}
+  .delta.flat{background:#f3f2f0;color:var(--muted)}
+  .plan .pcard{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:18px 20px;margin-bottom:14px}
+  .plan .ph{font-weight:750;font-size:15.5px;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+  .plan ol{padding-left:20px;font-size:14.5px}
+  .plan li{margin-bottom:7px}
+  .impact{display:inline-block;font-size:11px;font-weight:800;padding:2px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:.06em}
+  .impact.high{background:#fbeee9;color:var(--accent)}
+  .impact.med{background:var(--amber-soft);color:var(--amber)}
+  footer{margin-top:60px;color:var(--faint);font-size:12.5px;border-top:1px solid var(--line);padding-top:18px}
+  p+p{margin-top:9px}
+  .report-nav{display:flex;gap:8px;align-items:center;margin-bottom:28px;flex-wrap:wrap}
+  .report-nav a{font-size:13px;padding:5px 14px;border-radius:8px;text-decoration:none;
+    border:1px solid var(--line);color:var(--muted)}
+  .report-nav a.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .new-badge{display:inline-block;font-size:10px;font-weight:800;text-transform:uppercase;
+    letter-spacing:.1em;background:var(--accent);color:#fff;padding:2px 7px;
+    border-radius:6px;margin-left:6px;vertical-align:middle}
+  .big-number{font-size:48px;font-weight:900;letter-spacing:-.03em;line-height:1}
+  .big-label{font-size:14px;color:var(--muted);margin-top:6px}
+  .hero-nums{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+    background:var(--ink);color:#fff;border-radius:16px;padding:28px 32px;margin:24px 0 0}
+  @media(max-width:700px){.hero-nums{grid-template-columns:1fr;padding:20px}}
+  .hero-nums .hn-v{font-size:36px;font-weight:900;letter-spacing:-.02em}
+  .hero-nums .hn-l{font-size:12.5px;color:#94a3b8;margin-top:4px}
+  .hero-nums .hn-div{border-left:1px solid #334155;padding-left:24px}
+  @media(max-width:700px){.hero-nums .hn-div{border-left:none;padding-left:0;border-top:1px solid #334155;padding-top:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="report-nav">
+  <a href="/reports/blinhaus-june-2026">1–12 июня</a>
+  <a href="/reports/blinhaus-june-12-23">12–23 июня</a>
+  <a href="/reports/blinhaus-june-24-30">24–30 июня</a>
+  <a href="/reports/blinhaus-june-summary" class="active">Итоги июня <span class="new-badge">новый</span></a>
+</div>
+
+<header>
+  <span class="brand">BlinHaus Vienna · итоговый отчёт</span>
+  <h1>Июнь 2026 — полный месяц</h1>
+  <p class="sub">Сводный анализ рекламы и продаж заморозки.
+  Три периода, три отчёта — здесь всё вместе.
+  Для Анатолия и Андрея. Составлено 30.06.2026.</p>
+
+  <div class="hero-nums">
+    <div>
+      <div class="hn-v">2 200&nbsp;€</div>
+      <div class="hn-l">Касса за июнь — все каналы</div>
+    </div>
+    <div class="hn-div">
+      <div class="hn-v">849&nbsp;€</div>
+      <div class="hn-l">Потрачено на рекламу</div>
+    </div>
+    <div class="hn-div">
+      <div class="hn-v" style="color:#4ade80">2,59×</div>
+      <div class="hn-l">Средняя окупаемость рекламы</div>
+    </div>
+  </div>
+</header>
+
+<!-- KPI row -->
+<section>
+  <div class="kpis">
+    <div class="kpi"><div class="v">2&nbsp;392</div><div class="l">Кликов на рекламу за месяц</div></div>
+    <div class="kpi"><div class="v">50</div><div class="l">Лидов в Messenger (FB + Instagram)</div></div>
+    <div class="kpi good"><div class="v">26</div><div class="l">Заказов за июнь (все каналы)</div></div>
+    <div class="kpi good"><div class="v">85&nbsp;€</div><div class="l">Средний чек за месяц</div></div>
+  </div>
+  <div class="kpis" style="margin-top:12px">
+    <div class="kpi info"><div class="v">107</div><div class="l">Добавлений в корзину (сайт, 12–30.06)</div></div>
+    <div class="kpi info"><div class="v">934</div><div class="l">Человек зашли на новый сайт</div></div>
+    <div class="kpi bad"><div class="v">156&nbsp;€</div><div class="l">Потерянные заказы (операционные ошибки)</div></div>
+    <div class="kpi warn"><div class="v">125&nbsp;€</div><div class="l">Выручка в день (последние 7 дней)</div></div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section>
+  <h2>Как рос бизнес — три периода июня</h2>
+  <p class="sec-cap">Каждый период — отдельный отчёт. Клик по заголовку открывает детали.</p>
+  <div class="timeline">
+    <div class="tcard">
+      <div class="period"><a href="/reports/blinhaus-june-2026" style="color:inherit;text-decoration:none">1–12 июня →</a></div>
+      <div class="rev">512&nbsp;€</div>
+      <div class="roas"><span style="background:var(--amber-soft);color:var(--amber)">ROAS 1,53×</span></div>
+      <div class="metrics">
+        <div>Бюджет: <b>334&nbsp;€</b></div>
+        <div>Охват: <b>21&nbsp;391</b></div>
+        <div>Лидов: <b>26</b></div>
+        <div>Заказов: <b>8</b> (42&nbsp;€/день)</div>
+        <div>Кампании: торты Messenger</div>
+      </div>
+      <div class="arrow">→</div>
+    </div>
+    <div class="tcard">
+      <div class="period"><a href="/reports/blinhaus-june-12-23" style="color:inherit;text-decoration:none">12–23 июня →</a></div>
+      <div class="rev">811&nbsp;€</div>
+      <div class="roas"><span style="background:var(--blue-soft);color:var(--blue)">ROAS 2,42×</span></div>
+      <div class="metrics">
+        <div>Бюджет: <b>335&nbsp;€</b></div>
+        <div>Охват: <b>23&nbsp;896</b></div>
+        <div>Лидов: <b>13</b></div>
+        <div>Заказов: <b>10</b> (68&nbsp;€/день)</div>
+        <div>Кампании: пельмени → сайт 🆕</div>
+      </div>
+      <div class="arrow">→</div>
+    </div>
+    <div class="tcard">
+      <div class="period"><a href="/reports/blinhaus-june-24-30" style="color:inherit;text-decoration:none">24–30 июня →</a></div>
+      <div class="rev" style="color:var(--green)">877&nbsp;€</div>
+      <div class="roas"><span style="background:var(--green-soft);color:var(--green)">ROAS 4,87× 🔥</span></div>
+      <div class="metrics">
+        <div>Бюджет: <b>180&nbsp;€</b></div>
+        <div>Охват: <b>19&nbsp;233</b></div>
+        <div>Лидов: <b>11</b></div>
+        <div>Заказов: <b>9</b> (125&nbsp;€/день)</div>
+        <div>Кампании: пельмени + торт видео</div>
+      </div>
+    </div>
+  </div>
+  <p class="note">Выручка в день выросла в 3 раза: 42 → 68 → 125&nbsp;€/день. Тренд устойчивый.</p>
+</section>
+
+<!-- CHANNELS -->
+<section>
+  <h2>Продажи по каналам — весь июнь</h2>
+  <p class="sec-cap">Три источника кассы. Итого 2 200&nbsp;€, 26 заказов.</p>
+  <div class="channels">
+    <div class="ch">
+      <div class="cv" style="color:var(--green)">952&nbsp;€</div>
+      <div class="cl">Messenger · 12 заказов · 43% кассы</div>
+      <div class="bar-chart">
+        <div class="bar-row">
+          <span class="bar-label">1–12 июня</span>
+          <div class="bar-wrap"><div class="bar-fill" style="width:26%;background:#4caf50"></div></div>
+          <span class="bar-val">249&nbsp;€</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">12–23 июня</span>
+          <div class="bar-wrap"><div class="bar-fill" style="width:39%;background:#4caf50"></div></div>
+          <span class="bar-val">375&nbsp;€</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">24–30 июня</span>
+          <div class="bar-wrap"><div class="bar-fill" style="width:34%;background:#4caf50"></div></div>
+          <span class="bar-val">328&nbsp;€</span>
+        </div>
+      </div>
+      <p class="note">Бот + ручное принятие заказов. Работало всегда, конверсия выросла 15% → 36%.</p>
+    </div>
+    <div class="ch">
+      <div class="cv" style="color:var(--blue)">456&nbsp;€</div>
+      <div class="cl">Новый сайт 7loc · 5 заказов · 21% кассы</div>
+      <div class="bar-chart">
+        <div class="bar-row">
+          <span class="bar-label">1–12 июня</span>
+          <div class="bar-wrap"><div class="bar-fill" style="width:0%;background:#1976d2"></div></div>
+          <span class="bar-val">0&nbsp;€</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">12–23 июня</span>
+          <div class="bar-wrap"><div class="bar-fill" style="width:62%;background:#1976d2"></div></div>
+          <span class="bar-val">284&nbsp;€</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">24–30 июня</span>
+          <div class="bar-wrap"><div class="bar-fill" style="width:38%;background:#1976d2"></div></div>
+          <span class="bar-val">172&nbsp;€</span>
+        </div>
+      </div>
+      <p class="note">Запустили в середине июня. 100% атрибуция к рекламе через UTM + пиксель.
+      107 корзин за 19 дней — огромный потенциал при подключении Stripe.</p>
+    </div>
+    <div class="ch">
+      <div class="cv" style="color:var(--muted)">792&nbsp;€</div>
+      <div class="cl">Старый сайт Choice · 9 заказов · 36% кассы</div>
+      <div class="bar-chart">
+        <div class="bar-row">
+          <span class="bar-label">1–12 июня</span>
+          <div class="bar-wrap"><div class="bar-fill" style="width:33%;background:#9e9e9e"></div></div>
+          <span class="bar-val">263&nbsp;€</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">12–23 июня</span>
+          <div class="bar-wrap"><div class="bar-fill" style="width:19%;background:#9e9e9e"></div></div>
+          <span class="bar-val">152&nbsp;€</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">24–30 июня</span>
+          <div class="bar-wrap"><div class="bar-fill" style="width:48%;background:#9e9e9e"></div></div>
+          <span class="bar-val">377&nbsp;€</span>
+        </div>
+      </div>
+      <p class="note">Источник трафика неизвестен — может быть Instagram органика, сарафан,
+      или реклама без UTM. Постепенно переводим трафик на 7loc для атрибуции.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PIXEL FUNNEL -->
+<section>
+  <h2>Сайт — воронка за 19 дней (12–30 июня)</h2>
+  <p class="sec-cap">Пиксель Meta 990892723736650. Пельменные кампании. Торты на сайте — отдельно ниже.</p>
+  <table>
+    <tr>
+      <th>Этап</th>
+      <th class="num">12–23 июня</th>
+      <th class="num">24–30 июня</th>
+      <th class="num">Итого</th>
+    </tr>
+    <tr><td>Клики по рекламе (пельмени)</td><td class="num">1&nbsp;051</td><td class="num">386</td><td class="num"><b>1&nbsp;437</b></td></tr>
+    <tr class="info"><td>Зашли на сайт (landing page views)</td><td class="num">644</td><td class="num">290</td><td class="num"><b>934</b></td></tr>
+    <tr><td>↳ Клик → сайт</td><td class="num">61%</td><td class="num">75%</td><td class="num">65%</td></tr>
+    <tr><td>Просмотрели товар</td><td class="num">165</td><td class="num">107</td><td class="num"><b>272</b></td></tr>
+    <tr class="warn"><td>Добавили в корзину</td><td class="num">65</td><td class="num"><b style="color:var(--green)">42</b></td><td class="num"><b>107</b></td></tr>
+    <tr><td>↳ Карточка → корзина</td><td class="num">39%</td><td class="num">39%</td><td class="num">39%</td></tr>
+    <tr><td>Начали оформление (checkout)</td><td class="num">~4</td><td class="num">2</td><td class="num"><b>~6</b></td></tr>
+    <tr class="good"><td>Заказы (CRM 7loc)</td><td class="num">4</td><td class="num">1</td><td class="num"><b>5</b></td></tr>
+    <tr><td>↳ Корзина → заказ</td><td class="num">6%</td><td class="num">2,4%</td><td class="num">~5%</td></tr>
+    <tr class="good"><td>Выручка с сайта</td><td class="num">284&nbsp;€</td><td class="num">172&nbsp;€</td><td class="num"><b>456&nbsp;€</b></td></tr>
+  </table>
+  <div class="callout amber" style="margin-top:14px">
+    <span class="t">102 корзины брошены из 107 — это и есть главная задача июля</span>
+    Люди хотят купить (корзина = намерение), но без онлайн-оплаты закрывают страницу.
+    При конверсии корзина→заказ 15% (норма с Stripe) — это <b>16 дополнительных заказов</b>
+    ≈ 1 360&nbsp;€ прибавки в месяц без увеличения рекламного бюджета.
+  </div>
+</section>
+
+<!-- LOSSES -->
+<section>
+  <h2>Операционные потери — 156&nbsp;€</h2>
+  <p class="sec-cap">Заказы, которые были, но деньги не получили.</p>
+  <table>
+    <tr><th>Дата</th><th>Причина</th><th class="num">Сумма</th><th>Статус</th></tr>
+    <tr class="bad"><td>7.06</td><td>Заказ принят на субботу — доставки нет. Клиент отказался.</td><td class="num">61&nbsp;€</td><td>Системная ошибка бота</td></tr>
+    <tr class="bad"><td>26.06</td><td>Заказ в Messenger не увидели вовремя, не доставили.</td><td class="num">56&nbsp;€</td><td>Пропущено вручную</td></tr>
+    <tr class="warn"><td>—</td><td>Отказ (передумала, аллергия на фундук)</td><td class="num">39&nbsp;€</td><td>Объективный</td></tr>
+    <tr style="background:#f5f4f1">
+      <td colspan="2"><b>Итого предотвратимые потери</b></td>
+      <td class="num"><b>117&nbsp;€</b></td><td>Системные ошибки</td>
+    </tr>
+  </table>
+  <p class="note">Оба предотвратимых случая закрываются одним действием:
+  <b>Telegram-алерт на каждый новый заказ</b> (бот Railway → TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID).
+  Это 15 минут настройки.</p>
+</section>
+
+<!-- BIG TABLE -->
+<section>
+  <h2>Сравнение периодов — все метрики</h2>
+  <table>
+    <tr>
+      <th>Метрика</th>
+      <th class="num">1–12 июня</th>
+      <th class="num">12–23 июня</th>
+      <th class="num">24–30 июня</th>
+      <th class="num">Июнь итого</th>
+    </tr>
+    <tr>
+      <td>Рекламный бюджет</td>
+      <td class="num">334&nbsp;€</td><td class="num">335&nbsp;€</td><td class="num">180&nbsp;€</td>
+      <td class="num"><b>849&nbsp;€</b></td>
+    </tr>
+    <tr>
+      <td>Охват</td>
+      <td class="num">21&nbsp;391</td><td class="num">23&nbsp;896</td><td class="num">19&nbsp;233</td>
+      <td class="num">~58&nbsp;000*</td>
+    </tr>
+    <tr>
+      <td>Клики</td>
+      <td class="num">838</td><td class="num">1&nbsp;051</td><td class="num">503</td>
+      <td class="num"><b>2&nbsp;392</b></td>
+    </tr>
+    <tr>
+      <td>Средний CPC</td>
+      <td class="num">0,40&nbsp;€</td><td class="num">0,32&nbsp;€</td><td class="num">0,36&nbsp;€</td>
+      <td class="num"><b>0,35&nbsp;€</b></td>
+    </tr>
+    <tr>
+      <td>Лиды Messenger</td>
+      <td class="num">26</td><td class="num">13</td><td class="num">11</td>
+      <td class="num"><b>50</b></td>
+    </tr>
+    <tr class="good">
+      <td>Касса (все каналы)</td>
+      <td class="num">512&nbsp;€</td><td class="num">811&nbsp;€</td><td class="num">877&nbsp;€</td>
+      <td class="num"><b>2 200&nbsp;€</b></td>
+    </tr>
+    <tr class="good">
+      <td>ROAS</td>
+      <td class="num">1,53×</td>
+      <td class="num">2,42×</td>
+      <td class="num"><b style="color:var(--green)">4,87×</b></td>
+      <td class="num"><b>2,59×</b></td>
+    </tr>
+    <tr>
+      <td>Средний чек</td>
+      <td class="num">62&nbsp;€</td><td class="num">81&nbsp;€</td><td class="num">97&nbsp;€</td>
+      <td class="num"><b>85&nbsp;€</b></td>
+    </tr>
+    <tr>
+      <td>Выручка в день</td>
+      <td class="num">43&nbsp;€</td><td class="num">68&nbsp;€</td>
+      <td class="num"><b style="color:var(--green)">125&nbsp;€</b></td>
+      <td class="num">73&nbsp;€ среднее</td>
+    </tr>
+    <tr class="bad">
+      <td>Операционные потери</td>
+      <td class="num">100&nbsp;€</td><td class="num">0&nbsp;€</td><td class="num">56&nbsp;€</td>
+      <td class="num"><b>156&nbsp;€</b></td>
+    </tr>
+  </table>
+  <p class="note">* Охват не суммируется напрямую — один человек мог видеть рекламу в нескольких периодах.</p>
+</section>
+
+<!-- JULY FORECAST -->
+<section>
+  <h2>Прогноз на июль — и что нужно сделать</h2>
+  <p class="sec-cap">При текущем темпе (125&nbsp;€/день) → 3 750&nbsp;€/месяц. Цель — 5 000&nbsp;€. Разрыв 1 250&nbsp;€.</p>
+
+  <div class="callout blue" style="margin-bottom:0">
+    <span class="t">Как закрыть разрыв 1 250&nbsp;€ до 5 000&nbsp;€ без увеличения бюджета</span>
+    <table style="margin-top:10px;box-shadow:none;border:none;font-size:13.5px">
+      <tr style="background:transparent">
+        <th style="background:transparent;padding:6px 10px;font-size:11.5px">Действие</th>
+        <th class="num" style="background:transparent;padding:6px 10px;font-size:11.5px">Потенциал €/мес</th>
+        <th style="background:transparent;padding:6px 10px;font-size:11.5px">Сложность</th>
+      </tr>
+      <tr style="border-top:1px solid #cfe0f5">
+        <td style="padding:8px 10px">Stripe на 7loc → 107 корзин → 15% conv → +16 заказов</td>
+        <td class="num" style="padding:8px 10px"><b style="color:var(--green)">+1 000&nbsp;€</b></td>
+        <td style="padding:8px 10px"><span class="impact high">1–3 дня</span></td>
+      </tr>
+      <tr style="border-top:1px solid #cfe0f5">
+        <td style="padding:8px 10px">Telegram-алерты → ноль пропущенных заказов</td>
+        <td class="num" style="padding:8px 10px"><b style="color:var(--green)">+150&nbsp;€</b></td>
+        <td style="padding:8px 10px"><span class="impact high">15 минут</span></td>
+      </tr>
+      <tr style="border-top:1px solid #cfe0f5">
+        <td style="padding:8px 10px">Торты → уже в Messenger ✓ → добавить UTM чтобы видеть конверсию</td>
+        <td class="num" style="padding:8px 10px"><b style="color:var(--green)">+200&nbsp;€</b></td>
+        <td style="padding:8px 10px"><span class="impact high">1 час</span></td>
+      </tr>
+      <tr style="border-top:1px solid #cfe0f5">
+        <td style="padding:8px 10px">CRM: второе сообщение лидам через 24ч → повторные продажи</td>
+        <td class="num" style="padding:8px 10px"><b style="color:var(--amber)">+300&nbsp;€</b></td>
+        <td style="padding:8px 10px"><span class="impact med">1–2 недели</span></td>
+      </tr>
+      <tr style="border-top:1px solid #cfe0f5;background:var(--blue-soft)">
+        <td style="padding:8px 10px"><b>Итого потенциал</b></td>
+        <td class="num" style="padding:8px 10px"><b>+1 650&nbsp;€</b></td>
+        <td style="padding:8px 10px">При текущем бюджете</td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<!-- ACTION PLAN -->
+<section>
+  <h2 style="margin-bottom:16px">План июля — три приоритета</h2>
+  <div class="plan">
+    <div class="pcard" style="border-left:4px solid var(--accent)">
+      <div class="ph">1. Stripe <span class="impact high">высокий импакт</span></div>
+      <ol>
+        <li>7loc → Налаштування → Оплати → Stripe → подключить карточку компании</li>
+        <li>Stripe верификация: 1–2 рабочих дня</li>
+        <li>После запуска: тестовый заказ → убедиться что пиксель фиксирует purchase</li>
+        <li>Прогноз: конверсия корзина→заказ с 5% → 15–20%, выручка сайта ×3</li>
+      </ol>
+    </div>
+    <div class="pcard" style="border-left:4px solid var(--amber)">
+      <div class="ph">2. Telegram-алерты на новые заказы <span class="impact high">15 минут</span></div>
+      <ol>
+        <li>Railway → Variables → TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID → сохранить</li>
+        <li>Бот уже поддерживает алерты — только переменные пустые</li>
+        <li>Результат: каждый Messenger-заказ → мгновенное уведомление на кухню</li>
+      </ol>
+    </div>
+    <div class="pcard" style="border-left:4px solid var(--blue)">
+      <div class="ph">3. UTM к рекламе тортов → увидеть конверсию <span class="impact med">30 минут</span></div>
+      <ol>
+        <li>Кампания тортов уже правильно ведёт в Messenger — 117 диалогов/нед по 0,45&nbsp;€/лид.</li>
+        <li>Добавить UTM-параметр в объявление → бот передаёт его в заказ → видим сколько тортов продала реклама.</li>
+        <li>Потенциал: часть из 328&nbsp;€ Messenger-продаж периода — это торты из этой кампании.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+
+<section style="margin-top:32px">
+  <a href="/blinhaus-june-2026-report.xlsx" download
+     style="display:inline-flex;align-items:center;gap:10px;background:#1c1917;color:#fff;
+            text-decoration:none;padding:14px 24px;border-radius:12px;font-weight:700;
+            font-size:15px;transition:opacity .2s">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 2v10m0 0l-3-3m3 3l3-3M3 14v2a1 1 0 001 1h12a1 1 0 001-1v-2" 
+            stroke="#4ade80" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Скачать Excel — Итоги июня 2026
+    <span style="font-size:12px;opacity:.6;font-weight:400">4 листа: сводка, реклама, заказы, клиенты LTV</span>
+  </a>
+  <p style="margin-top:10px;font-size:13px;color:#9ca3af">
+    Файл содержит: сводку KPI по периодам, рекламу Meta по кампаниям, все заказы июня по каналам,
+    базу 99 клиентов с LTV и историей покупок.
+  </p>
+</section>
+
+<footer>
+  Данные: Meta Ads API (act_2218753342313360), пиксель 990892723736650, CRM 7loc (crm.7loc.com),
+  Choice (blinhausvienna.choiceqr.com), ручная таблица лидов Messenger.
+  Три периода: 01–12.06, 12–23.06, 24–30.06.2026. Отчёт не индексируется.
+</footer>
+
+</div>
+</body>
+</html>

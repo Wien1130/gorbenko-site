@@ -1,25 +1,29 @@
-import Header from "./components/Header";
-import Hero from "./components/Hero";
-import Problem from "./components/Problem";
-import Process from "./components/Process";
-import CaseStudy from "./components/CaseStudy";
-import Pricing from "./components/Pricing";
-import About from "./components/About";
-import Contact from "./components/Contact";
-import Footer from "./components/Footer";
+import SiteHeader from "./components/SiteHeader";
+import SiteFooter from "./components/SiteFooter";
+import HomeHero from "./components/home/HomeHero";
+import ClientMarquee from "./components/home/ClientMarquee";
+import StatsRow from "./components/home/StatsRow";
+import ServicesBento from "./components/home/ServicesBento";
+import FeaturedProjects from "./components/home/FeaturedProjects";
+import ConsultationSteps from "./components/home/ConsultationSteps";
+import AboutTeaser from "./components/home/AboutTeaser";
+import HomeFaq from "./components/home/HomeFaq";
+import CTASection from "./components/ui/CTASection";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-      <Header />
-      <Hero />
-      <Problem />
-      <Process />
-      <CaseStudy />
-      <Pricing />
-      <About />
-      <Contact />
-      <Footer />
+      <SiteHeader />
+      <HomeHero />
+      <ClientMarquee />
+      <StatsRow />
+      <ServicesBento />
+      <FeaturedProjects />
+      <ConsultationSteps />
+      <AboutTeaser />
+      <HomeFaq />
+      <CTASection />
+      <SiteFooter />
     </main>
   );
 }
