@@ -1,0 +1,13 @@
+{
+  "name": "Cold Sales CRM",
+  "short_name": "Cold CRM",
+  "description": "CRM холодных продаж Андрея Горбенко",
+  "start_url": "/crm",
+  "scope": "/crm",
+  "display": "standalone",
+  "background_color": "#0d0d0d",
+  "theme_color": "#0d0d0d",
+  "icons": [
+    { "src": "/crm/apple-icon", "sizes": "180x180", "type": "image/png", "purpose": "any" }
+  ]
+}

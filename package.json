@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
     "csv-parse": "^7.0.1",
     "motion": "^12.42.2",
     "next": "16.1.6",

@@ -28,6 +28,8 @@ const nextConfig: NextConfig = {
     "/reports/blinhaus-june-12-23": ["./private-reports/**"],
     "/reports/blinhaus-june-24-30": ["./private-reports/**"],
     "/reports/blinhaus-june-summary": ["./private-reports/**"],
+    "/anton": ["./private-anton/**"],
+    "/anton/calendar.ics": ["./private-anton/**"],
   },
 };
 

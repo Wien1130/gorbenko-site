@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Антон · Время. Голова. Деньги.</title>
+<style>
+  :root{
+    --bg:#0b0e13; --bg2:#11151d; --card:#161b26; --card2:#1a2130;
+    --gold:#d4af6a; --gold-soft:#e8cfa0; --emerald:#34d399; --red:#f87171;
+    --text:#e8e6e1; --muted:#9aa3b2; --line:#242c3c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,'Inter','Segoe UI',sans-serif;line-height:1.6;overflow-x:hidden}
+  section{max-width:980px;margin:0 auto;padding:90px 40px}
+  .reveal{opacity:0;transform:translateY(34px);transition:opacity .8s ease,transform .8s ease}
+  .reveal.on{opacity:1;transform:none}
+  .kicker{font-size:13px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;font-weight:600}
+  h1{font-size:66px;line-height:1.08;font-weight:800;letter-spacing:-.02em}
+  h2{font-size:40px;line-height:1.15;font-weight:800;letter-spacing:-.015em;margin-bottom:14px}
+  .sub{color:var(--muted);font-size:19px;max-width:660px}
+  .hr{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);max-width:980px;margin:0 auto}
+
+  .hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;position:relative}
+  .hero::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;border-radius:50%;
+    background:radial-gradient(circle,rgba(212,175,106,.13),transparent 65%);pointer-events:none}
+  .hero h1 em{font-style:normal;color:var(--gold)}
+  .quote{margin-top:34px;padding:20px 26px;border-left:3px solid var(--gold);background:var(--card);border-radius:0 14px 14px 0;color:var(--gold-soft);font-size:18px;font-style:italic;max-width:560px}
+  .quote small{display:block;margin-top:6px;color:var(--muted);font-style:normal}
+  .quote.wait{margin-top:12px;padding:14px 22px;border-left:2px dashed var(--emerald);max-width:420px;font-size:14.5px;color:var(--muted)}
+  .quote.wait .blank{letter-spacing:.12em;color:var(--emerald);opacity:.7}
+  .quote.wait small{color:var(--emerald);font-size:12.5px}
+  .three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:40px;max-width:720px}
+  .three .t3{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+  .three .t3 b{color:var(--gold);display:block;font-size:17px;margin-bottom:4px}
+  .three .t3 span{font-size:13.5px;color:var(--muted)}
+
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:38px}
+  .col{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:30px}
+  .col.bad{border-top:3px solid var(--red)}
+  .col.good{border-top:3px solid var(--emerald)}
+  .col h3{font-size:15px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:20px}
+  .col.bad h3{color:var(--red)} .col.good h3{color:var(--emerald)}
+  .col ul{list-style:none}
+  .col li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:16px}
+  .col li:last-child{border-bottom:none}
+  .col.bad li::before{content:'✕';position:absolute;left:2px;color:var(--red);font-weight:700}
+  .col.good li::before{content:'✓';position:absolute;left:2px;color:var(--emerald);font-weight:700}
+
+  /* week bars */
+  .weeks{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:38px}
+  .week{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px}
+  .week h3{font-size:14px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:6px}
+  .week .sum{font-size:36px;font-weight:800;margin-bottom:18px}
+  .week.now h3{color:var(--red)} .week.now .sum{color:var(--red)}
+  .week.goal h3{color:var(--emerald)} .week.goal .sum{color:var(--emerald)}
+  .day{display:flex;align-items:center;gap:12px;margin:7px 0}
+  .day .dn{width:30px;font-size:13px;color:var(--muted);flex-shrink:0}
+  .day .bar{height:20px;border-radius:5px;position:relative;min-width:4px;transition:width 1s ease}
+  .week.now .bar{background:linear-gradient(90deg,rgba(248,113,113,.75),rgba(248,113,113,.35))}
+  .week.goal .bar{background:linear-gradient(90deg,rgba(52,211,153,.75),rgba(52,211,153,.3))}
+  .day .h{font-size:12.5px;color:var(--muted);flex-shrink:0}
+  .descent{margin-top:26px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px}
+  .descent h3{font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+  .drow{display:flex;align-items:center;gap:14px;margin:10px 0}
+  .drow .dl{width:170px;font-size:14.5px;color:var(--muted);flex-shrink:0}
+  .drow .dbar{height:24px;border-radius:6px;background:linear-gradient(90deg,rgba(212,175,106,.8),rgba(212,175,106,.25));display:flex;align-items:center;justify-content:flex-end;padding-right:10px;font-size:13px;font-weight:700;color:#0b0e13;min-width:60px;transition:width 1s ease}
+  .drow.last .dbar{background:linear-gradient(90deg,rgba(52,211,153,.85),rgba(52,211,153,.3));color:#04140d}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:38px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px;transition:transform .3s,border-color .3s}
+  .card:hover{transform:translateY(-4px);border-color:var(--gold)}
+  .card .tag{display:inline-block;font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);border-radius:100px;padding:4px 14px;margin-bottom:16px}
+  .card h3{font-size:22px;margin-bottom:8px}
+  .card p{color:var(--muted);font-size:15px}
+  .card .do{margin-top:14px;padding-top:14px;border-top:1px dashed var(--line);font-size:15px;color:var(--gold-soft)}
+  .card .do b{color:var(--gold)}
+  .opp{margin-top:22px;background:linear-gradient(135deg,var(--card),var(--card2));border:1px solid var(--gold);border-radius:18px;padding:32px 30px;position:relative;overflow:hidden}
+  .opp::before{content:'';position:absolute;top:-80px;right:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(212,175,106,.14),transparent 68%);pointer-events:none}
+  .opp .tag{display:inline-block;font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);border-radius:100px;padding:4px 14px;margin-bottom:14px}
+  .opp h3{font-size:24px;margin-bottom:8px}
+  .opp p{color:var(--muted);font-size:15.5px;max-width:820px}
+  .opp-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:22px}
+  .opp-row .o{background:rgba(11,14,19,.45);border:1px solid var(--line);border-radius:14px;padding:18px 16px}
+  .opp-row .o b{display:block;color:var(--gold);font-size:14px;margin-bottom:6px}
+  .opp-row .o span{font-size:13.5px;color:var(--gold-soft);line-height:1.5}
+  @media(max-width:820px){ .opp-row{grid-template-columns:1fr} }
+
+  .cycle{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:38px}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 20px}
+  .step .n{width:34px;height:34px;border-radius:50%;background:var(--gold);color:#0b0e13;font-weight:800;display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:15px}
+  .step h4{font-size:16px;margin-bottom:6px}
+  .step p{font-size:13.5px;color:var(--muted)}
+  .step .t{color:var(--gold);font-size:12.5px;letter-spacing:.08em;margin-bottom:8px;font-weight:600}
+
+  .months{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:38px}
+  .month{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px 20px;text-align:center;position:relative;overflow:hidden;cursor:pointer;transition:border-color .3s}
+  .month:hover{border-color:var(--gold)}
+  .month .bar{position:absolute;bottom:0;left:0;width:100%;background:linear-gradient(180deg,rgba(212,175,106,.16),rgba(212,175,106,.05));z-index:0}
+  .month>*{position:relative;z-index:1}
+  .month .mn{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+  .month .per{font-size:12px;color:var(--muted);margin-bottom:10px}
+  .month .calls{font-size:42px;font-weight:800;color:var(--gold)}
+  .month .calls small{font-size:14px;color:var(--muted);font-weight:400}
+  .month .expl{font-size:12.5px;color:var(--gold-soft);margin-top:4px}
+  .month p{font-size:13px;color:var(--muted);margin-top:8px}
+  .month .open-hint{font-size:11.5px;color:var(--muted);margin-top:10px;opacity:.7}
+  .dates{display:none;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line);text-align:left}
+  .month.open .dates{display:block}
+  .dates .dm{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:8px 0 4px}
+  .chip{display:inline-block;background:var(--card2);border:1px solid var(--line);border-radius:7px;padding:2px 8px;margin:2px;font-size:12.5px;color:var(--gold-soft)}
+  .chip.float{border-style:dashed;color:var(--muted)}
+  .taper-note{margin-top:26px;text-align:center;font-size:20px;color:var(--gold-soft);font-style:italic}
+  .cal-note{margin-top:18px;text-align:center;font-size:14px;color:var(--muted)}
+
+  .kpi{margin-top:38px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:36px}
+  .kpi li{list-style:none;padding:13px 0 13px 42px;position:relative;font-size:17.5px;border-bottom:1px solid var(--line)}
+  .kpi li:last-child{border-bottom:none}
+  .kpi li::before{content:'';position:absolute;left:0;top:14px;width:24px;height:24px;border-radius:7px;border:2px solid var(--emerald)}
+  .kpi li b{color:var(--emerald)}
+
+  .build{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:38px}
+  .b{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px}
+  .b .ic{font-size:26px;margin-bottom:12px}
+  .b h4{font-size:16.5px;margin-bottom:6px}
+  .b p{font-size:13.5px;color:var(--muted)}
+
+  table{width:100%;border-collapse:collapse;margin-top:38px;background:var(--card);border-radius:18px;overflow:hidden}
+  th,td{padding:15px 18px;text-align:left;border-bottom:1px solid var(--line);font-size:15.5px}
+  th{background:var(--card2);color:var(--gold);font-size:12.5px;letter-spacing:.12em;text-transform:uppercase}
+  td.num{font-variant-numeric:tabular-nums;font-weight:600}
+  tr.total td{background:var(--card2);font-weight:800;color:var(--gold);border-bottom:none;font-size:17px}
+  .value-strip{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:26px}
+  .v{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;text-align:center}
+  .v .big{font-size:32px;font-weight:800;color:var(--emerald)}
+  .v p{font-size:13.5px;color:var(--muted);margin-top:6px}
+
+  .price-hero{margin-top:38px;background:linear-gradient(135deg,var(--card),var(--card2));border:1px solid var(--gold);border-radius:22px;padding:50px 40px;text-align:center;position:relative;overflow:hidden}
+  .price-hero::before{content:'';position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:500px;height:280px;background:radial-gradient(ellipse,rgba(212,175,106,.16),transparent 70%)}
+  .price-hero .p{font-size:76px;font-weight:800;color:var(--gold);letter-spacing:-.02em;position:relative}
+  .price-hero .p small{font-size:26px;color:var(--muted);font-weight:400}
+  .price-hero .per{color:var(--muted);margin-top:6px;position:relative}
+  .pays{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:34px}
+  .pay{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 16px;text-align:center}
+  .pay .m{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .pay .a{font-size:30px;font-weight:800;color:var(--gold)}
+  .pay p{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .aside-costs{margin-top:22px;background:var(--card);border:1px dashed var(--line);border-radius:14px;padding:20px 26px;color:var(--muted);font-size:15px}
+  .aside-costs b{color:var(--text)}
+  .gold-note{margin-top:22px;background:linear-gradient(135deg,var(--card),var(--card2));border:1px solid var(--gold);border-radius:18px;padding:28px 28px 26px;position:relative;overflow:hidden}
+  .gold-note::before{content:'';position:absolute;top:-70px;left:40%;width:280px;height:180px;background:radial-gradient(ellipse,rgba(212,175,106,.16),transparent 70%);pointer-events:none}
+  .gold-note .gn-k{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:8px}
+  .gold-note h3{font-size:26px;color:var(--gold);margin-bottom:10px;letter-spacing:-.015em}
+  .gold-note p{color:var(--gold-soft);font-size:16px;line-height:1.6;max-width:780px;position:relative}
+  .gold-note p strong{color:var(--text);font-weight:700}
+
+  .rules{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:38px}
+  .rule{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:30px}
+  .rule h4{color:var(--gold);font-size:17px;margin-bottom:12px}
+  .rule li{font-size:15px;color:var(--muted)}
+  .rule ul{list-style:none}
+  .rule li{padding:6px 0 6px 24px;position:relative}
+  .rule li::before{content:'—';position:absolute;left:0;color:var(--gold)}
+
+  .start{margin-top:38px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .s{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;font-size:14.5px;color:var(--muted)}
+  .s b{display:block;color:var(--gold);margin-bottom:6px;font-size:13.5px;letter-spacing:.08em}
+  .fin{margin-top:70px;text-align:center;color:var(--muted);font-size:15px}
+  .fin .logo{font-weight:800;letter-spacing:.2em;color:var(--gold);font-size:13px;text-transform:uppercase;margin-bottom:8px}
+
+  @media(max-width:820px){
+    h1{font-size:40px} h2{font-size:30px} section{padding:60px 22px}
+    .duo,.grid2,.cycle,.months,.build,.value-strip,.pays,.rules,.start,.weeks,.three{grid-template-columns:1fr}
+    .price-hero .p{font-size:52px}
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="kicker reveal">Совместная работа · 1 сентября — 31 декабря 2026</div>
+  <h1 class="reveal">Время. Голова.<br><em>И дожать то, что работает.</em></h1>
+  <p class="sub reveal" style="margin-top:22px">Не консультации и не «просто маркетинг». Ежедневная совместная работа: возвращаем время, чистим голову, строим систему, которая работает без тебя.</p>
+  <div class="three reveal">
+    <div class="t3"><b>Время</b><span>вернуть часы недели и утро себе</span></div>
+    <div class="t3"><b>Голова</b><span>цифры вместо хаоса, ноль «страшных» ящиков</span></div>
+    <div class="t3"><b>Деньги</b><span>дожать то, что уже работает</span></div>
+  </div>
+  <div class="quote reveal">«Паровоз несётся на полной скорости, а я просто за ним пытаюсь успеть»<small>— Антон, 15.08.2026</small></div>
+  <div class="quote wait reveal">« <span class="blank">………………</span> »<small>— Антон, 15.12.2026 · место для твоей цитаты</small></div>
+</section>
+
+<div class="hr"></div>
+
+<section>
+  <div class="kicker reveal">Ситуация</div>
+  <h2 class="reveal">Сейчас → 31 декабря</h2>
+  <div class="duo">
+    <div class="col bad reveal">
+      <h3>Сегодня</h3>
+      <ul>
+        <li>~65 часов в неделю: офис 10:00–20:00 + вечера + суббота</li>
+        <li>«Ловля яиц»: живёшь только срочным</li>
+        <li>Ноль цифр: нет отчётов, эффективность неизвестна</li>
+        <li>Страшно открыть почту и чат таргет-агентства</li>
+        <li>Таск-менеджер не открывался 3 месяца</li>
+        <li>Утренние ритуалы — 1 раз из 7</li>
+        <li>Подъём без ресурса (Netflix уже отключён — первый рельс снят, зачёт)</li>
+      </ul>
+    </div>
+    <div class="col good reveal">
+      <h3>31 декабря</h3>
+      <ul>
+        <li>4 рабочих дня + пятница до 15:00 (~41 ч) — воскресенья полностью твои</li>
+        <li>Суббота: 2 в месяц по 4 часа под клиентов — твой выбор, остальные выходные</li>
+        <li>Утро 6:00–9:00 твоё — минимум 5 дней из 7</li>
+        <li>Дашборд: Киев и Вена раз в неделю, Голландия — ревью раз в месяц</li>
+        <li>Ассистент закрывает почту, календарь, личные задачи</li>
+        <li>Регламент: сотрудники пишут в бот, не звонят</li>
+        <li>Ни одного «страшного» ящика — все 5 почт разобраны, спам отсечён</li>
+        <li>Час в день на развитие — стабильно</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<section>
+  <div class="kicker reveal">Часы — честный расчёт</div>
+  <h2 class="reveal">Твоя неделя: сейчас и к 31 декабря</h2>
+  <div class="weeks">
+    <div class="week now reveal">
+      <h3>Неделя сейчас</h3>
+      <div class="sum">~65 ч</div>
+      <div class="day"><span class="dn">Пн</span><div class="bar" style="width:62%"></div><span class="h">~9 ч · голландцы + финансы Creatore</span></div>
+      <div class="day"><span class="dn">Вт</span><div class="bar" style="width:76%"></div><span class="h">~11 ч</span></div>
+      <div class="day"><span class="dn">Ср</span><div class="bar" style="width:76%"></div><span class="h">~11 ч</span></div>
+      <div class="day"><span class="dn">Чт</span><div class="bar" style="width:76%"></div><span class="h">~11 ч</span></div>
+      <div class="day"><span class="dn">Пт</span><div class="bar" style="width:76%"></div><span class="h">~11 ч</span></div>
+      <div class="day"><span class="dn">Сб</span><div class="bar" style="width:55%"></div><span class="h">~8 ч · салон</span></div>
+      <div class="day"><span class="dn">Вс</span><div class="bar" style="width:18%"></div><span class="h">~2–3 ч · хвосты</span></div>
+    </div>
+    <div class="week goal reveal">
+      <h3>Неделя к 31 декабря</h3>
+      <div class="sum">~41 ч</div>
+      <div class="day"><span class="dn">Пн</span><div class="bar" style="width:62%"></div><span class="h">~9 ч</span></div>
+      <div class="day"><span class="dn">Вт</span><div class="bar" style="width:62%"></div><span class="h">~9 ч</span></div>
+      <div class="day"><span class="dn">Ср</span><div class="bar" style="width:62%"></div><span class="h">~9 ч</span></div>
+      <div class="day"><span class="dn">Чт</span><div class="bar" style="width:62%"></div><span class="h">~9 ч</span></div>
+      <div class="day"><span class="dn">Пт</span><div class="bar" style="width:34%"></div><span class="h">~5 ч · 10:00–15:00</span></div>
+      <div class="day"><span class="dn">Сб</span><div class="bar" style="width:14%"></div><span class="h">2 в месяц по 4 ч · твои клиенты, твой выбор</span></div>
+      <div class="day"><span class="dn">Вс</span><div class="bar" style="width:2%"></div><span class="h">0 ч</span></div>
+    </div>
+  </div>
+  <div class="descent reveal">
+    <h3>Спуск по месяцам — к чему целимся</h3>
+    <div class="drow"><span class="dl">Сейчас</span><div class="dbar" style="width:100%">~65 ч/нед</div></div>
+    <div class="drow"><span class="dl">к 1 октября</span><div class="dbar" style="width:92%">~60 ч/нед</div></div>
+    <div class="drow"><span class="dl">к 1 ноября</span><div class="dbar" style="width:81%">~53 ч/нед</div></div>
+    <div class="drow"><span class="dl">к 1 декабря</span><div class="dbar" style="width:72%">~47 ч/нед</div></div>
+    <div class="drow last"><span class="dl">к 31 декабря</span><div class="dbar" style="width:63%">~41 ч/нед</div></div>
+  </div>
+  <p class="sub reveal" style="margin-top:22px">Минус ~24 часа каждую неделю — это ~100 часов в месяц, возвращённых тебе. Откуда берутся: ассистент, боты, регламенты, сотрудница закрывает субботу, отказ от лишнего.</p>
+</section>
+
+<div class="hr"></div>
+
+<section>
+  <div class="kicker reveal">Карта твоего мира</div>
+  <h2 class="reveal">4 контура — что делаем в каждом</h2>
+  <div class="grid2">
+    <div class="card reveal">
+      <span class="tag">Контур 1</span>
+      <h3>Creatore Киев</h3>
+      <p>Управляющая сильная, но финансы, оплаты, таможня, логистика и маркетинг — на тебе. Созвоны «по требованию» съедают энергию.</p>
+      <div class="do"><b>Делаем:</b> фиксированный слот раз в неделю, голосовой бот для всего остального, финансы и маркетинг → ассистенту по чек-листу. Один экран: продажи, деньги на счетах и месячный отчёт «сколько продали — сколько осталось».</div>
+    </div>
+    <div class="card reveal">
+      <span class="tag">Контур 2</span>
+      <h3>Creatore Вена</h3>
+      <p>Сотрудница учится, ты проверяешь каждый заказ. Портные съедают 100–150 € за поход. Ключевые клиенты только на тебе.</p>
+      <div class="do"><b>Делаем:</b> за 4 месяца выводим сотрудницу в самостоятельность: мерки и перемерки — её зона ответственности; к декабрю пятница после 15:00 и субботы (кроме твоих двух клиентских) — на ней. Портные: собираем объём, передоговариваемся на пакетные цены.</div>
+    </div>
+    <div class="card reveal">
+      <span class="tag">Контур 3</span>
+      <h3>Голландцы</h3>
+      <p>Около четырёх часов в день плюс перелёты. Запросы из пятидесяти–шестидесяти салонов сыплются как попало. Ты сам сказал: со структурой хватит двух часов.</p>
+      <div class="do"><b>Делаем:</b> рабочие границы как у них — с девяти до пяти, в выходные не отвечаем. Готовые ответы на повторяющиеся вопросы. Раз в месяц час–два: глянуть текущих клиентов и решить, в какие страны идти за новыми. К ноябрю — спокойный разговор про то, как эта работа должна быть устроена.</div>
+    </div>
+    <div class="card reveal">
+      <span class="tag">Контур 4</span>
+      <h3>Личное</h3>
+      <p>Недвижимость, продажа дома, налоги, сын, личные финансы, режим, час развития, который срывается. Плюс то, что исчезло: хобби, отдых, друзья.</p>
+      <div class="do"><b>Делаем:</b> бумаги и счета → ассистенту. Сон и утро 6:00–9:00 защищены с первого дня. В календаре появляются живые окна: хобби, отдых, встречи с друзьями — не «если останется время», а как обычные дела.</div>
+    </div>
+  </div>
+  <div class="opp reveal">
+    <span class="tag">Отдельно в этих 4 месяцах</span>
+    <h3>Большие возможности — не случайно, а по календарю</h3>
+    <p>Это не наш утренний созвон. Это встреча с живым человеком — партнёром, инвестором, тем, кто уже стучится, или с идеей, которую ты сам хочешь запустить. Сейчас такие разговоры пролетают: нет ни часа сесть, ни сил подумать, чего ты хочешь. Правило: минимум одна такая встреча каждые два месяца — шесть в год. В этих четырёх месяцах проводим две: заранее спланированные, подготовленные, спокойно разобранные после.</p>
+    <div class="opp-row">
+      <div class="o"><b>Выписать</b><span>Все возможности за последнее время и всё, чего хочется. Отдельный список — не в голове, а на бумаге.</span></div>
+      <div class="o"><b>Подготовить и провести</b><span>Две встречи до 31 декабря. Выделяем время, силы и желание заранее — не «как получится».</span></div>
+      <div class="o"><b>Разобрать</b><span>После каждой: что сработало, что нет, что берём в следующий круг. Так это становится ритмом, а не удачей.</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<section>
+  <div class="kicker reveal">Как это физически устроено</div>
+  <h2 class="reveal">Один рабочий день</h2>
+  <div class="cycle">
+    <div class="step reveal" style="border-color:var(--red)">
+      <div class="n">1</div>
+      <div class="t">6:00–9:00</div>
+      <h4>Твоё утро</h4>
+      <p>Спорт, йога, медитация. Телефон не трогаем.</p>
+      <p style="margin-top:10px;color:var(--red);font-weight:700">В нём — 1 час личного развития. Самый главный час дня. Защищаем в первую очередь.</p>
+    </div>
+    <div class="step reveal">
+      <div class="n">2</div>
+      <div class="t">9:00–10:00</div>
+      <h4>Созвон-планирование</h4>
+      <p>Вместе: разбор вчера, план на день, что забираем из рутины в систему. В день без созвона — твоё личное планирование, час.</p>
+    </div>
+    <div class="step reveal">
+      <div class="n">3</div>
+      <div class="t">Днём + 5 мин вечером</div>
+      <h4>Голосовой отчёт</h4>
+      <p>В течение дня наговариваешь в бот сделанное — просто словами, по ходу. Вечером 5 минут: суммируешь день.</p>
+    </div>
+    <div class="step reveal">
+      <div class="n">4</div>
+      <div class="t">Ночью</div>
+      <h4>Мастерская</h4>
+      <p>Всё наговоренное разбирается и раскладывается: кому отдать, что автоматизировать. К утру готова выжимка — обсуждаем на созвоне.</p>
+    </div>
+  </div>
+  <p class="sub reveal" style="margin-top:26px">Из твоих ежедневных отчётов сами вырастают карта бизнеса, инструкции и задачи для ассистента. Тебе не нужно ничего «описывать» — ты просто говоришь.</p>
+</section>
+
+<div class="hr"></div>
+
+<section>
+  <div class="kicker reveal">4 месяца</div>
+  <h2 class="reveal">Интенсивно в начале — свобода в конце</h2>
+  <div class="months">
+    <div class="month reveal" onclick="this.classList.toggle('open')"><div class="bar" style="height:100%"></div>
+      <div class="mn">Месяц 1</div><div class="per">01.09 – 30.09</div>
+      <div class="calls">4+1<small> в нед</small></div>
+      <div class="expl">4 утренних созвона (пн–чт) + суббота: обзор недели</div>
+      <p>Ежедневное со-планирование. Найм ассистента, карта бизнеса, боты.</p>
+      <div class="dates">
+        <div class="dm">03–07.09 · плавающий график (мой отпуск)</div>
+        <span class="chip">чт 3 · старт</span><span class="chip float">сб 5 · подтверждаем накануне</span>
+        <div class="dm">Сентябрь · полный ритм</div>
+        <span class="chip">вт 8</span><span class="chip">ср 9</span><span class="chip">чт 10</span><span class="chip">сб 12</span>
+        <span class="chip">пн 14</span><span class="chip">вт 15</span><span class="chip">ср 16</span><span class="chip">чт 17</span><span class="chip">сб 19</span>
+        <span class="chip">пн 21</span><span class="chip">вт 22</span><span class="chip">ср 23</span><span class="chip">чт 24</span><span class="chip">сб 26</span>
+        <span class="chip">пн 28</span><span class="chip">вт 29</span><span class="chip">ср 30</span>
+      </div>
+      <div class="open-hint">▾ нажми — даты созвонов</div>
+    </div>
+    <div class="month reveal" onclick="this.classList.toggle('open')"><div class="bar" style="height:72%"></div>
+      <div class="mn">Месяц 2</div><div class="per">01.10 – 31.10</div>
+      <div class="calls">3+1<small> в нед</small></div>
+      <div class="expl">3 утренних созвона (пн·ср·пт) + суббота</div>
+      <p>Ассистент в работе. Дашборд живёт. Один день планируешь сам.</p>
+      <div class="dates">
+        <div class="dm">Октябрь</div>
+        <span class="chip">пт 2</span><span class="chip">сб 3</span>
+        <span class="chip">пн 5</span><span class="chip">ср 7</span><span class="chip">пт 9</span><span class="chip">сб 10</span>
+        <span class="chip">пн 12</span><span class="chip">ср 14</span><span class="chip">пт 16</span><span class="chip">сб 17</span>
+        <span class="chip">пн 19</span><span class="chip">ср 21</span><span class="chip">пт 23</span><span class="chip">сб 24</span>
+        <span class="chip">пн 26</span><span class="chip">ср 28</span><span class="chip">пт 30</span><span class="chip">сб 31</span>
+      </div>
+      <div class="open-hint">▾ нажми — даты созвонов</div>
+    </div>
+    <div class="month reveal" onclick="this.classList.toggle('open')"><div class="bar" style="height:48%"></div>
+      <div class="mn">Месяц 3</div><div class="per">01.11 – 30.11</div>
+      <div class="calls">2+1<small> в нед</small></div>
+      <div class="expl">2 утренних созвона (вт·чт) + суббота</div>
+      <p>Система несёт сама. Кейс для голландцев. Дожим: портные, реклама.</p>
+      <div class="dates">
+        <div class="dm">Ноябрь</div>
+        <span class="chip">вт 3</span><span class="chip">чт 5</span><span class="chip">сб 7</span>
+        <span class="chip">вт 10</span><span class="chip">чт 12</span><span class="chip">сб 14</span>
+        <span class="chip">вт 17</span><span class="chip">чт 19</span><span class="chip">сб 21</span>
+        <span class="chip">вт 24</span><span class="chip">чт 26</span><span class="chip">сб 28</span>
+      </div>
+      <div class="open-hint">▾ нажми — даты созвонов</div>
+    </div>
+    <div class="month reveal" onclick="this.classList.toggle('open')"><div class="bar" style="height:26%"></div>
+      <div class="mn">Месяц 4</div><div class="per">01.12 – 31.12</div>
+      <div class="calls">1+1<small> в нед</small></div>
+      <div class="expl">1 утренний созвон (вт) + суббота</div>
+      <p>Финальный замер против сентября. План на январь–март. Новый год — в новой реальности.</p>
+      <div class="dates">
+        <div class="dm">Декабрь</div>
+        <span class="chip">вт 1</span><span class="chip">сб 5</span>
+        <span class="chip">вт 8</span><span class="chip">сб 12</span>
+        <span class="chip">вт 15</span><span class="chip">сб 19</span>
+        <span class="chip">вт 22</span>
+        <span class="chip" style="border-color:var(--emerald);color:var(--emerald)">вт 29 · финал</span>
+      </div>
+      <div class="open-hint">▾ нажми — даты созвонов</div>
+    </div>
+  </div>
+  <p class="taper-note reveal">С каждым месяцем система берёт на себя больше — а у тебя всё больше свободы. Это и есть результат.</p>
+  <p class="cal-note reveal" style="margin-top:22px"><a href="/anton/calendar.ics" style="display:inline-block;background:var(--gold);color:#0b0e13;font-weight:700;padding:12px 28px;border-radius:100px;text-decoration:none;font-size:15px">📅 Добавить все созвоны в календарь</a><br><span style="font-size:12.5px;opacity:.7;display:inline-block;max-width:520px;margin-top:8px;line-height:1.6">Как это работает: нажимаешь — скачивается файл-календарь. Открываешь его — телефон сам предложит добавить все 57 созвонов. На iPhone: «Добавить все». На Android / Google Календарь: файл откроется — жми «Сохранить». Всё, созвоны в твоём календаре до 31 декабря, с напоминаниями.</span></p>
+</section>
+
+<div class="hr"></div>
+
+<section>
+  <div class="kicker reveal">Что строится руками</div>
+  <h2 class="reveal">Системы, которые остаются с тобой</h2>
+  <div class="build">
+    <div class="b reveal"><div class="ic">👤</div><h4>Личный ассистент</h4><p>Вакансия, отбор анкет и тестовых с AI, собеседования веду я. Одно финальное собеседование проводим вместе (1,5–2 ч) — ты подсвечиваешь, что важно. Удалённо, 700–900 €/мес.</p></div>
+    <div class="b reveal"><div class="ic">🤖</div><h4>Голосовые боты</h4><p>Для тебя и сотрудников: наговорил — система расшифровала, разложила, поставила задачу.</p></div>
+    <div class="b reveal"><div class="ic">📊</div><h4>Дашборд цифр</h4><p>Киев и Вена на одном экране: продажи, деньги, месячный отчёт. Раз в неделю — 10 минут, и ты всё знаешь. Голландия — спокойный просмотр раз в месяц в твоих цифрах, которые уже есть.</p></div>
+    <div class="b reveal"><div class="ic">📋</div><h4>Карта и инструкции</h4><p>Кто что делает во всех бизнесах. Написано один раз — работает без тебя.</p></div>
+    <div class="b reveal"><div class="ic">🧠</div><h4>AI в каждую щель</h4><p>Каждая задача проходит вопрос: «как это сделает AI или другой человек?» Настраиваю под тебя лично.</p></div>
+    <div class="b reveal"><div class="ic">🛡️</div><h4>Защита режима</h4><p>Сон-протокол, утренний блок, правила «кто и когда может тебя дёргать».</p></div>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<section>
+  <div class="kicker reveal">Цена</div>
+  <h2 class="reveal">20 000 € — что в них входит</h2>
+  <table class="reveal">
+    <tr><th>Период</th><th>Созвоны</th><th>Разбор отчётов + связь</th><th>Сборка систем и найм</th><th>Часы</th></tr>
+    <tr><td>Месяц 1 · 01.09–30.09</td><td class="num">19 ч</td><td class="num">~14 ч</td><td class="num">~30 ч</td><td class="num">~63 ч</td></tr>
+    <tr><td>Месяц 2 · 01.10–31.10</td><td class="num">18 ч</td><td class="num">~10 ч</td><td class="num">~18 ч</td><td class="num">~46 ч</td></tr>
+    <tr><td>Месяц 3 · 01.11–30.11</td><td class="num">12 ч</td><td class="num">~8 ч</td><td class="num">~15 ч</td><td class="num">~35 ч</td></tr>
+    <tr><td>Месяц 4 · 01.12–31.12</td><td class="num">8 ч</td><td class="num">~6 ч</td><td class="num">~9 ч</td><td class="num">~23 ч</td></tr>
+    <tr><td>Резерв на непредвиденное</td><td></td><td></td><td></td><td class="num">~15 ч</td></tr>
+    <tr class="total"><td colspan="4">Всего работы</td><td class="num">~180 ч</td></tr>
+  </table>
+  <div class="hr" style="margin:44px 0"></div>
+  <div class="kicker reveal">Твоя сторона</div>
+  <h2 class="reveal" style="font-size:34px">Что возвращается тебе</h2>
+  <div class="value-strip">
+    <div class="v reveal"><div class="big">≈ 95 €</div><p>стоит час твоего времени уже сейчас: голландцы платят ~8 300 €/мес за ~85–90 часов</p></div>
+    <div class="v reveal"><div class="big">−100 ч/мес</div><p>столько часов возвращаем тебе к декабрю: с ~65 до ~41 ч/нед</p></div>
+    <div class="v reveal"><div class="big">≈ 9 500 €</div><p>ценность возвращённого времени каждый месяц — по твоей же ставке. Работа окупается за первые же месяцы</p></div>
+  </div>
+  <div class="gold-note reveal">
+    <div class="gn-k">Плюс то, что не измерить часами</div>
+    <h3>Большие возможности</h3>
+    <p>Встреча не «поболтать», а заранее выбранный разговор: новый бизнес, партнёрство, человек, который полгода не может до тебя достучаться. Мы вместе выписываем, чего ты хочешь, готовим встречу, проводим её и разбираем после. <strong>Каждые два месяца — одна. Шесть в год. В этих четырёх месяцах — две.</strong> Ритм остаётся с тобой, а не «как получится».</p>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<section>
+  <div class="kicker reveal">Инвестиция</div>
+  <h2 class="reveal">Одна работа. Один результат.</h2>
+  <div class="price-hero reveal">
+    <div class="p">20 000 <small>€</small></div>
+    <div class="per">1 сентября — 31 декабря · оплата помесячно вперёд, до 1-го числа каждого месяца</div>
+  </div>
+  <div class="pays">
+    <div class="pay reveal"><div class="m">Сентябрь</div><div class="a">7 000</div><p>до четверга 20.08 · ежедневный режим, найм, стройка</p></div>
+    <div class="pay reveal"><div class="m">Октябрь</div><div class="a">5 500</div><p>до четверга 1.10 · системы встают на рельсы</p></div>
+    <div class="pay reveal"><div class="m">Ноябрь</div><div class="a">4 500</div><p>до воскресенья 1.11 · дожим денег и рычагов</p></div>
+    <div class="pay reveal"><div class="m">Декабрь</div><div class="a">3 000</div><p>до вторника 1.12 · замер, план, передача</p></div>
+  </div>
+  <div class="aside-costs reveal">Отдельно твои прямые расходы (не мне): ассистент <b>700–900 €/мес</b> · инструменты и AI-сервисы <b>~250 €/мес</b> · размещение вакансий <b>по факту (~50–150 €)</b>. Всё, что построено — боты, дашборды, инструкции — <b>остаётся твоей собственностью</b>.</div>
+  <div class="aside-costs reveal" style="border-color:var(--gold);color:var(--gold-soft)"><b style="color:var(--gold)">Решение и первая часть 7 000 € — до четверга 20.08.</b> Оплата сейчас — это твоё обязательство перед самим собой: ты отдыхаешь спокойно, зная, что 3-го стартуем, а я за это время готовлю систему и вакансию ассистента. Ты возвращаешься 2-го — и мы не тратим ни дня на «раскачаться». Если нет — я расчищаю утренние слоты под другую работу.<br><br>Дальше — тоже вперёд, до 1-го числа: <b style="color:var(--gold)">1 октября 5 500 €</b> · <b style="color:var(--gold)">1 ноября 4 500 €</b> · <b style="color:var(--gold)">1 декабря 3 000 €</b>.</div>
+</section>
+
+<div class="hr"></div>
+
+<section>
+  <div class="kicker reveal">Правила игры</div>
+  <h2 class="reveal">Обязательства двух сторон</h2>
+  <div class="rules">
+    <div class="rule reveal">
+      <h4>Я обязуюсь</h4>
+      <ul>
+        <li>Каждый созвон — по согласованному календарю, без переносов с моей стороны</li>
+        <li>Исключение согласовано заранее: 03–07.09 плавающий график (мой отпуск), созвоны 3-го и 5-го подтверждаем накануне</li>
+        <li>Все системы строю сам — тебе не нужно «идти разбираться»</li>
+        <li>Выжимка твоего дня — к утреннему созвону, всегда</li>
+        <li>Полная конфиденциальность: всё остаётся между нами</li>
+      </ul>
+    </div>
+    <div class="rule reveal">
+      <h4>Ты обязуешься</h4>
+      <ul>
+        <li>Утренний созвон и вечерние 5 минут голосом — святое</li>
+        <li>Решения (ассистент, регламенты) — не откладываются</li>
+        <li>Пропущенный созвон или отложенное решение сдвигает срок результата — график оплат остаётся</li>
+        <li>Оплата — помесячно вперёд: 20.08 · 1.10 · 1.11 · 1.12</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<section>
+  <div class="kicker reveal">Если да — как стартуем</div>
+  <h2 class="reveal">От решения до первого созвона</h2>
+  <div class="start">
+    <div class="s reveal"><b>Сейчас, 16–19.08</b>Спокойно изучаешь предложение, обсуждаешь сам с собой, задаёшь мне любые вопросы. Решение — на холодную голову.</div>
+    <div class="s reveal"><b>До чт 20.08</b>Решение + оплата первой части (счёт уже у тебя). Это твоё обязательство перед самим собой — дальше отдыхаешь со спокойной головой.</div>
+    <div class="s reveal"><b>20.08 – 02.09</b>Ты по-настоящему отдыхаешь: море, сестра, друзья, ноль работы. Я строю: вакансия ассистента, голосовой бот отчётов, структура системы. 2-го вечером ты в Вене.</div>
+    <div class="s reveal"><b>Чт 03.09 · 9:00</b>Первый созвон-планирование. Погнали. В первые дни передаёшь доступы: почты, рекламные кабинеты (Google/Meta), GA4, чат таргет-агентства. С 08.09 — полный ритм 4+1.</div>
+  </div>
+  <div class="fin reveal">
+    <div class="logo">Gorbenko · Marketing & AI</div>
+    Андрей Горбенко · gorbenko.at · конфиденциально, только для Антона
+  </div>
+</section>
+
+<script>
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
+}), { threshold: .12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

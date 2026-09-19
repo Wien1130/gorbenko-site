@@ -1,62 +1,36 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { CRM_COOKIE, crmToken } from "../lib/crm-auth";
-import { fetchLeadRows } from "../lib/cold-leads";
-import { computeColdSalesStats } from "../lib/cold-leads-stats";
-import { fetchDailyPlans, computePlanVsActual, averagePlanMatch } from "../lib/plans";
-import { fetchResistanceLog, matchResistanceContext } from "../lib/resistance";
-import ColdSalesOverview from "../components/ColdSalesOverview";
-import LeadsTable from "../components/LeadsTable";
-import PlanVsActual from "../components/PlanVsActual";
-import FearCard from "../components/FearCard";
+import { fetchLeads, fetchDueReminders, getSql } from "../lib/crm/db";
+import CrmHome from "../components/crm/CrmHome";
 
 export const dynamic = "force-dynamic";
 
 export default async function CrmPage() {
   const cookieStore = await cookies();
-  const cookie = cookieStore.get(CRM_COOKIE)?.value;
-  if (cookie !== crmToken()) {
-    redirect("/crm/login");
-  }
+  if (cookieStore.get(CRM_COOKIE)?.value !== crmToken()) redirect("/crm/login");
 
-  const [rows, plans, resistance] = await Promise.all([
-    fetchLeadRows(),
-    fetchDailyPlans(),
-    fetchResistanceLog(),
+  const sql = getSql();
+  const [leads, reminders, counts] = await Promise.all([
+    fetchLeads(),
+    fetchDueReminders(),
+    sql
+      ? sql`SELECT
+            (SELECT count(*) FROM activities WHERE entry_type = 'cold_touch')::int AS touches,
+            (SELECT count(*) FROM leads WHERE stage IN ('meeting_tentative','meeting_confirmed','meeting_done'))::int AS meetings,
+            (SELECT count(*) FROM leads WHERE stage = 'won')::int AS won`
+      : Promise.resolve([{ touches: 0, meetings: 0, won: 0 }]),
   ]);
-  const stats = computeColdSalesStats(rows);
-  const comparisons = computePlanVsActual(plans, rows);
-  const planMatchPct = averagePlanMatch(comparisons);
-  const resistanceWithContext = matchResistanceContext(resistance, rows);
+
+  const c = (counts[0] ?? { touches: 0, meetings: 0, won: 0 }) as { touches: number; meetings: number; won: number };
 
   return (
-    <main className="dash-main">
-      <div className="dash-header">
-        <span className="page-label">Gorbenko · закрытая CRM</span>
-        <a href="/crm/plan" className="badge red" style={{ textDecoration: "none" }}>🗓 план на неделю →</a>
-      </div>
-      <h1 className="page-title">🗂 Холодные продажи — вся картина</h1>
-      <p className="page-sub">
-        Полная версия с именами, контактами и заметками. Не для шаринга.
-      </p>
-
-      <FearCard count={resistance.length} entries={resistanceWithContext} variant="private" />
-
-      {stats.total > 0 ? (
-        <>
-          <ColdSalesOverview stats={stats} planMatchPct={planMatchPct} />
-          <PlanVsActual comparisons={comparisons} />
-          <LeadsTable rows={rows} masked={false} />
-        </>
-      ) : (
-        <div className="card">
-          <div className="card-title">Пока пусто</div>
-        </div>
-      )}
-
-      <p className="footer-note">
-        Публичная версия без личных данных: <a href="/cold-sales">gorbenko.at/cold-sales</a>
-      </p>
+    <main style={{ minHeight: "100vh", background: "#0d0d0d" }}>
+      <CrmHome
+        leads={leads}
+        reminders={reminders}
+        stats={{ leads: leads.length, touches: c.touches, meetings: c.meetings, won: c.won }}
+      />
     </main>
   );
 }
