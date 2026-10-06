@@ -170,7 +170,6 @@ export default function FinmodelDashboard() {
   return (
     <main className="fm-main">
       <nav className="fm-nav">
-        <a href="/reports/blinhaus-plan-sep-feb" className="fm-nav-primary">План сен–фев</a>
         <a href="/reports/blinhaus-finmodel" className="active">Финмодель</a>
         <a href="/reports/blinhaus-horeca-markup">Наценка и цены</a>
         <a href="/blinhaus-finmodel.xlsx" className="fm-nav-xlsx" download>⬇ Скачать Excel</a>

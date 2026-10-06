@@ -11,7 +11,7 @@ export default async function ReportsLogin({
   searchParams: Promise<{ next?: string; error?: string }>;
 }) {
   const params = await searchParams;
-  const next = params.next ?? "/reports/blinhaus-june-2026";
+  const next = params.next ?? "/reports/blinhaus-finmodel";
   const hasError = params.error === "1";
 
   return (

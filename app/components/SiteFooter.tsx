@@ -8,7 +8,7 @@ export default function SiteFooter() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <p className="font-display text-lg font-bold">
-              Gorbenko<span className="text-[var(--accent)]">.</span>
+              Gorbenko<span className="text-[var(--accent)]">.at</span>
             </p>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-[var(--muted)]">
               KI-Automatisierung, Websites, Content und Werbung für Betriebe in

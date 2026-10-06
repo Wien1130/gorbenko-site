@@ -106,11 +106,12 @@ Footer (`SiteFooter.tsx`): 4 колонки — бренд+соцсети, Leist
 - Ergebnisse-числа: Ladezeit/Lighthouse (реальные из замера), `9 Video-Clips + Interview produziert`, `Anfragen direkt über WhatsApp`, остальное фактологично, без выдуманных сумм.
 - Цитата: draft `„Andrii hat aus meiner Werkstatt einen digitalen Betrieb gemacht — Website, Videos, Werbung. Ich schmiede, er kümmert sich um den Rest." — Stefan Nagl` (пометить: согласовать!).
 
-### 5.2 BlinHaus — `BlinHaus Vienna` — Café & Lieferservice, Wien.
-Теги: KI-Chatbot, Content, Ads, Digitalisierung. Gemacht: KI-Assistent (IG/FB, nimmt Bestellungen an, kennt Speisekarte & Lieferzeiten), Content-Marketing, Meta-Kampagnen, digitalisierte Lieferprozesse + Finanzmodell/Reports. Ergebnisse: `€3.000 Mehrumsatz in 15 Tagen`, `95 % automatisch beantwortet`, `<10 s Antwortzeit`, `24/7`. Цитата Anatoly (есть, взять из старого CaseStudy).
+### 5.2 BlinHaus — СНЯТ с публичной витрины 18.09.2026 (кейс, marquee, мини-кейсы). Приватные `/reports/blinhaus-*` не трогать. Не возвращать на gorbenko.at без явной просьбы.
+
+Историческая запись (не публиковать снова): Café & Lieferservice, Wien. Теги: KI-Chatbot, Content, Ads, Digitalisierung. Gemacht: KI-Assistent (IG/FB, nimmt Bestellungen an), Content, Meta, Finanzmodell. Результаты тогда: `€3.000 Mehrumsatz in 15 Tagen`, `95 % automatisch beantwortet`.
 
 ### 5.3 Rubberik — `Rubberik — Mode-Atelier mit Online-Konfigurator`, Wien.
-Теги: Online-Shop, Konfigurator, Ads. Осторожная подача (latex fashion → `Wiener Atelier für maßgefertigte Designer-Mode`): neuer Shop (Launch 2026) mit Produkt-Konfigurator — Material & Farbe wählen, Maße online erfassen, Preis live berechnet; moderne Architektur (Headless: Medusa + Next.js); Meta-Kampagnen laufen. Скриншоты конфигуратора/выбора тканей — из локальной сборки (или стилизованные мокапы, если сборка не поднимется). Метка `Launch in Kürze`.
+Теги: Online-Shop, Konfigurator, Ads. Осторожная подача (latex fashion → Latex-Atelier Wien): neuer Shop **in Arbeit** mit Produkt-Konfigurator — Farbe/Ausstattung wählen, Maße online erfassen, Preis live berechnet; Headless (Medusa + Next.js); Meta-Kampagnen laufen. Скриншоты: `public/portfolio/rubberik/` (homepage + конфигуратор). Метка `In Arbeit`. **Не ссылаться на старый rubberik.at** (чужой сайт) — liveUrl только после публичного деплоя нового шопа.
 
 ### 5.4 G-Bike Wien — E-Scooter-Store, Staglgasse 12, 1150 Wien. gbikewien.at.
 Теги: Online-Shop, TikTok. Gemacht: Shopify-Shop (Katalog, Bestellungen), TikTok-Kanal eingeführt. Скриншот сайта.

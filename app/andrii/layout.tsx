@@ -173,6 +173,49 @@ export default function AndriiLayout({ children }: { children: ReactNode }) {
         .de-line { color: var(--text); font-size: 14px; line-height: 1.6; font-weight: 600; }
         .ru-line { color: var(--text-3); font-size: 13px; line-height: 1.55; margin-top: 3px; }
 
+        /* ── Instagram caption block ── */
+        .cap-box {
+          margin-top: 4px; border: 1px solid var(--border);
+          border-radius: 10px; background: var(--surface2); overflow: hidden;
+        }
+        .cap-head {
+          display: flex; align-items: center; justify-content: space-between; gap: 10px;
+          padding: 8px 12px; border-bottom: 1px solid var(--border);
+          font-size: 11px; font-weight: 700; letter-spacing: .06em;
+          text-transform: uppercase; color: var(--text-3);
+        }
+        .cap-de {
+          padding: 12px; white-space: pre-line;
+          font-size: 13.5px; line-height: 1.65; color: var(--text);
+        }
+        .cap-tags { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 12px 12px; }
+        .tag {
+          font-size: 12px; color: var(--blue); background: var(--blue-bg);
+          border: 1px solid #1e3a5f; border-radius: 6px; padding: 2px 7px;
+        }
+        .cap-ru { border-top: 1px solid var(--border); }
+        .cap-ru summary {
+          padding: 8px 12px; cursor: pointer; list-style: none;
+          font-size: 12px; color: var(--text-3);
+        }
+        .cap-ru summary::-webkit-details-marker { display: none; }
+        .cap-ru summary::before { content: "▸ "; }
+        .cap-ru[open] summary::before { content: "▾ "; }
+        .cap-ru summary:hover { color: var(--text-2); }
+        .cap-ru-body {
+          padding: 0 12px 12px; white-space: pre-line;
+          font-size: 13px; line-height: 1.6; color: var(--text-3);
+        }
+        .copy-btn {
+          font: inherit; font-size: 11px; font-weight: 700; letter-spacing: .04em;
+          text-transform: uppercase; cursor: pointer; white-space: nowrap;
+          padding: 5px 10px; border-radius: 7px;
+          background: var(--accent-dim); color: var(--accent);
+          border: 1px solid #14532d; transition: background .15s, color .15s;
+        }
+        .copy-btn:hover { background: #14532d; color: var(--text); }
+        .copy-btn.done { background: var(--green-bg); color: var(--green); }
+
         /* ── Ref card ── */
         .ref-card {
           background: var(--surface); border: 1px solid var(--border);

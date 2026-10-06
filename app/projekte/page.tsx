@@ -8,9 +8,9 @@ import ProjectCard from "../components/ProjectCard";
 import { projects } from "../lib/content";
 
 export const metadata: Metadata = {
-  title: "Projekte — Websites, KI-Bots & Kampagnen für Wiener Betriebe",
+  title: "Projekte — Websites, KI-Assistenten & Kampagnen für Wiener Betriebe",
   description:
-    "Echte Projekte für echte Betriebe in Wien: Messerschmiede Nagl, BlinHaus, Rubberik, G-Bike, Zum Eisbären. Websites, KI-Chatbots, Reels, Werbung.",
+    "Echte Projekte für echte Betriebe in Wien: Messerschmiede Nagl, Rubberik, G-Bike, Zum Eisbären. Websites, KI-Assistenten, Reels, Werbung.",
   alternates: { canonical: "/projekte" },
 };
 

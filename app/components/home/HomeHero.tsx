@@ -1,5 +1,5 @@
 import Link from "next/link";
-import ChatDemo from "./ChatDemo";
+import SiteAssistant from "../assistant/SiteAssistant";
 
 export default function HomeHero() {
   return (
@@ -50,7 +50,7 @@ export default function HomeHero() {
           </div>
 
           <div className="relative mx-auto w-full max-w-md lg:max-w-none">
-            <ChatDemo />
+            <SiteAssistant variant="hero" />
           </div>
         </div>
       </div>

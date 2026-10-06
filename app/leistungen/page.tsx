@@ -10,9 +10,9 @@ import TiltGlowCard from "../components/ui/TiltGlowCard";
 import { services } from "../lib/content";
 
 export const metadata: Metadata = {
-  title: "Leistungen — KI, Websites, Content & Werbung in Wien",
+  title: "Leistungen — Marketing-Strategie, KI, Websites, Content & Werbung in Wien",
   description:
-    "Alle Leistungen aus einer Hand: KI-Chatbots, Websites & Online-Shops, virale Reels, Meta Ads, GEO und Digitalisierung — für Betriebe in Wien.",
+    "Alle Leistungen aus einer Hand: Marketing-Strategie, KI-Chatbots, Websites & Online-Shops, virale Reels, Meta Ads, GEO und Digitalisierung — für Betriebe in Wien.",
   alternates: { canonical: "/leistungen" },
 };
 

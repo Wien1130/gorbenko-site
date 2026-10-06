@@ -11,6 +11,7 @@ import SectionLabel from "../../components/ui/SectionLabel";
 import ServiceIcon from "../../components/ui/ServiceIcon";
 import LighthouseRow from "../../components/LighthouseRow";
 import ChatDemo from "../../components/home/ChatDemo";
+import MassFigureDemo from "../../components/demos/MassFigureDemo";
 import { getService, services, SITE_URL } from "../../lib/content";
 
 export function generateStaticParams() {
@@ -96,6 +97,98 @@ export default async function ServicePage({
         </div>
       </section>
 
+      {/* Packages / steps */}
+      {service.packages && (
+        <section className="border-t border-[var(--border)] py-20">
+          <div className="mx-auto max-w-6xl px-6">
+            <Reveal>
+              <h2 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
+                {service.packagesTitle ?? "Pakete"}
+              </h2>
+              {service.packagesSub && (
+                <p className="mt-4 max-w-2xl text-[var(--muted)]">
+                  {service.packagesSub}
+                </p>
+              )}
+            </Reveal>
+            <div className="mt-10 grid gap-4 lg:grid-cols-3">
+              {service.packages.map((p, i) => (
+                <Reveal key={p.name} delay={i * 0.08}>
+                  <div
+                    className="flex h-full flex-col rounded-2xl border border-[var(--border)] bg-[var(--card)] p-7"
+                    style={
+                      p.highlight
+                        ? {
+                            borderColor: service.color,
+                            boxShadow: `0 0 0 1px ${service.color}, 0 24px 60px -30px ${service.color}`,
+                          }
+                        : undefined
+                    }
+                  >
+                    <p
+                      className="text-xs font-semibold uppercase tracking-wider"
+                      style={{ color: service.color }}
+                    >
+                      {p.step}
+                    </p>
+                    <h3 className="font-display mt-2 text-2xl font-bold tracking-tight">
+                      {p.name}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
+                      {p.tagline}
+                    </p>
+                    <p className="mt-4 rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-xs font-medium">
+                      {p.format}
+                    </p>
+                    <ul className="mt-5 space-y-2.5 text-sm leading-relaxed">
+                      {p.items.map((it) => (
+                        <li key={it} className="flex gap-2.5">
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke={service.color}
+                            strokeWidth="2.2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="mt-1 shrink-0"
+                            aria-hidden
+                          >
+                            <path d="M5 12l5 5L20 7" />
+                          </svg>
+                          <span>{it}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-auto border-t border-[var(--border)] pt-5">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-[var(--muted)]">
+                        Ergebnis
+                      </p>
+                      <p className="mt-1.5 text-sm font-medium leading-relaxed">
+                        {p.result}
+                      </p>
+                    </div>
+                    <Link
+                      href="/kontakt"
+                      className={
+                        "mt-6 inline-flex justify-center rounded-full px-6 py-3 text-sm font-semibold transition hover:opacity-90 " +
+                        (p.highlight
+                          ? "text-[var(--background)]"
+                          : "border border-[var(--border)] text-[var(--foreground)]")
+                      }
+                      style={p.highlight ? { backgroundColor: service.color } : undefined}
+                    >
+                      {i === 0 ? "Marketing-Check anfragen" : "Unverbindlich anfragen"}
+                    </Link>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Pains */}
       <section className="border-t border-[var(--border)] py-20">
         <div className="mx-auto max-w-6xl px-6">
@@ -176,22 +269,40 @@ export default async function ServicePage({
       )}
 
       {service.slug === "websites" && (
-        <section className="border-t border-[var(--border)] py-20">
-          <div className="mx-auto max-w-4xl px-6">
-            <Reveal>
-              <h2 className="font-display text-center text-2xl font-bold tracking-tight sm:text-3xl">
-                Geschwindigkeit ist messbar
-              </h2>
-              <div className="mt-10 space-y-6">
-                <LighthouseRow
-                  slug="nagl"
-                  title="Landingpage Messerschmiede Nagl"
-                />
-                <LighthouseRow slug="gorbenko" title="Diese Website" />
-              </div>
-            </Reveal>
-          </div>
-        </section>
+        <>
+          <section className="border-t border-[var(--border)] py-20">
+            <div className="mx-auto max-w-4xl px-6">
+              <Reveal>
+                <h2 className="font-display text-center text-2xl font-bold tracking-tight sm:text-3xl">
+                  Geschwindigkeit ist messbar
+                </h2>
+                <div className="mt-10 space-y-6">
+                  <LighthouseRow
+                    slug="nagl"
+                    title="Landingpage Messerschmiede Nagl"
+                  />
+                  <LighthouseRow slug="gorbenko" title="Diese Website" />
+                </div>
+              </Reveal>
+            </div>
+          </section>
+          <section className="border-t border-[var(--border)] py-20">
+            <div className="mx-auto max-w-5xl px-6">
+              <Reveal>
+                <h2 className="font-display text-center text-2xl font-bold tracking-tight sm:text-3xl">
+                  Konfiguratoren, die man anfassen kann
+                </h2>
+                <p className="mx-auto mt-3 max-w-xl text-center text-sm leading-relaxed text-[var(--muted)]">
+                  Wenn Standard-Shops nicht reichen: interaktive Produkt-Konfiguratoren
+                  mit Maßerfassung und Live-Preis — wie in diesem Demo.
+                </p>
+                <div className="mt-10">
+                  <MassFigureDemo compact />
+                </div>
+              </Reveal>
+            </div>
+          </section>
+        </>
       )}
 
       {service.slug === "geo-ai-sichtbarkeit" && (

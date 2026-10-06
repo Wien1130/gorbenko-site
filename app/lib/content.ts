@@ -29,13 +29,32 @@ export type Metric = {
   label: string;
 };
 
+export type Package = {
+  /** small label above the name, e.g. "Schritt 1" */
+  step: string;
+  name: string;
+  /** one line: for whom / what you get */
+  tagline: string;
+  /** duration or format, e.g. "20 Minuten vor Ort" */
+  format: string;
+  items: string[];
+  /** what you hold in your hands at the end */
+  result: string;
+  highlight?: boolean;
+};
+
 export type Service = {
   slug: string;
   /** short name for nav / cards */
   name: string;
   /** accent color from the palette */
   color: string;
-  icon: "bot" | "globe" | "video" | "megaphone" | "sparkles" | "chart";
+  icon: "bot" | "globe" | "video" | "megaphone" | "sparkles" | "chart" | "compass";
+  /** optional step-by-step packages (rendered as a 3-column block) */
+  packages?: Package[];
+  /** optional headline for the packages block */
+  packagesTitle?: string;
+  packagesSub?: string;
   /** one-liner for bento cards on homepage */
   teaser: string;
   /** longer description for /leistungen overview */
@@ -76,6 +95,8 @@ export type Project = {
   quote?: { text: string; author: string; role: string };
   /** screenshot paths relative to /public, if captured */
   screenshots: { desktop?: string; mobile?: string };
+  /** optional extra screens (configurator, detail pages, …) */
+  gallery?: { src: string; alt: string }[];
   badge?: string;
   featured?: boolean;
   seoDescription: string;
@@ -86,6 +107,137 @@ export type Project = {
 /* ------------------------------------------------------------------ */
 
 export const services: Service[] = [
+  {
+    slug: "marketing-strategie",
+    name: "Marketing-Strategie",
+    color: "var(--c-orange)",
+    icon: "compass",
+    teaser:
+      "Erst der Plan, dann die Werbung: In 7 Tagen wissen Sie, wen Sie ansprechen, wo — und was es kostet.",
+    description:
+      "Für Betriebe, die Geld in Werbung stecken, ohne zu wissen, ob es wirkt. Ich analysiere Ihren Auftritt, Ihre Kunden und Mitbewerber — und Sie bekommen einen 90-Tage-Plan auf einer Seite.",
+    h1: "Erst der Plan. Dann die Werbung.",
+    sub: "Eine Marketing-Strategie für Ihren Betrieb in Wien — in 7 Tagen. Sie wissen danach genau, wen Sie ansprechen, über welche Kanäle, mit welchem Budget und woran Sie den Erfolg messen.",
+    packagesTitle: "So läuft es ab — in drei Schritten",
+    packagesSub:
+      "Sie steigen kostenlos ein. Jeder weitere Schritt ist optional und baut auf dem vorherigen auf.",
+    packages: [
+      {
+        step: "Schritt 1 · kostenlos",
+        name: "Marketing-Check",
+        tagline: "Für alle, die wissen wollen, wo gerade Kunden verloren gehen.",
+        format: "20 Minuten, direkt bei Ihnen im Betrieb",
+        items: [
+          "Google-Profil, Website und Instagram im Schnelldurchlauf",
+          "Die 3 größten Lecks, durch die Ihnen Kunden entgehen",
+          "Ehrliche Einschätzung: Was lohnt sich, was nicht",
+        ],
+        result: "Eine klare Empfehlung — ohne Verpflichtung.",
+      },
+      {
+        step: "Schritt 2 · 7 Tage",
+        name: "Marketing-Strategie",
+        tagline: "Der Plan, mit dem Sie ab Tag 8 gezielt statt zufällig werben.",
+        format: "Analyse + 90-Minuten-Workshop + Plan auf einer Seite",
+        items: [
+          "Analyse: Auftritt, Bewertungen, Mitbewerber, Suchanfragen in Ihrem Grätzl",
+          "Ihr Zielkunde: Wer kauft, warum, wo informiert er sich",
+          "Positionierung: Ein Satz, der Sie vom Mitbewerber unterscheidet",
+          "Kanalwahl: Die 2–3 Kanäle, die für Ihren Betrieb wirklich zählen",
+          "90-Tage-Plan mit Budget, Reihenfolge und Kennzahlen",
+        ],
+        result: "Strategie-Dokument + 1-Seiten-Plan, den Sie selbst oder mit jedem Dienstleister umsetzen können.",
+        highlight: true,
+      },
+      {
+        step: "Schritt 3 · 90 Tage",
+        name: "Umsetzung & Begleitung",
+        tagline: "Für alle, die den Plan nicht selbst umsetzen wollen.",
+        format: "Monatlicher Sprint, ein Ansprechpartner",
+        items: [
+          "Ich setze den Plan um: Website, Content, Werbung, KI-Assistent — was der Plan vorsieht",
+          "Monatliches Treffen: Zahlen, Anpassungen, nächste Schritte",
+          "Ein Ansprechpartner statt drei Agenturen",
+        ],
+        result: "Nach 90 Tagen: laufendes Marketing, das Sie an Zahlen messen können.",
+      },
+    ],
+    pains: [
+      {
+        title: "Werbung läuft — aber niemand weiß, ob sie wirkt",
+        text: "Flyer, Instagram-Posts, ein bisschen Google: Alles läuft irgendwie, nur die Kasse merkt nichts davon.",
+      },
+      {
+        title: "Jede Agentur verkauft, was sie selbst im Angebot hat",
+        text: "Die Web-Agentur sagt «Website», der Social-Media-Freelancer sagt «Reels». Niemand sagt, was Ihr Betrieb wirklich braucht.",
+      },
+      {
+        title: "Keine Zeit, sich einzuarbeiten",
+        text: "Sie führen Ihren Betrieb. Für Zielgruppen, Kanäle und Budgets bleibt abends keine Energie mehr.",
+      },
+    ],
+    deliverables: [
+      {
+        title: "Ist-Analyse Ihres Auftritts",
+        text: "Google-Unternehmensprofil, Website, Instagram/Facebook, Bewertungen — wie Sie heute gefunden werden und wo Kunden abspringen.",
+      },
+      {
+        title: "Mitbewerber & Markt im Grätzl",
+        text: "Was die 3–5 relevanten Mitbewerber in Ihrer Umgebung machen, wo sie stark sind — und wo Platz für Sie ist.",
+      },
+      {
+        title: "Zielkunde & Positionierung",
+        text: "Wer bei Ihnen kauft, warum, und wie er sich informiert. Daraus: ein Satz, der Sie klar vom Mitbewerber unterscheidet.",
+      },
+      {
+        title: "Kanalwahl mit Begründung",
+        text: "Nicht «überall sein», sondern die 2–3 Kanäle, die für Ihren Betrieb zählen — und welche Sie getrost ignorieren können.",
+      },
+      {
+        title: "90-Tage-Plan auf einer Seite",
+        text: "Was in Woche 1, Monat 1 und Monat 3 passiert, mit Budget pro Kanal und den 3 Kennzahlen, an denen Sie den Erfolg ablesen.",
+      },
+      {
+        title: "Workshop & Übergabe",
+        text: "90 Minuten gemeinsam: Ich erkläre jeden Punkt so, dass Sie den Plan selbst oder mit jedem Dienstleister umsetzen können.",
+      },
+    ],
+    miniCase: {
+      title: "Messerschmiede Stefan Nagl",
+      text: "Statt einzelner Maßnahmen ein zusammenhängender Plan: Positionierung auf handgefertigte Custom-Messer, dann in dieser Reihenfolge Landingpage, KI-Assistent, Reels und Werbung — jeder Baustein greift in den nächsten.",
+      projectSlug: "nagl",
+      metrics: [
+        { value: 1, label: "Positionierung: Custom-Messer aus Wien" },
+        { value: 4, label: "Kanäle in klarer Reihenfolge statt alles auf einmal" },
+        { value: 90, suffix: "+", label: "Reel-Ideen, aus der Strategie abgeleitet" },
+      ],
+    },
+    faqs: [
+      {
+        q: "Was unterscheidet das von einer kostenlosen Beratung?",
+        a: "Der Marketing-Check ist die kostenlose Beratung — 20 Minuten bei Ihnen vor Ort, Sie bekommen eine ehrliche Einschätzung. Die Strategie geht tiefer: eine Woche Analyse, Workshop und ein schriftlicher Plan, mit dem Sie arbeiten können.",
+      },
+      {
+        q: "Muss ich danach die Umsetzung bei Ihnen buchen?",
+        a: "Nein. Der Plan gehört Ihnen und ist so geschrieben, dass Sie ihn selbst oder mit jedem anderen Dienstleister umsetzen können. Wenn Sie wollen, übernehme ich das — aber das ist ein eigener Schritt.",
+      },
+      {
+        q: "Für welche Betriebe passt das?",
+        a: "Für Wiener Betriebe mit 1 bis etwa 30 Mitarbeitern: Gastronomie, Handwerk, Einzelhandel, Dienstleister, Praxen, Studios. Alle, die Kunden aus der Umgebung brauchen und bisher eher aus dem Bauch heraus geworben haben.",
+      },
+      {
+        q: "Wie lange dauert es wirklich?",
+        a: "Vom Workshop-Termin bis zum fertigen Plan sieben Tage. Sie investieren selbst etwa zwei Stunden: 30 Minuten Fragen vorab und 90 Minuten Workshop.",
+      },
+      {
+        q: "Was kostet die Strategie?",
+        a: "Das hängt von Größe und Komplexität Ihres Betriebs ab. Beim kostenlosen Marketing-Check sage ich Ihnen den Preis konkret — ohne Überraschungen.",
+      },
+    ],
+    seoTitle: "Marketing-Strategie für kleine Betriebe in Wien",
+    seoDescription:
+      "Marketing-Strategie in 7 Tagen für Betriebe in Wien: Analyse, Zielkunde, Positionierung, Kanalwahl und 90-Tage-Plan auf einer Seite. Einstieg mit kostenlosem Marketing-Check vor Ort.",
+  },
   {
     slug: "ki-chatbots",
     name: "KI-Chatbots & Automatisierung",
@@ -134,13 +286,13 @@ export const services: Service[] = [
       },
     ],
     miniCase: {
-      title: "BlinHaus Vienna",
-      text: "Ein Wiener Café nimmt Bestellungen über Instagram und Facebook vollautomatisch entgegen.",
-      projectSlug: "blinhaus",
+      title: "Messerschmiede Stefan Nagl",
+      text: "Der digitale Assistent beantwortet Fragen zu Stahlsorten und nimmt Anfragen auf — auch wenn Stefan am Schmiedefeuer steht.",
+      projectSlug: "nagl",
       metrics: [
-        { value: 3000, prefix: "€", label: "Mehrumsatz in 15 Tagen" },
-        { value: 95, suffix: " %", label: "automatisch beantwortet" },
-        { value: 10, prefix: "<", suffix: " s", label: "Antwortzeit" },
+        { value: 0, text: "24/7", label: "erreichbar, auch in der Werkstatt" },
+        { value: 90, suffix: "+", label: "Reel-Ideen im Drehbuch" },
+        { value: 0, text: "WhatsApp", label: "Anfragen landen direkt" },
       ],
     },
     faqs: [
@@ -361,12 +513,12 @@ export const services: Service[] = [
     ],
     miniCase: {
       title: "Kampagnen für Wiener Betriebe",
-      text: "Messerschmiede Nagl, BlinHaus und Rubberik — laufende Kampagnen auf Meta, Google und TikTok.",
-      projectSlug: "blinhaus",
+      text: "Messerschmiede Nagl und Rubberik — laufende Kampagnen auf Meta, Google und TikTok.",
+      projectSlug: "nagl",
       metrics: [
-        { value: 3, label: "Betriebe mit laufenden Kampagnen" },
+        { value: 2, label: "Betriebe mit laufenden Kampagnen" },
         { value: 3, label: "Plattformen: Meta, Google, TikTok" },
-        { value: 0, text: "Bot", label: "übernimmt jeden Klick sofort" },
+        { value: 0, text: "Assistent", label: "übernimmt jeden Klick sofort" },
       ],
     },
     faqs: [
@@ -502,13 +654,13 @@ export const services: Service[] = [
       },
     ],
     miniCase: {
-      title: "BlinHaus Vienna",
-      text: "Finanzmodell, digitalisierte Lieferprozesse und automatische Berichte für ein Wiener Café mit Lieferservice.",
-      projectSlug: "blinhaus",
+      title: "G-Bike Wien",
+      text: "E-Scooter-Sortiment und Bestellungen online — statt nur im Geschäft in Wien 1150.",
+      projectSlug: "gbike",
       metrics: [
-        { value: 3, label: "Vertriebskanäle ausgewertet" },
-        { value: 0, text: "Live", label: "Finanzmodell & Reports" },
-        { value: 0, text: "0 Hefte", label: "alles digital erfasst" },
+        { value: 8, suffix: "+", label: "Produkte im Shop" },
+        { value: 0, text: "Shopify", label: "vom Team selbst pflegbar" },
+        { value: 0, text: "TikTok", label: "Kanal eingeführt" },
       ],
     },
     faqs: [
@@ -586,75 +738,28 @@ export const projects: Project[] = [
       "Case Study: Wiener Messerschmiede digital — Landingpage, KI-Assistent, virale Reels und Werbekampagnen für Messerschmiede Stefan Nagl.",
   },
   {
-    slug: "blinhaus",
-    client: "BlinHaus Vienna",
-    branch: "Gastronomie · Café & Lieferservice",
-    location: "Wien",
-    tags: ["KI-Chatbot", "Content & Reels", "Werbung", "Digitalisierung"],
-    teaser:
-      "Ein Wiener Café nimmt Bestellungen vollautomatisch über Instagram und Facebook entgegen — und kennt endlich seine Zahlen.",
-    headline: "€3.000 Mehrumsatz in 15 Tagen",
-    situation:
-      "BlinHaus erhielt täglich dutzende Nachrichten über Instagram und Facebook — Bestellungen, Fragen zur Speisekarte, Lieferzeiten. Der Inhaber konnte nicht rund um die Uhr antworten. Verlorene Bestellungen, frustrierte Kunden — und die Geschäftszahlen verteilten sich auf Hefte und Chats.",
-    steps: [
-      {
-        title: "KI-Assistent auf Instagram & Facebook",
-        text: "Kennt die Speisekarte, nimmt Bestellungen auf, berechnet Preise und benachrichtigt den Inhaber sofort — 24/7.",
-      },
-      {
-        title: "Content-Marketing",
-        text: "Regelmäßige Reels und Posts, die das Produkt zeigen und Bestellungen auslösen.",
-      },
-      {
-        title: "Meta-Kampagnen",
-        text: "Click-to-Messenger-Werbung: Der Interessent klickt auf die Anzeige und bestellt direkt im Chat.",
-      },
-      {
-        title: "Digitalisierung der Lieferprozesse",
-        text: "Bestellwege, Kassa-Auswertung und ein interaktives Finanzmodell: alle Kanäle und Margen auf einen Blick.",
-      },
-    ],
-    metrics: [
-      { value: 3000, prefix: "€", label: "Mehrumsatz in 15 Tagen" },
-      { value: 95, suffix: " %", label: "der Anfragen automatisch beantwortet" },
-      { value: 10, prefix: "<", suffix: " s", label: "Antwortzeit" },
-      { value: 0, text: "24/7", label: "erreichbar" },
-    ],
-    quote: {
-      text: "Der Assistent beantwortet Kundenanfragen sofort und nimmt Bestellungen auf — auch nachts und am Wochenende. Wir haben dadurch deutlich mehr Bestellungen erhalten.",
-      author: "Anatoly",
-      role: "Inhaber, BlinHaus Vienna",
-    },
-    screenshots: {},
-    featured: true,
-    seoDescription:
-      "Case Study: Wiener Café automatisiert Bestellannahme mit KI-Chatbot — €3.000 Mehrumsatz in 15 Tagen, 95 % automatisch beantwortet.",
-  },
-  {
     slug: "rubberik",
     client: "Rubberik",
     branch: "Mode · Maßanfertigung",
     location: "Wien",
     tags: ["Online-Shop", "Konfigurator", "Werbung"],
-    liveUrl: "https://rubberik.at",
-    liveLabel: "rubberik.at",
     teaser:
-      "Ein Wiener Atelier für maßgefertigte Designer-Mode bekommt einen neuen Shop mit Produkt-Konfigurator: Material wählen, Maße erfassen, Preis live berechnet.",
+      "Neuer Shop für ein Wiener Latex-Atelier — gerade in Arbeit: Produkt-Konfigurator mit Materialwahl, Maßerfassung und Live-Preis. Screenshots vom aktuellen Stand.",
     headline: "Online-Shop mit Maß-Konfigurator",
     situation:
-      "Das Atelier fertigt Designer-Mode nach Maß — aber der alte Shop war technisch veraltet, langsam und konnte den wichtigsten Schritt nicht abbilden: die individuelle Konfiguration. Jede Bestellung brauchte manuelle Abstimmung per E-Mail.",
+      "Das Atelier fertigt Latex-Mode nach Maß — der bisherige Shop war technisch veraltet und konnte den wichtigsten Schritt nicht abbilden: die individuelle Konfiguration. Jede Bestellung brauchte manuelle Abstimmung per E-Mail. Wir bauen den Shop gerade neu.",
     steps: [
       {
         title: "Neuer Shop mit moderner Architektur",
-        text: "Headless-Aufbau (Medusa + Next.js): blitzschnell, flexibel und bereit für den europäischen Markt.",
+        text: "Headless-Aufbau (Medusa + Next.js): schnell, flexibel und bereit für den europäischen Markt — aktuell im Aufbau.",
       },
       {
         title: "Produkt-Konfigurator",
-        text: "Material und Farbe wählen, Maße online erfassen, Preis wird live berechnet — der komplette Bestellprozess ohne E-Mail-Pingpong.",
+        text: "Farbe und Ausstattung wählen, Maße online erfassen, Preis wird live berechnet — der komplette Bestellprozess ohne E-Mail-Pingpong.",
       },
       {
         title: "Meta-Kampagnen",
-        text: "Laufende Werbung auf Instagram und Facebook für den DACH-Raum.",
+        text: "Laufende Werbung auf Instagram und Facebook für den DACH-Raum — parallel zum Shop-Relaunch.",
       },
     ],
     metrics: [
@@ -662,11 +767,27 @@ export const projects: Project[] = [
       { value: 0, text: "Maße", label: "online erfasst statt per E-Mail" },
       { value: 0, text: "Headless", label: "Medusa + Next.js Architektur" },
     ],
-    screenshots: {},
-    badge: "Launch in Kürze",
+    screenshots: {
+      desktop: "/portfolio/rubberik/desktop.webp",
+    },
+    gallery: [
+      {
+        src: "/portfolio/rubberik/config-farben.webp",
+        alt: "Farbwahl im Produkt-Konfigurator",
+      },
+      {
+        src: "/portfolio/rubberik/config-ausstattung.webp",
+        alt: "Ausstattung und Optionen im Konfigurator",
+      },
+      {
+        src: "/portfolio/rubberik/masse.webp",
+        alt: "Interaktive Maßerfassung",
+      },
+    ],
+    badge: "In Arbeit",
     featured: true,
     seoDescription:
-      "Case Study: Neuer Online-Shop mit Produkt-Konfigurator für ein Wiener Mode-Atelier — Materialwahl, Maßerfassung, Live-Preisberechnung.",
+      "Case Study in Arbeit: Neuer Online-Shop mit Produkt-Konfigurator für ein Wiener Latex-Atelier — Materialwahl, Maßerfassung, Live-Preisberechnung.",
   },
   {
     slug: "gbike",
@@ -700,6 +821,7 @@ export const projects: Project[] = [
       desktop: "/portfolio/gbike/desktop.webp",
       mobile: "/portfolio/gbike/mobile.webp",
     },
+    featured: true,
     seoDescription:
       "Case Study: Shopify-Online-Shop für G-Bike Wien — E-Scooter-Katalog, Bestellfunktion und TikTok-Einstieg für den Store in Wien 1150.",
   },

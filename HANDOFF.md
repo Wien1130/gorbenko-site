@@ -6,20 +6,19 @@
 ## Правила работы (читать перед любой задачей)
 
 1. Источник правды по текстам и структуре: `REDESIGN-SPEC.md`. Весь контент услуг/кейсов: `app/lib/content.ts`. Посты блога: `app/blog/posts.ts` + `app/blog/(artikel)/<slug>/page.mdx`.
-2. НЕ трогать: `/andrii`, `/olya`, `/crm`, `/cold-sales`, `/reports`, `/api/*`, `/google-maps`, redirects в `next.config.ts`, GTM в `layout.tsx`.
+2. НЕ трогать: `/andrii`, `/olya`, `/crm`, `/cold-sales`, `/reports`, приватные `/api/*` (кроме осознанных правок site-assist/consultation), `/google-maps`, redirects в `next.config.ts`, GTM в `layout.tsx`.
 3. Перед деплоем всегда: `npm run build` (из `agency-site/`). Деплой: `npx vercel --prod`.
 4. Держать Lighthouse 95+: никаких новых тяжёлых библиотек, картинки только через `next/image` (webp, в `public/portfolio/`), анимации только transform/opacity.
 5. Немецкий: обращение «Sie», от первого лица («ich»), без слова «Bot» в клиентских текстах — только «digitaler Assistent» / «KI-Assistent».
 6. UI-примитивы уже есть в `app/components/ui/` (Reveal, Counter, Marquee, BrowserFrame, PhoneFrame, ScoreGauge, FAQ, CTASection) — переиспользовать, не создавать новые.
 
-## Блок 1 — Скриншоты Rubberik (когда будет доступ)
+## Блок 1 — Rubberik (частично сделано 28.07.2026)
 
-Staging `https://rubberik-storefront.vercel.app` закрыт Vercel-аутентификацией.
-Когда Андрей даст доступ (или сайт задеплоится публично):
-1. Добавить URL в `scripts/capture-portfolio.mjs` (slug `rubberik`), запустить `node scripts/capture-portfolio.mjs`, конвертнуть в webp (sharp-однострочник в конце скрипта истории — или просто `sharp(f).webp({quality:82})`).
-2. Прописать пути в `app/lib/content.ts` → проект `rubberik` → `screenshots: { desktop: "/portfolio/rubberik/desktop.webp", mobile: "/portfolio/rubberik/mobile.webp" }`.
-3. Отдельно снять экраны конфигуратора (выбор ткани, ввод мерок, live-цена) → можно добавить в кейс галереей.
-4. Build + deploy.
+Сделано: ссылка на старый `rubberik.at` убрана; badge «In Arbeit»; скрины + галерея; **интерактивный Maß-силуэт** (`MassFigureDemo`) на `/projekte/rubberik` и `/leistungen/websites`.
+Осталось:
+1. Когда staging станет публичным — mobile-скрин + при желании `scripts/capture-portfolio.mjs`.
+2. После публичного деплоя нового шопа — вернуть `liveUrl`/`liveLabel`, badge → «Live».
+3. Build + deploy после правок.
 
 ## Блок 2 — Фото от Андрея (когда пришлёт)
 
@@ -48,9 +47,17 @@ Staging `https://rubberik-storefront.vercel.app` закрыт Vercel-аутен�
 2. Bing Webmaster Tools: то же.
 3. Проверить превью OG в Telegram (@WebpageBot) и WhatsApp.
 
-## Блок 7 — Необязательное (потом)
+## Блок 7 — Живой Site Assistant (сделано 28.07.2026)
+
+Сделано: живой digitaler Assistent на главной (вместо скриптового ChatDemo) + FAB на публичных страницах.
+- UI: `app/components/assistant/` (SiteAssistant, Avatar, Launcher)
+- API: `POST /api/site-assist` → Claude Haiku (`app/lib/site-assist.ts`), EU AI Act disclosure в первом сообщении
+- Голос: Web Speech (mic + optional TTS), graceful degrade
+- ChatDemo остаётся только на `/leistungen/ki-chatbots` (демо клиентских сценариев)
+- **Перед деплоем:** в Vercel Project → Environment Variables добавить `ANTHROPIC_API_KEY` (тот же ключ, что у agency bots; не коммитить в git). Без ключа API вернёт 503.
+
+## Блок 8 — Необязательное (потом)
 
 - Calendly-виджет на /kontakt (когда Андрей заведёт аккаунт).
 - EN-версия сайта (только после того как DE-версия наберёт трафик).
-- Живой KI-ассистент на сайте вместо демо — ОБЯЗАТЕЛЬНО с раскрытием «digitaler Assistent» в первом сообщении (EU AI Act, см. скилл eu-ai-act-bot-disclosure).
 - Реальные метрики рилсов/рекламы в кейсы, когда накопятся.

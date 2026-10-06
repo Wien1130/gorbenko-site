@@ -23,18 +23,18 @@ const scenarios: Scenario[] = [
     ],
   },
   {
-    initials: "BH",
-    name: "BlinHaus Vienna",
+    initials: "RK",
+    name: "Rubberik",
     messages: [
-      { from: "user", text: "Hallo! Kann ich Blini für morgen bestellen?" },
+      { from: "user", text: "Hallo! Kann ich ein Kleid in meiner Größe konfigurieren?" },
       {
         from: "bot",
-        text: "Willkommen bei BlinHaus! Natürlich — unsere beliebtesten Blini: Lachs, Käse, Pilze. Was darf es sein?",
+        text: "Gerne. Sie wählen Farbe und Ausstattung — die Maße erfassen wir online, der Preis erscheint live. Soll ich Ihnen den Konfigurator erklären?",
       },
-      { from: "user", text: "3x Lachs, 2x Käse. Lieferung um 18:00" },
+      { from: "user", text: "Ja bitte. Und liefern Sie nach Wien?" },
       {
         from: "bot",
-        text: "Perfekt! 3× Lachs (€27) + 2× Käse (€16) = €43. Lieferung morgen um 18:00. Ihre Adresse bitte?",
+        text: "Ja, Lieferung in Wien ist möglich. Ich leite Ihre Anfrage an das Atelier weiter — Sie bekommen eine persönliche Antwort. ✔",
       },
     ],
   },

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import CookieConsent from "./components/CookieConsent";
+import SiteAssistantLauncher from "./components/assistant/SiteAssistantLauncher";
 
 const GTM_ID = "GTM-KX7PQ7LP";
 
@@ -90,6 +91,7 @@ export default function RootLayout({
         </noscript>
 
         {children}
+        <SiteAssistantLauncher />
         <CookieConsent />
 
         <script

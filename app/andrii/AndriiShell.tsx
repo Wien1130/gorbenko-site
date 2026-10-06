@@ -3,13 +3,22 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const NAV = [
+  { href: "/andrii/hq",         icon: "🧭", label: "Штаб",        short: "Штаб" },
+  { href: "/andrii/dom",        icon: "🏡", label: "Дом мечты",   short: "Дом" },
   { href: "/andrii",            icon: "🏠", label: "Обзор",       short: "Обзор" },
   { href: "/andrii/strategy",   icon: "🎯", label: "Стратегия",   short: "Стратегия" },
   { href: "/andrii/reels",      icon: "🎬", label: "Банк reels",  short: "Reels" },
+  { href: "/andrii/reels-2",    icon: "🔥", label: "Банк reels 2", short: "Reels 2" },
   { href: "/andrii/references", icon: "💡", label: "Референсы",   short: "Референсы" },
   { href: "/andrii/ideas",      icon: "🎙️", label: "Идеи (бот)",  short: "Идеи" },
   { href: "/andrii/system",     icon: "⚙️", label: "Автопостинг", short: "Постинг" },
+  { href: "/bi-markt",          icon: "📊", label: "BI-рынок",    short: "Рынок" },
 ];
+
+function isActive(pathname: string, href: string) {
+  if (href === "/andrii") return pathname === "/andrii";
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
 
 export default function AndriiShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -24,8 +33,7 @@ export default function AndriiShell({ children }: { children: React.ReactNode })
         </div>
         <nav className="sidebar-nav">
           {NAV.map((item) => {
-            const exact = item.href === "/andrii";
-            const active = exact ? pathname === "/andrii" : pathname.startsWith(item.href);
+            const active = isActive(pathname, item.href);
             return (
               <Link
                 key={item.href}
@@ -48,8 +56,7 @@ export default function AndriiShell({ children }: { children: React.ReactNode })
 
       <nav className="an-mobile-nav">
         {NAV.map((item) => {
-          const exact = item.href === "/andrii";
-          const active = exact ? pathname === "/andrii" : pathname.startsWith(item.href);
+          const active = isActive(pathname, item.href);
           return (
             <Link
               key={item.href}

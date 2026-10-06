@@ -12,10 +12,10 @@ export default function AboutTeaser() {
             <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-3xl border border-[var(--border)]">
               <Image
                 src="/andrey.png"
-                alt="Andrii Gorbenko"
+                alt="Andrii Gorbenko am Laptop"
                 fill
                 sizes="(max-width: 1024px) 100vw, 400px"
-                className="object-cover"
+                className="object-cover object-[50%_18%]"
               />
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[var(--background)]/90 to-transparent p-5">
                 <p className="font-semibold">Andrii Gorbenko</p>

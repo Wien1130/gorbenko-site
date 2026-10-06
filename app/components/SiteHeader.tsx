@@ -44,7 +44,7 @@ export default function SiteHeader() {
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <Link href="/" className="font-display text-lg font-bold tracking-tight">
-          Gorbenko<span className="text-[var(--accent)]">.</span>
+          Gorbenko<span className="text-[var(--accent)]">.at</span>
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">

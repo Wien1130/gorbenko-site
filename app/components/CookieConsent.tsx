@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 
 declare global {
@@ -25,7 +26,14 @@ function updateConsent(granted: boolean) {
 }
 
 export default function CookieConsent() {
+  const pathname = usePathname() || "/";
   const [visible, setVisible] = useState(false);
+  const hidden =
+    pathname.startsWith("/angebot") ||
+    pathname.startsWith("/andrii") ||
+    pathname.startsWith("/reports") ||
+    pathname.startsWith("/bi-markt") ||
+    pathname.startsWith("/deutsch");
 
   useEffect(() => {
     const stored = localStorage.getItem("cookie_consent");
@@ -48,7 +56,7 @@ export default function CookieConsent() {
     setVisible(false);
   }
 
-  if (!visible) return null;
+  if (!visible || hidden) return null;
 
   return (
     <div

@@ -12,6 +12,7 @@ import Reveal from "../../components/ui/Reveal";
 import SectionLabel from "../../components/ui/SectionLabel";
 import LighthouseRow from "../../components/LighthouseRow";
 import ProjectCard from "../../components/ProjectCard";
+import MassFigureDemo from "../../components/demos/MassFigureDemo";
 import { getProject, projects, SITE_URL } from "../../lib/content";
 
 export function generateStaticParams() {
@@ -121,7 +122,7 @@ export default async function ProjectPage({
         <section className="pb-8">
           <div className="mx-auto max-w-5xl px-6">
             <Reveal>
-              <BrowserFrame url={project.liveLabel ?? project.client}>
+              <BrowserFrame url={project.liveLabel ?? (project.badge ? `${project.client} · ${project.badge}` : project.client)}>
                 <Image
                   src={project.screenshots.desktop}
                   alt={`Website von ${project.client}`}
@@ -131,6 +132,55 @@ export default async function ProjectPage({
                   priority
                 />
               </BrowserFrame>
+            </Reveal>
+          </div>
+        </section>
+      )}
+
+      {/* Extra screenshots (configurator etc.) */}
+      {project.gallery && project.gallery.length > 0 && (
+        <section className="pb-16">
+          <div className="mx-auto max-w-5xl px-6">
+            <Reveal>
+              <h2 className="font-display text-xl font-bold tracking-tight sm:text-2xl">
+                Aktueller Stand
+              </h2>
+              <p className="mt-2 text-sm text-[var(--muted)]">
+                Screenshots aus dem Shop in Arbeit — noch nicht öffentlich.
+              </p>
+            </Reveal>
+            <div className="mt-8 grid gap-6 md:grid-cols-1">
+              {project.gallery.map((item, i) => (
+                <Reveal key={item.src} delay={i * 0.08}>
+                  <BrowserFrame url={project.client}>
+                    <Image
+                      src={item.src}
+                      alt={item.alt}
+                      width={1440}
+                      height={900}
+                      className="w-full"
+                    />
+                  </BrowserFrame>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {project.slug === "rubberik" && (
+        <section className="pb-16">
+          <div className="mx-auto max-w-5xl px-6">
+            <Reveal>
+              <h2 className="font-display text-xl font-bold tracking-tight sm:text-2xl">
+                So fühlt sich der Konfigurator an
+              </h2>
+              <p className="mt-2 text-sm text-[var(--muted)]">
+                Bewegen Sie die Maus über die Figur — oder tippen Sie eine Maßzone.
+              </p>
+              <div className="mt-8">
+                <MassFigureDemo />
+              </div>
             </Reveal>
           </div>
         </section>

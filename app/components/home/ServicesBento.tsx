@@ -15,8 +15,9 @@ export default function ServicesBento() {
             Was ich für Sie tun kann
           </h2>
           <p className="mt-4 max-w-2xl text-[var(--muted)]">
-            Sechs Bausteine, ein Ziel: mehr Kunden für Ihren Betrieb — ohne
-            dass Sie sich um die Technik kümmern müssen.
+            Sieben Bausteine, ein Ziel: mehr Kunden für Ihren Betrieb — ohne
+            dass Sie sich um die Technik kümmern müssen. Am Anfang steht
+            immer der Plan.
           </p>
         </Reveal>
 

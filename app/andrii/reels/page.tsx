@@ -27,20 +27,62 @@ const CTA_BLOCKS = [
     de: "Schreib «KI» in die Kommentare — ich schicke dir die Anleitung.",
     ru: "Напиши «KI» в комментарии — пришлю инструкцию.",
   },
+  {
+    key: "D", name: "CTA-D · Blitz-Check 100€ (быстрые деньги)",
+    de: "Du hast ein Geschäft in Wien? Schreib mir jetzt „CHECK“. Für 100 Euro checke ich heute mit KI, warum dich niemand findet — und du bekommst 3 konkrete Schritte. Heute. Nicht nächste Woche.",
+    ru: "Есть бизнес в Вене? Напиши мне сейчас «CHECK». За 100 евро сегодня проверю через ИИ, почему тебя никто не находит — и дам 3 конкретных шага. Сегодня. Не на следующей неделе.",
+  },
+  {
+    key: "E", name: "CTA-E · Website-Visitenkarte ab 2 Tagen",
+    de: "Ich bin Andrii — Marketing-Agentur in Wien. Ich baue dir eine neue Website-Visitenkarte, schnell, ab 2 Tagen. Schreib „SITE“ in die DM oder auf WhatsApp. Nur diese Woche.",
+    ru: "Я Андрей — маркетинговое агентство в Вене. Сделаю тебе новый сайт-визитку, быстро, от 2 дней. Напиши «SITE» в личку или в WhatsApp. Только эта неделя.",
+  },
 ] as const;
 
 type Script = {
   num: number; pilar: 1 | 2 | 3 | 4 | 5; title: string; priority?: string;
   hookDe: string; hookRu: string;
   midDe: string; midRu: string;
-  cta: "A" | "B" | "C";
+  cta: "A" | "B" | "C" | "D" | "E";
   shoot: string;
 };
 
 const SCRIPTS: Script[] = [
-  // ── СЕГОДНЯ ──
+  // ── СЕГОДНЯ 29.07 · panel drop 1 (оригиналы 27/23/22 ниже не тронуты) ──
   {
-    num: 1, pilar: 4, title: "Ausländer dreht auf Deutsch (манифест)", priority: "⭐⭐⭐ СЕГОДНЯ · №1",
+    num: 27.2, pilar: 4, title: "Stephansplatz: unsichtbare Geschäfte · panel drop 1",
+    priority: "⭐⭐⭐ СЕГОДНЯ · №1 · снимай это",
+    hookDe: "Ich frage ChatGPT: Wo kann ich am Stephansplatz essen? Sie schlägt ein Burger-Lokal vor. Das hat 2019 zugemacht.",
+    hookRu: "Спрашиваю ChatGPT: где поесть на Штефансплац? Она советует бургерную. Та закрылась в 2019.",
+    midDe: "Das Café 20 Meter weiter? Kennt sie nicht. Live hier: wer wird empfohlen, wer ist unsichtbar? Teuerste Miete Österreichs — und digital oft ein leeres Grundstück. Check selbst: frag ChatGPT nach deinem Geschäft.",
+    midRu: "Кафе в 20 метрах? Она его не знает. Live здесь: кого рекомендует, кто невидим? Самая дорогая аренда Австрии — а в цифре часто пустырь. Проверь себя: спроси ChatGPT про свой бизнес.",
+    cta: "B",
+    shoot: "Panel 29.07: хук = мёртвая рекомендация KI (шок). Показать экран ChatGPT + бургерную/пустую витрину если есть. Оригинал — №27. CTA-B.",
+  },
+  {
+    num: 23.2, pilar: 3, title: "Dein Angebot in 1 Satz · panel drop 1",
+    priority: "⭐⭐⭐ СЕГОДНЯ · №2 · снимай это",
+    hookDe: "Dein Service ist gut. Aber niemand versteht, was du machst.",
+    hookRu: "Твой сервис хороший. Но никто не понимает, что ты делаешь.",
+    midDe: "Test: «Wir sind ein innovatives Unternehmen für individuelle Lösungen» — was verkauft die? Keine Ahnung. Formel: Ich helfe [wem] bei [Problem] — [wie]. «Ich schärfe Wiener Küchenmesser in 24 Stunden.» Sofort klar. Schreib deinen Satz in die Kommentare — ich gebe Feedback.",
+    midRu: "Тест: «Мы инновационная компания индивидуальных решений» — что продаёт? Непонятно. Формула: я помогаю [кому] с [проблемой] — [как]. «Точу венские кухонные ножи за 24 часа». Сразу ясно. Напиши свою фразу в комментарии — дам обратную связь.",
+    cta: "C",
+    shoot: "Panel 29.07: хук короче и жёстче (stop_rate ~92%). Польза как в оригинале — формула + пример. Оригинал — №23. Отвечать на все комментарии!",
+  },
+  {
+    num: 22.2, pilar: 3, title: "«Zu teuer» — die richtige Antwort · panel drop 1",
+    priority: "⭐⭐⭐ СЕГОДНЯ · №3 · снимай это",
+    hookDe: "Er hört «zu teuer» — macht sofort 20% runter. Der Kunde kauft trotzdem nicht.",
+    hookRu: "Слышит «дорого» — сразу минус 20%. Клиент всё равно не покупает.",
+    midDe: "Falsch: sofort Rabatt. Damit sagst du: Mein Preis war gelogen. Richtig: eine Frage — «Zu teuer im Vergleich wozu?» Dann hörst du das echte Problem. Meistens ist es Unsicherheit. Die löst man mit Beispielen, nicht mit Rabatten.",
+    midRu: "Неправильно: сразу скидка. Этим ты говоришь: моя цена была враньём. Правильно: вопрос — «Дорого по сравнению с чем?» Тогда услышишь настоящую проблему. Чаще всего это неуверенность. Её лечат примерами, не скидками.",
+    cta: "A",
+    shoot: "Panel 29.07: хук = мини-история с цифрой 20% (конфликт за 0,5 сек). Mid короткий B1. Оригинал — №22. Разыграть диалог за двоих (смена ракурса).",
+  },
+
+  // ── Банк (оригиналы) ──
+  {
+    num: 1, pilar: 4, title: "Ausländer dreht auf Deutsch (манифест)",
     hookDe: "Ich bin Ausländer. Mein Deutsch ist nicht perfekt. Und ich drehe trotzdem jeden Tag drei Videos auf Deutsch.",
     hookRu: "Я иностранец. Мой немецкий не идеален. И я всё равно снимаю три видео в день на немецком.",
     midDe: "Ich baue mein Business in Wien auf — mit KI, Marketing und Websites. Meine Kunden sind hier. Also lerne ich eure Sprache — vor der Kamera, mit Fehlern. Und wir finden zusammen raus, wie KI unsere Alltagsprobleme löst: Briefe vom Amt, Verträge, Business. Schau zu.",
@@ -49,7 +91,7 @@ const SCRIPTS: Script[] = [
     shoot: "Прямо в камеру, красивый венский фон (Stephansplatz / канал). Искренне, без монтажной полировки. Личный ролик = лучший старт аккаунта.",
   },
   {
-    num: 2, pilar: 2, title: "Live-Check: Café Wien", priority: "⭐⭐⭐ СЕГОДНЯ · №2",
+    num: 2, pilar: 2, title: "Live-Check: Café Wien",
     hookDe: "Ich habe ChatGPT gefragt: Wo ist das beste Café in Wien? Die Antwort ist ein Problem für 90% der Lokale.",
     hookRu: "Я спросил ChatGPT: где лучшее кафе в Вене? Ответ — проблема для 90% заведений.",
     midDe: "Schau: ChatGPT empfiehlt diese drei Cafés. Warum genau diese? Gute Google-Bewertungen, klare Website, Presse-Erwähnungen. Tausende andere Lokale existieren für die KI einfach nicht. Deine Gäste fragen heute die KI — nicht mehr nur Google.",
@@ -58,7 +100,7 @@ const SCRIPTS: Script[] = [
     shoot: "Запись экрана с ответом ChatGPT + talking head. Можно снять у витрины кафе. Конфликт виден за 0,5 сек. Формат-серия: дальше любая ниша.",
   },
   {
-    num: 31, pilar: 4, title: "Blick auf Wien — was ich hier mache", priority: "⭐⭐⭐ СЕГОДНЯ · №3 (со ступенек)",
+    num: 31, pilar: 4, title: "Blick auf Wien — was ich hier mache",
     hookDe: "Von hier oben sieht Wien perfekt aus. Aber ich sehe 10.000 Geschäfte, die niemand findet.",
     hookRu: "Отсюда сверху Вена выглядит идеально. Но я вижу десять тысяч бизнесов, которых никто не находит.",
     midDe: "Ich mache Marketing in Wien — Websites, Werbung, KI. Und jeden Tag sehe ich das Gleiche: tolles Café, tolle Arbeit — aber keine Bewertungen, keine Website. Für ChatGPT existieren sie nicht. Die besten Geschäfte sind oft unsichtbar. Genau das ändere ich — und hier zeige ich, wie. Jeden Tag, drei Videos.",
@@ -67,7 +109,7 @@ const SCRIPTS: Script[] = [
     shoot: "Первые 2 сек — чистая панорама города (стоп-скролл), потом разворот на себя, город за плечом. Говори по опорам, не дословно. Одна ошибка в DE — не переснимай. CTA A клеится в монтаже; если блоков ещё нет — снять A/B/C там же на ступеньках (фон шикарный).",
   },
   {
-    num: 3, pilar: 1, title: "Brief vom Amt → KI übersetzt", priority: "⭐ ЗАВТРА · первый",
+    num: 3, pilar: 1, title: "Brief vom Amt → KI übersetzt",
     hookDe: "Brief vom Finanzamt bekommen und nichts verstanden? Mach genau das.",
     hookRu: "Получил письмо из налоговой и ничего не понял? Сделай вот что.",
     midDe: "Foto vom Brief machen. In ChatGPT hochladen. Schreiben: «Erkläre mir diesen Brief in einfachen Worten. Was muss ich tun und bis wann?» Fertig. Die KI erklärt Amtsdeutsch besser als das Amt selbst. Funktioniert auch mit Verträgen.",
@@ -217,13 +259,13 @@ const SCRIPTS: Script[] = [
     shoot: "Реальные цифры из твоей CRM (cold-sales). Ходьба по Вене, перебивки улиц. Дневник + польза.",
   },
   {
-    num: 19, pilar: 3, title: "3 Website-Fehler = keine Anrufe",
+    num: 19, pilar: 3, title: "3 Website-Fehler = keine Anrufe", priority: "⭐ СНИМАЙ · CTA-E",
     hookDe: "Deine Website ist schön. Und trotzdem ruft niemand an. Hier sind die drei Gründe.",
     hookRu: "Твой сайт красивый. И всё равно никто не звонит. Вот три причины.",
     midDe: "Eins: Die Nummer ist nicht klickbar — am Handy ist das tödlich. Zwei: Keine Preise, nicht mal «ab». Der Kunde denkt: zu teuer. Drei: «Willkommen auf unserer Website» statt einer Antwort auf seine Frage. Dein erster Satz muss sein Problem nennen — nicht deinen Namen.",
     midRu: "Раз: номер телефона некликабельный — на мобильном это смертельно. Два: нет цен, даже «от». Клиент думает: дорого. Три: «Добро пожаловать на наш сайт» вместо ответа на его вопрос. Первая фраза должна называть его проблему, а не твоё имя.",
-    cta: "B",
-    shoot: "Показать примеры на экране (анонимно). Список из 3 — динамично, цифры на экране.",
+    cta: "E",
+    shoot: "Показать примеры на экране (анонимно). Список из 3 — динамично. В конце клеить CTA-E (SITE): чек 100€ или новый сайт от 2 дней.",
   },
   {
     num: 20, pilar: 3, title: "Bewertungen: die 1-Satz-Maschine",
@@ -245,6 +287,7 @@ const SCRIPTS: Script[] = [
   },
   {
     num: 22, pilar: 3, title: "«Zu teuer» — die richtige Antwort",
+    priority: "оригинал · рядом есть 22.2 (panel)",
     hookDe: "Kunde sagt: «Zu teuer.» Die meisten antworten falsch. So geht's richtig.",
     hookRu: "Клиент говорит: «Дорого». Большинство отвечает неправильно. Вот как надо.",
     midDe: "Falsch: sofort Rabatt. Damit sagst du: Mein Preis war gelogen. Richtig: eine Frage zurück — «Zu teuer im Vergleich wozu?» Dann hörst du das echte Problem. Meistens ist es nicht der Preis — es ist Unsicherheit. Und Unsicherheit löst man mit Beispielen, nicht mit Rabatten.",
@@ -254,6 +297,7 @@ const SCRIPTS: Script[] = [
   },
   {
     num: 23, pilar: 3, title: "Dein Angebot in 1 Satz",
+    priority: "оригинал · рядом есть 23.2 (panel)",
     hookDe: "Wenn du dein Angebot nicht in einem Satz sagen kannst, verlierst du jeden Tag Kunden.",
     hookRu: "Если не можешь сказать своё предложение одной фразой — теряешь клиентов каждый день.",
     midDe: "Test: «Wir sind ein innovatives Unternehmen für individuelle Lösungen» — was verkauft diese Firma? Keine Ahnung. Formel: Ich helfe [wem] bei [Problem] — [wie]. «Ich schärfe Wiener Küchenmesser in 24 Stunden.» Sofort klar. Schreib deinen Satz in die Kommentare — ich gebe Feedback.",
@@ -292,6 +336,7 @@ const SCRIPTS: Script[] = [
   },
   {
     num: 27, pilar: 4, title: "Stephansplatz: unsichtbare Geschäfte",
+    priority: "оригинал · рядом есть 27.2 (panel)",
     hookDe: "Ich stehe am Stephansplatz. Um mich herum: 50 Geschäfte. Für die KI existiert die Hälfte nicht.",
     hookRu: "Стою на Штефансплац. Вокруг — 50 бизнесов. Для ИИ половины не существует.",
     midDe: "Live-Test mitten in Wien: Ich frage die KI nach Geschäften genau hier. Wer wird empfohlen, wer ist unsichtbar? Das teuerste Pflaster Österreichs — und digital sind viele ein leeres Grundstück.",
@@ -370,9 +415,9 @@ export default async function AndriiReels() {
       </section>
 
       {SCRIPTS.map((s) => (
-        <div className={`script-card${s.priority?.includes("СЕГОДНЯ") ? " today" : ""}`} key={s.num}>
+        <div className={`script-card${s.priority?.includes("СЕГОДНЯ") ? " today" : ""}`} key={String(s.num)}>
           <div className="script-head">
-            <div className="script-num">{s.num}</div>
+            <div className="script-num">{Number.isInteger(s.num) ? s.num : s.num.toFixed(1)}</div>
             <div style={{ flex: 1 }}>
               <div className="script-title">{s.title}</div>
               {s.priority && (

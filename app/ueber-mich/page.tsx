@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import SiteHeader from "../components/SiteHeader";
 import SiteFooter from "../components/SiteFooter";
 import CTASection from "../components/ui/CTASection";
 import Reveal from "../components/ui/Reveal";
 import SectionLabel from "../components/ui/SectionLabel";
+import AboutPhotoDuo from "../components/about/AboutPhotoDuo";
 import { CONTACT } from "../lib/content";
 
 export const metadata: Metadata = {
@@ -65,16 +65,7 @@ export default function UeberMichPage() {
               </p>
             </Reveal>
             <Reveal delay={0.1}>
-              <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-3xl border border-[var(--border)]">
-                <Image
-                  src="/hero-portrait.png"
-                  alt="Andrii Gorbenko"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 400px"
-                  className="object-cover"
-                  priority
-                />
-              </div>
+              <AboutPhotoDuo />
             </Reveal>
           </div>
         </div>

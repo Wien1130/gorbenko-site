@@ -21,13 +21,15 @@ const nextConfig: NextConfig = {
         destination: "/?utm_source=youtube&utm_medium=bio&utm_campaign=ki_mit_andrii",
         permanent: false,
       },
+      {
+        source: "/projekte/blinhaus",
+        destination: "/projekte",
+        permanent: true,
+      },
     ];
   },
   outputFileTracingIncludes: {
-    "/reports/blinhaus-june-2026": ["./private-reports/**"],
-    "/reports/blinhaus-june-12-23": ["./private-reports/**"],
-    "/reports/blinhaus-june-24-30": ["./private-reports/**"],
-    "/reports/blinhaus-june-summary": ["./private-reports/**"],
+    "/reports/roman-minin": ["./private-reports/**"],
     "/anton": ["./private-anton/**"],
     "/anton/calendar.ics": ["./private-anton/**"],
   },
