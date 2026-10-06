@@ -102,7 +102,7 @@ export default async function ServicePage({
               ))}
             </div>
             <p className="mt-3 text-xs text-[var(--muted)]">
-              Alle Preise netto, „ab“ = Einstiegspreis. Fixpreis nach der kostenlosen Beratung.
+              „ab“ = Einstiegspreis. Es fällt keine Umsatzsteuer an (Kleinunternehmer gemäß § 6 Abs. 1 Z 27 UStG). Fixpreis nach der kostenlosen Beratung.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link

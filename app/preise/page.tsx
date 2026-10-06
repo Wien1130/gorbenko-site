@@ -73,9 +73,11 @@ export default function PreisePage() {
               Was es kostet — offen, ab dem ersten Gespräch.
             </h1>
             <p className="mt-6 max-w-2xl text-lg text-[var(--muted)]">
-              Alle Preise sind Einstiegspreise („ab“), netto. Den Fixpreis für
-              Ihren Betrieb bekommen Sie nach der kostenlosen Beratung — schriftlich,
-              mit allem, was drin ist, und ohne Überraschungen.
+              Alle Preise sind Einstiegspreise („ab“). Es fällt keine Umsatzsteuer
+              an — ich bin Kleinunternehmer gemäß § 6 Abs. 1 Z 27 UStG, der genannte
+              Betrag ist der Endbetrag. Den Fixpreis für Ihren Betrieb bekommen Sie
+              nach der kostenlosen Beratung — schriftlich, mit allem, was drin ist,
+              und ohne Überraschungen.
             </p>
             <div className="mt-8 flex flex-wrap gap-3 text-sm text-[var(--muted)]">
               <span className="rounded-full border border-[var(--border)] px-4 py-2">50 % Anzahlung, Rest bei Übergabe</span>
@@ -142,7 +144,8 @@ export default function PreisePage() {
 
           <Reveal>
             <p className="text-center text-sm text-[var(--muted)]">
-              Preise netto, Stand Oktober 2026. Fremdkosten (Domain, Werbebudget,
+              Preise ohne Umsatzsteuer (Kleinunternehmer, § 6 Abs. 1 Z 27 UStG), Stand Oktober 2026.
+              Angebot richtet sich an Unternehmer. Fremdkosten (Domain, Werbebudget,
               SMS-Versand) gehen direkt an den jeweiligen Anbieter und sind nicht
               Teil meiner Rechnung.
             </p>

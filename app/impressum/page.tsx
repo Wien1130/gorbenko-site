@@ -45,9 +45,12 @@ export default function ImpressumPage() {
           <section>
             <h2 className="text-lg font-semibold mb-3">Gewerberechtliche Angaben</h2>
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 space-y-2 text-[var(--muted)]">
-              <p><span className="text-[var(--foreground)] font-medium">Gewerbe:</span> Werbeagentur</p>
-              <p><span className="text-[var(--foreground)] font-medium">Gewerbebeh&ouml;rde:</span> Magistrat der Stadt Wien, Bezirksamt f&uuml;r den 13. und 14. Bezirk</p>
-              <p><span className="text-[var(--foreground)] font-medium">Berufsrecht:</span> Gewerbeordnung (GewO)</p>
+              <p><span className="text-[var(--foreground)] font-medium">Gewerbe:</span> Werbeagentur (freies Gewerbe, verliehen in &Ouml;sterreich)</p>
+              <p><span className="text-[var(--foreground)] font-medium">Rechtsform:</span> Einzelunternehmen, nicht im Firmenbuch eingetragen</p>
+              <p><span className="text-[var(--foreground)] font-medium">Gewerbebeh&ouml;rde:</span> Magistrat der Stadt Wien, Magistratisches Bezirksamt f&uuml;r den 13. und 14. Bezirk</p>
+              <p><span className="text-[var(--foreground)] font-medium">Kammerzugeh&ouml;rigkeit:</span> Mitglied der Wirtschaftskammer Wien, Fachgruppe Werbung und Marktkommunikation</p>
+              <p><span className="text-[var(--foreground)] font-medium">Berufsrecht:</span> Gewerbeordnung 1994 (GewO), abrufbar unter</p>
+              <p><span className="text-[var(--foreground)] font-medium">Umsatzsteuer:</span> Kleinunternehmer gem&auml;&szlig; &sect;&nbsp;6 Abs.&nbsp;1 Z&nbsp;27 UStG — es wird keine Umsatzsteuer verrechnet, keine UID-Nummer.</p>
               <p>
                 <a href="https://www.ris.bka.gv.at" target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover:underline">
                   www.ris.bka.gv.at
@@ -60,7 +63,8 @@ export default function ImpressumPage() {
             <h2 className="text-lg font-semibold mb-3">Offenlegung gem&auml;&szlig; &sect;&nbsp;25 MedienG</h2>
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 text-[var(--muted)]">
               <p>Medieninhaber und Herausgeber: Andrii Gorbenko, Hietzinger Hauptstra&szlig;e 72/2, 1130 Wien.</p>
-              <p className="mt-2">Zweck der Website: Pr&auml;sentation von Marketingdienstleistungen und Kontaktaufnahme mit potenziellen Kunden.</p>
+              <p className="mt-2">Unternehmensgegenstand: Werbeagentur — KI-Assistenten, Websites, Content, Werbung und Marketing-Strategie f&uuml;r Betriebe in Wien.</p>
+              <p className="mt-2">Grundlegende Richtung der Website: Pr&auml;sentation der Dienstleistungen des Medieninhabers, Praxiswissen zu Marketing und KI f&uuml;r kleine Betriebe sowie Kontaktaufnahme mit potenziellen Kunden.</p>
             </div>
           </section>
 
@@ -69,6 +73,13 @@ export default function ImpressumPage() {
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 text-[var(--muted)] space-y-3">
               <p>Die Inhalte dieser Website wurden mit gr&ouml;&szlig;tm&ouml;glicher Sorgfalt erstellt. F&uuml;r die Richtigkeit, Vollst&auml;ndigkeit und Aktualit&auml;t der Inhalte kann jedoch keine Gew&auml;hr &uuml;bernommen werden.</p>
               <p>Als Diensteanbieter sind wir gem&auml;&szlig; &sect;&nbsp;17 ECG f&uuml;r eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich.</p>
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold mb-3">Hinweis zu Kundenstimmen und Zahlen</h2>
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 text-[var(--muted)]">
+              <p>Alle auf dieser Website genannten Projekte, Kennzahlen und Kundenstimmen beziehen sich auf tats&auml;chlich erbrachte Leistungen und wurden mit den jeweiligen Kunden abgestimmt. Genannte Preise sind Einstiegspreise („ab“) und richten sich an Unternehmer.</p>
             </div>
           </section>
 

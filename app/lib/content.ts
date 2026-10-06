@@ -795,11 +795,9 @@ export const projects: Project[] = [
       { value: 90, suffix: "+", label: "Reel-Ideen im Drehbuch" },
       { value: 40, suffix: "+", label: "Jahre Handwerkstradition, digital sichtbar gemacht" },
     ],
-    quote: {
-      text: "Andrii hat aus meiner Werkstatt einen digitalen Betrieb gemacht — Website, Videos, Werbung. Ich schmiede, er kümmert sich um den Rest.",
-      author: "Stefan Nagl",
-      role: "Messerschmied, Wien",
-    },
+    // Zitat entfernt 06.10.2026: Entwurf, von Stefan nie freigegeben.
+    // UWG § 2 / Anhang Z 23: nur echte, freigegebene Kundenstimmen veröffentlichen.
+    // Wieder einsetzen erst nach schriftlicher Freigabe (WhatsApp reicht, Screenshot ablegen).
     screenshots: {
       desktop: "/portfolio/nagl/desktop.webp",
       mobile: "/portfolio/nagl/mobile.webp",

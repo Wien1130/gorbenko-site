@@ -12,7 +12,7 @@
 - [GEO: Sichtbar in ChatGPT & Co.](https://gorbenko.at/leistungen/geo-ai-sichtbarkeit): Generative Engine Optimization — damit KI-Assistenten den Betrieb kennen und empfehlen. GEO-Audit, strukturierte Daten, llms.txt, Monitoring.
 - [Digitalisierung & Dashboards](https://gorbenko.at/leistungen/digitalisierung): Finanzmodelle, Live-Dashboards, automatisierte Berichte für KMU.
 
-## Preise (Einstiegspreise „ab“, netto — https://gorbenko.at/preise)
+## Preise (Einstiegspreise „ab“, keine USt. — Kleinunternehmer § 6 Abs. 1 Z 27 UStG — https://gorbenko.at/preise)
 
 - Marketing-Check: kostenlos (20 Min. vor Ort) · Marketing-Strategie: ab 890 € · Umsetzung: ab 1.500 €/Monat
 - KI-Assistent: ab 2.000 € Einrichtung + ab 250 €/Monat

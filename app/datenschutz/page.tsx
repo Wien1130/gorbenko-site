@@ -24,7 +24,7 @@ export default function DatenschutzPage() {
         <h1 className="font-display text-4xl font-bold tracking-tight mb-2">
           Datenschutzerkl&auml;rung
         </h1>
-        <p className="text-sm text-[var(--muted)] mb-12">gem&auml;&szlig; DSGVO &amp; &ouml;sterreichischem Datenschutzgesetz</p>
+        <p className="text-sm text-[var(--muted)] mb-12">gem&auml;&szlig; DSGVO &amp; &ouml;sterreichischem Datenschutzgesetz · Stand: 6. Oktober 2026</p>
 
         <div className="space-y-10 text-sm leading-relaxed">
 
@@ -108,8 +108,19 @@ export default function DatenschutzPage() {
           <section>
             <h2 className="text-lg font-semibold mb-3">7. Kontaktaufnahme</h2>
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 text-[var(--muted)] space-y-3">
-              <p>Wenn Sie uns per E-Mail, Telefon oder WhatsApp kontaktieren, werden Ihre Angaben (Name, Kontaktdaten, Nachricht) zur Bearbeitung Ihrer Anfrage gespeichert. Rechtsgrundlage: Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;b DSGVO (Vertragsanbahnung) bzw. Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO.</p>
-              <p>Die Daten werden nicht an Dritte weitergegeben und gel&ouml;scht, sobald sie nicht mehr ben&ouml;tigt werden.</p>
+              <p>Wenn Sie uns per E-Mail, Telefon, WhatsApp oder &uuml;ber das Kontaktformular kontaktieren, werden Ihre Angaben (Name, Kontaktdaten, Nachricht, gew&uuml;nschter Termin) zur Bearbeitung Ihrer Anfrage gespeichert. Rechtsgrundlage: Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;b DSGVO (Vertragsanbahnung) bzw. Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO.</p>
+              <p><span className="text-[var(--foreground)] font-medium">Kontaktformular — technische Weiterleitung:</span> Anfragen &uuml;ber das Formular werden mir als Benachrichtigung &uuml;ber den Messenger-Dienst Telegram (Telegram FZ-LLC, Dubai, VAE) zugestellt und in einer gesch&uuml;tzten Datei bei GitHub, Inc. (San Francisco, USA; Tochter der Microsoft Corporation, zertifiziert nach dem EU-US Data Privacy Framework) gespeichert. Die &Uuml;bermittlung an Telegram erfolgt auf Grundlage von Art.&nbsp;49 Abs.&nbsp;1 lit.&nbsp;b DSGVO (Erforderlichkeit f&uuml;r vorvertragliche Ma&szlig;nahmen auf Ihre Anfrage). Wenn Sie das nicht m&ouml;chten, schreiben Sie mir bitte direkt per E-Mail.</p>
+              <p><span className="text-[var(--foreground)] font-medium">WhatsApp:</span> Bei Kontakt &uuml;ber WhatsApp gelten zus&auml;tzlich die Datenschutzbestimmungen von WhatsApp Ireland Ltd.</p>
+              <p>Die Daten werden gel&ouml;scht, sobald Ihre Anfrage abgeschlossen ist und keine gesetzlichen Aufbewahrungspflichten (z.&nbsp;B. 7 Jahre nach &sect;&nbsp;132 BAO f&uuml;r Gesch&auml;ftsunterlagen) entgegenstehen.</p>
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold mb-3">7a. Digitaler Assistent (KI-Chat) auf der Website</h2>
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 text-[var(--muted)] space-y-3">
+              <p>Auf der Website steht ein digitaler Assistent zur Verf&uuml;gung, der Fragen zu Leistungen und Projekten beantwortet. Er ist ein KI-System und stellt sich zu Beginn jedes Gespr&auml;chs als solches vor (Art.&nbsp;50 EU-KI-Verordnung). Es handelt sich nicht um einen Menschen.</p>
+              <p>Ihre Chat-Eingaben werden zur Beantwortung an Anthropic, PBC (San Francisco, USA) &uuml;bermittelt und dort verarbeitet. Die Drittland&uuml;bermittlung erfolgt auf Grundlage der Standardvertragsklauseln der EU-Kommission (Art.&nbsp;46 Abs.&nbsp;2 lit.&nbsp;c DSGVO) im Rahmen der Auftragsverarbeitung; Anthropic verwendet die Eingaben nicht zum Training seiner Modelle. Rechtsgrundlage: Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO (berechtigtes Interesse an einer schnellen Besucherbetreuung) bzw. Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;b DSGVO, wenn Sie &uuml;ber den Assistenten eine Beratung anfragen.</p>
+              <p>Bitte geben Sie im Chat keine sensiblen Daten (Gesundheit, Finanzen, Zugangsdaten) ein. Der Gespr&auml;chsverlauf wird nur in Ihrem Browser gehalten und nicht dauerhaft bei mir gespeichert. Bei Nutzung der Spracheingabe wird die Spracherkennung Ihres Browsers verwendet.</p>
             </div>
           </section>
 
@@ -140,7 +151,7 @@ export default function DatenschutzPage() {
                 </a>
               </p>
               <p className="mt-3">
-                Sie haben auch das Recht, sich bei der &ouml;sterreichischen Datenschutzbeh&ouml;rde zu beschweren:{" "}
+                Sie haben au&szlig;erdem das Recht, sich bei der Aufsichtsbeh&ouml;rde zu beschweren (Art.&nbsp;77 DSGVO): &Ouml;sterreichische Datenschutzbeh&ouml;rde, Barichgasse 40–42, 1030 Wien, Telefon +43 1 52 152-0, E-Mail dsb@dsb.gv.at,{" "}
                 <a href="https://www.dsb.gv.at" target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover:underline">
                   www.dsb.gv.at
                 </a>
