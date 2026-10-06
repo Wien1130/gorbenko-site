@@ -1010,7 +1010,8 @@ export const priceList: PriceGroup[] = [
 ];
 
 export function formatEur(n: number) {
-  return new Intl.NumberFormat("de-AT", { maximumFractionDigits: 0 }).format(n) + " €";
+  // de-DE → "2.000"; de-AT would insert a space as thousands separator
+  return new Intl.NumberFormat("de-DE", { maximumFractionDigits: 0 }).format(n) + " €";
 }
 
 export function getService(slug: string) {
