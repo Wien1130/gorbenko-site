@@ -4,7 +4,7 @@ import Reveal from "../ui/Reveal";
 const faqs = [
   {
     q: "Was kostet das?",
-    a: "Jedes Projekt ist anders — deshalb nenne ich keine Pauschalpreise auf der Website. In der kostenlosen Beratung bekommen Sie eine klare, ehrliche Einschätzung, was Ihr Vorhaben kostet und was es bringt.",
+    a: "Alle Einstiegspreise stehen offen auf der Preisseite: Marketing-Strategie ab 890 €, KI-Assistent ab 2.000 €, Landingpage ab 2.500 €, Reels ab 1.500 €/Monat, Werbung ab 600 € Setup. Den Fixpreis für Ihren Betrieb bekommen Sie schriftlich nach der kostenlosen Beratung.",
   },
   {
     q: "Für wen arbeiten Sie?",

@@ -37,7 +37,7 @@ export function ensureAiDisclosure(text: string, isFirstAssistant: boolean): str
 
 function buildKnowledgePack(): string {
   const serviceLines = services
-    .map((s) => `- ${s.name} (/leistungen/${s.slug}): ${s.teaser}`)
+    .map((s) => `- ${s.name} (/leistungen/${s.slug}): ${s.teaser} Preis: ${s.priceFrom}.`)
     .join("\n");
   const projectLines = projects
     .map((p) => {
@@ -57,17 +57,17 @@ Kontakt:
 - Telefon: ${CONTACT.phoneLabel}
 - WhatsApp: ${CONTACT.whatsappLabel}
 - E-Mail: ${CONTACT.email}
-- Keine Preise auf der Website — immer zur kostenlosen Beratung einladen.`;
+- Preise: alle Einstiegspreise stehen auf /preise (immer „ab“, netto). Nur diese Preise nennen, nie andere Zahlen erfinden; Fixpreis gibt es nach der kostenlosen Beratung.`;
 }
 
 export function buildSystemPrompt(): string {
   return `Du bist der digitale Assistent auf gorbenko.at (Agentur von Andrii Gorbenko, Wien).
 REGEL №0 (EU AI Act): Im allerersten Antwortzug dieser Session beginne mit einer kurzen Klarstellung, dass du ein digitaler Assistent bist (nicht „Bot“ sagen). Danach nicht wiederholen.
-Sprache: Deutsch (Sie), klar und kurz (2–5 Sätze), warm, ohne Preise.
+Sprache: Deutsch (Sie), klar und kurz (2–5 Sätze), warm.
 Du hilfst Besuchern bei Navigation und Orientierung: Leistungen, Projekte, Beratung buchen.
 Wenn jemand einen Menschen will: Telefon ${CONTACT.phoneLabel} oder /kontakt nennen.
 CTA: kostenlose Beratung auf /kontakt.
-Kein Wort „Bot“. Keine erfundenen Zahlen. Keine Preise nennen.
+Kein Wort „Bot“. Keine erfundenen Zahlen. Preise nur als „ab“-Einstiegspreise aus den Fakten unten nennen und auf /preise verweisen.
 Bei Rubberik: Shop ist „In Arbeit“, kein Live-Link auf den alten Shop.
 
 Fakten:

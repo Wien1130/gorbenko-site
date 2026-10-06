@@ -85,6 +85,25 @@ export default async function ServicePage({
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-[var(--muted)]">
               {service.sub}
             </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              {service.prices.map((p) => (
+                <div
+                  key={p.label}
+                  className="rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-3"
+                >
+                  <p className="text-xs text-[var(--muted)]">{p.label}</p>
+                  <p className="mt-0.5 font-display text-lg font-bold" style={{ color: service.color }}>
+                    {p.value}
+                  </p>
+                  {p.note && (
+                    <p className="mt-0.5 text-xs text-[var(--muted)]">{p.note}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+            <p className="mt-3 text-xs text-[var(--muted)]">
+              Alle Preise netto, „ab“ = Einstiegspreis. Fixpreis nach der kostenlosen Beratung.
+            </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
                 href="/kontakt"
@@ -134,7 +153,13 @@ export default async function ServicePage({
                     <h3 className="font-display mt-2 text-2xl font-bold tracking-tight">
                       {p.name}
                     </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
+                    <p className="font-display mt-3 text-3xl font-bold" style={{ color: service.color }}>
+                      {p.price}
+                    </p>
+                    {p.priceNote && (
+                      <p className="mt-1 text-xs text-[var(--muted)]">{p.priceNote}</p>
+                    )}
+                    <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
                       {p.tagline}
                     </p>
                     <p className="mt-4 rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-xs font-medium">

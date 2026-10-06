@@ -60,8 +60,11 @@ export default function LeistungenPage() {
                         <p className="mt-2.5 text-sm leading-relaxed text-[var(--muted)]">
                           {s.description}
                         </p>
+                        <p className="mt-4 text-sm font-semibold" style={{ color: s.color }}>
+                          {s.priceFrom}
+                        </p>
                         <p
-                          className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium"
+                          className="mt-2 inline-flex items-center gap-1.5 text-sm font-medium"
                           style={{ color: s.color }}
                         >
                           Mehr erfahren

@@ -40,7 +40,28 @@ export type Package = {
   items: string[];
   /** what you hold in your hands at the end */
   result: string;
+  /** "kostenlos" or "ab 890 €" */
+  price: string;
+  priceNote?: string;
   highlight?: boolean;
+};
+
+export type PriceTag = { label: string; value: string; note?: string };
+
+export type PriceItem = {
+  name: string;
+  loest: string;
+  /** one-time price floor, e.g. 2000 → "ab 2.000 €" */
+  einmalig?: number;
+  /** monthly price floor */
+  monatlich?: number;
+  note?: string;
+};
+
+export type PriceGroup = {
+  serviceSlug: string;
+  title: string;
+  items: PriceItem[];
 };
 
 export type Service = {
@@ -55,6 +76,10 @@ export type Service = {
   /** optional headline for the packages block */
   packagesTitle?: string;
   packagesSub?: string;
+  /** short price line for cards, e.g. "ab 2.000 €" */
+  priceFrom: string;
+  /** price chips in the hero */
+  prices: PriceTag[];
   /** one-liner for bento cards on homepage */
   teaser: string;
   /** longer description for /leistungen overview */
@@ -112,6 +137,12 @@ export const services: Service[] = [
     name: "Marketing-Strategie",
     color: "var(--c-orange)",
     icon: "compass",
+    priceFrom: "Check kostenlos · Strategie ab 890 €",
+    prices: [
+      { label: "Marketing-Check", value: "kostenlos", note: "20 Min. vor Ort" },
+      { label: "Marketing-Strategie", value: "ab 890 €", note: "einmalig, 7 Tage" },
+      { label: "Umsetzung", value: "ab 1.500 €/Monat", note: "90 Tage" },
+    ],
     teaser:
       "Erst der Plan, dann die Werbung: In 7 Tagen wissen Sie, wen Sie ansprechen, wo — und was es kostet.",
     description:
@@ -133,6 +164,7 @@ export const services: Service[] = [
           "Ehrliche Einschätzung: Was lohnt sich, was nicht",
         ],
         result: "Eine klare Empfehlung — ohne Verpflichtung.",
+        price: "kostenlos",
       },
       {
         step: "Schritt 2 · 7 Tage",
@@ -147,6 +179,8 @@ export const services: Service[] = [
           "90-Tage-Plan mit Budget, Reihenfolge und Kennzahlen",
         ],
         result: "Strategie-Dokument + 1-Seiten-Plan, den Sie selbst oder mit jedem Dienstleister umsetzen können.",
+        price: "ab 890 €",
+        priceNote: "einmalig · Fixpreis nach dem Check",
         highlight: true,
       },
       {
@@ -160,6 +194,8 @@ export const services: Service[] = [
           "Ein Ansprechpartner statt drei Agenturen",
         ],
         result: "Nach 90 Tagen: laufendes Marketing, das Sie an Zahlen messen können.",
+        price: "ab 1.500 €/Monat",
+        priceNote: "Werbebudget geht direkt an Google/Meta, nicht an mich",
       },
     ],
     pains: [
@@ -231,7 +267,7 @@ export const services: Service[] = [
       },
       {
         q: "Was kostet die Strategie?",
-        a: "Das hängt von Größe und Komplexität Ihres Betriebs ab. Beim kostenlosen Marketing-Check sage ich Ihnen den Preis konkret — ohne Überraschungen.",
+        a: "Der Marketing-Check ist kostenlos. Die Strategie beginnt bei 890 € einmalig — der genaue Fixpreis hängt von Größe und Komplexität Ihres Betriebs ab und steht nach dem Check fest, ohne Überraschungen. Die Umsetzung ab 1.500 € pro Monat, Werbebudget extra.",
       },
     ],
     seoTitle: "Marketing-Strategie für kleine Betriebe in Wien",
@@ -243,6 +279,11 @@ export const services: Service[] = [
     name: "KI-Chatbots & Automatisierung",
     color: "var(--accent)",
     icon: "bot",
+    priceFrom: "ab 2.000 € + ab 250 €/Monat",
+    prices: [
+      { label: "Einrichtung & Training", value: "ab 2.000 €", note: "einmalig, 1–2 Wochen" },
+      { label: "Pflege & KI-Kosten", value: "ab 250 €/Monat", note: "neue Preise, Produkte, Aktionen" },
+    ],
     teaser:
       "Ein digitaler Assistent, der Ihre Kunden auf Facebook, Instagram & WhatsApp bedient — 24/7, in Ihrem Ton.",
     description:
@@ -323,6 +364,12 @@ export const services: Service[] = [
     name: "Websites & Online-Shops",
     color: "var(--c-blue)",
     icon: "globe",
+    priceFrom: "Landingpage ab 2.500 € · Shop ab 6.500 €",
+    prices: [
+      { label: "Landingpage / Website", value: "ab 2.500 €", note: "Texte & Prototyp inklusive" },
+      { label: "Online-Shop", value: "ab 6.500 €", note: "Zahlung, Versand, Produkte" },
+      { label: "Shop mit Konfigurator", value: "ab 10.500 €", note: "Maße, Optionen, Live-Preis" },
+    ],
     teaser:
       "Blitzschnelle Websites und Online-Shops — vom Landingpage bis zum Shop mit Produkt-Konfigurator.",
     description:
@@ -398,6 +445,12 @@ export const services: Service[] = [
     name: "Content & Virale Reels",
     color: "var(--c-violet)",
     icon: "video",
+    priceFrom: "Reels-Paket ab 1.500 €/Monat",
+    prices: [
+      { label: "Reels-Paket (8 Videos)", value: "ab 1.500 €/Monat", note: "Drehtag mit Licht inklusive" },
+      { label: "Einzelnes Video", value: "ab 250 €", note: "ohne Monatspaket" },
+      { label: "Instagram-Betreuung + DM", value: "ab 500 €/Monat", note: "Posting, Antworten, Struktur" },
+    ],
     teaser:
       "Ich komme mit Profi-Licht in Ihren Betrieb, drehe Reels und führe Ihren Instagram-Kanal — komplett.",
     description:
@@ -469,6 +522,12 @@ export const services: Service[] = [
     name: "Werbung auf Facebook & Instagram",
     color: "var(--c-amber)",
     icon: "megaphone",
+    priceFrom: "Setup ab 700 € + ab 400 €/Monat",
+    prices: [
+      { label: "Meta Ads Setup", value: "ab 700 €", note: "Kampagnen, Zielgruppen, Tracking" },
+      { label: "Google Ads Setup", value: "ab 600 €", note: "Suche & Remarketing" },
+      { label: "Laufende Betreuung", value: "ab 400 €/Monat", note: "Werbebudget geht an Google/Meta" },
+    ],
     teaser:
       "Meta-Kampagnen mit Click-to-Messenger: Der Interessent klickt — und der KI-Assistent übernimmt sofort.",
     description:
@@ -544,6 +603,12 @@ export const services: Service[] = [
     name: "GEO: Sichtbar in ChatGPT & Co.",
     color: "var(--c-rose)",
     icon: "sparkles",
+    priceFrom: "GEO-Audit ab 490 €",
+    prices: [
+      { label: "GEO-Audit", value: "ab 490 €", note: "Wie KI-Assistenten Sie heute sehen" },
+      { label: "Umsetzung", value: "ab 1.500 €", note: "strukturierte Daten, llms.txt, FAQ" },
+      { label: "Monitoring", value: "ab 200 €/Monat", note: "monatlicher Bericht" },
+    ],
     teaser:
       "Immer mehr Kunden fragen KI statt Google. Ich sorge dafür, dass ChatGPT Ihren Betrieb kennt und empfiehlt.",
     description:
@@ -615,6 +680,12 @@ export const services: Service[] = [
     name: "Digitalisierung & Dashboards",
     color: "var(--c-lime)",
     icon: "chart",
+    priceFrom: "Dashboard ab 1.500 € + ab 200 €/Monat",
+    prices: [
+      { label: "Dashboard & Wochenbericht", value: "ab 1.500 €", note: "Anfragen → Termine → Umsatz" },
+      { label: "CRM + SMS + Prozesse", value: "ab 2.800 €", note: "3-Monats-Projekt, Team-Schulung" },
+      { label: "Betreuung", value: "ab 200 €/Monat", note: "Bericht, Anpassungen" },
+    ],
     teaser:
       "Finanzmodelle, Live-Dashboards und automatisierte Berichte statt Zettelwirtschaft.",
     description:
@@ -865,6 +936,82 @@ export const projects: Project[] = [
       "Case Study: Shopify-Shop für die Wiener Parfümerie Zum Eisbären — 50 Jahre Tradition, jetzt mit Online-Sortiment, Events und Newsletter.",
   },
 ];
+
+/* ------------------------------------------------------------------ */
+/* Public price list (/preise). Floors only — always "ab".            */
+/* Source of truth: ~/gorbenko/me/PRICING.md                           */
+/* ------------------------------------------------------------------ */
+
+export const priceList: PriceGroup[] = [
+  {
+    serviceSlug: "marketing-strategie",
+    title: "Marketing-Strategie",
+    items: [
+      { name: "Marketing-Check", loest: "20 Minuten vor Ort: wo gehen gerade Kunden verloren?", einmalig: 0 },
+      { name: "Marketing-Strategie (7 Tage)", loest: "Analyse, Zielkunde, Positionierung, Kanalwahl, 90-Tage-Plan auf einer Seite", einmalig: 890 },
+      { name: "Umsetzung & Begleitung (90 Tage)", loest: "Ich setze den Plan um, monatlicher Sprint, ein Ansprechpartner", monatlich: 1500, note: "Werbebudget extra" },
+    ],
+  },
+  {
+    serviceSlug: "ki-chatbots",
+    title: "KI-Assistent & Automatisierung",
+    items: [
+      { name: "KI-Assistent (Instagram / Facebook / WhatsApp / Website)", loest: "Antwortet 24/7, nimmt Anfragen und Bestellungen auf, übergibt an Sie", einmalig: 2000, monatlich: 250, note: "Monatlich: Pflege + KI-Kosten" },
+    ],
+  },
+  {
+    serviceSlug: "websites",
+    title: "Websites & Online-Shops",
+    items: [
+      { name: "Landingpage / Website", loest: "Ein Angebot im Zentrum, ein Weg zur Anfrage — blitzschnell geladen", einmalig: 2500, note: "Domain ca. 20–40 €/Jahr an den Registrar" },
+      { name: "Online-Shop (einfach)", loest: "Verkaufen rund um die Uhr, Zahlung und Versand automatisch", einmalig: 6500 },
+      { name: "Online-Shop mit Konfigurator", loest: "Individuelle Produkte mit Maßen, Optionen und Live-Preis bestellbar", einmalig: 10500, note: "Fixangebot nach Gespräch über den Umfang" },
+    ],
+  },
+  {
+    serviceSlug: "content-marketing",
+    title: "Content & Reels",
+    items: [
+      { name: "Reels-Paket: 8 Videos / Monat", loest: "Drehtag mit Licht im Betrieb, Schnitt, Posting — alles enthalten", monatlich: 1500 },
+      { name: "Einzelnes Video", loest: "Ein Anlass, ein Video — ohne Monatspaket", einmalig: 250 },
+      { name: "Drehtag (Licht, Technik, Logistik)", loest: "Für Website-Videos oder eine Serie auf Vorrat", einmalig: 600 },
+      { name: "Instagram-Neuverpackung", loest: "Bio, Highlights, Struktur: Profil erklärt in 5 Sekunden, wer Sie sind", einmalig: 600 },
+      { name: "Instagram-Betreuung + DM-Antworten", loest: "Follower werden zu Anfragen — niemand bleibt unbeantwortet", monatlich: 500 },
+    ],
+  },
+  {
+    serviceSlug: "meta-ads",
+    title: "Werbung",
+    items: [
+      { name: "Meta Ads (Facebook + Instagram)", loest: "Targeting + Remarketing, Click-to-Messenger, sauberes Tracking", einmalig: 700, monatlich: 400, note: "1. Monat nur Setup · Werbebudget ab 500 €/Monat an Meta" },
+      { name: "Google Ads (Suche)", loest: "Wer aktiv sucht, findet Sie — nicht den Mitbewerber", einmalig: 600, monatlich: 400, note: "1. Monat nur Setup · Werbebudget ab 800 €/Monat an Google" },
+      { name: "Kunden-Rückholung", loest: "SMS/WhatsApp-Welle an Interessenten, die «noch überlegen»", einmalig: 500, note: "Versandkosten ca. 50–150 € an den Anbieter" },
+    ],
+  },
+  {
+    serviceSlug: "geo-ai-sichtbarkeit",
+    title: "GEO: Sichtbar in ChatGPT & Co.",
+    items: [
+      { name: "GEO-Audit", loest: "Wie ChatGPT, Perplexity & Co. Ihren Betrieb heute sehen — und was fehlt", einmalig: 490 },
+      { name: "GEO-Umsetzung", loest: "Strukturierte Daten, llms.txt, FAQ, Quellen — damit KI Sie empfiehlt", einmalig: 1500 },
+      { name: "Monitoring", loest: "Monatlicher Bericht: wo Sie genannt werden, wo nicht", monatlich: 200 },
+    ],
+  },
+  {
+    serviceSlug: "digitalisierung",
+    title: "Digitalisierung & Dashboards",
+    items: [
+      { name: "Digitalisierungs-Check + Automatisierungsplan", loest: "2–3 Tage im Betrieb: was lässt sich automatisieren, was bringt zuerst Ergebnis", einmalig: 2500 },
+      { name: "Messung + Dashboard + Wochenbericht", loest: "Jede Woche sehen: Anfragen → Termine → Umsatz. Zahlen statt Hoffnung", einmalig: 1500, monatlich: 200 },
+      { name: "CRM + SMS + Team-Prozesse", loest: "Jeder Kunde erfasst, SMS automatisch, Team weiß, wer was macht", einmalig: 2800, monatlich: 250, note: "3-Monats-Projekt inkl. Schulung" },
+      { name: "Marketing-Retainer", loest: "Werbung + Content + KI-Assistent + Bericht aus einer Hand", monatlich: 1900 },
+    ],
+  },
+];
+
+export function formatEur(n: number) {
+  return new Intl.NumberFormat("de-AT", { maximumFractionDigits: 0 }).format(n) + " €";
+}
 
 export function getService(slug: string) {
   return services.find((s) => s.slug === slug);

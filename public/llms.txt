@@ -12,6 +12,16 @@
 - [GEO: Sichtbar in ChatGPT & Co.](https://gorbenko.at/leistungen/geo-ai-sichtbarkeit): Generative Engine Optimization — damit KI-Assistenten den Betrieb kennen und empfehlen. GEO-Audit, strukturierte Daten, llms.txt, Monitoring.
 - [Digitalisierung & Dashboards](https://gorbenko.at/leistungen/digitalisierung): Finanzmodelle, Live-Dashboards, automatisierte Berichte für KMU.
 
+## Preise (Einstiegspreise „ab“, netto — https://gorbenko.at/preise)
+
+- Marketing-Check: kostenlos (20 Min. vor Ort) · Marketing-Strategie: ab 890 € · Umsetzung: ab 1.500 €/Monat
+- KI-Assistent: ab 2.000 € Einrichtung + ab 250 €/Monat
+- Landingpage/Website: ab 2.500 € · Online-Shop: ab 6.500 € · Shop mit Konfigurator: ab 10.500 €
+- Reels-Paket (8 Videos): ab 1.500 €/Monat · Einzelvideo: ab 250 € · Instagram-Betreuung: ab 500 €/Monat
+- Meta Ads: Setup ab 700 € · Google Ads: Setup ab 600 € · Betreuung ab 400 €/Monat (Werbebudget extra, direkt an Google/Meta)
+- GEO-Audit: ab 490 € · GEO-Umsetzung: ab 1.500 € · Monitoring: ab 200 €/Monat
+- Dashboard & Wochenbericht: ab 1.500 € + 200 €/Monat · CRM + SMS + Prozesse: ab 2.800 € · Marketing-Retainer: ab 1.900 €/Monat
+
 ## Projekte (Referenzen in Wien)
 
 - [Messerschmiede Stefan Nagl](https://gorbenko.at/projekte/nagl): Landingpage (custom.nagl-messer.at), KI-Assistent, virale Reels, Google & Meta Ads für eine Wiener Messerschmiede.
