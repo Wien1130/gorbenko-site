@@ -124,7 +124,7 @@ export default function CaptureScreen({ leadId, leadName }: { leadId?: number; l
     setProposal((p) => (p ? { ...p, [key]: value } : p));
   }
 
-  async function save() {
+  async function save(withPitch = false) {
     if (!proposal) return;
     setPhase("saving");
     setError("");
@@ -143,7 +143,7 @@ export default function CaptureScreen({ leadId, leadName }: { leadId?: number; l
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || `HTTP ${res.status}`);
-      router.push(`/crm/lead/${json.lead_id}`);
+      router.push(`/crm/lead/${json.lead_id}${withPitch ? "?pitch=1" : ""}`);
     } catch (e) {
       setError(String(e instanceof Error ? e.message : e));
       setPhase("confirm");
@@ -239,7 +239,17 @@ export default function CaptureScreen({ leadId, leadName }: { leadId?: number; l
         {transcript && <div className="crm-sub" style={{ margin: "8px 0" }}>🎙 «{transcript.slice(0, 220)}{transcript.length > 220 ? "…" : ""}»</div>}
         {error && <div className="crm-error">{error}</div>}
 
-        <button className="crm-go red" onClick={save} disabled={phase === "saving" || !proposal.business_name.trim()}>
+        {proposal.stage !== "lost" && (
+          <button className="crm-go red" onClick={() => save(true)} disabled={phase === "saving" || !proposal.business_name.trim()}>
+            {phase === "saving" ? "Сохраняю…" : "🪄 Сохранить + страница клиенту"}
+          </button>
+        )}
+        <button
+          className="crm-go"
+          style={proposal.stage !== "lost" ? { background: "#161616", color: "#bbb", marginTop: 8 } : undefined}
+          onClick={() => save(false)}
+          disabled={phase === "saving" || !proposal.business_name.trim()}
+        >
           {phase === "saving" ? "Сохраняю…" : "✓ Сохранить"}
         </button>
         <button className="crm-go" style={{ background: "#161616", color: "#bbb", marginTop: 8 }} onClick={() => setPhase("input")}>

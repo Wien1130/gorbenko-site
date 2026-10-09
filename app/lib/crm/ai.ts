@@ -1,4 +1,5 @@
-import type { Lead, Activity, VisitProposal } from "./types";
+import type { Lead, Activity, VisitProposal, PitchContent, PitchFocus } from "./types";
+import { VERIFIED_FACTS, FOCUS_HINT } from "./pitch";
 
 /**
  * Мозг CRM — Anthropic Claude со structured outputs (output_config.format).
@@ -157,6 +158,8 @@ export async function draftEmail(opts: {
   lang: "ru" | "de";
   instruction?: string;
   priorDraft?: { subject: string; body: string };
+  /** Персональная страница лида — письмо обязано сослаться на неё одним предложением. */
+  pitchUrl?: string;
 }): Promise<{ subject: string; body: string }> {
   const { lead, lang } = opts;
   const history = opts.activities
@@ -164,16 +167,19 @@ export async function draftEmail(opts: {
     .map((a) => `- [${a.created_at}] ${a.summary || a.transcript}`.slice(0, 300))
     .join("\n");
 
+  const legal = `Юридические рамки (строго): не писать «Bot»/«Chatbot» — только «digitaler Assistent»; не писать «Unternehmensberatung», «garantiert», «Nr. 1», «beste», «führend», «netto», «zzgl. USt.»; никаких цифр охватов/выручки, которых нет в заметках; не выдумывать факты о заведении.`;
+
   const system =
     lang === "de"
-      ? `Ты пишешь деловое follow-up письмо ПО-НЕМЕЦКИ (Sie-Form, венский деловой стиль, тепло но коротко) от имени Андрея Горбенко — владельца digital-агентства в Вене (сайты, AI-ассистенты, реклама, аналитика, gorbenko.at). Письмо после холодного визита в заведение. 4-8 предложений. БЕЗ прощальной формулы и БЕЗ подписи — их добавит система.`
-      : `Ты пишешь деловое follow-up письмо ПО-РУССКИ от имени Андрея Горбенко — владельца digital-агентства в Вене (сайты, AI-ассистенты, реклама, аналитика, gorbenko.at). Письмо после холодного визита в заведение. Тепло, по делу, 4-8 предложений. БЕЗ прощальной формулы и БЕЗ подписи — их добавит система.`;
+      ? `Ты пишешь деловое follow-up письмо ПО-НЕМЕЦКИ (Sie-Form, венский деловой стиль, тепло, коротко, без канцелярита и без клише вроде «ich hoffe, diese E-Mail erreicht Sie gut») от имени Андрея Горбенко — Inhaber einer Werbeagentur in Wien (Websites, digitale Assistenten, Content & Reels, Werbung, gorbenko.at). Письмо после личного визита в заведение. 4-7 предложений, первое предложение — конкретная зацепка из разговора. ${opts.pitchUrl ? "ОБЯЗАТЕЛЬНО: одно предложение со ссылкой на персональную страницу — вставь URL как есть, отдельной строкой, с коротким приглашением открыть (например «Ich habe Ihnen eine persönliche Seite vorbereitet:»)." : ""} БЕЗ прощальной формулы и БЕЗ подписи — их добавит система. ${legal}`
+      : `Ты пишешь деловое follow-up письмо ПО-РУССКИ от имени Андрея Горбенко — владельца рекламного агентства в Вене (сайты, цифровые ассистенты, контент, реклама, gorbenko.at). Письмо после личного визита в заведение. Тепло, по делу, 4-7 предложений. ${opts.pitchUrl ? "ОБЯЗАТЕЛЬНО: одно предложение со ссылкой на персональную страницу — URL как есть, отдельной строкой." : ""} БЕЗ прощальной формулы и БЕЗ подписи — их добавит система. ${legal}`;
 
   const parts = [
     `Лид: «${lead.business_name}» (${lead.business_type}), stage: ${lead.stage}.`,
     lead.contact_name ? `Контакт: ${lead.contact_name}` : "",
     lead.next_action ? `Следующий шаг: ${lead.next_action}` : "",
     lead.notes ? `Заметки: ${lead.notes}` : "",
+    opts.pitchUrl ? `Персональная страница для этого клиента: ${opts.pitchUrl}` : "",
     history ? `История касаний:\n${history}` : "",
     opts.priorDraft ? `ТЕКУЩИЙ ЧЕРНОВИК (перепиши с учётом инструкции, не с нуля):\nSubject: ${opts.priorDraft.subject}\n${opts.priorDraft.body}` : "",
     opts.instruction ? `Инструкция Андрея: ${opts.instruction}` : "",
@@ -184,5 +190,83 @@ export async function draftEmail(opts: {
     content: [{ type: "text", text: parts.join("\n\n") }],
     schema: EMAIL_SCHEMA as unknown as Record<string, unknown>,
     maxTokens: 1500,
+  });
+}
+
+// ---------- Персональная страница (pitch) ----------
+
+const PITCH_SCHEMA = {
+  type: "object",
+  additionalProperties: false,
+  required: ["headline", "subline", "observed", "proposals", "why_me", "next_step", "whatsapp_text", "summary_ru"],
+  properties: {
+    headline: { type: "string", description: "H1 на немецком, 4-9 слов, с названием заведения или прямым обращением. Без восклицательных знаков." },
+    subline: { type: "string", description: "1-2 предложения под заголовком: зачем эта страница и что Андрей запомнил из визита." },
+    observed: {
+      type: "array",
+      items: { type: "string" },
+      description: "0-4 коротких пункта «Was mir aufgefallen ist» — ТОЛЬКО то, что Андрей реально сказал в заметках/транскрипте. Нет фактов — пустой массив.",
+    },
+    proposals: {
+      type: "array",
+      items: {
+        type: "object",
+        additionalProperties: false,
+        required: ["title", "text"],
+        properties: { title: { type: "string" }, text: { type: "string", description: "2-3 предложения: что именно, какой эффект для этого заведения" } },
+      },
+      description: "2-3 конкретных предложения под это заведение",
+    },
+    why_me: { type: "string", description: "2-3 предложения от первого лица: почему Андрей понимает этот бизнес. Только из проверенных фактов." },
+    next_step: { type: "string", description: "Один конкретный следующий шаг (напр. 20-минутное Gespräch vor Ort, предложить 2 окна времени если Андрей их назвал)." },
+    whatsapp_text: { type: "string", description: "Текст, который клиент отправит Андрею одним тапом: «Hallo Andrii, ich habe die Seite für <Betrieb> gesehen …», 1-2 предложения, на Sie." },
+    summary_ru: { type: "string", description: "1 предложение по-русски для Андрея: что получилось на странице." },
+  },
+} as const;
+
+export async function generatePitch(opts: {
+  lead: Lead;
+  activities: Activity[];
+  focus: PitchFocus;
+  instruction?: string;
+  prior?: PitchContent;
+}): Promise<PitchContent> {
+  const { lead } = opts;
+  const history = opts.activities
+    .slice(0, 6)
+    .map((a) => `- [${a.created_at}] ${a.summary || ""}${a.transcript ? `\n  Транскрипт: ${a.transcript}` : ""}`.slice(0, 1200))
+    .join("\n");
+
+  const system = `Ты собираешь ПЕРСОНАЛЬНУЮ ВЕБ-СТРАНИЦУ на немецком (Sie-Form, венский деловой тон, тепло, конкретно, без маркетингового пафоса) от имени Andrii Gorbenko для заведения, которое он только что лично посетил. Страницу откроет владелец на телефоне через минуту после разговора — она должна продолжить разговор, а не читаться как реклама.
+
+Жёсткие правила:
+1. ФАКТЫ О ЗАВЕДЕНИИ — только из заметок/транскрипта Андрея. Ничего не додумывать: ни «боли», ни цифры, ни что у них плохой сайт, если Андрей этого не сказал. Нет фактов — observed пустой, а subline нейтральный.
+2. ФАКТЫ ОБ АНДРЕЕ И РЕФЕРЕНСАХ — только из списка ниже. Никаких охватов, просмотров, процентов, выручки.
+3. Запрещённые слова: «Bot», «Chatbot» (говори «digitaler Assistent»), «Unternehmensberatung/Betriebsberatung/Organisationsberatung», «garantiert», «Nr. 1», «beste», «führend», «netto», «zzgl. USt.». Никаких обещаний результата.
+4. 2-3 предложения (proposals), не каталог услуг. Каждое привязано к тому, что обсуждали.
+5. Коротко. Весь текст страницы должен читаться за 60 секунд.
+
+Проверенные факты:
+${VERIFIED_FACTS}
+
+${FOCUS_HINT[opts.focus]}`;
+
+  const parts = [
+    `Заведение: «${lead.business_name}» (${lead.business_type}), stage: ${lead.stage}.`,
+    lead.contact_name ? `Контакт: ${lead.contact_name}` : "",
+    lead.address ? `Адрес: ${lead.address}` : "",
+    lead.next_action ? `Следующий шаг по CRM: ${lead.next_action}` : "",
+    lead.meeting_datetime ? `Встреча: ${lead.meeting_datetime}` : "",
+    lead.notes ? `Заметки: ${lead.notes}` : "",
+    history ? `История касаний (свежие сверху):\n${history}` : "",
+    opts.prior ? `ТЕКУЩАЯ ВЕРСИЯ (перепиши с учётом инструкции, не с нуля):\n${JSON.stringify(opts.prior)}` : "",
+    opts.instruction ? `Инструкция Андрея: ${opts.instruction}` : "",
+  ].filter(Boolean);
+
+  return callClaude<PitchContent>({
+    system,
+    content: [{ type: "text", text: parts.join("\n\n") }],
+    schema: PITCH_SCHEMA as unknown as Record<string, unknown>,
+    maxTokens: 2500,
   });
 }

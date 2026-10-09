@@ -16,6 +16,7 @@ const HIDDEN_PREFIXES = [
   "/bi-markt",
   "/angebot",
   "/deutsch",
+  "/p",
 ];
 
 export default function SiteAssistantLauncher() {

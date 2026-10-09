@@ -37,18 +37,44 @@ export async function sendGmail(opts: {
   to: string;
   subject: string;
   body: string;
+  /** Если задан — письмо уходит multipart/alternative: текст + HTML. */
+  html?: string;
 }): Promise<{ id: string }> {
   const token = await gmailAccessToken();
 
-  const mime = [
-    `To: ${opts.to}`,
-    `Subject: ${encodeSubject(opts.subject)}`,
-    "MIME-Version: 1.0",
-    'Content-Type: text/plain; charset="UTF-8"',
-    "Content-Transfer-Encoding: base64",
-    "",
-    Buffer.from(opts.body, "utf-8").toString("base64"),
-  ].join("\r\n");
+  const textPart = Buffer.from(opts.body, "utf-8").toString("base64");
+  let mime: string;
+  if (opts.html) {
+    const boundary = `b_${Date.now().toString(36)}_${Math.random().toString(36).slice(2)}`;
+    mime = [
+      `To: ${opts.to}`,
+      `Subject: ${encodeSubject(opts.subject)}`,
+      "MIME-Version: 1.0",
+      `Content-Type: multipart/alternative; boundary="${boundary}"`,
+      "",
+      `--${boundary}`,
+      'Content-Type: text/plain; charset="UTF-8"',
+      "Content-Transfer-Encoding: base64",
+      "",
+      textPart,
+      `--${boundary}`,
+      'Content-Type: text/html; charset="UTF-8"',
+      "Content-Transfer-Encoding: base64",
+      "",
+      Buffer.from(opts.html, "utf-8").toString("base64"),
+      `--${boundary}--`,
+    ].join("\r\n");
+  } else {
+    mime = [
+      `To: ${opts.to}`,
+      `Subject: ${encodeSubject(opts.subject)}`,
+      "MIME-Version: 1.0",
+      'Content-Type: text/plain; charset="UTF-8"',
+      "Content-Transfer-Encoding: base64",
+      "",
+      textPart,
+    ].join("\r\n");
+  }
 
   const res = await fetch("https://gmail.googleapis.com/gmail/v1/users/me/messages/send", {
     method: "POST",

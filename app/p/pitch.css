@@ -1,0 +1,71 @@
+/* Персональная страница для лида — бумажный стиль, как /angebot, mobile-first. */
+.pt, .pt * { box-sizing: border-box; }
+.pt {
+  --pt-bg: #f4efe6;
+  --pt-paper: #fbf7ef;
+  --pt-ink: #161412;
+  --pt-muted: #6b6558;
+  --pt-line: #d8d0c2;
+  --pt-ok: #2d6a4f;
+  min-height: 100vh;
+  background: var(--pt-bg);
+  color: var(--pt-ink);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.pt a { color: inherit; }
+.pt-serif { font-family: var(--font-pt-serif), "Times New Roman", serif; font-weight: 500; letter-spacing: -0.02em; }
+
+.pt-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 18px 20px; border-bottom: 1px solid var(--pt-line); }
+.pt-brand { font-size: 12px; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; }
+.pt-brand span { display: block; margin-top: 2px; font-size: 11px; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--pt-muted); }
+.pt-date { font-size: 12px; color: var(--pt-muted); }
+
+.pt-shell { max-width: 680px; margin: 0 auto; padding: 36px 20px 120px; }
+.pt-kicker { font-size: 11px; font-weight: 650; letter-spacing: .14em; text-transform: uppercase; color: var(--pt-muted); margin: 0 0 14px; }
+.pt-h1 { font-size: clamp(30px, 7vw, 46px); line-height: 1.1; margin: 0 0 14px; }
+.pt-sub { font-size: 17px; line-height: 1.6; margin: 0 0 32px; max-width: 58ch; }
+
+.pt-h2 { font-size: 12px; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; color: var(--pt-muted); margin: 36px 0 14px; }
+
+.pt-obs { list-style: none; padding: 0; margin: 0; }
+.pt-obs li { position: relative; padding: 10px 0 10px 22px; border-top: 1px solid var(--pt-line); font-size: 15px; line-height: 1.5; }
+.pt-obs li:last-child { border-bottom: 1px solid var(--pt-line); }
+.pt-obs li::before { content: "—"; position: absolute; left: 0; color: var(--pt-muted); }
+
+.pt-card { background: var(--pt-paper); border: 1px solid var(--pt-line); padding: 18px 18px 16px; margin-bottom: 10px; }
+.pt-card h3 { font-size: 20px; margin: 0 0 6px; line-height: 1.25; }
+.pt-card p { margin: 0; font-size: 15px; line-height: 1.55; color: #2a2724; }
+.pt-num { font-size: 11px; letter-spacing: .1em; color: var(--pt-muted); margin-bottom: 8px; }
+
+.pt-me { display: grid; grid-template-columns: 64px 1fr; gap: 16px; align-items: start; }
+.pt-me img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 1px solid var(--pt-line); }
+.pt-me p { margin: 0; font-size: 15px; line-height: 1.55; }
+.pt-me small { display: block; margin-top: 8px; color: var(--pt-muted); font-size: 13px; }
+
+.pt-proof { display: grid; gap: 10px; }
+.pt-proof a { display: block; text-decoration: none; background: var(--pt-paper); border: 1px solid var(--pt-line); padding: 14px 16px; }
+.pt-proof b { display: block; font-size: 15px; margin-bottom: 3px; }
+.pt-proof span { font-size: 13px; color: var(--pt-muted); }
+
+.pt-next { background: var(--pt-ink); color: var(--pt-bg); padding: 22px 20px; margin-top: 40px; }
+.pt-next .pt-h2 { color: #b8b0a2; margin-top: 0; }
+.pt-next p { font-size: 18px; line-height: 1.45; margin: 0 0 18px; }
+.pt-actions { display: grid; gap: 8px; }
+.pt .pt-btn { display: block; width: 100%; text-align: center; padding: 14px; font-size: 15px; font-weight: 600; text-decoration: none; border: 1px solid var(--pt-bg); background: var(--pt-bg); color: var(--pt-ink); cursor: pointer; font-family: inherit; }
+.pt .pt-btn-ghost { background: transparent; color: var(--pt-bg); }
+.pt .pt-btn:disabled { opacity: .6; }
+
+.pt-form { margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(244,239,230,.25); }
+.pt-form label { display: block; font-size: 13px; margin-bottom: 10px; color: #d9d2c4; }
+.pt-form input, .pt-form textarea { width: 100%; margin-top: 4px; padding: 10px; border: 1px solid rgba(244,239,230,.3); background: rgba(244,239,230,.06); color: var(--pt-bg); font: inherit; font-size: 15px; }
+.pt-form textarea { min-height: 70px; resize: vertical; }
+.pt-form-ok { color: #9ad1b4; font-size: 14px; margin: 8px 0 0; }
+.pt-form-err { color: #f0a0a0; font-size: 14px; margin: 8px 0 0; }
+
+.pt-foot { margin-top: 44px; padding-top: 18px; border-top: 1px solid var(--pt-line); font-size: 12px; line-height: 1.6; color: var(--pt-muted); }
+.pt-foot a { color: var(--pt-muted); }
+
+.pt-locked { min-height: 100vh; display: grid; place-items: center; padding: 24px; text-align: center; }
+.pt-locked h1 { font-size: 30px; margin: 8px 0; }
+.pt-locked p { color: var(--pt-muted); }

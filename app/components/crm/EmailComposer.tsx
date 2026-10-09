@@ -15,6 +15,7 @@ export default function EmailComposer({ lead }: { lead: Lead }) {
   const [body, setBody] = useState("");
   const [signature, setSignature] = useState("");
   const [instruction, setInstruction] = useState("");
+  const [pitchUrl, setPitchUrl] = useState("");
 
   async function draft(revise: boolean) {
     setPhase("drafting");
@@ -35,6 +36,7 @@ export default function EmailComposer({ lead }: { lead: Lead }) {
       setSubject(json.subject);
       setBody(json.body);
       setSignature(json.signature);
+      setPitchUrl(json.pitch_url ?? "");
       if (!to && json.to) setTo(json.to);
       setInstruction("");
       setPhase("editing");
@@ -123,6 +125,11 @@ export default function EmailComposer({ lead }: { lead: Lead }) {
         <label>Текст</label>
         <textarea className="crm-textarea" style={{ minHeight: 180 }} value={body} onChange={(e) => setBody(e.target.value)} />
         <div className="crm-sig">{signature.trim()}</div>
+        <div className="crm-sub" style={{ marginTop: 6 }}>
+          {pitchUrl
+            ? "🪄 Уйдёт как HTML-письмо с кнопкой на персональную страницу (ссылка с UTM)."
+            : "Персональной страницы ещё нет — сначала «🪄 Страница», тогда письмо получит кнопку на неё."}
+        </div>
       </div>
       <div className="crm-field">
         <input

@@ -6,6 +6,7 @@ import { STAGE_ORDER, STAGE_LABELS, type Stage } from "../../lib/cold-leads-stat
 import { BUSINESS_TYPE_OPTIONS, type Lead, type Activity, type Reminder, type EmailRecord } from "../../lib/crm/types";
 import StageBadge from "./StageBadge";
 import EmailComposer from "./EmailComposer";
+import PitchPanel from "./PitchPanel";
 
 const KIND_ICONS: Record<string, string> = { visit: "🚶", note: "📝", email: "✉️", call: "📞" };
 
@@ -24,17 +25,21 @@ export default function LeadDetail({
   activities,
   reminders: initialReminders,
   emails,
+  openPitch,
 }: {
   lead: Lead;
   activities: Activity[];
   reminders: Reminder[];
   emails: EmailRecord[];
+  /** ?pitch=1 — пришли с экрана захода, сразу открыть и собрать страницу */
+  openPitch?: boolean;
 }) {
   const router = useRouter();
   const [lead, setLead] = useState(initial);
   const [editing, setEditing] = useState(false);
   const [reminders, setReminders] = useState(initialReminders);
   const [showEmail, setShowEmail] = useState(false);
+  const [showPitch, setShowPitch] = useState(!!openPitch);
   const [saved, setSaved] = useState(false);
 
   async function patch(fields: Partial<Lead>) {
@@ -107,10 +112,18 @@ export default function LeadDetail({
       {/* Действия */}
       <div className="crm-actions">
         <a href={`/crm/new?lead=${lead.id}`} className="crm-action"><b>➕</b>Заход</a>
+        <button className="crm-action" onClick={() => setShowPitch((v) => !v)}><b>🪄</b>Страница</button>
         <button className="crm-action" onClick={() => setShowEmail((v) => !v)}><b>✉️</b>Письмо</button>
         <a href={lead.contact_phone ? `tel:${lead.contact_phone.replace(/[^\d+]/g, "")}` : "#"} className={`crm-action ${lead.contact_phone ? "" : "off"}`}><b>📞</b>Позвонить</a>
         <a href={mapsUrl} target="_blank" rel="noreferrer" className="crm-action"><b>🗺</b>Маршрут</a>
       </div>
+
+      {showPitch && (
+        <div style={{ marginBottom: 16 }}>
+          <div className="crm-section-title">Персональная страница</div>
+          <PitchPanel lead={lead} autoStart={!!openPitch} />
+        </div>
+      )}
 
       {showEmail && (
         <div style={{ marginBottom: 16 }}>

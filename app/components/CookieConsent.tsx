@@ -30,6 +30,7 @@ export default function CookieConsent() {
   const [visible, setVisible] = useState(false);
   const hidden =
     pathname.startsWith("/angebot") ||
+    pathname.startsWith("/p/") ||
     pathname.startsWith("/andrii") ||
     pathname.startsWith("/reports") ||
     pathname.startsWith("/bi-markt") ||

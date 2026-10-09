@@ -1,5 +1,5 @@
 import { neon } from "@neondatabase/serverless";
-import type { Lead, Activity, Reminder, EmailRecord } from "./types";
+import type { Lead, Activity, Reminder, EmailRecord, Pitch, PitchEvent, PitchContent, PitchFocus } from "./types";
 
 /** Единая точка доступа к Postgres (Neon). Если DATABASE_URL не задан — sql = null, вызывающий код деградирует. */
 export function getSql() {
@@ -67,6 +67,31 @@ export const SCHEMA_SQL = [
     ended_at timestamptz,
     created_at timestamptz NOT NULL DEFAULT now()
   )`,
+  `CREATE TABLE IF NOT EXISTS pitches (
+    id serial PRIMARY KEY,
+    lead_id int NOT NULL REFERENCES leads(id) ON DELETE CASCADE,
+    slug text NOT NULL UNIQUE,
+    focus text NOT NULL DEFAULT 'general',
+    lang text NOT NULL DEFAULT 'de',
+    content jsonb NOT NULL,
+    status text NOT NULL DEFAULT 'draft',
+    created_at timestamptz NOT NULL DEFAULT now(),
+    updated_at timestamptz NOT NULL DEFAULT now()
+  )`,
+  `CREATE TABLE IF NOT EXISTS pitch_events (
+    id serial PRIMARY KEY,
+    pitch_id int NOT NULL REFERENCES pitches(id) ON DELETE CASCADE,
+    kind text NOT NULL,
+    utm_source text NOT NULL DEFAULT '',
+    utm_medium text NOT NULL DEFAULT '',
+    utm_campaign text NOT NULL DEFAULT '',
+    referrer text NOT NULL DEFAULT '',
+    user_agent text NOT NULL DEFAULT '',
+    payload jsonb,
+    created_at timestamptz NOT NULL DEFAULT now()
+  )`,
+  `CREATE INDEX IF NOT EXISTS idx_pitches_lead ON pitches(lead_id)`,
+  `CREATE INDEX IF NOT EXISTS idx_pitch_events_pitch ON pitch_events(pitch_id, created_at)`,
 ];
 
 export async function ensureSchema() {
@@ -112,6 +137,56 @@ export async function fetchLeadEmails(leadId: number): Promise<EmailRecord[]> {
   if (!sql) return [];
   const rows = await sql`SELECT * FROM emails WHERE lead_id = ${leadId} ORDER BY created_at DESC`;
   return rows as unknown as EmailRecord[];
+}
+
+// ---------- Персональные страницы ----------
+
+export async function fetchPitchByLead(leadId: number): Promise<Pitch | null> {
+  const sql = getSql();
+  if (!sql) return null;
+  const rows = await sql`SELECT * FROM pitches WHERE lead_id = ${leadId} ORDER BY updated_at DESC LIMIT 1`;
+  return (rows[0] as unknown as Pitch) ?? null;
+}
+
+export async function fetchPitchBySlug(slug: string): Promise<(Pitch & { business_name: string; contact_name: string }) | null> {
+  const sql = getSql();
+  if (!sql) return null;
+  const rows = await sql`
+    SELECT p.*, l.business_name, l.contact_name
+    FROM pitches p JOIN leads l ON l.id = p.lead_id
+    WHERE p.slug = ${slug} AND p.status = 'published'`;
+  return (rows[0] as unknown as Pitch & { business_name: string; contact_name: string }) ?? null;
+}
+
+/** Одна страница на лида: есть — обновляем контент (slug стабилен), нет — создаём. */
+export async function upsertPitch(opts: {
+  leadId: number;
+  slug: string;
+  focus: PitchFocus;
+  content: PitchContent;
+  status: "draft" | "published";
+}): Promise<Pitch> {
+  const sql = getSql();
+  if (!sql) throw new Error("DATABASE_URL is not set");
+  const existing = await fetchPitchByLead(opts.leadId);
+  const contentJson = JSON.stringify(opts.content);
+  if (existing) {
+    const rows = await sql`
+      UPDATE pitches SET focus = ${opts.focus}, content = ${contentJson}::jsonb, status = ${opts.status}, updated_at = now()
+      WHERE id = ${existing.id} RETURNING *`;
+    return rows[0] as unknown as Pitch;
+  }
+  const rows = await sql`
+    INSERT INTO pitches (lead_id, slug, focus, content, status)
+    VALUES (${opts.leadId}, ${opts.slug}, ${opts.focus}, ${contentJson}::jsonb, ${opts.status}) RETURNING *`;
+  return rows[0] as unknown as Pitch;
+}
+
+export async function fetchPitchEvents(pitchId: number, limit = 30): Promise<PitchEvent[]> {
+  const sql = getSql();
+  if (!sql) return [];
+  const rows = await sql`SELECT * FROM pitch_events WHERE pitch_id = ${pitchId} ORDER BY created_at DESC LIMIT ${limit}`;
+  return rows as unknown as PitchEvent[];
 }
 
 /** Напоминания на сегодня и просроченные (для главного экрана). */

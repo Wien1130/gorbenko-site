@@ -106,6 +106,56 @@ export interface VisitProposal {
   summary: string;
 }
 
+// ---------- Персональная страница (pitch) ----------
+
+export type PitchFocus = "catering" | "gastro" | "general";
+
+/** Структура контента персональной страницы — строго то, что генерирует Claude (DE). */
+export interface PitchContent {
+  headline: string;
+  subline: string;
+  /** Что Андрей увидел/услышал на месте — ТОЛЬКО из заметок, 0–4 пункта */
+  observed: string[];
+  proposals: { title: string; text: string }[];
+  why_me: string;
+  next_step: string;
+  /** Текст, который клиент отправит в WhatsApp одним тапом */
+  whatsapp_text: string;
+  /** 1 предложение по-русски для Андрея: что на странице */
+  summary_ru: string;
+}
+
+export interface Pitch {
+  id: number;
+  lead_id: number;
+  slug: string;
+  focus: PitchFocus;
+  lang: "de";
+  content: PitchContent;
+  status: "draft" | "published";
+  created_at: string;
+  updated_at: string;
+}
+
+export interface PitchEvent {
+  id: number;
+  pitch_id: number;
+  kind: "view" | "cta_whatsapp" | "cta_call" | "cta_site" | "form";
+  utm_source: string;
+  utm_medium: string;
+  utm_campaign: string;
+  referrer: string;
+  user_agent: string;
+  payload: Record<string, string> | null;
+  created_at: string;
+}
+
+export const PITCH_FOCUS_OPTIONS: { value: PitchFocus; label: string }[] = [
+  { value: "catering", label: "Кейтеринг" },
+  { value: "gastro", label: "Ресторан / кафе" },
+  { value: "general", label: "Общий" },
+];
+
 export const BUSINESS_TYPE_OPTIONS: { value: BusinessType; label: string }[] = [
   { value: "restaurant", label: "Ресторан" },
   { value: "cafe", label: "Кафе" },
