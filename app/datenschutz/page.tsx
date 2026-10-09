@@ -125,6 +125,15 @@ export default function DatenschutzPage() {
           </section>
 
           <section>
+            <h2 className="text-lg font-semibold mb-3">7b. Gesch&auml;ftskontakte &amp; pers&ouml;nliche Akquise</h2>
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 text-[var(--muted)] space-y-3">
+              <p>Wenn ich Ihr Unternehmen pers&ouml;nlich besuche, notiere ich in einem internen Kundenverwaltungssystem Firmenname, Adresse und Standort, Gespr&auml;chsnotizen sowie die mir &uuml;bergebenen Kontaktdaten (Name, E-Mail, Telefon, ggf. Foto einer Visitenkarte). Zweck ist die Nachbereitung des Gespr&auml;chs und die Anbahnung einer Zusammenarbeit. Rechtsgrundlage: Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO (berechtigtes Interesse an der Gesch&auml;ftsanbahnung) bzw. lit.&nbsp;b, sofern Sie ein Angebot w&uuml;nschen.</p>
+              <p>Eingesetzte Dienstleister (Auftragsverarbeitung): Vercel Inc. und Neon Inc. (USA; Hosting und Datenbank), Anthropic, PBC (USA; KI-gest&uuml;tzte Strukturierung der Notizen und Entw&uuml;rfe von E-Mails), Groq, Inc. (USA; Umwandlung von Sprachnotizen in Text), Google Ireland Ltd. / Google LLC (E-Mail-Versand &uuml;ber Gmail, Kalender, Karten), GitHub, Inc. (USA; Ablage von Fotos) sowie OpenStreetMap Foundation (Vereinigtes K&ouml;nigreich; Umwandlung von Adressen in Koordinaten). Die Drittland&uuml;bermittlung erfolgt auf Grundlage des EU-US Data Privacy Framework bzw. der Standardvertragsklauseln (Art.&nbsp;46 Abs.&nbsp;2 lit.&nbsp;c DSGVO); f&uuml;r das Vereinigte K&ouml;nigreich besteht ein Angemessenheitsbeschluss.</p>
+              <p>Die Daten werden gel&ouml;scht, sobald keine Gesch&auml;ftsbeziehung zustande kommt und kein weiterer Kontakt gew&uuml;nscht ist, sp&auml;testens nach 24 Monaten ohne Kontakt. Sie k&ouml;nnen der Verarbeitung jederzeit formlos per E-Mail widersprechen.</p>
+            </div>
+          </section>
+
+          <section>
             <h2 className="text-lg font-semibold mb-3">8. Ihre Rechte</h2>
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 text-[var(--muted)]">
               <p className="mb-3">Sie haben gem&auml;&szlig; DSGVO folgende Rechte:</p>
