@@ -39,3 +39,15 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     return Response.json({ error: String(e instanceof Error ? e.message : e) }, { status: 500 });
   }
 }
+
+/** DELETE /api/crm/leads/[id] — удалить лид со всей историей (activities/reminders/emails/pitch — каскадом). */
+export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  if (!(await isCrmAuthed())) return unauthorized();
+  const sql = getSql();
+  if (!sql) return Response.json({ error: "База не подключена" }, { status: 500 });
+  const { id } = await params;
+  const leadId = parseInt(id, 10);
+  if (!leadId) return Response.json({ error: "id?" }, { status: 400 });
+  await sql`DELETE FROM leads WHERE id = ${leadId}`;
+  return Response.json({ ok: true });
+}

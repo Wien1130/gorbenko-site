@@ -181,6 +181,17 @@ export default function LeadDetail({
             <input className="crm-input" type="number" value={lead.deal_amount || ""} onChange={(e) => setLead({ ...lead, deal_amount: Number(e.target.value) || 0 })} /></div>
           <div className="crm-field"><label>Заметки</label>
             <textarea className="crm-textarea" value={lead.notes} onChange={(e) => setLead({ ...lead, notes: e.target.value })} /></div>
+          <button
+            className="crm-mini-btn"
+            style={{ color: "#f87171", borderColor: "#7f1d1d", marginBottom: 12 }}
+            onClick={async () => {
+              if (!confirm(`Удалить «${lead.business_name}» со всей историей и страницей? Это необратимо.`)) return;
+              await fetch(`/api/crm/leads/${lead.id}`, { method: "DELETE" });
+              router.push("/crm");
+            }}
+          >
+            🗑 Удалить лид
+          </button>
         </>
       ) : (
         <div className="crm-lead" style={{ cursor: "default" }}>
