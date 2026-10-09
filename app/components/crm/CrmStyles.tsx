@@ -74,6 +74,24 @@ export default function CrmStyles() {
       .crm-sig { color: #777; font-size: 0.82rem; white-space: pre-wrap; border-top: 1px dashed #333; margin-top: 6px; padding-top: 6px; }
       .crm-row-btns { display: flex; gap: 8px; }
       .crm-row-btns .crm-go { margin-top: 0; }
+      .crm-work { background: #111827; border: 1px solid #1f2937; border-radius: 16px; padding: 12px 14px; margin-bottom: 14px; }
+      .crm-work-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+      .crm-work-timer { font-size: 1.35rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+      .crm-work-btn { border: none; border-radius: 14px; padding: 14px 16px; font-size: 0.95rem; font-weight: 800; cursor: pointer; white-space: nowrap; }
+      .crm-work-btn.start { background: #22c55e; color: #052e16; }
+      .crm-work-btn.stop { background: #f59e0b; color: #1c1917; }
+      .crm-work-stats { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; font-size: 0.82rem; color: #9ca3af; }
+      .crm-work-stats b { color: #eee; }
+      .crm-work-stats .crm-mini-btn { margin-left: auto; }
+      .crm-work-edit { margin-top: 12px; border-top: 1px solid #1f2937; padding-top: 10px; }
+      .crm-work-session { border-bottom: 1px dashed #1f2937; padding-bottom: 10px; margin-bottom: 10px; }
+      .crm-map { height: 62vh; min-height: 360px; border-radius: 16px; overflow: hidden; border: 1px solid #262626; }
+      .crm-chart-card { background: #141414; border: 1px solid #262626; border-radius: 14px; padding: 12px; margin-bottom: 12px; }
+      .crm-chart-title { font-size: 0.8rem; font-weight: 700; color: #aaa; margin-bottom: 8px; }
+      .crm-day-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+      .crm-day-table th, .crm-day-table td { padding: 6px 4px; border-bottom: 1px solid #222; text-align: right; }
+      .crm-day-table th:first-child, .crm-day-table td:first-child { text-align: left; }
+      .crm-day-table th { color: #888; font-weight: 600; }
       .crm-mini-btn { border: 1px solid #333; background: #161616; color: #bbb; border-radius: 10px; padding: 6px 12px; font-size: 0.78rem; cursor: pointer; }
     `}</style>
   );

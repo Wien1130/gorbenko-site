@@ -36,7 +36,19 @@ export default function CaptureScreen({ leadId, leadName }: { leadId?: number; l
   const [transcript, setTranscript] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
 
+  const [geo, setGeo] = useState<{ lat: number; lng: number } | null>(null);
+  const [geoState, setGeoState] = useState<"pending" | "ok" | "off">("pending");
+
   useEffect(() => () => { if (timerRef.current) clearInterval(timerRef.current); }, []);
+
+  useEffect(() => {
+    if (!("geolocation" in navigator)) { setGeoState("off"); return; }
+    navigator.geolocation.getCurrentPosition(
+      (p) => { setGeo({ lat: p.coords.latitude, lng: p.coords.longitude }); setGeoState("ok"); },
+      () => setGeoState("off"),
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 },
+    );
+  }, []);
 
   async function toggleRecord() {
     if (recording) {
@@ -125,6 +137,8 @@ export default function CaptureScreen({ leadId, leadName }: { leadId?: number; l
           transcript,
           photo_url: photoUrl,
           kind: "visit",
+          lat: geo?.lat,
+          lng: geo?.lng,
         }),
       });
       const json = await res.json();
@@ -215,6 +229,13 @@ export default function CaptureScreen({ leadId, leadName }: { leadId?: number; l
           </div>
         )}
 
+        <div className="crm-sub" style={{ margin: "8px 0" }}>
+          {geoState === "ok"
+            ? "📍 Точка на карте — по GPS телефона"
+            : proposal.address
+              ? "📍 GPS нет — точку поставлю по адресу"
+              : "📍 GPS нет и адреса нет — на карту не попадёт (впиши адрес)"}
+        </div>
         {transcript && <div className="crm-sub" style={{ margin: "8px 0" }}>🎙 «{transcript.slice(0, 220)}{transcript.length > 220 ? "…" : ""}»</div>}
         {error && <div className="crm-error">{error}</div>}
 
@@ -275,6 +296,10 @@ export default function CaptureScreen({ leadId, leadName }: { leadId?: number; l
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
+      </div>
+
+      <div className="crm-sub" style={{ marginTop: 10 }}>
+        {geoState === "ok" ? "📍 GPS ✓" : geoState === "pending" ? "📍 ищу GPS…" : "📍 GPS выключен — разреши геолокацию для gorbenko.at"}
       </div>
 
       {error && <div className="crm-error">{error}</div>}

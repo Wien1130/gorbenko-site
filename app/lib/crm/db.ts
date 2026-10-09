@@ -57,6 +57,16 @@ export const SCHEMA_SQL = [
   )`,
   `CREATE INDEX IF NOT EXISTS idx_activities_lead ON activities(lead_id, created_at)`,
   `CREATE INDEX IF NOT EXISTS idx_reminders_due ON reminders(status, due_at)`,
+  `ALTER TABLE leads ADD COLUMN IF NOT EXISTS lat double precision`,
+  `ALTER TABLE leads ADD COLUMN IF NOT EXISTS lng double precision`,
+  `ALTER TABLE activities ADD COLUMN IF NOT EXISTS lat double precision`,
+  `ALTER TABLE activities ADD COLUMN IF NOT EXISTS lng double precision`,
+  `CREATE TABLE IF NOT EXISTS work_sessions (
+    id serial PRIMARY KEY,
+    started_at timestamptz NOT NULL,
+    ended_at timestamptz,
+    created_at timestamptz NOT NULL DEFAULT now()
+  )`,
 ];
 
 export async function ensureSchema() {

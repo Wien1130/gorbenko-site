@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import { isCrmAuthed, unauthorized } from "../../../lib/crm/api-auth";
 import { getSql, fetchLeads } from "../../../lib/crm/db";
 import { createCalendarEvent } from "../../../lib/crm/gmail";
+import { geocode, parseCoord } from "../../../lib/crm/geo";
 
 export async function GET() {
   if (!(await isCrmAuthed())) return unauthorized();
@@ -20,6 +21,13 @@ export async function POST(req: NextRequest) {
 
   const dealAmount = Number(b.deal_amount) || 0;
   const matchedId: number | null = b.matched_lead_id ? Number(b.matched_lead_id) : null;
+
+  let lat = parseCoord(b.lat);
+  let lng = parseCoord(b.lng);
+  if ((lat === null || lng === null) && b.address) {
+    const g = await geocode(b.address);
+    if (g) ({ lat, lng } = g);
+  }
 
   try {
     let leadId: number;
@@ -40,20 +48,22 @@ export async function POST(req: NextRequest) {
           next_action = ${b.next_action ?? ""},
           meeting_datetime = CASE WHEN ${b.meeting_datetime ?? ""} <> '' THEN ${b.meeting_datetime ?? ""} ELSE meeting_datetime END,
           deal_amount = CASE WHEN ${dealAmount} > 0 THEN ${dealAmount} ELSE deal_amount END,
+          lat = coalesce(lat, ${lat}::double precision),
+          lng = coalesce(lng, ${lng}::double precision),
           updated_at = now()
         WHERE id = ${matchedId}`;
       leadId = matchedId;
     } else {
       const inserted = await sql`
-        INSERT INTO leads (business_name, business_type, stage, address, contact_name, contact_email, contact_phone, next_action, meeting_datetime, deal_amount, notes)
-        VALUES (${businessName}, ${b.business_type ?? "other"}, ${b.stage ?? "warm_followup"}, ${b.address ?? ""}, ${b.contact_name ?? ""}, ${b.contact_email ?? ""}, ${b.contact_phone ?? ""}, ${b.next_action ?? ""}, ${b.meeting_datetime ?? ""}, ${dealAmount}, ${b.notes ?? ""})
+        INSERT INTO leads (business_name, business_type, stage, address, contact_name, contact_email, contact_phone, next_action, meeting_datetime, deal_amount, notes, lat, lng)
+        VALUES (${businessName}, ${b.business_type ?? "other"}, ${b.stage ?? "warm_followup"}, ${b.address ?? ""}, ${b.contact_name ?? ""}, ${b.contact_email ?? ""}, ${b.contact_phone ?? ""}, ${b.next_action ?? ""}, ${b.meeting_datetime ?? ""}, ${dealAmount}, ${b.notes ?? ""}, ${lat}, ${lng})
         RETURNING id`;
       leadId = (inserted[0] as { id: number }).id;
     }
 
     await sql`
-      INSERT INTO activities (lead_id, kind, entry_type, stage_after, transcript, summary, photo_url)
-      VALUES (${leadId}, ${b.kind ?? "visit"}, ${entryType}, ${b.stage ?? ""}, ${b.transcript ?? ""}, ${b.summary ?? ""}, ${b.photo_url ?? ""})`;
+      INSERT INTO activities (lead_id, kind, entry_type, stage_after, transcript, summary, photo_url, lat, lng)
+      VALUES (${leadId}, ${b.kind ?? "visit"}, ${entryType}, ${b.stage ?? ""}, ${b.transcript ?? ""}, ${b.summary ?? ""}, ${b.photo_url ?? ""}, ${lat}, ${lng})`;
 
     if (b.reminder_date) {
       const text = (b.reminder_text ?? "") || (b.next_action ?? "") || `Follow-up: ${businessName}`;

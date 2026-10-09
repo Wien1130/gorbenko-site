@@ -20,8 +20,35 @@ export interface Lead {
   meeting_datetime: string;
   deal_amount: number;
   notes: string;
+  lat: number | null;
+  lng: number | null;
   created_at: string;
   updated_at: string;
+}
+
+export interface WorkSession {
+  id: number;
+  started_at: string;
+  ended_at: string | null;
+}
+
+export interface DayStats {
+  day: string; // YYYY-MM-DD по Вене
+  hours: number;
+  visits: number;
+  followups: number;
+  emails: number;
+}
+
+export interface MapPoint {
+  id: number;
+  business_name: string;
+  stage: string;
+  lat: number;
+  lng: number;
+  address: string;
+  first_visit: string;
+  visit_day: string;
 }
 
 export interface Activity {

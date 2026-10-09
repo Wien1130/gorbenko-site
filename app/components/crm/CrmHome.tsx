@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { STAGE_ORDER, STAGE_LABELS, type Stage } from "../../lib/cold-leads-stats";
-import type { Lead, Reminder } from "../../lib/crm/types";
+import type { Lead, Reminder, WorkSession } from "../../lib/crm/types";
 import StageBadge from "./StageBadge";
+import WorkBar from "./WorkBar";
 
 function viennaDate(iso: string): string {
   try {
@@ -17,10 +18,14 @@ export default function CrmHome({
   leads,
   reminders,
   stats,
+  sessions,
+  todayVisits,
 }: {
   leads: Lead[];
   reminders: Reminder[];
   stats: { leads: number; touches: number; meetings: number; won: number };
+  sessions: WorkSession[];
+  todayVisits: number;
 }) {
   const [filter, setFilter] = useState<string>("all");
   const [reminderList, setReminderList] = useState(reminders);
@@ -41,13 +46,16 @@ export default function CrmHome({
       <div className="crm-top">
         <div>
           <div className="crm-title">🗂 Cold Sales CRM</div>
-          <div className="crm-sub">50 ресторанов — вперёд</div>
+          <div className="crm-sub">100 клиентов · старт 9 октября · {stats.touches}/100</div>
         </div>
         <div className="crm-links">
+          <a href="/crm/map">🗺</a>
           <a href="/crm/stats">📊</a>
           <a href="/crm/plan">🗓</a>
         </div>
       </div>
+
+      <WorkBar sessions={sessions} todayVisits={todayVisits} />
 
       <div className="crm-stats-mini">
         <div className="crm-stat"><b>{stats.touches}</b><span>касаний</span></div>

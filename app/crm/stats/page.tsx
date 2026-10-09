@@ -3,56 +3,43 @@ import { redirect } from "next/navigation";
 import { CRM_COOKIE, crmToken } from "../../lib/crm-auth";
 import { fetchLeadRows } from "../../lib/cold-leads";
 import { computeColdSalesStats } from "../../lib/cold-leads-stats";
-import { fetchDailyPlans, computePlanVsActual, averagePlanMatch } from "../../lib/plans";
 import { fetchResistanceLog, matchResistanceContext } from "../../lib/resistance";
+import { fetchDayStats } from "../../lib/crm/work";
 import ColdSalesOverview from "../../components/ColdSalesOverview";
 import LeadsTable from "../../components/LeadsTable";
-import PlanVsActual from "../../components/PlanVsActual";
 import FearCard from "../../components/FearCard";
+import DayCharts from "../../components/crm/DayCharts";
 
 export const dynamic = "force-dynamic";
 
-/** Старый полный дашборд (воронка, план/факт, таблица) — теперь на /crm/stats. */
 export default async function CrmStatsPage() {
   const cookieStore = await cookies();
   if (cookieStore.get(CRM_COOKIE)?.value !== crmToken()) redirect("/crm/login");
 
-  const [rows, plans, resistance] = await Promise.all([
-    fetchLeadRows(),
-    fetchDailyPlans(),
-    fetchResistanceLog(),
-  ]);
+  const [rows, resistance, days] = await Promise.all([fetchLeadRows(), fetchResistanceLog(), fetchDayStats()]);
   const stats = computeColdSalesStats(rows);
-  const comparisons = computePlanVsActual(plans, rows);
-  const planMatchPct = averagePlanMatch(comparisons);
   const resistanceWithContext = matchResistanceContext(resistance, rows);
 
   return (
-    <main className="dash-main">
-      <div className="dash-header">
-        <a href="/crm" className="page-label" style={{ textDecoration: "none" }}>← CRM</a>
-        <a href="/crm/plan" className="badge red" style={{ textDecoration: "none" }}>🗓 план на неделю →</a>
-      </div>
-      <h1 className="page-title">📊 Холодные продажи — вся картина</h1>
-      <p className="page-sub">Полная версия с именами, контактами и заметками. Не для шаринга.</p>
-
-      <FearCard count={resistance.length} entries={resistanceWithContext} variant="private" />
-
-      {stats.total > 0 ? (
-        <>
-          <ColdSalesOverview stats={stats} planMatchPct={planMatchPct} />
-          <PlanVsActual comparisons={comparisons} />
-          <LeadsTable rows={rows} masked={false} />
-        </>
-      ) : (
-        <div className="card">
-          <div className="card-title">Пока пусто</div>
+    <main style={{ minHeight: "100vh", background: "#0d0d0d" }}>
+      <div className="crm-wrap">
+        <div className="crm-top">
+          <a href="/crm" className="crm-mini-btn" style={{ textDecoration: "none" }}>← CRM</a>
+          <div className="crm-title">📊 Статистика</div>
+          <a href="/crm/map" className="crm-mini-btn" style={{ textDecoration: "none" }}>🗺</a>
         </div>
-      )}
+        <DayCharts days={days} />
+      </div>
 
-      <p className="footer-note">
-        Публичная версия без личных данных: <a href="/cold-sales">gorbenko.at/cold-sales</a>
-      </p>
+      <div className="dash-main" style={{ paddingTop: 0 }}>
+        {stats.total > 0 && (
+          <>
+            <ColdSalesOverview stats={stats} />
+            <LeadsTable rows={rows} masked={false} />
+          </>
+        )}
+        <FearCard count={resistance.length} entries={resistanceWithContext} variant="private" />
+      </div>
     </main>
   );
 }

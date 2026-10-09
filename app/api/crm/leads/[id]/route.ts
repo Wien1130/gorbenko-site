@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { isCrmAuthed, unauthorized } from "../../../../lib/crm/api-auth";
 import { getSql } from "../../../../lib/crm/db";
+import { geocode } from "../../../../lib/crm/geo";
 
 const EDITABLE = [
   "business_name", "business_type", "stage", "address",
@@ -22,9 +23,15 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (!updates.length) return Response.json({ error: "Нет полей для правки" }, { status: 400 });
 
   try {
+    const before = (await sql`SELECT address FROM leads WHERE id = ${leadId}`)[0] as { address: string } | undefined;
     for (const [key, value] of updates) {
       const v = key === "deal_amount" ? Number(value) || 0 : String(value ?? "");
       await sql.query(`UPDATE leads SET ${key} = $1, updated_at = now() WHERE id = $2`, [v, leadId]);
+    }
+    const newAddress = typeof body.address === "string" ? body.address.trim() : "";
+    if (newAddress && newAddress !== (before?.address ?? "").trim()) {
+      const g = await geocode(newAddress);
+      if (g) await sql`UPDATE leads SET lat = ${g.lat}, lng = ${g.lng} WHERE id = ${leadId}`;
     }
     return Response.json({ ok: true });
   } catch (e) {

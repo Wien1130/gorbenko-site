@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { Lead } from "../../lib/crm/types";
+import { EMAIL_SIGNATURE_DE, EMAIL_SIGNATURE_RU } from "../../lib/crm/signature";
 
 type Phase = "idle" | "drafting" | "editing" | "sending" | "sent";
 
@@ -72,12 +73,23 @@ export default function EmailComposer({ lead }: { lead: Lead }) {
     );
   }
 
+  function writeManually() {
+    setSubject("");
+    setBody("");
+    setSignature(lang === "de" ? EMAIL_SIGNATURE_DE : EMAIL_SIGNATURE_RU);
+    setPhase("editing");
+  }
+
   if (phase === "idle" || (phase === "drafting" && !subject)) {
     return (
       <div>
         <div className="crm-row-btns" style={{ marginBottom: 8 }}>
           <button className={`crm-chip ${lang === "de" ? "on" : ""}`} onClick={() => setLang("de")}>🇦🇹 Deutsch</button>
           <button className={`crm-chip ${lang === "ru" ? "on" : ""}`} onClick={() => setLang("ru")}>🇷🇺 Русский</button>
+        </div>
+        <div className="crm-field">
+          <label>Кому</label>
+          <input className="crm-input" type="email" value={to} onChange={(e) => setTo(e.target.value)} placeholder="email@..." />
         </div>
         <input
           className="crm-input"
@@ -88,7 +100,10 @@ export default function EmailComposer({ lead }: { lead: Lead }) {
         />
         {error && <div className="crm-error">{error}</div>}
         <button className="crm-go" onClick={() => draft(false)} disabled={phase === "drafting"}>
-          {phase === "drafting" ? "🧠 Пишу…" : "✍️ Сгенерировать письмо"}
+          {phase === "drafting" ? "🧠 Пишу…" : "🧠 AI напишет письмо"}
+        </button>
+        <button className="crm-go" style={{ background: "#161616", color: "#bbb", marginTop: 8 }} onClick={writeManually} disabled={phase === "drafting"}>
+          ✍️ Написать самому
         </button>
       </div>
     );
