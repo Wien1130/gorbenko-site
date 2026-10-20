@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 
 const NAV = [
   { href: "/andrii/hq",         icon: "🧭", label: "Штаб",        short: "Штаб" },
-  { href: "/andrii/dom",        icon: "🏡", label: "Дом мечты",   short: "Дом" },
+  { href: "https://dream-house.gorbenko.at/teksty", icon: "🏡", label: "Дом мечты", short: "Дом" },
   { href: "/andrii",            icon: "🏠", label: "Обзор",       short: "Обзор" },
   { href: "/andrii/strategy",   icon: "🎯", label: "Стратегия",   short: "Стратегия" },
   { href: "/andrii/reels",      icon: "🎬", label: "Банк reels",  short: "Reels" },
