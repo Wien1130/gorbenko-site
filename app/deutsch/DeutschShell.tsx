@@ -11,6 +11,7 @@ const NAV = [
   { href: "/deutsch/hausaufgabe", label: "Домашка", icon: "III" },
   { href: "/deutsch/strasse", label: "Улица", icon: "IV" },
   { href: "/deutsch/ksenia", label: "Ксюша", icon: "V" },
+  { href: "/deutsch/verkauf", label: "Дверь", icon: "VI" },
 ];
 
 export default function DeutschShell({ children }: { children: ReactNode }) {
