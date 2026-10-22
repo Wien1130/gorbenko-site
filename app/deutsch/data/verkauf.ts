@@ -32,6 +32,67 @@ export const VERKAUF_BLOCKS: SalesBlock[] = [
     ],
   },
   {
+    id: "bestehend",
+    title: "Сайт уже есть — заход через Betreuung",
+    note: "Отдельный оффер, не возражение. В Вене сайт есть у большинства — это заход по умолчанию. Сайт не трогаем, продаём цифры и один шаг в месяц. Новый сайт — потом, из цифр.",
+    phrases: [
+      {
+        id: "bes-1",
+        de: "Sie haben eine Website. Wissen Sie, was sie Ihnen im Monat bringt? Genau das zeige ich Ihnen — in Zahlen.",
+        ru: "У вас есть сайт. Вы знаете, что он приносит вам в месяц? Именно это я вам показываю — в цифрах.",
+        when: "Главная фраза вместо «Ich mache Websites…», если перед дверью увидел: сайт есть и он не старьё.",
+      },
+      {
+        id: "bes-2",
+        de: "Wann kam die letzte Anfrage über die Website?",
+        ru: "Когда пришла последняя заявка через сайт?",
+        when: "Первый вопрос-боль. Почти всегда — пауза. Пауза и есть ответ.",
+      },
+      {
+        id: "bes-3",
+        de: "Wer kümmert sich aktuell um Website und Werbung?",
+        ru: "Кто сейчас занимается сайтом и рекламой?",
+        when: "Узнаёшь расклад: племянница / агентство / никто. От этого зависит следующая фраза.",
+      },
+      {
+        id: "bes-4",
+        de: "Was steht im letzten Bericht: wie viele Anrufe, wie viele Formulare, was hat eine Anfrage gekostet?",
+        ru: "Что в последнем отчёте: сколько звонков, сколько форм, сколько стоила одна заявка?",
+        when: "«Das macht schon eine Agentur». Три цифры. Если их нет в отчёте — вот твоё место. Без бесплатного разбора.",
+      },
+      {
+        id: "bes-5",
+        de: "Also: die Seite läuft — aber niemand schaut, was sie bringt.",
+        ru: "То есть: сайт работает — но никто не смотрит, что он приносит.",
+        when: "Отражение. Ждёшь «genau».",
+      },
+      {
+        id: "bes-6",
+        de: "Die Seite bleibt. Ich mache nur eines: Sie sehen jeden Monat, was sie bringt — und ich mache einen Schritt, damit es mehr wird.",
+        ru: "Сайт остаётся. Я делаю только одно: вы каждый месяц видите, что он приносит, — и я делаю один шаг, чтобы стало больше.",
+        when: "Оффер одним предложением. «Die Seite bleibt» снимает страх «впарит новый сайт».",
+      },
+      {
+        id: "bes-7",
+        de: "Im ersten Monat richte ich die Zählung ein: Anrufe, Formulare, woher die Leute kommen. Danach bekommen Sie die erste Seite.",
+        ru: "В первый месяц я настраиваю подсчёт: звонки, формы, откуда приходят люди. После этого вы получаете первую страницу.",
+        when: "«Und was passiert im ersten Monat?» Честно: месяц 1 = измерение, не чудеса.",
+      },
+      {
+        id: "bes-8",
+        de: "Wenn die Seite selbst das Problem ist, sage ich es Ihnen im ersten Monat — mit Zahlen, nicht mit Meinung.",
+        ru: "Если проблема в самом сайте, я скажу вам это в первый месяц — с цифрами, а не с мнением.",
+        when: "Страховка для тебя: плохой сайт даст плохие цифры. Говоришь заранее — и новый сайт потом продаётся сам.",
+      },
+      {
+        id: "bes-9",
+        de: "Betreuung ab 500 Euro im Monat. Keine neue Website, kein Umbau. Monatlich kündbar. Ihr Konto, Ihre Daten — alles bleibt bei Ihnen.",
+        ru: "Ведение от 500 евро в месяц. Без нового сайта, без переделки. Отмена помесячно. Ваш аккаунт, ваши данные — всё остаётся у вас.",
+        when: "Цена. «Alles bleibt bei Ihnen» — против страха зависимости от агентства.",
+      },
+    ],
+  },
+  {
     id: "eingang",
     title: "Вход",
     note: "Коротко. Уважение в первые 5 секунд — хозяин занят, и это нормально.",
