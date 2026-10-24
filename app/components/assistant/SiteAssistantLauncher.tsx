@@ -6,6 +6,7 @@ import AssistantAvatar from "./AssistantAvatar";
 import SiteAssistant from "./SiteAssistant";
 
 const HIDDEN_PREFIXES = [
+  "/kunden",
   "/andrii",
   "/olya",
   "/crm",
