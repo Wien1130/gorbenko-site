@@ -64,6 +64,7 @@ export default function DatenschutzPage() {
               <p>Diese Website verwendet Cookies und &auml;hnliche Technologien. Beim ersten Besuch erscheint ein Cookie-Banner, &uuml;ber den Sie Ihre Einwilligung erteilen oder ablehnen k&ouml;nnen.</p>
               <p><strong className="text-[var(--foreground)]">Notwendige Cookies:</strong> Speichern Ihrer Cookie-Einwilligung (localStorage). Kein Tracking, keine Weitergabe an Dritte. Rechtsgrundlage: Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO.</p>
               <p><strong className="text-[var(--foreground)]">Analyse- &amp; Marketing-Cookies:</strong> Nur nach Ihrer Einwilligung (Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;a DSGVO). Sie k&ouml;nnen die Einwilligung jederzeit widerrufen, indem Sie den Browser-Speicher l&ouml;schen.</p>
+              <p><strong className="text-[var(--foreground)]">Kundenbereich:</strong> Für die passwortgeschützte Auswertung unter gorbenko.at/kunden/… wird ein notwendiges Cookie gesetzt (Name beginnt mit gorbenko_kunden_, nur für diese Seite, 30 Tage, nicht per Skript lesbar). Es enthält kein Passwort, sondern einen Prüfwert. Rechtsgrundlage: Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;b DSGVO.</p>
             </div>
           </section>
 
@@ -131,6 +132,15 @@ export default function DatenschutzPage() {
               <p>Eingesetzte Dienstleister (Auftragsverarbeitung): Vercel Inc. und Neon Inc. (USA; Hosting und Datenbank), Anthropic, PBC (USA; KI-gest&uuml;tzte Strukturierung der Notizen und Entw&uuml;rfe von E-Mails), Groq, Inc. (USA; Umwandlung von Sprachnotizen in Text), Google Ireland Ltd. / Google LLC (E-Mail-Versand &uuml;ber Gmail, Kalender, Karten), GitHub, Inc. (USA; Ablage von Fotos) sowie OpenStreetMap Foundation (Vereinigtes K&ouml;nigreich; Umwandlung von Adressen in Koordinaten). Die Drittland&uuml;bermittlung erfolgt auf Grundlage des EU-US Data Privacy Framework bzw. der Standardvertragsklauseln (Art.&nbsp;46 Abs.&nbsp;2 lit.&nbsp;c DSGVO); f&uuml;r das Vereinigte K&ouml;nigreich besteht ein Angemessenheitsbeschluss.</p>
               <p><span className="text-[var(--foreground)] font-medium">Pers&ouml;nliche Seiten (gorbenko.at/p/…):</span> Nach einem Gespr&auml;ch kann ich Ihnen einen privaten, nicht &ouml;ffentlich auffindbaren Link zu einer f&uuml;r Ihren Betrieb erstellten Seite schicken (per E-Mail oder WhatsApp). Beim &Ouml;ffnen dieser Seite sowie beim Klick auf die dortigen Schaltfl&auml;chen werden Zeitpunkt, Art der Aktion, gek&uuml;rzte Browser-Kennung, die verweisende Seite und Kampagnen-Parameter der Adresse (UTM) gespeichert, um zu erkennen, ob der Kontakt aus meiner pers&ouml;nlichen Akquise stammt. IP-Adressen werden dabei nicht gespeichert; es werden keine Cookies gesetzt. Angaben aus dem Terminformular der Seite (Name, Telefon/E-Mail, Nachricht) werden Ihrem Kontakt im Kundenverwaltungssystem zugeordnet und mir per Telegram gemeldet. Die Texte dieser Seiten werden mit KI-Unterst&uuml;tzung (Anthropic) aus meinen Gespr&auml;chsnotizen erstellt. Rechtsgrundlage: Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO.</p>
               <p>Die Daten werden gel&ouml;scht, sobald keine Gesch&auml;ftsbeziehung zustande kommt und kein weiterer Kontakt gew&uuml;nscht ist, sp&auml;testens nach 24 Monaten ohne Kontakt. Sie k&ouml;nnen der Verarbeitung jederzeit formlos per E-Mail widersprechen.</p>
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold mb-3">7c. Kundenbereich (Werbe-Auswertung)</h2>
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 text-[var(--muted)] space-y-3">
+              <p>Für betreute Betriebe gibt es eine nicht öffentliche Seite mit Kennzahlen aus den Werbekampagnen: Ausgaben, Klicks, Kontaktabsichten (Klick auf WhatsApp, Telefon oder Formular), bestätigte Anfragen, Bestellungen und Suchanfragen. Der Zugang erfolgt mit einem eigenen Passwort je Betrieb. Das Passwort wird nicht gespeichert, sondern nur geprüft. Die Seite ist für Suchmaschinen gesperrt.</p>
+              <p>Die Zahlen liegen in einer Datenbank bei Neon (EU) und werden über das Hosting bei Vercel ausgeliefert. Rechtsgrundlage ist der Vertrag (Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;b DSGVO). Suchanfragen aus dem Werbekonto können ausnahmsweise Angaben enthalten, die Dritte selbst in die Suche eingegeben haben. Sie dienen nur der Auswertung der Werbung dieses Betriebs.</p>
+              <p>Die Seite gorbenko.at/kunden/demo zeigt erfundene Zahlen und ist als solche gekennzeichnet. Dort werden keine Daten eines Betriebs verarbeitet.</p>
             </div>
           </section>
 
