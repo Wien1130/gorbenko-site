@@ -5,8 +5,9 @@ import type { Exhibitor, FairData, FairVisit, VisitStatus } from "../../../lib/c
 import { VISIT_STATUS_LABEL } from "../../../lib/crm/messe/data";
 import CardFlow from "./CardFlow";
 
-type Tab = "sites" | "route" | "vienna" | "munich" | "three";
-const TAB_LABEL: Record<Tab, string> = { sites: "Сайты", vienna: "Вена", munich: "Мюнхен", three: "3D / конструктор", route: "Порядок обхода" };
+type Tab = "first" | "sites" | "route" | "vienna" | "munich" | "three";
+const TAB_LABEL: Record<Tab, string> = { first: "⚡ Маршрут 1", sites: "Сайты", vienna: "Вена", munich: "Мюнхен", three: "3D / конструктор", route: "Все" };
+const TABS: Tab[] = ["first", "sites", "vienna", "munich", "three", "route"];
 type StatusFilter = "all" | "todo" | "talked" | "revisit" | "done";
 
 /** Пять стендов с подтверждённой бедой сайта — их обходить первыми. */
@@ -24,7 +25,7 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
   const [visits, setVisits] = useState<Record<string, FairVisit>>(() =>
     Object.fromEntries(initialVisits.map((v) => [v.exhibitor_id, v])),
   );
-  const [tab, setTab] = useState<Tab>("sites");
+  const [tab, setTab] = useState<Tab>("first");
   const [plan, setPlan] = useState(false);
   const [status, setStatus] = useState<StatusFilter>("all");
   const [q, setQ] = useState("");
@@ -53,6 +54,7 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
 
   /** Состав каждой вкладки (без фильтра статуса и поиска) — для счётчиков и плана. */
   const tabRows = useMemo<Record<Tab, Exhibitor[]>>(() => {
+    const byId = new Map(fair.rows.map((r) => [r.id, r]));
     const sites = fair.rows
       .filter((r) => r.site_priority === "A" || r.site_priority === "B" || r.site_priority === "U")
       .sort(
@@ -61,7 +63,9 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
           ((SITE_HEAD.indexOf(a.id) + 99) % 99) - ((SITE_HEAD.indexOf(b.id) + 99) % 99) ||
           (a.rank ?? 999) - (b.rank ?? 999),
       );
+    const first = (fair.route1 ?? []).map((id) => byId.get(id)).filter(Boolean) as Exhibitor[];
     return {
+      first,
       sites,
       vienna: ordered.filter((r) => r.city.startsWith("Wien") || r.city.includes("Вена")),
       munich: ordered.filter((r) => r.city === "München"),
@@ -171,7 +175,7 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
 
       <div className="m-bar">
         <div className="m-tabs">
-          {(["sites", "vienna", "munich", "three", "route"] as Tab[]).map((t) => (
+          {TABS.map((t) => (
             <button key={t} className={tab === t ? "on" : ""} onClick={() => setTab(t)}>
               {TAB_LABEL[t]} <small>{tabDone(t)}/{tabRows[t].length}</small>
             </button>
@@ -205,11 +209,12 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
         ) : (
           <>
             <div className="m-note">
+              {tab === "first" && "Маршрут 1 — кому идти сразу. Отбор по сайтам всех 156: не одиночка (юрлицо, UID, команда, дилеры/showroom, средний чек, работающий магазин) и есть повод (сайт A/B, закрыт, мобилка) или Вена/Мюнхен. Порядок — как идти ногами: EG по номерам стендов, затем OG. Четыре с мёртвым сайтом стоят здесь без оценки размера — смотри на стенд."}
               {tab === "sites" && "Сайты — обходить первыми. Сверху пять с конкретной бедой: WABISABI (магазин анонсирован, не открыт), Gerald Pahr (режим обслуживания), Georg Mähring (домен зарезервирован), macharten (магазин обещают открыть), Karaka (коллекция 2020/21). Дальше — по силе повода."}
               {tab === "vienna" && "Вена — для локального контента и съёмки."}
               {tab === "munich" && "Мюнхен — все четыре."}
               {tab === "three" && "3D / конструктор — только где у товара есть реальные варианты. У кого конфигуратор уже есть, не предлагать второй."}
-              {tab === "route" && "Порядок обхода: сначала маршрут из брифа, затем Мюнхен → Вена → остальные."}
+              {tab === "route" && "Все 156: сначала маршрут из брифа, затем Мюнхен → Вена → остальные."}
               {" "}Отмечено {tabDone(tab)} из {tabRows[tab].length}{filtered.length !== tabRows[tab].length ? `, показано ${filtered.length}` : ""}.
             </div>
             {filtered.map((r, i) => {
@@ -228,6 +233,11 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
                     {r.site_priority && <span className={`m-chip ${r.site_priority}`}>Сайт: {r.site_priority}</span>}
                     {r.content_fit && <span className={`m-chip ${r.content_fit}`}>Контент: {r.content_fit}</span>}
                     {r.configurator_fit === "yes" && <span className="m-chip A">3D: да</span>}
+                    {typeof r.size_score === "number" && (
+                      <span className={`m-chip ${r.size_score >= 7 ? "A" : r.size_score >= 4 ? "B" : ""}`} title={r.size_note}>
+                        Размер: {r.size_score >= 7 ? "фирма" : r.size_score >= 4 ? "средний" : r.size_score > 0 ? "малый" : "?"}
+                      </span>
+                    )}
                     {r.verified ? <span className="m-chip">браузер ✓</span> : <span className="m-chip">не открыт</span>}
                     {r.geography_confidence && r.geography_confidence !== "high" && <span className="m-chip">гео: {r.geography_confidence}</span>}
                     {v.status !== "todo" && <span className={`m-chip st-${v.status}`}>{VISIT_STATUS_LABEL[v.status]}</span>}
@@ -249,6 +259,7 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
                   {(r.observed || r.hypothesis || r.evidence_short?.length) && (
                     <details>
                       <summary>Что найдено и гипотеза</summary>
+                      {r.size_note && <p><b>Размер по сайту:</b> {r.size_note}</p>}
                       {r.evidence_short?.map((f, k) => <p key={k}>• {f}</p>)}
                       {r.mobile_note && <p><b>390px:</b> {r.mobile_note}</p>}
                       {r.unresolved?.length ? <p><b>Не установлено:</b> {r.unresolved.join("; ")}</p> : null}

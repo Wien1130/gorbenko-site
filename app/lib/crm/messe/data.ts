@@ -28,6 +28,10 @@ export interface Exhibitor {
   evidence_short?: string[];
   mobile_note?: string;
   unresolved?: string[];
+  /** Сигналы размера/платёжеспособности с сайта (юрлицо, UID, дилеры, чек, магазин). 0 = сигналов нет. */
+  size_score?: number;
+  size_note?: string;
+  route1_score?: number;
 }
 
 export interface FairData {
@@ -35,6 +39,8 @@ export interface FairData {
   title: string;
   date: string;
   route: string[];
+  /** «Маршрут 1»: платёжеспособные × есть потребность × Вена/Мюнхен, порядок EG → OG по номерам стендов. */
+  route1?: string[];
   rows: Exhibitor[];
 }
 
