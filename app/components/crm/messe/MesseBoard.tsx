@@ -194,7 +194,10 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
                   <div className="m-chips">
                     <span className={`m-chip ${r.priority}`}>Приоритет {r.priority}</span>
                     {r.site_priority && <span className={`m-chip ${r.site_priority}`}>Сайт: {r.site_priority}</span>}
-                    {r.services.map((s) => <span key={s} className="m-chip">{s}</span>)}
+                    {r.content_fit && <span className={`m-chip ${r.content_fit}`}>Контент: {r.content_fit}</span>}
+                    {r.configurator_fit === "yes" && <span className="m-chip A">3D: да</span>}
+                    {r.verified ? <span className="m-chip">браузер ✓</span> : <span className="m-chip">не открыт</span>}
+                    {r.geography_confidence && r.geography_confidence !== "high" && <span className="m-chip">гео: {r.geography_confidence}</span>}
                     {v.status !== "todo" && <span className={`m-chip st-${v.status}`}>{VISIT_STATUS_LABEL[v.status]}</span>}
                     {v.email_sent && <span className="m-chip st-mail">письмо ✓</span>}
                   </div>
@@ -211,9 +214,12 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
                     {v.lead_id && <a href={`/crm/lead/${v.lead_id}`}>Лид #{v.lead_id} в CRM</a>}
                     {r.email && <a href={`mailto:${r.email}`}>{r.email}</a>}
                   </div>
-                  {(r.observed || r.hypothesis) && (
+                  {(r.observed || r.hypothesis || r.evidence_short?.length) && (
                     <details>
                       <summary>Что найдено и гипотеза</summary>
+                      {r.evidence_short?.map((f, k) => <p key={k}>• {f}</p>)}
+                      {r.mobile_note && <p><b>390px:</b> {r.mobile_note}</p>}
+                      {r.unresolved?.length ? <p><b>Не установлено:</b> {r.unresolved.join("; ")}</p> : null}
                       {r.observed && <p>{r.observed}</p>}
                       {r.hypothesis && <p><b>Гипотеза:</b> {r.hypothesis}</p>}
                     </details>

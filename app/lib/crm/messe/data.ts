@@ -20,6 +20,14 @@ export interface Exhibitor {
   rank: number | null;
   profile_url: string;
   fetch_status: string;
+  /** Поля браузерной проверки 07.11.2026 (добавляются tools/merge.py; могут отсутствовать) */
+  verified?: boolean;
+  content_fit?: string;
+  configurator_fit?: string;
+  geography_confidence?: string;
+  evidence_short?: string[];
+  mobile_note?: string;
+  unresolved?: string[];
 }
 
 export interface FairData {
