@@ -31,6 +31,7 @@ export default function CookieConsent() {
   const hidden =
     pathname.startsWith("/angebot") ||
     pathname.startsWith("/kunden") ||
+    pathname.startsWith("/crm") ||
     pathname.startsWith("/p/") ||
     pathname.startsWith("/andrii") ||
     pathname.startsWith("/reports") ||
