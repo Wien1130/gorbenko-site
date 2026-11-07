@@ -173,7 +173,13 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
         {error && <div className="m-err">{error}</div>}
 
         {view === "plan" ? (
-          <FloorPlan fair={fair} getVisit={getVisit} onPick={jumpTo} />
+          <FloorPlan
+            fair={fair}
+            getVisit={getVisit}
+            onPick={jumpTo}
+            matchIds={new Set(filtered.map((r) => r.id))}
+            filterOn={city !== "all" || status !== "all" || onlyA || q.trim() !== ""}
+          />
         ) : (
           <>
             <div className="m-note">
@@ -267,7 +273,7 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
 }
 
 /** Схема этажей по номерам стендов — покрытие обхода. Это порядок номеров, не геометрия зала. */
-function FloorPlan({ fair, getVisit, onPick }: { fair: FairData; getVisit: (id: string) => FairVisit; onPick: (id: string) => void }) {
+function FloorPlan({ fair, getVisit, onPick, matchIds, filterOn }: { fair: FairData; getVisit: (id: string) => FairVisit; onPick: (id: string) => void; matchIds: Set<string>; filterOn: boolean }) {
   const floors = useMemo(() => {
     const m = new Map<string, Exhibitor[]>();
     for (const r of fair.rows) {
@@ -284,7 +290,8 @@ function FloorPlan({ fair, getVisit, onPick }: { fair: FairData; getVisit: (id: 
     <>
       <div className="m-note">
         EG — нижний уровень (стенды 001–066), OG — верхний (070–140). Плитки идут по номерам стендов, не по геометрии зала —
-        план организатора уточни на info desk. Розовая рамка — приоритет A.
+        план организатора уточни на info desk. Розовая рамка — приоритет A, она горит всегда.
+        Фильтры сверху приглушают стенды, которые в них не попадают.
       </div>
       <div className="m-legend">
         <span><i style={{ background: "#fff" }} />не посещён</span>
@@ -298,14 +305,14 @@ function FloorPlan({ fair, getVisit, onPick }: { fair: FairData; getVisit: (id: 
         return (
           <section key={floor} className="m-floor">
             <h2>{floor === "EG" ? "EG — нижний уровень" : floor === "OG" ? "OG — верхний уровень" : "Этаж уточнить"}</h2>
-            <div className="sub">{done} из {list.length} отмечено</div>
+            <div className="sub">{done} из {list.length} отмечено{filterOn ? ` · в фильтре ${list.filter((r) => matchIds.has(r.id)).length}` : ""}</div>
             <div className="m-grid">
               {list.map((r) => {
                 const v = getVisit(r.id);
                 return (
                   <div
                     key={r.id}
-                    className={`m-tile ${v.status} ${r.priority === "A" ? "pA" : ""} ${v.email_sent ? "mail" : ""}`}
+                    className={`m-tile ${v.status} ${r.priority === "A" ? "pA" : ""} ${v.email_sent ? "mail" : ""} ${filterOn && !matchIds.has(r.id) ? "dim" : ""}`}
                     onClick={() => onPick(r.id)}
                     title={`${r.booth} ${r.name} — ${VISIT_STATUS_LABEL[v.status]}`}
                   >

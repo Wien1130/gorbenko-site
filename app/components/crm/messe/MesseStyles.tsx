@@ -100,6 +100,7 @@ export default function MesseStyles() {
       .m-tile.skip { background:#eef1f3; color:#9aa6b0; }
       .m-tile.pA { box-shadow: inset 0 0 0 2px var(--pink); }
       .m-tile.mail::after { content:"✉"; font-size:10px; color:#1d4f7a; }
+      .m-tile.dim { opacity:.16; }
       .m-legend { display:flex; gap:10px; flex-wrap:wrap; font-size:12px; color:var(--muted); margin-bottom:10px; }
       .m-legend i { display:inline-block; width:12px; height:12px; border-radius:3px; vertical-align:-2px; margin-right:4px; border:1px solid var(--line); }
 
