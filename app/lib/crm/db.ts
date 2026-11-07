@@ -57,6 +57,7 @@ export const SCHEMA_SQL = [
   )`,
   `CREATE INDEX IF NOT EXISTS idx_activities_lead ON activities(lead_id, created_at)`,
   `CREATE INDEX IF NOT EXISTS idx_reminders_due ON reminders(status, due_at)`,
+  `ALTER TABLE emails ADD COLUMN IF NOT EXISTS send_at timestamptz`,
   `ALTER TABLE leads ADD COLUMN IF NOT EXISTS lat double precision`,
   `ALTER TABLE leads ADD COLUMN IF NOT EXISTS lng double precision`,
   `ALTER TABLE activities ADD COLUMN IF NOT EXISTS lat double precision`,

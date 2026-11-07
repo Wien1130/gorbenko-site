@@ -41,10 +41,84 @@ export default function CardFlow({
   const [signature, setSignature] = useState("");
   const [to, setTo] = useState(r.email || "");
   const [instruction, setInstruction] = useState("");
+  const [nextAction, setNextAction] = useState("");
+  const [reminderDate, setReminderDate] = useState("");
+  /** "" = отправить сейчас, иначе YYYY-MM-DD — cron отправит в 09:00 по Вене. */
+  const [sendDate, setSendDate] = useState("");
+  const [scheduledWhen, setScheduledWhen] = useState("");
+  const [recording, setRecording] = useState(false);
+  const [seconds, setSeconds] = useState(0);
+  const [listening, setListening] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
   const draftedFor = useRef<number | null>(null);
+  const recRef = useRef<MediaRecorder | null>(null);
+  const chunksRef = useRef<Blob[]>([]);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const context = `${fairTitle}, MAK Wien, Stand ${r.booth} (${r.floor}). Участник: ${r.name}, ${r.city}, ${r.category}. Разговор на стенде выставки.`;
+
+  /** 🎤 Надиктовать по-русски: что обсудили, кто контакт, когда писать. Groq Whisper → Claude → поля. */
+  async function toggleRecord() {
+    if (recording) {
+      recRef.current?.stop();
+      setRecording(false);
+      if (timerRef.current) clearInterval(timerRef.current);
+      return;
+    }
+    setError("");
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const mime = MediaRecorder.isTypeSupported("audio/mp4") ? "audio/mp4" : MediaRecorder.isTypeSupported("audio/webm") ? "audio/webm" : "";
+      const rec = new MediaRecorder(stream, mime ? { mimeType: mime } : undefined);
+      chunksRef.current = [];
+      rec.ondataavailable = (e) => { if (e.data.size) chunksRef.current.push(e.data); };
+      rec.onstop = () => {
+        stream.getTracks().forEach((t) => t.stop());
+        const blob = new Blob(chunksRef.current, { type: mime || "audio/webm" });
+        if (blob.size > 0) void onAudio(blob, mime);
+      };
+      rec.start();
+      recRef.current = rec;
+      setSeconds(0);
+      setRecording(true);
+      timerRef.current = setInterval(() => setSeconds((s) => s + 1), 1000);
+    } catch {
+      setError("Нет доступа к микрофону. Разреши микрофон для gorbenko.at в настройках Safari.");
+    }
+  }
+
+  async function onAudio(blob: Blob, mime: string) {
+    setListening(true);
+    setError("");
+    try {
+      const fd = new FormData();
+      fd.append("audio", new File([blob], mime === "audio/mp4" ? "talk.m4a" : "talk.webm", { type: blob.type }));
+      fd.append(
+        "text",
+        `${context} Название бизнеса: «${r.name}» (не менять). Андрей надиктовал по-русски итог разговора на стенде: вытащи имя/должность собеседника, email/телефон если названы, что обсудили (summary 1–2 фразы), следующий шаг и ДАТУ, когда он просил написать/позвонить (reminder_date, YYYY-MM-DD; сегодня ${today()}; «на следующей неделе» = ближайший понедельник, «через неделю» = +7 дней).`,
+      );
+      fd.append("outcome", "warm_followup");
+      const res = await fetch("/api/crm/capture", { method: "POST", body: fd });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || `HTTP ${res.status}`);
+      const p = json.proposal as VisitProposal;
+      const transcript: string = json.transcript || "";
+      setTalk((prev) => [prev.trim(), transcript.trim()].filter(Boolean).join("\n"));
+      if (p.summary) setSummary(p.summary);
+      setContact((c) => ({ name: c.name || p.contact_name || "", email: c.email || p.contact_email || r.email || "", phone: c.phone || p.contact_phone || "" }));
+      if (p.next_action) setNextAction(p.next_action);
+      if (p.reminder_date && p.reminder_date > today()) {
+        setReminderDate(p.reminder_date);
+        setSendDate(p.reminder_date);
+      }
+      if (step === "photo") setStep("confirm");
+    } catch (e) {
+      setError(String(e instanceof Error ? e.message : e));
+      if (step === "reading") setStep("photo");
+    } finally {
+      setListening(false);
+    }
+  }
 
   async function onFile(file: File) {
     setError("");
@@ -91,9 +165,9 @@ export default function CardFlow({
           contact_name: contact.name,
           contact_email: contact.email,
           contact_phone: contact.phone,
-          next_action: "Отправить 2 конкретные идеи, предложить 15-минутный разговор",
-          reminder_date: nextWorkday(),
-          reminder_text: `Follow-up после BLICKFANG: ${r.name}`,
+          next_action: nextAction || "Отправить 2 конкретные идеи, предложить 15-минутный разговор",
+          reminder_date: reminderDate || nextWorkday(),
+          reminder_text: `Follow-up после BLICKFANG: ${r.name}${nextAction ? ` — ${nextAction}` : ""}`,
           notes,
           summary: fullSummary,
           transcript: talk.trim(),
@@ -151,10 +225,11 @@ export default function CardFlow({
       const res = await fetch("/api/crm/email/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ lead_id: leadId, to, subject, body, lang: "de" }),
+        body: JSON.stringify({ lead_id: leadId, to, subject, body, lang: "de", send_at: sendDate || "" }),
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || `HTTP ${res.status}`);
+      setScheduledWhen(json.scheduled ? json.when || sendDate : "");
       onEmailSent();
       setStep("sent");
     } catch (e) {
@@ -188,12 +263,16 @@ export default function CardFlow({
 
       {step === "photo" && (
         <>
+          <button className={`m-mic ${recording ? "rec" : ""}`} onClick={() => void toggleRecord()} disabled={listening}>
+            {listening ? "Слушаю и разбираю…" : recording ? `■ Стоп · ${seconds}s` : "🎤 Надиктовать разговор"}
+          </button>
+          <div className="m-hint">Скажи по-русски: с кем говорил, что обсудили, когда он просил написать. Контакт, дата и письмо заполнятся сами.</div>
           <label className="m-filelabel">
             📷 Сфотографировать визитку
             <input ref={fileRef} type="file" accept="image/*" capture="environment" onChange={(e) => e.target.files?.[0] && void onFile(e.target.files[0])} />
           </label>
           <div style={{ textAlign: "center", marginTop: 8 }}>
-            <button className="ghost" onClick={() => setStep("confirm")}>Без визитки — ввести контакт вручную</button>
+            <button className="ghost" onClick={() => setStep("confirm")}>Ввести контакт вручную</button>
           </div>
         </>
       )}
@@ -214,12 +293,25 @@ export default function CardFlow({
           </div>
           <div className="field"><span className="m-label">Email</span><input type="email" value={contact.email} onChange={(e) => setContact({ ...contact, email: e.target.value })} /></div>
           <div className="field">
-            <span className="m-label">Что обсудили (1–2 фразы, пойдёт в письмо)</span>
+            <span className="m-label">Что обсудили (пойдёт в лид и в письмо)</span>
             <textarea value={talk} onChange={(e) => setTalk(e.target.value)} placeholder="Напр.: интересует видео монтажа, решает Frau X, написать в понедельник" />
           </div>
+          {summary && <div className="m-hint"><b>Итог:</b> {summary}{nextAction ? ` · Дальше: ${nextAction}` : ""}</div>}
+          <div className="row">
+            <div className="field">
+              <span className="m-label">Напомнить / написать</span>
+              <input type="date" value={reminderDate} min={today()} onChange={(e) => { setReminderDate(e.target.value); setSendDate(e.target.value); }} />
+            </div>
+            <div className="field" style={{ justifyContent: "flex-end" }}>
+              <button className={`m-mic small ${recording ? "rec" : ""}`} onClick={() => void toggleRecord()} disabled={listening || step === "saving"}>
+                {listening ? "Разбираю…" : recording ? `■ Стоп · ${seconds}s` : "🎤 Надиктовать"}
+              </button>
+            </div>
+          </div>
           <div className="m-actions">
-            {!preview && <button onClick={() => setStep("photo")}>📷 Визитка</button>}
-            <button className="pink" disabled={step === "saving"} onClick={() => void saveLead()}>
+            {!preview && <button onClick={() => fileRef.current?.click()}>📷 Визитка</button>}
+            <input ref={fileRef} type="file" accept="image/*" capture="environment" style={{ display: "none" }} onChange={(e) => e.target.files?.[0] && void onFile(e.target.files[0])} />
+            <button className="pink" disabled={step === "saving" || listening || recording} onClick={() => void saveLead()}>
               {step === "saving" ? "Сохраняю…" : "Сохранить лид → письмо"}
             </button>
           </div>
@@ -240,10 +332,20 @@ export default function CardFlow({
           <div className="field">
             <input placeholder="Переписать: напр. «короче», «упомяни видео монтажа»" value={instruction} onChange={(e) => setInstruction(e.target.value)} />
           </div>
+          <div className="m-when">
+            <span className="m-label">Когда отправить</span>
+            <div className="m-when-row">
+              <button className={!sendDate ? "on" : ""} onClick={() => setSendDate("")}>Сейчас</button>
+              <button className={sendDate === addDays(1) ? "on" : ""} onClick={() => setSendDate(addDays(1))}>Завтра</button>
+              <button className={sendDate === nextMonday() ? "on" : ""} onClick={() => setSendDate(nextMonday())}>Пн</button>
+              <input type="date" value={sendDate} min={addDays(1)} onChange={(e) => setSendDate(e.target.value)} />
+            </div>
+            {sendDate && <div className="m-hint">Уйдёт {fmtDate(sendDate)} в 09:00 по Вене само — думать больше не надо.</div>}
+          </div>
           <div className="m-actions">
             <button onClick={() => void draft(true)} disabled={step === "sending"}>↻ Переписать</button>
             <button className="pink" disabled={step === "sending" || !to || !subject || !body} onClick={() => void send()}>
-              {step === "sending" ? "Отправляю…" : "Отправить"}
+              {step === "sending" ? (sendDate ? "Планирую…" : "Отправляю…") : sendDate ? `Запланировать на ${fmtDate(sendDate)}` : "Отправить сейчас"}
             </button>
           </div>
           <div style={{ marginTop: 8, fontSize: 13, display: "flex", gap: 12, flexWrap: "wrap" }}>
@@ -261,7 +363,7 @@ export default function CardFlow({
 
       {step === "sent" && (
         <div className="m-ok">
-          Письмо ушло на {to}. Лид #{leadId} в CRM, напоминание на {nextWorkday()}.
+          {scheduledWhen ? `Письмо запланировано: уйдёт ${scheduledWhen} на ${to}.` : `Письмо ушло на ${to}.`} Лид #{leadId} в CRM, напоминание на {reminderDate || nextWorkday()}.
           <div style={{ marginTop: 6 }}><a href={`/crm/lead/${leadId}`}>Открыть лид</a> · <button className="ghost" onClick={onClose}>закрыть</button></div>
         </div>
       )}
@@ -269,10 +371,22 @@ export default function CardFlow({
   );
 }
 
+const vienna = (d: Date) => d.toLocaleDateString("sv-SE", { timeZone: "Europe/Vienna" });
+function today(): string { return vienna(new Date()); }
+function addDays(n: number): string { const d = new Date(); d.setDate(d.getDate() + n); return vienna(d); }
+function nextMonday(): string {
+  const d = new Date();
+  d.setDate(d.getDate() + ((8 - d.getDay()) % 7 || 7));
+  return vienna(d);
+}
+function fmtDate(iso: string): string {
+  const [y, m, d] = iso.split("-");
+  return y && m && d ? `${d}.${m}` : iso;
+}
 /** Ближайший рабочий день по Вене (пн–пт) — для напоминания. */
 function nextWorkday(): string {
   const d = new Date();
   d.setDate(d.getDate() + 1);
   while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() + 1);
-  return d.toLocaleDateString("sv-SE", { timeZone: "Europe/Vienna" });
+  return vienna(d);
 }

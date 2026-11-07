@@ -89,6 +89,17 @@ export default function MesseStyles() {
       .m-thumb { width:100%; max-height:160px; object-fit:cover; border-radius:8px; border:1px solid var(--line); margin-bottom:8px; }
       .m-filelabel { display:block; border:2px dashed #bcc8d0; border-radius:12px; padding:18px; text-align:center; font-weight:700; cursor:pointer; background:#fff; }
       .m-filelabel input { display:none; }
+      .m-mic { display:block; width:100%; margin-bottom:10px; padding:18px; border-radius:12px; border:2px solid var(--pink); background:var(--pink); color:#fff; font-weight:800; font-size:16px; }
+      .m-mic.rec { background:#fff; color:var(--pink); animation:mpulse 1.2s ease-in-out infinite; }
+      .m-mic.small { width:auto; padding:10px 14px; font-size:14px; margin:0; }
+      .m-mic:disabled { opacity:.6; }
+      @keyframes mpulse { 0%,100% { box-shadow:0 0 0 0 rgba(212,39,100,.35); } 50% { box-shadow:0 0 0 10px rgba(212,39,100,0); } }
+      .m-hint { font-size:13px; color:var(--muted); margin:4px 0 10px; line-height:1.4; }
+      .m-when { margin-top:10px; }
+      .m-when-row { display:flex; gap:6px; align-items:center; flex-wrap:wrap; }
+      .m-when-row button { padding:8px 12px; font-size:13px; }
+      .m-when-row button.on { background:var(--ink); color:#fff; border-color:var(--ink); }
+      .m-when-row input[type=date] { flex:1; min-width:140px; padding:8px; }
 
       /* План залов */
       .m-floor { background:#fff; border:1px solid var(--line); border-radius:14px; padding:14px; margin-bottom:12px; }

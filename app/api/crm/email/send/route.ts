@@ -1,14 +1,15 @@
 import { NextRequest } from "next/server";
 import { isCrmAuthed, unauthorized } from "../../../../lib/crm/api-auth";
-import { getSql, fetchLead, fetchPitchByLead } from "../../../../lib/crm/db";
-import { sendGmail } from "../../../../lib/crm/gmail";
-import { withSignature } from "../../../../lib/crm/ai";
-import { buildEmailHtml } from "../../../../lib/crm/email-html";
-import { pitchUrl, withUtm } from "../../../../lib/crm/pitch";
+import { getSql } from "../../../../lib/crm/db";
+import { scheduleLeadEmail, sendLeadEmail } from "../../../../lib/crm/send-email";
 
 export const maxDuration = 30;
 
-/** POST /api/crm/email/send — реальная отправка письма через Gmail Андрея (текст + HTML). */
+/**
+ * POST /api/crm/email/send — отправка письма через Gmail Андрея (текст + HTML).
+ * Если передан send_at (ISO или YYYY-MM-DD) в будущем — письмо откладывается, cron отправит его в срок
+ * (дата без времени = 09:00 по Вене).
+ */
 export async function POST(req: NextRequest) {
   if (!(await isCrmAuthed())) return unauthorized();
   const sql = getSql();
@@ -23,30 +24,33 @@ export async function POST(req: NextRequest) {
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)) return Response.json({ error: `Некорректный email: "${to}"` }, { status: 400 });
   if (!subject || !body) return Response.json({ error: "Пустая тема или текст" }, { status: 400 });
-
-  const lead = await fetchLead(leadId);
-  if (!lead) return Response.json({ error: "Лид не найден" }, { status: 404 });
+  if (!leadId) return Response.json({ error: "Нет lead_id" }, { status: 400 });
 
   try {
-    const pitch = await fetchPitchByLead(leadId);
-    const link = pitch && pitch.status === "published" ? withUtm(pitchUrl(pitch.slug), pitch.slug, "email") : undefined;
-    // Если страница есть, а в тексте ссылки нет — добавим строкой перед подписью (UTM-версия).
-    const bodyWithLink = link && !body.includes(`/p/${pitch!.slug}`) ? `${body}\n\n${link}` : body;
-    const fullBody = withSignature(bodyWithLink, lang);
-    const html = buildEmailHtml({ body: bodyWithLink, lang, pitchUrl: link, businessName: lead.business_name });
-    const { id: gmailId } = await sendGmail({ to, subject, body: fullBody, html });
-
-    await sql`INSERT INTO emails (lead_id, to_email, subject, body, lang, status, gmail_id)
-      VALUES (${leadId}, ${to}, ${subject}, ${fullBody}, ${lang}, 'sent', ${gmailId})`;
-    await sql`INSERT INTO activities (lead_id, kind, entry_type, stage_after, summary)
-      VALUES (${leadId}, 'email', 'followup', ${lead.stage}, ${"Отправлено письмо: " + subject})`;
-    if (to && !lead.contact_email) {
-      await sql`UPDATE leads SET contact_email = ${to}, updated_at = now() WHERE id = ${leadId}`;
+    const sendAt = parseSendAt(b.send_at);
+    if (sendAt && sendAt.getTime() > Date.now() + 60_000) {
+      const r = await scheduleLeadEmail(leadId, { to, subject, body, lang }, sendAt);
+      return Response.json({ ok: true, scheduled: true, email_id: r.id, send_at: sendAt.toISOString(), when: r.when });
     }
-
+    const { gmailId } = await sendLeadEmail(leadId, { to, subject, body, lang });
     return Response.json({ ok: true, gmail_id: gmailId });
   } catch (e) {
     console.error("crm email send error", e);
     return Response.json({ error: String(e instanceof Error ? e.message : e) }, { status: 500 });
   }
+}
+
+/** "2026-11-12" → 09:00 по Вене того дня; полный ISO — как есть. */
+function parseSendAt(v: unknown): Date | null {
+  if (typeof v !== "string" || !v.trim()) return null;
+  const s = v.trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) {
+    const d = new Date(`${s}T09:00:00+01:00`);
+    // летом Вена +02:00 — сдвиг на час не критичен для утреннего письма, но поправим
+    const m = Number(s.slice(5, 7));
+    if (m >= 4 && m <= 10) d.setHours(d.getHours() - 1);
+    return isNaN(d.getTime()) ? null : d;
+  }
+  const d = new Date(s);
+  return isNaN(d.getTime()) ? null : d;
 }
