@@ -29,6 +29,9 @@ export interface Exhibitor {
   mobile_note?: string;
   unresolved?: string[];
   /** Сигналы размера/платёжеспособности с сайта (юрлицо, UID, дилеры, чек, магазин). 0 = сигналов нет. */
+  /** Имя владельца / Geschäftsführer из импрессума сайта (эвристика по скачанному тексту, 07.11). */
+  imprint_name?: string;
+  imprint_name_src?: string;
   size_score?: number;
   size_note?: string;
   route1_score?: number;

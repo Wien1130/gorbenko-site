@@ -234,6 +234,7 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
                     {r.site_priority && <span className={`m-chip ${r.site_priority}`}>Сайт: {r.site_priority}</span>}
                     {r.content_fit && <span className={`m-chip ${r.content_fit}`}>Контент: {r.content_fit}</span>}
                     {r.configurator_fit === "yes" && <span className="m-chip A">3D: да</span>}
+                    {r.imprint_name && <span className="m-chip A" title={r.imprint_name_src}>👤 {r.imprint_name}</span>}
                     {typeof r.size_score === "number" && (
                       <span className={`m-chip ${r.size_score >= 7 ? "A" : r.size_score >= 4 ? "B" : ""}`} title={r.size_note}>
                         Размер: {r.size_score >= 7 ? "фирма" : r.size_score >= 4 ? "средний" : r.size_score > 0 ? "малый" : "?"}

@@ -33,7 +33,7 @@ export default function CardFlow({
   const [preview, setPreview] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
   const [leadId, setLeadId] = useState<number | null>(visit.lead_id);
-  const [contact, setContact] = useState({ name: "", email: r.email || "", phone: "" });
+  const [contact, setContact] = useState({ name: r.imprint_name || "", email: r.email || "", phone: "" });
   const [summary, setSummary] = useState("");
   const [talk, setTalk] = useState("");
   const [subject, setSubject] = useState("");
@@ -151,6 +151,7 @@ export default function CardFlow({
         `${fairTitle} · Stand ${r.booth} (${r.floor}) · ${r.city}`,
         `Предложение: ${r.offer}`,
         r.opening_de ? `Erste Frage: ${r.opening_de}` : "",
+        r.imprint_name ? `Владелец по импрессуму: ${r.imprint_name}` : "",
         r.website ? `Сайт: ${r.website}` : "",
       ].filter(Boolean).join("\n");
       const fullSummary = [`Разговор на стенде ${r.booth} ${fairTitle}.`, talk.trim(), summary.trim()].filter(Boolean).join(" ");
@@ -192,7 +193,7 @@ export default function CardFlow({
     setError("");
     setStep("drafting");
     try {
-      const base = `Разговор был СЕГОДНЯ на стенде ${r.booth} выставки ${fairTitle} im MAK — не визит в заведение; первое предложение — отсылка к стенду/продукту. Продукт/бренд: ${r.name}. Идея, которую обсуждали: ${r.offer} ${talk.trim() ? `Что сказал собеседник: ${talk.trim()}.` : ""} Предложи прислать 2 конкретные идеи и короткий 15-минутный разговор на следующей неделе. Не оценивать их сайт негативно.`;
+      const base = `Разговор был СЕГОДНЯ на стенде ${r.booth} выставки ${fairTitle} im MAK — не визит в заведение; первое предложение — отсылка к стенду/продукту. Продукт/бренд: ${r.name}. ${r.imprint_name ? `Владелец по импрессуму: ${r.imprint_name} — если имя контакта в лиде пустое, обращайся «Sehr geehrte/r Frau/Herr <Nachname>» по этому имени.` : ""} Идея, которую обсуждали: ${r.offer} ${talk.trim() ? `Что сказал собеседник: ${talk.trim()}.` : ""} Предложи прислать 2 конкретные идеи и короткий 15-минутный разговор на следующей неделе. Не оценивать их сайт негативно.`;
       const res = await fetch("/api/crm/email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

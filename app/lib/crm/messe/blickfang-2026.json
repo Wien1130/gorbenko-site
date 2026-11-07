@@ -291,7 +291,9 @@
    ],
    "size_score": 7,
    "size_note": "KG/OG/e.U., seit 2012, средний чек ~269 €, соцсети ≥2, 45 цен на страницах",
-   "route1_score": 13.6
+   "route1_score": 13.6,
+   "imprint_name": "Florian Plüer",
+   "imprint_name_src": "imprint · Geschäftsführer: Florian Plüer"
   },
   {
    "id": "32346",
@@ -371,7 +373,9 @@
    ],
    "size_score": 5,
    "size_note": "KG/OG/e.U., UID, средний чек ~90 €, 30 цен на страницах",
-   "route1_score": 9.2
+   "route1_score": 9.2,
+   "imprint_name": "Philip Blair",
+   "imprint_name_src": "imprint · перед адресом: Philip Blair"
   },
   {
    "id": "39392",
@@ -413,7 +417,9 @@
    ],
    "size_score": 2,
    "size_note": "средний чек ~78 €, работающий магазин",
-   "route1_score": 8.6
+   "route1_score": 8.6,
+   "imprint_name": "Kurt Penetsdorfer",
+   "imprint_name_src": "imprint · перед адресом: Kurt Penetsdorfer"
   },
   {
    "id": "15980",
@@ -452,7 +458,9 @@
    ],
    "size_score": 4,
    "size_note": "UID, seit 1991, средний чек ~385 €",
-   "route1_score": 8.2
+   "route1_score": 8.2,
+   "imprint_name": "Lisa Stolz",
+   "imprint_name_src": "imprint · перед адресом: Lisa Stolz"
   },
   {
    "id": "10514",
@@ -493,7 +501,9 @@
    ],
    "size_score": 5,
    "size_note": "UID, Händler/B2B/Showroom, средний чек ~89 €, соцсети ≥2",
-   "route1_score": 11.6
+   "route1_score": 11.6,
+   "imprint_name": "Stefanie Klausegger",
+   "imprint_name_src": "imprint · перед адресом: Stefanie Klausegger"
   },
   {
    "id": "49411",
@@ -533,7 +543,9 @@
    ],
    "size_score": 7,
    "size_note": "UID, Händler/B2B/Showroom, средний чек ~52 €, работающий магазин, соцсети ≥2, 50 цен на страницах",
-   "route1_score": 11.2
+   "route1_score": 11.2,
+   "imprint_name": "Thomas Poganitsch",
+   "imprint_name_src": "contact · перед адресом: Thomas Poganitsch"
   },
   {
    "id": "39026",
@@ -571,7 +583,9 @@
    ],
    "size_score": 4,
    "size_note": "UID, Händler/B2B/Showroom, seit 2014",
-   "route1_score": 9.4
+   "route1_score": 9.4,
+   "imprint_name": "Steffen Klein",
+   "imprint_name_src": "imprint · перед адресом: Steffen Klein"
   },
   {
    "id": "38974",
@@ -722,7 +736,9 @@
    ],
    "size_score": 7,
    "size_note": "KG/OG/e.U., UID, средний чек ~122 €, работающий магазин, соцсети ≥2, 88 цен на страницах",
-   "route1_score": 11.2
+   "route1_score": 11.2,
+   "imprint_name": "Cornelia Pucher",
+   "imprint_name_src": "imprint · перед адресом: Cornelia Pucher"
   },
   {
    "id": "39031",
@@ -831,7 +847,9 @@
    ],
    "size_score": 8,
    "size_note": "KG/OG/e.U., UID, Händler/B2B/Showroom, Awards, средний чек ~145 €, соцсети ≥2",
-   "route1_score": 11.0
+   "route1_score": 11.0,
+   "imprint_name": "Martina Zupanc",
+   "imprint_name_src": "imprint · Inhaberin: Martina Zupanc"
   },
   {
    "id": "41693",
@@ -940,7 +958,9 @@
    ],
    "size_score": 2,
    "size_note": "Händler/B2B/Showroom",
-   "route1_score": 7.4
+   "route1_score": 7.4,
+   "imprint_name": "Katha Harrer",
+   "imprint_name_src": "imprint · перед адресом: Katha Harrer"
   },
   {
    "id": "46700",
@@ -1123,7 +1143,9 @@
    ],
    "size_score": 4,
    "size_note": "UID, Händler/B2B/Showroom, соцсети ≥2",
-   "route1_score": 7.0
+   "route1_score": 7.0,
+   "imprint_name": "Monir Kienzl",
+   "imprint_name_src": "imprint · перед адресом: Monir Kienzl"
   },
   {
    "id": "51062",
@@ -1232,7 +1254,9 @@
    ],
    "size_score": 3,
    "size_note": "UID, работающий магазин, соцсети ≥2",
-   "route1_score": 6.0
+   "route1_score": 6.0,
+   "imprint_name": "Mag. Katharina Schicht",
+   "imprint_name_src": "imprint · перед адресом: Mag. Katharina Schicht"
   },
   {
    "id": "36996",
@@ -1305,7 +1329,9 @@
    ],
    "size_score": 0,
    "size_note": "сигналов размера нет",
-   "route1_score": 5.4
+   "route1_score": 5.4,
+   "imprint_name": "Susanne Feigl",
+   "imprint_name_src": "imprint · перед адресом: Susanne Feigl"
   },
   {
    "id": "20896",
@@ -1341,7 +1367,9 @@
    ],
    "size_score": 2,
    "size_note": "UID, соцсети ≥2",
-   "route1_score": 5.0
+   "route1_score": 5.0,
+   "imprint_name": "Güzin Deveci",
+   "imprint_name_src": "imprint · перед адресом: Güzin Deveci"
   },
   {
    "id": "36030",
@@ -1604,7 +1632,9 @@
    ],
    "size_score": 9,
    "size_note": "GmbH/AG/Ltd, UID, Händler/B2B/Showroom, средний чек ~150 €, соцсети ≥2",
-   "route1_score": 13.2
+   "route1_score": 13.2,
+   "imprint_name": "Manuel Rauner",
+   "imprint_name_src": "imprint · Geschäftsführer: Manuel Rauner"
   },
   {
    "id": "80216",
@@ -2043,7 +2073,9 @@
    ],
    "size_score": 2,
    "size_note": "UID, соцсети ≥2",
-   "route1_score": 4.4
+   "route1_score": 4.4,
+   "imprint_name": "Johannes Haberl",
+   "imprint_name_src": "imprint · перед адресом: Johannes Haberl"
   },
   {
    "id": "35229",
@@ -2189,7 +2221,9 @@
    ],
    "size_score": 5,
    "size_note": "GmbH/AG/Ltd, Händler/B2B/Showroom",
-   "route1_score": 7.4
+   "route1_score": 7.4,
+   "imprint_name": "Thomas Feichtlbauer",
+   "imprint_name_src": "imprint · Vertreten durch: Thomas Feichtlbauer"
   },
   {
    "id": "36962",
@@ -2226,7 +2260,9 @@
    ],
    "size_score": 0,
    "size_note": "сигналов размера нет",
-   "route1_score": 4.8
+   "route1_score": 4.8,
+   "imprint_name": "Monika Assem",
+   "imprint_name_src": "imprint · Verantwortlich für den Inhalt: Monika Assem"
   },
   {
    "id": "36592",
@@ -2336,7 +2372,9 @@
    ],
    "size_score": 5,
    "size_note": "KG/OG/e.U., Awards, средний чек ~199 €",
-   "route1_score": 7.4
+   "route1_score": 7.4,
+   "imprint_name": "Maximilian Huber",
+   "imprint_name_src": "imprint · Geschäftsführung: Maximilian Huber"
   },
   {
    "id": "38899",
@@ -2534,7 +2572,9 @@
    ],
    "size_score": 5,
    "size_note": "UID, средний чек ~460 €, работающий магазин, соцсети ≥2",
-   "route1_score": 8.6
+   "route1_score": 8.6,
+   "imprint_name": "Aleksandra Kurkowski",
+   "imprint_name_src": "imprint · перед адресом: Aleksandra Kurkowski"
   },
   {
    "id": "37682",
@@ -2732,7 +2772,9 @@
    ],
    "size_score": 6,
    "size_note": "UID, Händler/B2B/Showroom, средний чек ~260 €, работающий магазин",
-   "route1_score": 7.2
+   "route1_score": 7.2,
+   "imprint_name": "Durziijalbuu Sengee",
+   "imprint_name_src": "imprint · перед адресом: Durziijalbuu Sengee"
   },
   {
    "id": "36857",
@@ -2922,7 +2964,9 @@
    ],
    "size_score": 1,
    "size_note": "соцсети ≥2",
-   "route1_score": 1.0
+   "route1_score": 1.0,
+   "imprint_name": "Klaus Ebbers",
+   "imprint_name_src": "imprint · Inhaber: Klaus Ebbers"
   },
   {
    "id": "10600",
@@ -3141,7 +3185,9 @@
    ],
    "size_score": 3,
    "size_note": "UID, Händler/B2B/Showroom",
-   "route1_score": 5.4
+   "route1_score": 5.4,
+   "imprint_name": "Gabriele Schenke",
+   "imprint_name_src": "imprint · перед адресом: Gabriele Schenke"
   },
   {
    "id": "41757",
@@ -3287,7 +3333,9 @@
    ],
    "size_score": 3,
    "size_note": "UID, Awards, соцсети ≥2",
-   "route1_score": 5.4
+   "route1_score": 5.4,
+   "imprint_name": "Theresa Föhrenbacher",
+   "imprint_name_src": "imprint · перед адресом: Theresa Föhrenbacher"
   },
   {
    "id": "44783",
@@ -3472,7 +3520,9 @@
    ],
    "size_score": 4,
    "size_note": "UID, средний чек ~89 €, работающий магазин, 52 цен на страницах",
-   "route1_score": 4.0
+   "route1_score": 4.0,
+   "imprint_name": "Herbert Kett",
+   "imprint_name_src": "imprint · перед адресом: Herbert Kett"
   },
   {
    "id": "18790",
@@ -3774,7 +3824,9 @@
    ],
    "size_score": 7,
    "size_note": "KG/OG/e.U., UID, средний чек ~329 €, соцсети ≥2, 86 цен на страницах",
-   "route1_score": 10.6
+   "route1_score": 10.6,
+   "imprint_name": "Corinna Sara Houidi",
+   "imprint_name_src": "imprint · Geschäftsführerin: Corinna Sara Houidi"
   },
   {
    "id": "40971",
@@ -4620,7 +4672,9 @@
    ],
    "size_score": 10,
    "size_note": "UID, Händler/B2B/Showroom, Awards, seit 1990, средний чек ~419 €, работающий магазин, соцсети ≥2, 46 цен на страницах",
-   "route1_score": 12.2
+   "route1_score": 12.2,
+   "imprint_name": "Josef Pöcklhofer",
+   "imprint_name_src": "imprint · перед адресом: Josef Pöcklhofer"
   },
   {
    "id": "41527",
@@ -4922,7 +4976,9 @@
    ],
    "size_score": 6,
    "size_note": "GmbH/AG/Ltd, UID, seit 2013, соцсети ≥2",
-   "route1_score": 7.2
+   "route1_score": 7.2,
+   "imprint_name": "Benjamin Weide",
+   "imprint_name_src": "imprint · Geschäftsführer: Benjamin Weide"
   },
   {
    "id": "53281",
@@ -5034,7 +5090,9 @@
    "unresolved": [],
    "size_score": 7,
    "size_note": "UID, Händler/B2B/Showroom, средний чек ~365 €, соцсети ≥2, 34 цен на страницах",
-   "route1_score": 8.2
+   "route1_score": 8.2,
+   "imprint_name": "Katrin Rieber",
+   "imprint_name_src": "imprint · Geschäftsführung: Katrin Rieber"
   },
   {
    "id": "51648",
@@ -5221,7 +5279,9 @@
    "unresolved": [],
    "size_score": 6,
    "size_note": "GmbH/AG/Ltd, UID, работающий магазин, соцсети ≥2",
-   "route1_score": 8.2
+   "route1_score": 8.2,
+   "imprint_name": "Mag. Beatrix Schlaffer-Günsberg",
+   "imprint_name_src": "imprint · Vertreten durch: Mag. Beatrix Schlaffer-Günsberg"
   },
   {
    "id": "19598",
@@ -5257,7 +5317,9 @@
    "unresolved": [],
    "size_score": 4,
    "size_note": "средний чек ~289 €, соцсети ≥2, 93 цен на страницах",
-   "route1_score": 5.2
+   "route1_score": 5.2,
+   "imprint_name": "Helena Harfst",
+   "imprint_name_src": "imprint · перед адресом: Helena Harfst"
   },
   {
    "id": "16097",
@@ -5446,7 +5508,9 @@
    ],
    "size_score": 8,
    "size_note": "UID, Händler/B2B/Showroom, средний чек ~154 €, работающий магазин, соцсети ≥2, 44 цен на страницах",
-   "route1_score": 10.2
+   "route1_score": 10.2,
+   "imprint_name": "Christoph Maier",
+   "imprint_name_src": "contact · перед адресом: Christoph Maier"
   },
   {
    "id": "10287",
@@ -5561,7 +5625,9 @@
    ],
    "size_score": 1,
    "size_note": "UID",
-   "route1_score": 3.4
+   "route1_score": 3.4,
+   "imprint_name": "Stephan Zirwes",
+   "imprint_name_src": "imprint · перед адресом: Stephan Zirwes"
   },
   {
    "id": "33133",
@@ -5597,7 +5663,9 @@
    "unresolved": [],
    "size_score": 12,
    "size_note": "GmbH/AG/Ltd, UID, Händler/B2B/Showroom, Awards, средний чек ~372 €, работающий магазин, соцсети ≥2, 47 цен на страницах",
-   "route1_score": 13.2
+   "route1_score": 13.2,
+   "imprint_name": "Alisa Menkhaus",
+   "imprint_name_src": "imprint · Vertreten durch: Alisa Menkhaus"
   },
   {
    "id": "12561",
@@ -5709,7 +5777,9 @@
    "unresolved": [],
    "size_score": 7,
    "size_note": "GmbH/AG/Ltd, UID, работающий магазин, соцсети ≥2, 74 цен на страницах",
-   "route1_score": 9.2
+   "route1_score": 9.2,
+   "imprint_name": "Mag. Christian Pauzenberger",
+   "imprint_name_src": "imprint · Geschäftsführer: Mag. Christian Pauzenberger"
   },
   {
    "id": "18949",
@@ -5785,7 +5855,9 @@
    ],
    "size_score": 11,
    "size_note": "KG/OG/e.U., UID, Händler/B2B/Showroom, seit 2007, средний чек ~260 €, работающий магазин, соцсети ≥2, 32 цен на страницах",
-   "route1_score": 12.2
+   "route1_score": 12.2,
+   "imprint_name": "Birgit Rampula",
+   "imprint_name_src": "imprint · Designerin: Birgit Rampula"
   },
   {
    "id": "36470",
@@ -5824,7 +5896,9 @@
    ],
    "size_score": 3,
    "size_note": "Team/Jobs, Händler/B2B/Showroom",
-   "route1_score": 6.6
+   "route1_score": 6.6,
+   "imprint_name": "Theres Lahr-Thiele",
+   "imprint_name_src": "imprint · перед адресом: Theres Lahr-Thiele"
   },
   {
    "id": "34793",

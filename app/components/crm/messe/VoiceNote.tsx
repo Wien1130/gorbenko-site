@@ -80,6 +80,7 @@ export default function VoiceNote({
       const notes = [
         `${fairTitle} · Stand ${r.booth} (${r.floor}) · ${r.city}`,
         `Предложение: ${r.offer}`,
+        r.imprint_name ? `Владелец по импрессуму: ${r.imprint_name}` : "",
         r.website ? `Сайт: ${r.website}` : "",
       ].filter(Boolean).join("\n");
       const summary = [`Разговор на стенде ${r.booth} ${fairTitle}.`, p.summary || ""].filter(Boolean).join(" ");
@@ -93,7 +94,7 @@ export default function VoiceNote({
           business_type: "other",
           stage: "warm_followup",
           address: r.city && r.city !== "Не подтверждено" ? r.city : "",
-          contact_name: p.contact_name || "",
+          contact_name: p.contact_name || r.imprint_name || "",
           contact_email: p.contact_email || r.email || "",
           contact_phone: p.contact_phone || "",
           next_action: p.next_action || "Написать после выставки",
