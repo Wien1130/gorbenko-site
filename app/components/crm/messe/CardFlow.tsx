@@ -95,7 +95,7 @@ export default function CardFlow({
       fd.append("audio", new File([blob], mime === "audio/mp4" ? "talk.m4a" : "talk.webm", { type: blob.type }));
       fd.append(
         "text",
-        `${context} Название бизнеса: «${r.name}» (не менять). Андрей надиктовал по-русски итог разговора на стенде: вытащи имя/должность собеседника, email/телефон если названы, что обсудили (summary 1–2 фразы), следующий шаг и ДАТУ, когда он просил написать/позвонить (reminder_date, YYYY-MM-DD; сегодня ${today()}; «на следующей неделе» = ближайший понедельник, «через неделю» = +7 дней).`,
+        `${context} Название бизнеса: «${r.name}» (не менять). Андрей надиктовал по-русски итог разговора на стенде: вытащи имя/должность собеседника, email/телефон если названы, что обсудили (summary 1–2 фразы), следующий шаг и ДАТУ, когда он просил написать/позвонить (reminder_date, YYYY-MM-DD). Календарь: сегодня ${today()}, завтра ${addDays(1)}, ближайший понедельник ${nextMonday()}, через неделю ${addDays(7)}. «На следующей неделе» = ${nextMonday()}.`,
       );
       fd.append("outcome", "warm_followup");
       const res = await fetch("/api/crm/capture", { method: "POST", body: fd });

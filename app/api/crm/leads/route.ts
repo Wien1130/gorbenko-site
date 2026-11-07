@@ -67,6 +67,8 @@ export async function POST(req: NextRequest) {
 
     if (b.reminder_date) {
       const text = (b.reminder_text ?? "") || (b.next_action ?? "") || `Follow-up: ${businessName}`;
+      // Новое напоминание по лиду заменяет старые незакрытые — иначе два пинга в Telegram об одном и том же.
+      if (matchedId) await sql`UPDATE reminders SET status = 'done' WHERE lead_id = ${matchedId} AND status = 'pending'`;
       // 09:00 по Вене = 07:00 UTC (лето) — час не критичен, cron шлёт ближайшим прогоном
       await sql`INSERT INTO reminders (lead_id, due_at, text) VALUES (${leadId}, ${b.reminder_date + "T07:00:00Z"}, ${text})`;
     }

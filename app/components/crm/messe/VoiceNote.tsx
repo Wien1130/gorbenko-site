@@ -66,7 +66,7 @@ export default function VoiceNote({
       fd.append("audio", new File([blob], mime === "audio/mp4" ? "talk.m4a" : "talk.webm", { type: blob.type }));
       fd.append(
         "text",
-        `${fairTitle}, MAK Wien, Stand ${r.booth} (${r.floor}). Участник: ${r.name}, ${r.city}, ${r.category}. Название бизнеса: «${r.name}» (не менять). Андрей надиктовал по-русски итог разговора на стенде: вытащи имя/должность собеседника, email/телефон если названы, что обсудили (summary 1–2 фразы), следующий шаг (next_action) и ДАТУ, когда он просил написать/позвонить (reminder_date, YYYY-MM-DD; сегодня ${today}; «на следующей неделе» = ближайший понедельник, «через неделю» = +7 дней, «завтра» = +1).`,
+        `${fairTitle}, MAK Wien, Stand ${r.booth} (${r.floor}). Участник: ${r.name}, ${r.city}, ${r.category}. Название бизнеса: «${r.name}» (не менять). Андрей надиктовал по-русски итог разговора на стенде: вытащи имя/должность собеседника, email/телефон если названы, что обсудили (summary 1–2 фразы), следующий шаг (next_action) и ДАТУ, когда он просил написать/позвонить (reminder_date, YYYY-MM-DD). Календарь: сегодня ${today} (${weekday(today)}), завтра ${addDays(1)}, ближайший понедельник ${nextMonday()}, через неделю ${addDays(7)}. «На следующей неделе» = ближайший понедельник ${nextMonday()}.`,
       );
       fd.append("outcome", "warm_followup");
       if (visit.lead_id) fd.append("lead_id", String(visit.lead_id));
@@ -137,6 +137,10 @@ export default function VoiceNote({
 }
 
 function fmt(iso: string) { const [y, m, d] = iso.split("-"); return y && m && d ? `${d}.${m}` : iso; }
+const vienna = (d: Date) => d.toLocaleDateString("sv-SE", { timeZone: "Europe/Vienna" });
+function addDays(n: number) { const d = new Date(); d.setDate(d.getDate() + n); return vienna(d); }
+function nextMonday() { const d = new Date(); d.setDate(d.getDate() + ((8 - d.getDay()) % 7 || 7)); return vienna(d); }
+function weekday(iso: string) { return new Date(`${iso}T12:00:00`).toLocaleDateString("ru-RU", { weekday: "long" }); }
 function nextWorkday(): string {
   const d = new Date();
   d.setDate(d.getDate() + 1);
