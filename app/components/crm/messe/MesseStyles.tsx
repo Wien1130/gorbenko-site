@@ -97,6 +97,10 @@ export default function MesseStyles() {
       .m-voice { margin-top:10px; }
       .m-voice .m-mic { margin-bottom:4px; padding:14px; }
       .m-hint { font-size:13px; color:var(--muted); margin:4px 0 10px; line-height:1.4; }
+      .m-letter { border:1px solid #dfe5e9; border-radius:12px; padding:10px; margin-top:10px; background:#fff; }
+      .m-letter-head { font-size:13px; color:var(--muted); margin-bottom:6px; }
+      .m-letter input { width:100%; font-weight:700; margin-bottom:6px; }
+      .m-letter textarea { width:100%; }
       .m-when { margin-top:10px; }
       .m-when-row { display:flex; gap:6px; align-items:center; flex-wrap:wrap; }
       .m-when-row button { padding:8px 12px; font-size:13px; }

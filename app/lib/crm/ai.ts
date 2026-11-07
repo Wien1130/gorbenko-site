@@ -16,7 +16,7 @@ interface ClaudeContentBlock {
   source?: { type: "base64"; media_type: string; data: string };
 }
 
-async function callClaude<T>(opts: {
+export async function callClaude<T>(opts: {
   system: string;
   content: ClaudeContentBlock[];
   schema: Record<string, unknown>;
@@ -152,6 +152,8 @@ const EMAIL_SCHEMA = {
 
 export { EMAIL_SIGNATURE_RU, EMAIL_SIGNATURE_DE, withSignature } from "./signature";
 
+export const EMAIL_LEGAL = `Юридические рамки (строго): не писать «Bot»/«Chatbot» — только «digitaler Assistent»; не писать «Unternehmensberatung», «garantiert», «Nr. 1», «beste», «führend», «netto», «zzgl. USt.»; никаких цифр охватов/выручки, которых нет в заметках; не выдумывать факты о заведении.`;
+
 export async function draftEmail(opts: {
   lead: Lead;
   activities: Activity[];
@@ -167,7 +169,7 @@ export async function draftEmail(opts: {
     .map((a) => `- [${a.created_at}] ${a.summary || a.transcript}`.slice(0, 300))
     .join("\n");
 
-  const legal = `Юридические рамки (строго): не писать «Bot»/«Chatbot» — только «digitaler Assistent»; не писать «Unternehmensberatung», «garantiert», «Nr. 1», «beste», «führend», «netto», «zzgl. USt.»; никаких цифр охватов/выручки, которых нет в заметках; не выдумывать факты о заведении.`;
+  const legal = EMAIL_LEGAL;
 
   const system =
     lang === "de"

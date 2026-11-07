@@ -5,6 +5,7 @@ import type { Exhibitor, FairData, FairVisit, VisitStatus } from "../../../lib/c
 import { VISIT_STATUS_LABEL } from "../../../lib/crm/messe/data";
 import CardFlow from "./CardFlow";
 import VoiceNote from "./VoiceNote";
+import TwoLetters from "./TwoLetters";
 
 type Tab = "first" | "sites" | "route" | "vienna" | "munich" | "three";
 const TAB_LABEL: Record<Tab, string> = { first: "⚡ Маршрут 1", sites: "Сайты", vienna: "Вена", munich: "Мюнхен", three: "3D / конструктор", route: "Все" };
@@ -288,14 +289,29 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
                     }}
                   />
                   <div className="m-actions">
-                    <button className={v.lead_id ? "" : "pink"} onClick={() => setOpenFlow(openFlow === r.id ? null : r.id)}>
-                      {v.lead_id ? (v.email_sent ? "✉️ Ещё письмо" : "✉️ Письмо (сейчас или на дату)") : "📷 Визитка → письмо"}
+                    <button className="pink" onClick={() => setOpenFlow(openFlow === `2:${r.id}` ? null : `2:${r.id}`)}>
+                      {v.email_sent ? "✉️✉️ Ещё два письма" : "✉️✉️ Два письма: сейчас + на дату"}
                     </button>
+                    <button style={{ flex: "0 0 auto" }} title="Визитка → лид → одно письмо" onClick={() => setOpenFlow(openFlow === r.id ? null : r.id)}>📷</button>
                   </div>
                   <div className="m-notefield">
                     <textarea placeholder="Заметка: имя, задача, контакт, когда написать…" value={v.note} onChange={(e) => setNote(r.id, e.target.value)} />
                   </div>
 
+                  {openFlow === `2:${r.id}` && (
+                    <TwoLetters
+                      exhibitor={r}
+                      visit={v}
+                      fairTitle={fair.title}
+                      onLead={(leadId) => void save(r.id, { lead_id: leadId, status: "talked" })}
+                      onDone={({ secondDate }) => {
+                        const merged = [v.note.trim(), `✉️ 1 ушло · ✉️ 2 → ${secondDate.slice(8, 10)}.${secondDate.slice(5, 7)}`].filter(Boolean).join("\n");
+                        setVisits((s) => ({ ...s, [r.id]: { ...getVisit(r.id), note: merged, email_sent: true, status: "talked" } }));
+                        void save(r.id, { note: merged, email_sent: true, status: "talked" });
+                      }}
+                      onClose={() => setOpenFlow(null)}
+                    />
+                  )}
                   {openFlow === r.id && (
                     <CardFlow
                       exhibitor={r}
