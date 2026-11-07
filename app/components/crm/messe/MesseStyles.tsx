@@ -94,6 +94,8 @@ export default function MesseStyles() {
       .m-mic.small { width:auto; padding:10px 14px; font-size:14px; margin:0; }
       .m-mic:disabled { opacity:.6; }
       @keyframes mpulse { 0%,100% { box-shadow:0 0 0 0 rgba(212,39,100,.35); } 50% { box-shadow:0 0 0 10px rgba(212,39,100,0); } }
+      .m-voice { margin-top:10px; }
+      .m-voice .m-mic { margin-bottom:4px; padding:14px; }
       .m-hint { font-size:13px; color:var(--muted); margin:4px 0 10px; line-height:1.4; }
       .m-when { margin-top:10px; }
       .m-when-row { display:flex; gap:6px; align-items:center; flex-wrap:wrap; }

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { Exhibitor, FairData, FairVisit, VisitStatus } from "../../../lib/crm/messe/data";
 import { VISIT_STATUS_LABEL } from "../../../lib/crm/messe/data";
 import CardFlow from "./CardFlow";
+import VoiceNote from "./VoiceNote";
 
 type Tab = "first" | "sites" | "route" | "vienna" | "munich" | "three";
 const TAB_LABEL: Record<Tab, string> = { first: "⚡ Маршрут 1", sites: "Сайты", vienna: "Вена", munich: "Мюнхен", three: "3D / конструктор", route: "Все" };
@@ -275,9 +276,19 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
                       </button>
                     ))}
                   </div>
+                  <VoiceNote
+                    exhibitor={r}
+                    visit={v}
+                    fairTitle={fair.title}
+                    onDone={({ note, leadId }) => {
+                      const merged = [v.note.trim(), note].filter(Boolean).join("\n");
+                      setVisits((s) => ({ ...s, [r.id]: { ...getVisit(r.id), note: merged, lead_id: leadId, status: "talked" } }));
+                      void save(r.id, { note: merged, lead_id: leadId, status: "talked" });
+                    }}
+                  />
                   <div className="m-actions">
-                    <button className="pink" onClick={() => setOpenFlow(openFlow === r.id ? null : r.id)}>
-                      {v.lead_id ? (v.email_sent ? "✉️ Ещё письмо" : "✉️ Письмо") : "📷 Визитка → письмо"}
+                    <button className={v.lead_id ? "" : "pink"} onClick={() => setOpenFlow(openFlow === r.id ? null : r.id)}>
+                      {v.lead_id ? (v.email_sent ? "✉️ Ещё письмо" : "✉️ Письмо (сейчас или на дату)") : "📷 Визитка → письмо"}
                     </button>
                   </div>
                   <div className="m-notefield">
