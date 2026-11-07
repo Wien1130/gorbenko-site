@@ -5,9 +5,12 @@ import type { Exhibitor, FairData, FairVisit, VisitStatus } from "../../../lib/c
 import { VISIT_STATUS_LABEL } from "../../../lib/crm/messe/data";
 import CardFlow from "./CardFlow";
 
-type View = "route" | "plan";
-type CityFilter = "all" | "München" | "Wien" | "other";
+type Tab = "sites" | "route" | "plan" | "vienna" | "munich" | "three";
 type StatusFilter = "all" | "todo" | "talked" | "revisit" | "done";
+
+/** Пять стендов с подтверждённой бедой сайта — их обходить первыми. */
+const SITE_HEAD = ["38974", "13686", "40565", "36962", "35229"];
+const SITE_GRADE = (p: string) => (p === "A" ? 0 : p === "B" ? 1 : p === "U" ? 2 : 3);
 
 const CITY_ORDER = (c: string) => (c === "München" ? 0 : c === "Wien" ? 1 : 2);
 const PRIO_ORDER = (p: string) => (p === "A" ? 0 : p === "B" ? 1 : 2);
@@ -20,10 +23,8 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
   const [visits, setVisits] = useState<Record<string, FairVisit>>(() =>
     Object.fromEntries(initialVisits.map((v) => [v.exhibitor_id, v])),
   );
-  const [view, setView] = useState<View>("route");
-  const [city, setCity] = useState<CityFilter>("all");
+  const [tab, setTab] = useState<Tab>("sites");
   const [status, setStatus] = useState<StatusFilter>("all");
-  const [onlyA, setOnlyA] = useState(false);
   const [q, setQ] = useState("");
   const [openFlow, setOpenFlow] = useState<string | null>(null);
   const [error, setError] = useState("");
@@ -50,12 +51,23 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
 
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
-    return ordered.filter((r) => {
+    let base = ordered;
+    if (tab === "sites") {
+      base = fair.rows
+        .filter((r) => r.site_priority === "A" || r.site_priority === "B" || r.site_priority === "U")
+        .sort(
+          (a, b) =>
+            SITE_GRADE(a.site_priority) - SITE_GRADE(b.site_priority) ||
+            ((SITE_HEAD.indexOf(a.id) + 99) % 99) - ((SITE_HEAD.indexOf(b.id) + 99) % 99) ||
+            (a.rank ?? 999) - (b.rank ?? 999),
+        );
+    } else if (tab === "vienna") base = ordered.filter((r) => r.city.startsWith("Wien") || r.city.includes("Вена"));
+    else if (tab === "munich") base = ordered.filter((r) => r.city === "München");
+    else if (tab === "three") {
+      base = ordered.filter((r) => r.services.some((s) => s === "3D" || s === "конфигуратор") || r.configurator_fit === "yes");
+    }
+    return base.filter((r) => {
       const v = getVisit(r.id);
-      if (city === "München" && r.city !== "München") return false;
-      if (city === "Wien" && r.city !== "Wien") return false;
-      if (city === "other" && (r.city === "Wien" || r.city === "München")) return false;
-      if (onlyA && r.priority !== "A") return false;
       if (status === "todo" && v.status !== "todo") return false;
       if (status === "talked" && v.status !== "talked") return false;
       if (status === "revisit" && v.status !== "revisit") return false;
@@ -67,7 +79,7 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
       return true;
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ordered, visits, city, status, onlyA, q]);
+  }, [ordered, fair, visits, tab, status, q]);
 
   const counts = useMemo(() => {
     const c = { total: fair.rows.length, talked: 0, revisit: 0, skip: 0, mails: 0, leads: 0 };
@@ -111,10 +123,8 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
   }
 
   function jumpTo(id: string) {
-    setView("route");
-    setCity("all");
+    setTab("route");
     setStatus("all");
-    setOnlyA(false);
     setQ("");
     setTimeout(() => document.getElementById(`ex-${id}`)?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
   }
@@ -151,18 +161,18 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
 
       <div className="m-bar">
         <div className="m-tabs">
-          <button className={view === "route" ? "on" : ""} onClick={() => setView("route")}>Порядок обхода</button>
-          <button className={view === "plan" ? "on" : ""} onClick={() => setView("plan")}>План залов</button>
+          <button className={tab === "sites" ? "on" : ""} onClick={() => setTab("sites")}>Сайты</button>
+          <button className={tab === "vienna" ? "on" : ""} onClick={() => setTab("vienna")}>Вена</button>
+          <button className={tab === "munich" ? "on" : ""} onClick={() => setTab("munich")}>Мюнхен</button>
+          <button className={tab === "three" ? "on" : ""} onClick={() => setTab("three")}>3D / конструктор</button>
+          <button className={tab === "route" ? "on" : ""} onClick={() => setTab("route")}>Порядок обхода</button>
+          <button className={tab === "plan" ? "on" : ""} onClick={() => setTab("plan")}>План залов</button>
           <span style={{ width: 6 }} />
-          <button className={city === "München" ? "on" : ""} onClick={() => setCity(city === "München" ? "all" : "München")}>Мюнхен</button>
-          <button className={city === "Wien" ? "on" : ""} onClick={() => setCity(city === "Wien" ? "all" : "Wien")}>Вена</button>
-          <button className={city === "other" ? "on" : ""} onClick={() => setCity(city === "other" ? "all" : "other")}>Другие</button>
-          <button className={onlyA ? "on" : ""} onClick={() => setOnlyA(!onlyA)}>Только A</button>
           <button className={status === "todo" ? "on" : ""} onClick={() => setStatus(status === "todo" ? "all" : "todo")}>Не посещён</button>
           <button className={status === "revisit" ? "on" : ""} onClick={() => setStatus(status === "revisit" ? "all" : "revisit")}>Вернуться</button>
           <button className={status === "talked" ? "on" : ""} onClick={() => setStatus(status === "talked" ? "all" : "talked")}>Поговорил</button>
         </div>
-        {view === "route" && (
+        {tab !== "plan" && (
           <div className="m-search">
             <input placeholder="Бренд, стенд, город, продукт…" value={q} onChange={(e) => setQ(e.target.value)} />
           </div>
@@ -172,19 +182,23 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
       <div className="m-main">
         {error && <div className="m-err">{error}</div>}
 
-        {view === "plan" ? (
+        {tab === "plan" ? (
           <FloorPlan
             fair={fair}
             getVisit={getVisit}
             onPick={jumpTo}
             matchIds={new Set(filtered.map((r) => r.id))}
-            filterOn={city !== "all" || status !== "all" || onlyA || q.trim() !== ""}
+            filterOn={status !== "all" || q.trim() !== ""}
           />
         ) : (
           <>
             <div className="m-note">
-              Показано {filtered.length} из {fair.rows.length}. Первые 18 — маршрут из брифа. Цель на стенде — договориться о следующем разговоре,
-              визитка → письмо прямо здесь.
+              {tab === "sites" && "Сайты — обходить первыми. Сверху пять с конкретной бедой: WABISABI (магазин анонсирован, не открыт), Gerald Pahr (режим обслуживания), Georg Mähring (домен зарезервирован), macharten (магазин обещают открыть), Karaka (коллекция 2020/21). Дальше — по силе повода."}
+              {tab === "vienna" && "Вена — для локального контента и съёмки."}
+              {tab === "munich" && "Мюнхен — все четыре."}
+              {tab === "three" && "3D / конструктор — только где у товара есть реальные варианты. У кого конфигуратор уже есть, не предлагать второй."}
+              {tab === "route" && "Порядок обхода: сначала маршрут из брифа, затем Мюнхен → Вена → остальные."}
+              {" "}Показано {filtered.length}.
             </div>
             {filtered.map((r, i) => {
               const v = getVisit(r.id);
@@ -192,7 +206,7 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
                 <article key={r.id} id={`ex-${r.id}`} className={`m-card ${v.status}`}>
                   <div className="m-top">
                     <div>
-                      <div className="m-name"><span className="m-order">{ordered.indexOf(r) + 1}.</span>{r.name}</div>
+                      <div className="m-name"><span className="m-order">{i + 1}.</span>{r.name}</div>
                       <div className="m-sub">{r.city} · {r.category}</div>
                     </div>
                     <div className="m-booth">{r.booth || "—"}<small>{r.floor}</small></div>
@@ -265,7 +279,7 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
         )}
       </div>
 
-      {view === "route" && (
+      {tab !== "plan" && (
         <button className="m-fab" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>↑</button>
       )}
     </>
