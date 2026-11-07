@@ -68,8 +68,15 @@ export default function MesseStyles() {
       .m-status button.on.talked { background:var(--green); border-color:var(--green); }
       .m-status button.on.revisit { background:#b8860b; border-color:#b8860b; }
       .m-status button.on.skip { background:var(--grey); border-color:var(--grey); }
-      .m-actions { display:flex; gap:8px; margin-top:10px; }
-      .m-actions button { flex:1; padding:12px 8px; font-weight:700; }
+      .m-actions { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+      .m-actions button { flex:1 1 140px; padding:12px 8px; font-weight:700; white-space:normal; line-height:1.25; }
+      .m-actions button.pink { flex:1 1 100%; order:2; padding:14px 10px; font-size:16px; }
+      .m-flow { padding-bottom:calc(24px + env(safe-area-inset-bottom)); }
+      .m-main { padding-bottom:calc(120px + env(safe-area-inset-bottom)); }
+      .m-toast { position:fixed; left:10px; right:10px; bottom:calc(14px + env(safe-area-inset-bottom)); z-index:60; padding:14px 16px; border-radius:14px; font-size:15px; font-weight:700; color:#fff; background:var(--ink); box-shadow:0 8px 28px rgba(0,0,0,.25); }
+      .m-toast.ok { background:var(--green); }
+      .m-toast.err { background:#b3261e; }
+      .m-toast.busy { background:var(--ink); }
       .m-notefield { margin-top:8px; }
       .m-notefield textarea { min-height:44px; font-size:14px; }
 

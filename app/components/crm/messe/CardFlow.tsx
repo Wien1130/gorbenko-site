@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { Exhibitor, FairVisit } from "../../../lib/crm/messe/data";
 import type { VisitProposal } from "../../../lib/crm/types";
+import { toast } from "./toast";
 
 type Step = "photo" | "reading" | "confirm" | "saving" | "drafting" | "email" | "sending" | "sent";
 
@@ -222,6 +223,7 @@ export default function CardFlow({
     if (!leadId) return;
     setError("");
     setStep("sending");
+    toast("busy", sendDate ? `Планирую письмо на ${fmtDate(sendDate)}…` : `Отправляю письмо на ${to}…`);
     try {
       const res = await fetch("/api/crm/email/send", {
         method: "POST",
@@ -231,10 +233,13 @@ export default function CardFlow({
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || `HTTP ${res.status}`);
       setScheduledWhen(json.scheduled ? json.when || sendDate : "");
+      toast("ok", json.scheduled ? `Письмо запланировано на ${json.when || fmtDate(sendDate)}` : `Письмо ушло на ${to}`);
       onEmailSent();
       setStep("sent");
     } catch (e) {
-      setError(String(e instanceof Error ? e.message : e));
+      const msg = String(e instanceof Error ? e.message : e);
+      setError(msg);
+      toast("err", `Письмо НЕ ушло: ${msg}`);
       setStep("email");
     }
   }
@@ -349,6 +354,7 @@ export default function CardFlow({
               {step === "sending" ? (sendDate ? "Планирую…" : "Отправляю…") : sendDate ? `Запланировать на ${fmtDate(sendDate)}` : "Отправить сейчас"}
             </button>
           </div>
+          {error && <div className="m-err">{error}</div>}
           <div style={{ marginTop: 8, fontSize: 13, display: "flex", gap: 12, flexWrap: "wrap" }}>
             {leadId && <a href={`/crm/lead/${leadId}`}>Открыть лид #{leadId}</a>}
             <a

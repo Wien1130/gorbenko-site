@@ -6,6 +6,7 @@ import { VISIT_STATUS_LABEL } from "../../../lib/crm/messe/data";
 import CardFlow from "./CardFlow";
 import VoiceNote from "./VoiceNote";
 import TwoLetters from "./TwoLetters";
+import type { ToastKind } from "./toast";
 
 type Tab = "first" | "sites" | "route" | "vienna" | "munich" | "three";
 const TAB_LABEL: Record<Tab, string> = { first: "⚡ Маршрут 1", sites: "Сайты", vienna: "Вена", munich: "Мюнхен", three: "3D / конструктор", route: "Все" };
@@ -33,7 +34,20 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
   const [q, setQ] = useState("");
   const [openFlow, setOpenFlow] = useState<string | null>(null);
   const [error, setError] = useState("");
+  const [toastMsg, setToastMsg] = useState<{ kind: ToastKind; text: string } | null>(null);
   const noteTimers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const onToast = (e: Event) => {
+      const d = (e as CustomEvent<{ kind: ToastKind; text: string }>).detail;
+      setToastMsg(d);
+      if (toastTimer.current) clearTimeout(toastTimer.current);
+      if (d.kind !== "busy") toastTimer.current = setTimeout(() => setToastMsg(null), d.kind === "err" ? 12000 : 6000);
+    };
+    window.addEventListener("messe-toast", onToast);
+    return () => window.removeEventListener("messe-toast", onToast);
+  }, []);
 
   const getVisit = (id: string) => visits[id] ?? emptyVisit(fair.event, id);
 
@@ -356,6 +370,11 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
 
       {!plan && (
         <button className="m-fab" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>↑</button>
+      )}
+      {toastMsg && (
+        <div className={`m-toast ${toastMsg.kind}`} onClick={() => setToastMsg(null)}>
+          {toastMsg.kind === "busy" ? "⏳ " : toastMsg.kind === "ok" ? "✅ " : "⚠️ "}{toastMsg.text}
+        </div>
       )}
     </>
   );

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { Exhibitor, FairVisit } from "../../../lib/crm/messe/data";
+import { toast } from "./toast";
 
 type Step = "input" | "drafting" | "review" | "sending" | "done";
 
@@ -69,6 +70,7 @@ export default function TwoLetters({
     setError("");
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)) { setError("Нужен email — спроси на стенде или сфотографируй визитку."); return; }
     setStep("drafting");
+    toast("busy", "Пишу оба письма по-немецки… ~10 секунд");
     try {
       await ensureLead();
       const res = await fetch("/api/crm/messe/letters", {
@@ -84,9 +86,12 @@ export default function TwoLetters({
       setL1({ subject: json.letter1_subject, body: json.letter1_body });
       setL2({ subject: json.letter2_subject, body: json.letter2_body });
       setSignature(json.signature || "");
+      toast("ok", "Оба письма готовы — проверь и отправь");
       setStep("review");
     } catch (e) {
-      setError(String(e instanceof Error ? e.message : e));
+      const msg = String(e instanceof Error ? e.message : e);
+      setError(msg);
+      toast("err", `Не получилось составить: ${msg}`);
       setStep("input");
     }
   }
@@ -95,6 +100,7 @@ export default function TwoLetters({
     if (!leadId) return;
     setError("");
     setStep("sending");
+    toast("busy", `Отправляю письмо 1 на ${to}…`);
     try {
       const send = (subject: string, body: string, send_at: string) =>
         fetch("/api/crm/email/send", {
@@ -103,12 +109,16 @@ export default function TwoLetters({
           body: JSON.stringify({ lead_id: leadId, to, subject, body, lang: "de", send_at }),
         }).then(async (res) => { const j = await res.json(); if (!res.ok) throw new Error(j.error || `HTTP ${res.status}`); return j; });
       await send(l1.subject, l1.body, "");
+      toast("busy", `Письмо 1 ушло. Планирую письмо 2 на ${fmt(date2)}…`);
       const second = await send(l2.subject, l2.body, date2);
       setResult(`Письмо 1 ушло на ${to}. Письмо 2 запланировано: ${second.when || fmt(date2)}.`);
+      toast("ok", `Готово: 1 ушло на ${to}, 2 уйдёт ${second.when || fmt(date2)}`);
       onDone({ secondDate: date2 });
       setStep("done");
     } catch (e) {
-      setError(`${e instanceof Error ? e.message : e}. Если письмо 1 уже ушло — отправь второе через «✉️ Письмо» с датой.`);
+      const msg = String(e instanceof Error ? e.message : e);
+      setError(`${msg}. Если письмо 1 уже ушло — отправь второе через 📷-поток с датой.`);
+      toast("err", `НЕ ушло: ${msg}`);
       setStep("review");
     }
   }
@@ -169,6 +179,7 @@ export default function TwoLetters({
               {step === "sending" ? "Отправляю…" : `Отправить 1 сейчас + 2 на ${fmt(date2)}`}
             </button>
           </div>
+          {error && <div className="m-err">{error}</div>}
         </>
       )}
 

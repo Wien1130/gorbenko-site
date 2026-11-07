@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import type { Exhibitor, FairVisit } from "../../../lib/crm/messe/data";
 import type { VisitProposal } from "../../../lib/crm/types";
+import { toast } from "./toast";
 
 /**
  * 🎤 прямо на карточке стенда: наговорил по-русски → Whisper → Claude →
@@ -60,6 +61,7 @@ export default function VoiceNote({
   async function process(blob: Blob, mime: string) {
     setBusy(true);
     setError("");
+    toast("busy", "Расшифровываю и записываю в CRM…");
     try {
       const today = new Date().toLocaleDateString("sv-SE", { timeZone: "Europe/Vienna" });
       const fd = new FormData();
@@ -115,9 +117,12 @@ export default function VoiceNote({
         `→ ${p.next_action || "написать"} · ${fmt(reminderDate)}`,
       ].filter(Boolean).join("\n");
       setLast(`Записал. Лид #${lj.lead_id}, напоминание ${fmt(reminderDate)}.`);
+      toast("ok", `Записано: лид #${lj.lead_id}, напоминание ${fmt(reminderDate)}`);
       onDone({ note: line, leadId: lj.lead_id, reminderDate, summary: p.summary || "" });
     } catch (e) {
-      setError(String(e instanceof Error ? e.message : e));
+      const msg = String(e instanceof Error ? e.message : e);
+      setError(msg);
+      toast("err", `Не записалось: ${msg}`);
     } finally {
       setBusy(false);
     }
