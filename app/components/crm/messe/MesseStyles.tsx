@@ -29,6 +29,9 @@ export default function MesseStyles() {
       .m-bar { position:sticky; top:0; z-index:5; background:#f5f3eef2; backdrop-filter:blur(8px); border-bottom:1px solid var(--line); padding:10px 16px; }
       .m-tabs { display:flex; gap:6px; overflow-x:auto; -webkit-overflow-scrolling:touch; padding-bottom:6px; }
       .m-tabs button { flex:0 0 auto; font-size:13px; padding:7px 11px; }
+      .m-tabs button small { font-size:11px; opacity:.7; margin-left:2px; }
+      .m-tabs button.plan { border-color:var(--pink); color:var(--pink); font-weight:700; }
+      .m-tabs button.plan.on { background:var(--pink); color:#fff; }
       .m-search { margin-top:6px; }
 
       .m-main { max-width:760px; margin:0 auto; padding:14px 14px 90px; }
