@@ -131,6 +131,27 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
     }
   }
 
+  async function undo(id: string, leadId: number) {
+    if (!window.confirm("Стереть последнюю запись с этой карточки? Уйдёт лид, заметка и напоминание за последние 30 минут.")) return;
+    setError("");
+    try {
+      const res = await fetch("/api/crm/messe/undo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ lead_id: leadId }),
+      });
+      const j = await res.json();
+      if (!res.ok) throw new Error(j.error || `HTTP ${res.status}`);
+      if (j.lead_deleted) {
+        await save(id, { status: "todo", note: "", lead_id: null, email_sent: false });
+      } else {
+        setError("Последняя запись снята с лида. Текст заметки на карточке поправь руками.");
+      }
+    } catch (e) {
+      setError(String(e instanceof Error ? e.message : e));
+    }
+  }
+
   function setNote(id: string, note: string) {
     setVisits((s) => ({ ...s, [id]: { ...getVisit(id), note } }));
     clearTimeout(noteTimers.current[id]);
@@ -296,6 +317,9 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
                   </div>
                   <div className="m-notefield">
                     <textarea placeholder="Заметка: имя, задача, контакт, когда написать…" value={v.note} onChange={(e) => setNote(r.id, e.target.value)} />
+                    {v.lead_id && (
+                      <button className="ghost" style={{ marginTop: 4, fontSize: 13 }} onClick={() => void undo(r.id, v.lead_id!)}>↩ Отменить запись</button>
+                    )}
                   </div>
 
                   {openFlow === `2:${r.id}` && (
