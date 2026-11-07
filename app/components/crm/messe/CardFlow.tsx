@@ -246,7 +246,16 @@ export default function CardFlow({
               {step === "sending" ? "Отправляю…" : "Отправить"}
             </button>
           </div>
-          {leadId && <div style={{ marginTop: 8, fontSize: 13 }}><a href={`/crm/lead/${leadId}`}>Открыть лид #{leadId}</a></div>}
+          <div style={{ marginTop: 8, fontSize: 13, display: "flex", gap: 12, flexWrap: "wrap" }}>
+            {leadId && <a href={`/crm/lead/${leadId}`}>Открыть лид #{leadId}</a>}
+            <a
+              href={`mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`${body}\n\n${signature}`)}`}
+              onClick={() => onEmailSent()}
+              title="Если Gmail-отправка не сработала — открыть в почте телефона"
+            >
+              Открыть в почте телефона
+            </a>
+          </div>
         </>
       )}
 
