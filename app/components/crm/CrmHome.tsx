@@ -49,7 +49,8 @@ export default function CrmHome({
           <div className="crm-sub">100 клиентов · старт 9 октября · {stats.touches}/100</div>
         </div>
         <div className="crm-links">
-          <a href="/crm/messe" title="BLICKFANG — обход">🎪</a>
+          <a href="/crm/messe" title="Выставки — обход">🎪</a>
+          <a href="/crm/emails" title="Очередь писем">✉️</a>
           <a href="/crm/map">🗺</a>
           <a href="/crm/stats">📊</a>
           <a href="/crm/plan">🗓</a>

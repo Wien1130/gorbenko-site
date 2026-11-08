@@ -1,7 +1,8 @@
 import { NextRequest } from "next/server";
 import { isCrmAuthed, unauthorized } from "../../../../lib/crm/api-auth";
 import { getSql } from "../../../../lib/crm/db";
-import { scheduleLeadEmail, sendLeadEmail } from "../../../../lib/crm/send-email";
+import { holdLeadEmail, scheduleLeadEmail, sendLeadEmail } from "../../../../lib/crm/send-email";
+import { parseSendAt } from "../../../../lib/crm/vienna";
 
 export const maxDuration = 30;
 
@@ -27,10 +28,23 @@ export async function POST(req: NextRequest) {
   if (!leadId) return Response.json({ error: "Нет lead_id" }, { status: 400 });
 
   try {
+    if (b.hold === true) {
+      const r = await holdLeadEmail(leadId, { to, subject, body, lang });
+      return Response.json({ ok: true, held: true, duplicate: r.duplicate, email_id: r.id, status: "needs_review" });
+    }
     const sendAt = parseSendAt(b.send_at);
     if (sendAt && sendAt.getTime() > Date.now() + 60_000) {
       const r = await scheduleLeadEmail(leadId, { to, subject, body, lang }, sendAt);
       return Response.json({ ok: true, scheduled: true, email_id: r.id, send_at: sendAt.toISOString(), when: r.when });
+    }
+    const dup = (await sql`
+      SELECT id, gmail_id, status FROM emails
+      WHERE lead_id = ${leadId} AND subject = ${subject}
+        AND status IN ('sent', 'uncertain', 'sending')
+        AND created_at > now() - interval '12 hours'
+      ORDER BY id DESC LIMIT 1`) as unknown as { id: number; gmail_id: string; status: string }[];
+    if (dup[0]) {
+      return Response.json({ ok: true, duplicate: true, email_id: dup[0].id, gmail_id: dup[0].gmail_id, status: dup[0].status });
     }
     const { gmailId } = await sendLeadEmail(leadId, { to, subject, body, lang });
     return Response.json({ ok: true, gmail_id: gmailId });
@@ -40,17 +54,3 @@ export async function POST(req: NextRequest) {
   }
 }
 
-/** "2026-11-12" → 09:00 по Вене того дня; полный ISO — как есть. */
-function parseSendAt(v: unknown): Date | null {
-  if (typeof v !== "string" || !v.trim()) return null;
-  const s = v.trim();
-  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) {
-    const d = new Date(`${s}T09:00:00+01:00`);
-    // летом Вена +02:00 — сдвиг на час не критичен для утреннего письма, но поправим
-    const m = Number(s.slice(5, 7));
-    if (m >= 4 && m <= 10) d.setHours(d.getHours() - 1);
-    return isNaN(d.getTime()) ? null : d;
-  }
-  const d = new Date(s);
-  return isNaN(d.getTime()) ? null : d;
-}

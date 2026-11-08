@@ -17,6 +17,7 @@ export default function CardFlow({
   exhibitor: r,
   visit,
   fairTitle,
+  venue,
   onLead,
   onEmailSent,
   onClose,
@@ -24,6 +25,7 @@ export default function CardFlow({
   exhibitor: Exhibitor;
   visit: FairVisit;
   fairTitle: string;
+  venue: string;
   onLead: (leadId: number) => void;
   onEmailSent: () => void;
   onClose: () => void;
@@ -56,7 +58,7 @@ export default function CardFlow({
   const chunksRef = useRef<Blob[]>([]);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const context = `${fairTitle}, MAK Wien, Stand ${r.booth} (${r.floor}). Участник: ${r.name}, ${r.city}, ${r.category}. Разговор на стенде выставки.`;
+  const context = `${fairTitle}, ${venue}, Stand ${r.booth} (${r.floor}). Участник: ${r.name}, ${r.city}, ${r.category}. Разговор на стенде выставки.`;
 
   /** 🎤 Надиктовать по-русски: что обсудили, кто контакт, когда писать. Groq Whisper → Claude → поля. */
   async function toggleRecord() {
@@ -169,7 +171,7 @@ export default function CardFlow({
           contact_phone: contact.phone,
           next_action: nextAction || "Отправить 2 конкретные идеи, предложить 15-минутный разговор",
           reminder_date: reminderDate || nextWorkday(),
-          reminder_text: `Follow-up после BLICKFANG: ${r.name}${nextAction ? ` — ${nextAction}` : ""}`,
+          reminder_text: `Follow-up после ${fairTitle}: ${r.name}${nextAction ? ` — ${nextAction}` : ""}`,
           notes,
           summary: fullSummary,
           transcript: talk.trim(),
@@ -194,7 +196,7 @@ export default function CardFlow({
     setError("");
     setStep("drafting");
     try {
-      const base = `Разговор был СЕГОДНЯ на стенде ${r.booth} выставки ${fairTitle} im MAK — не визит в заведение; первое предложение — отсылка к стенду/продукту. Продукт/бренд: ${r.name}. ${r.imprint_name ? `Владелец по импрессуму: ${r.imprint_name} — если имя контакта в лиде пустое, обращайся «Sehr geehrte/r Frau/Herr <Nachname>» по этому имени.` : ""} Идея, которую обсуждали: ${r.offer} ${talk.trim() ? `Что сказал собеседник: ${talk.trim()}.` : ""} Предложи прислать 2 конкретные идеи и короткий 15-минутный разговор на следующей неделе. Не оценивать их сайт негативно.`;
+      const base = `Разговор был СЕГОДНЯ на стенде ${r.booth} выставки ${fairTitle}${venue ? ` (${venue})` : ""} — не визит в заведение; первое предложение — отсылка к стенду/продукту. Продукт/бренд: ${r.name}. ${r.imprint_name ? `Владелец по импрессуму: ${r.imprint_name} — если имя контакта в лиде пустое, обращайся «Sehr geehrte/r Frau/Herr <Nachname>» по этому имени.` : ""} Идея, которую обсуждали: ${r.offer} ${talk.trim() ? `Что сказал собеседник: ${talk.trim()}.` : ""} Не выдумывай разговор. Предложи один следующий шаг и короткий разговор. Не оценивать их сайт негативно.`;
       const res = await fetch("/api/crm/email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

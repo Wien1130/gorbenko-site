@@ -13,11 +13,13 @@ export default function VoiceNote({
   exhibitor: r,
   visit,
   fairTitle,
+  venue,
   onDone,
 }: {
   exhibitor: Exhibitor;
   visit: FairVisit;
   fairTitle: string;
+  venue: string;
   onDone: (res: { note: string; leadId: number; reminderDate: string; summary: string }) => void;
 }) {
   const [recording, setRecording] = useState(false);
@@ -68,7 +70,7 @@ export default function VoiceNote({
       fd.append("audio", new File([blob], mime === "audio/mp4" ? "talk.m4a" : "talk.webm", { type: blob.type }));
       fd.append(
         "text",
-        `${fairTitle}, MAK Wien, Stand ${r.booth} (${r.floor}). Участник: ${r.name}, ${r.city}, ${r.category}. Название бизнеса: «${r.name}» (не менять). Андрей надиктовал по-русски итог разговора на стенде: вытащи имя/должность собеседника, email/телефон если названы, что обсудили (summary 1–2 фразы), следующий шаг (next_action) и ДАТУ, когда он просил написать/позвонить (reminder_date, YYYY-MM-DD). Календарь: сегодня ${today} (${weekday(today)}), завтра ${addDays(1)}, ближайший понедельник ${nextMonday()}, через неделю ${addDays(7)}. «На следующей неделе» = ближайший понедельник ${nextMonday()}.`,
+        `${fairTitle}, ${venue}, Stand ${r.booth} (${r.floor}). Участник: ${r.name}, ${r.city}, ${r.category}. Название бизнеса: «${r.name}» (не менять). Андрей надиктовал по-русски итог разговора на стенде: вытащи имя/должность собеседника, email/телефон если названы, что обсудили (summary 1–2 фразы), следующий шаг (next_action) и ДАТУ, когда он просил написать/позвонить (reminder_date, YYYY-MM-DD). Календарь, Europe/Vienna: сегодня ${today} (${weekday(today)}), завтра ${addDays(1)}, ближайший понедельник ${nextMonday()}, через неделю ${addDays(7)}. «На следующей неделе» = ближайший понедельник ${nextMonday()}. Не выдумывай факты исследования — только то, что сказано в записи.`,
       );
       fd.append("outcome", "warm_followup");
       if (visit.lead_id) fd.append("lead_id", String(visit.lead_id));
@@ -101,7 +103,7 @@ export default function VoiceNote({
           contact_phone: p.contact_phone || "",
           next_action: p.next_action || "Написать после выставки",
           reminder_date: reminderDate,
-          reminder_text: `${r.name}: ${p.next_action || "follow-up после BLICKFANG"}`,
+          reminder_text: `${r.name}: ${p.next_action || `follow-up после ${fairTitle}`}`,
           notes,
           summary,
           transcript,

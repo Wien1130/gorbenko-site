@@ -9,13 +9,14 @@ type Step = "input" | "drafting" | "review" | "sending" | "done";
 /**
  * «Два письма» прямо на стенде:
  *   №1 — «мы только что говорили у вашего стенда» — уходит сразу;
- *   №2 — две конкретные идеи — ложится в очередь и уходит в выбранный день в 09:00.
- * Один вызов Claude на оба текста, один экран проверки, одна кнопка.
+ *   №2 — черновик «нужно обдумать». Само не уходит. На дату его ставит отдельная кнопка.
  */
 export default function TwoLetters({
   exhibitor: r,
   visit,
   fairTitle,
+  venue,
+  talkDateLabel,
   onLead,
   onDone,
   onClose,
@@ -23,8 +24,10 @@ export default function TwoLetters({
   exhibitor: Exhibitor;
   visit: FairVisit;
   fairTitle: string;
+  venue: string;
+  talkDateLabel: string;
   onLead: (leadId: number) => void;
-  onDone: (info: { secondDate: string }) => void;
+  onDone: (info: { mode: "held" | "scheduled"; secondDate?: string }) => void;
   onClose: () => void;
 }) {
   const [step, setStep] = useState<Step>("input");
@@ -37,6 +40,7 @@ export default function TwoLetters({
   const [l2, setL2] = useState({ subject: "", body: "" });
   const [signature, setSignature] = useState("");
   const [leadId, setLeadId] = useState<number | null>(visit.lead_id);
+  const [letter1Sent, setLetter1Sent] = useState(false);
   const [result, setResult] = useState("");
 
   async function ensureLead(): Promise<number> {
@@ -77,7 +81,8 @@ export default function TwoLetters({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          fair_title: fairTitle, booth: r.booth, exhibitor: r.name, city: r.city, offer: r.offer, opening_de: r.opening_de,
+          fair_title: fairTitle, venue, talk_date: talkDateLabel,
+          booth: r.booth, exhibitor: r.name, city: r.city, offer: r.offer, opening_de: r.opening_de,
           contact_name: name, talk, second_date: date2,
         }),
       });
@@ -96,29 +101,57 @@ export default function TwoLetters({
     }
   }
 
-  async function sendBoth() {
+  async function postMail(subject: string, body: string, sendAt: string, hold: boolean) {
+    const res = await fetch("/api/crm/email/send", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ lead_id: leadId, to, subject, body, lang: "de", send_at: hold ? "" : sendAt, hold }),
+    });
+    const j = await res.json();
+    if (!res.ok) throw new Error(j.error || `HTTP ${res.status}`);
+    return j as { ok?: boolean; duplicate?: boolean; when?: string; held?: boolean; gmail_id?: string };
+  }
+
+  async function sendFirstAndHoldSecond() {
     if (!leadId) return;
     setError("");
     setStep("sending");
-    toast("busy", `Отправляю письмо 1 на ${to}…`);
     try {
-      const send = (subject: string, body: string, send_at: string) =>
-        fetch("/api/crm/email/send", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ lead_id: leadId, to, subject, body, lang: "de", send_at }),
-        }).then(async (res) => { const j = await res.json(); if (!res.ok) throw new Error(j.error || `HTTP ${res.status}`); return j; });
-      await send(l1.subject, l1.body, "");
-      toast("busy", `Письмо 1 ушло. Планирую письмо 2 на ${fmt(date2)}…`);
-      const second = await send(l2.subject, l2.body, date2);
-      setResult(`Письмо 1 ушло на ${to}. Письмо 2 запланировано: ${second.when || fmt(date2)}.`);
-      toast("ok", `Готово: 1 ушло на ${to}, 2 уйдёт ${second.when || fmt(date2)}`);
-      onDone({ secondDate: date2 });
+      if (!letter1Sent) {
+        toast("busy", `Отправляю письмо 1 на ${to}…`);
+        const first = await postMail(l1.subject, l1.body, "", false);
+        setLetter1Sent(true);
+        if (first.duplicate) toast("ok", "Письмо 1 уже было отправлено — повторно не шлю");
+      }
+      toast("busy", "Сохраняю письмо 2 на проверку…");
+      await postMail(l2.subject, l2.body, "", true);
+      setResult(`Письмо 1 ушло на ${to}. Письмо 2 лежит как «нужно обдумать» и само не уйдёт.`);
+      toast("ok", "Письмо 1 ушло. Письмо 2 ждёт твоего решения");
+      onDone({ mode: "held" });
       setStep("done");
     } catch (e) {
       const msg = String(e instanceof Error ? e.message : e);
-      setError(`${msg}. Если письмо 1 уже ушло — отправь второе через 📷-поток с датой.`);
+      setError(letter1Sent ? `${msg}. Письмо 1 уже ушло, повторно его не отправляю.` : msg);
       toast("err", `НЕ ушло: ${msg}`);
+      setStep("review");
+    }
+  }
+
+  async function scheduleSecond() {
+    if (!leadId) return;
+    if (!window.confirm(`Запланировать письмо 2 на ${fmt(date2)} в 09:00 по Вене? Это отдельное решение, само оно не уйдёт.`)) return;
+    setError("");
+    setStep("sending");
+    try {
+      const second = await postMail(l2.subject, l2.body, date2, false);
+      setResult(`Письмо 2 запланировано: ${second.when || fmt(date2)}.`);
+      toast("ok", `Письмо 2 запланировано на ${second.when || fmt(date2)}`);
+      onDone({ mode: "scheduled", secondDate: date2 });
+      setStep("done");
+    } catch (e) {
+      const msg = String(e instanceof Error ? e.message : e);
+      setError(msg);
+      toast("err", `Не запланировалось: ${msg}`);
       setStep("review");
     }
   }
@@ -144,7 +177,7 @@ export default function TwoLetters({
             <div className="field"><span className="m-label">Email</span><input type="email" value={to} onChange={(e) => setTo(e.target.value)} /></div>
           </div>
           <div className="m-when">
-            <span className="m-label">Письмо 2 с идеями уйдёт</span>
+            <span className="m-label">Ориентир для письма 2 (само не отправится)</span>
             <div className="m-when-row">
               <button className={date2 === nextWeekday(1) ? "on" : ""} onClick={() => setDate2(nextWeekday(1))}>Пн {fmt(nextWeekday(1))}</button>
               <button className={date2 === nextWeekday(2) ? "on" : ""} onClick={() => setDate2(nextWeekday(2))}>Вт {fmt(nextWeekday(2))}</button>
@@ -168,15 +201,18 @@ export default function TwoLetters({
             <textarea style={{ minHeight: 120 }} value={l1.body} onChange={(e) => setL1({ ...l1, body: e.target.value })} />
           </div>
           <div className="m-letter">
-            <div className="m-letter-head">Письмо 2 — <b>уйдёт {fmt(date2)} в 09:00</b></div>
+            <div className="m-letter-head">Письмо 2 — <b>черновик, само не уйдёт</b></div>
             <input value={l2.subject} onChange={(e) => setL2({ ...l2, subject: e.target.value })} />
             <textarea style={{ minHeight: 200 }} value={l2.body} onChange={(e) => setL2({ ...l2, body: e.target.value })} />
           </div>
           <div className="m-sig">{signature}</div>
           <div className="m-actions">
             <button onClick={() => setStep("input")} disabled={step === "sending"}>← Поправить вводные</button>
-            <button className="pink" disabled={step === "sending" || !l1.subject || !l1.body || !l2.subject || !l2.body} onClick={() => void sendBoth()}>
-              {step === "sending" ? "Отправляю…" : `Отправить 1 сейчас + 2 на ${fmt(date2)}`}
+            <button className="pink" disabled={step === "sending" || !l1.subject || !l1.body || !l2.subject || !l2.body} onClick={() => void sendFirstAndHoldSecond()}>
+              {step === "sending" ? "Отправляю…" : letter1Sent ? "Сохранить письмо 2 на проверку" : "Отправить 1 сейчас, 2 сохранить"}
+            </button>
+            <button disabled={step === "sending" || !l2.subject || !l2.body} onClick={() => void scheduleSecond()}>
+              Запланировать 2 на {fmt(date2)}
             </button>
           </div>
           {error && <div className="m-err">{error}</div>}

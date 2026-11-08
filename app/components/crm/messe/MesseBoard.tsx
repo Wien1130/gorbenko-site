@@ -1,16 +1,21 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { Exhibitor, FairData, FairVisit, VisitStatus } from "../../../lib/crm/messe/data";
-import { VISIT_STATUS_LABEL } from "../../../lib/crm/messe/data";
+import type { Exhibitor, FairData, FairTab, FairVisit, VisitStatus } from "../../../lib/crm/messe/data";
+import { FAIR_SWITCH, VISIT_STATUS_LABEL } from "../../../lib/crm/messe/data";
 import CardFlow from "./CardFlow";
 import VoiceNote from "./VoiceNote";
 import TwoLetters from "./TwoLetters";
 import type { ToastKind } from "./toast";
 
-type Tab = "first" | "sites" | "route" | "vienna" | "munich" | "three";
-const TAB_LABEL: Record<Tab, string> = { first: "⚡ Маршрут 1", sites: "Сайты", vienna: "Вена", munich: "Мюнхен", three: "3D / конструктор", route: "Все" };
-const TABS: Tab[] = ["first", "sites", "vienna", "munich", "three", "route"];
+const BLICKFANG_TABS: FairTab[] = [
+  { id: "first", label: "⚡ Маршрут 1", note: "Маршрут 1 — кому идти сразу. Отбор по сайтам всех 156: не одиночка (юрлицо, UID, команда, дилеры/showroom, средний чек, работающий магазин) и есть повод (сайт A/B, закрыт, мобилка) или Вена/Мюнхен. Порядок — как идти ногами: EG по номерам стендов, затем OG. Четыре с мёртвым сайтом стоят здесь без оценки размера — смотри на стенд." },
+  { id: "sites", label: "Сайты", note: "Сайты — обходить первыми. Сверху пять с конкретной бедой: WABISABI (магазин анонсирован, не открыт), Gerald Pahr (режим обслуживания), Georg Mähring (домен зарезервирован), macharten (магазин обещают открыть), Karaka (коллекция 2020/21). Дальше — по силе повода." },
+  { id: "vienna", label: "Вена", note: "Вена — для локального контента и съёмки." },
+  { id: "munich", label: "Мюнхен", note: "Мюнхен — все четыре." },
+  { id: "three", label: "3D / конструктор", note: "3D / конструктор — только где у товара есть реальные варианты. У кого конфигуратор уже есть, не предлагать второй." },
+  { id: "route", label: "Все", note: "Все 156: сначала маршрут из брифа, затем Мюнхен → Вена → остальные." },
+];
 type StatusFilter = "all" | "todo" | "talked" | "revisit" | "done";
 
 /** Пять стендов с подтверждённой бедой сайта — их обходить первыми. */
@@ -28,7 +33,9 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
   const [visits, setVisits] = useState<Record<string, FairVisit>>(() =>
     Object.fromEntries(initialVisits.map((v) => [v.exhibitor_id, v])),
   );
-  const [tab, setTab] = useState<Tab>("first");
+  const tabs = fair.tabs?.length ? fair.tabs : BLICKFANG_TABS;
+  const [tab, setTab] = useState(tabs[0]?.id ?? "first");
+  const visitsRef = useRef(visits);
   const [plan, setPlan] = useState(false);
   const [status, setStatus] = useState<StatusFilter>("all");
   const [q, setQ] = useState("");
@@ -37,6 +44,27 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
   const [toastMsg, setToastMsg] = useState<{ kind: ToastKind; text: string } | null>(null);
   const noteTimers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => { visitsRef.current = visits; }, [visits]);
+
+  useEffect(() => {
+    const flush = () => {
+      for (const id of Object.keys(noteTimers.current)) {
+        clearTimeout(noteTimers.current[id]);
+        delete noteTimers.current[id];
+        const note = visitsRef.current[id]?.note;
+        if (note == null) continue;
+        void fetch("/api/crm/messe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ event: fair.event, exhibitor_id: id, note }),
+          keepalive: true,
+        });
+      }
+    };
+    window.addEventListener("pagehide", flush);
+    return () => window.removeEventListener("pagehide", flush);
+  }, [fair.event]);
 
   useEffect(() => {
     const onToast = (e: Event) => {
@@ -69,7 +97,7 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
   }, [fair]);
 
   /** Состав каждой вкладки (без фильтра статуса и поиска) — для счётчиков и плана. */
-  const tabRows = useMemo<Record<Tab, Exhibitor[]>>(() => {
+  const tabRows = useMemo<Record<string, Exhibitor[]>>(() => {
     const byId = new Map(fair.rows.map((r) => [r.id, r]));
     const sites = fair.rows
       .filter((r) => r.site_priority === "A" || r.site_priority === "B" || r.site_priority === "U")
@@ -80,21 +108,26 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
           (a.rank ?? 999) - (b.rank ?? 999),
       );
     const first = (fair.route1 ?? []).map((id) => byId.get(id)).filter(Boolean) as Exhibitor[];
-    return {
-      first,
-      sites,
-      vienna: ordered.filter((r) => r.city.startsWith("Wien") || r.city.includes("Вена")),
-      munich: ordered.filter((r) => r.city === "München"),
-      three: ordered.filter((r) => r.services.some((s) => s === "3D" || s === "конфигуратор") || r.configurator_fit === "yes"),
-      route: ordered,
+    const pick = (id: string): Exhibitor[] => {
+      if (id === "all" || id === "route") return ordered;
+      if (id === "first") return first;
+      if (id === "sites") return sites;
+      if (id === "vienna") return ordered.filter((r) => r.city.startsWith("Wien") || r.city.includes("Вена"));
+      if (id === "munich") return ordered.filter((r) => r.city === "München");
+      if (id === "three") return ordered.filter((r) => r.services.some((s) => s === "3D" || s === "конфигуратор") || r.configurator_fit === "yes");
+      if (id === "video") return ordered.filter((r) => r.services.includes("видео"));
+      if (id === "pages") return ordered.filter((r) => r.services.includes("проект"));
+      return ordered;
     };
-  }, [fair, ordered]);
+    return Object.fromEntries(tabs.map((t) => [t.id, pick(t.id)]));
+  }, [fair, ordered, tabs]);
 
-  const tabDone = (t: Tab) => tabRows[t].filter((r) => getVisit(r.id).status !== "todo").length;
+  const tabDone = (t: string) => (tabRows[t] ?? []).filter((r) => getVisit(r.id).status !== "todo").length;
+  const tabLabel = (t: string) => tabs.find((x) => x.id === t)?.label ?? t;
 
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
-    const base = tabRows[tab];
+    const base = tabRows[tab] ?? [];
     return base.filter((r) => {
       const v = getVisit(r.id);
       if (status === "todo" && v.status !== "todo") return false;
@@ -176,7 +209,7 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
     setPlan(false);
     setStatus("all");
     setQ("");
-    if (!tabRows[tab].some((r) => r.id === id)) setTab("route");
+    if (!(tabRows[tab] ?? []).some((r) => r.id === id)) setTab(fair.allTab || "route");
     setTimeout(() => document.getElementById(`ex-${id}`)?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
   }
 
@@ -186,16 +219,37 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
     return () => clearTimeout(t);
   }, [error]);
 
-  const visitedPct = Math.round(((counts.talked + counts.revisit + counts.skip) / counts.total) * 100);
+  const visitedPct = counts.total ? Math.round(((counts.talked + counts.revisit + counts.skip) / counts.total) * 100) : 0;
+
+  async function goFair(event: string) {
+    if (event === fair.event) return;
+    if (openFlow && !window.confirm("На карточке открыта форма. Переключить выставку и закрыть её?")) return;
+    for (const id of Object.keys(noteTimers.current)) {
+      clearTimeout(noteTimers.current[id]);
+      delete noteTimers.current[id];
+      const note = visitsRef.current[id]?.note ?? "";
+      await save(id, { note });
+    }
+    window.location.href = `/crm/messe?event=${event}`;
+  }
 
   return (
     <>
       <header className="m-head">
-        <small>7–8 ноября 2026 · MAK Wien · <a href="/crm" style={{ color: "#9bd4d1" }}>← CRM</a></small>
+        <small>
+          {fair.dateLabel || fair.date} · {fair.venue || ""}
+          {fair.address ? ` · ${fair.address}` : ""} · <a href="/crm" style={{ color: "#9bd4d1" }}>← CRM</a>
+          {" · "}<a href="/crm/emails" style={{ color: "#9bd4d1" }}>очередь писем</a>
+        </small>
+        <div className="m-tabs" style={{ margin: "8px 0" }}>
+          {FAIR_SWITCH.map((f) => (
+            <button key={f.event} className={f.event === fair.event ? "on" : ""} onClick={() => void goFair(f.event)}>{f.title}</button>
+          ))}
+        </div>
         <h1>{fair.title} — обход</h1>
         <div className="sub">
-          Мюнхен → Вена → остальные. Статусы и лиды сохраняются в CRM.{" "}
-          <a href="https://blickfang.com/wp-content/uploads/Blickfang-2026-Wien-Katalog-165x210mm-web.pdf" target="_blank" rel="noreferrer">каталог</a>
+          {fair.headerSub || "Статусы и лиды сохраняются в CRM."}{" "}
+          {fair.catalogUrl && <a href={fair.catalogUrl} target="_blank" rel="noreferrer">каталог</a>}
         </div>
         <div className="m-stats">
           <div className="m-stat"><b>{counts.talked}</b>поговорил</div>
@@ -212,9 +266,9 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
 
       <div className="m-bar">
         <div className="m-tabs">
-          {TABS.map((t) => (
-            <button key={t} className={tab === t ? "on" : ""} onClick={() => setTab(t)}>
-              {TAB_LABEL[t]} <small>{tabDone(t)}/{tabRows[t].length}</small>
+          {tabs.map((t) => (
+            <button key={t.id} className={tab === t.id ? "on" : ""} onClick={() => setTab(t.id)}>
+              {t.label} <small>{tabDone(t.id)}/{(tabRows[t.id] ?? []).length}</small>
             </button>
           ))}
           <span style={{ width: 6 }} />
@@ -241,18 +295,13 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
             onPick={jumpTo}
             matchIds={new Set(filtered.map((r) => r.id))}
             filterOn={tab !== "route" || status !== "all" || q.trim() !== ""}
-            label={`${TAB_LABEL[tab]}: отмечено ${tabDone(tab)} из ${tabRows[tab].length}`}
+            label={`${tabLabel(tab)}: отмечено ${tabDone(tab)} из ${(tabRows[tab] ?? []).length}`}
           />
         ) : (
           <>
             <div className="m-note">
-              {tab === "first" && "Маршрут 1 — кому идти сразу. Отбор по сайтам всех 156: не одиночка (юрлицо, UID, команда, дилеры/showroom, средний чек, работающий магазин) и есть повод (сайт A/B, закрыт, мобилка) или Вена/Мюнхен. Порядок — как идти ногами: EG по номерам стендов, затем OG. Четыре с мёртвым сайтом стоят здесь без оценки размера — смотри на стенд."}
-              {tab === "sites" && "Сайты — обходить первыми. Сверху пять с конкретной бедой: WABISABI (магазин анонсирован, не открыт), Gerald Pahr (режим обслуживания), Georg Mähring (домен зарезервирован), macharten (магазин обещают открыть), Karaka (коллекция 2020/21). Дальше — по силе повода."}
-              {tab === "vienna" && "Вена — для локального контента и съёмки."}
-              {tab === "munich" && "Мюнхен — все четыре."}
-              {tab === "three" && "3D / конструктор — только где у товара есть реальные варианты. У кого конфигуратор уже есть, не предлагать второй."}
-              {tab === "route" && "Все 156: сначала маршрут из брифа, затем Мюнхен → Вена → остальные."}
-              {" "}Отмечено {tabDone(tab)} из {tabRows[tab].length}{filtered.length !== tabRows[tab].length ? `, показано ${filtered.length}` : ""}.
+              {tabs.find((t) => t.id === tab)?.note}{" "}
+              Отмечено {tabDone(tab)} из {(tabRows[tab] ?? []).length}{filtered.length !== (tabRows[tab] ?? []).length ? `, показано ${filtered.length}` : ""}.
             </div>
             {filtered.map((r, i) => {
               const v = getVisit(r.id);
@@ -261,7 +310,7 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
                   <div className="m-top">
                     <div>
                       <div className="m-name"><span className="m-order">{i + 1}.</span>{r.name}</div>
-                      <div className="m-sub">{r.city} · {r.category}</div>
+                      <div className="m-sub">{[r.city, r.category].filter(Boolean).join(" · ")}</div>
                     </div>
                     <div className="m-booth">{r.booth || "—"}<small>{r.floor}</small></div>
                   </div>
@@ -276,12 +325,16 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
                         Размер: {r.size_score >= 7 ? "фирма" : r.size_score >= 4 ? "средний" : r.size_score > 0 ? "малый" : "?"}
                       </span>
                     )}
-                    {r.verified ? <span className="m-chip">браузер ✓</span> : <span className="m-chip">не открыт</span>}
+                    {r.review_label
+                      ? <span className="m-chip">{r.review_label}</span>
+                      : r.verified ? <span className="m-chip">браузер ✓</span> : <span className="m-chip">не открыт</span>}
                     {r.geography_confidence && r.geography_confidence !== "high" && <span className="m-chip">гео: {r.geography_confidence}</span>}
                     {v.status !== "todo" && <span className={`m-chip st-${v.status}`}>{VISIT_STATUS_LABEL[v.status]}</span>}
-                    {v.email_sent && <span className="m-chip st-mail">письмо ✓</span>}
+                    {v.email_sent && <span className="m-chip st-mail">письмо 1 ✓</span>}
                   </div>
-                  <div className="m-offer"><span className="m-label">Предложение</span>{r.offer}</div>
+                  {r.ask_who && <div className="m-offer"><span className="m-label">Кого спросить (каталог, не факт разговора)</span>{r.ask_who}</div>}
+                  {r.observed && <div className="m-offer"><span className="m-label">Факт</span>{r.observed}</div>}
+                  <div className="m-offer"><span className="m-label">Гипотеза предложения</span>{r.offer}</div>
                   {r.opening_de && (
                     <div className="m-q">
                       <span>{r.opening_de}</span>
@@ -290,7 +343,8 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
                   )}
                   <div className="m-links">
                     {r.website && <a href={r.website} target="_blank" rel="noreferrer">Сайт</a>}
-                    {r.profile_url && <a href={r.profile_url} target="_blank" rel="noreferrer">Профиль BLICKFANG</a>}
+                    {r.profile_url && <a href={r.profile_url} target="_blank" rel="noreferrer">{fair.profileLinkLabel || "Профиль"}</a>}
+                    {r.sources?.slice(0, 3).map((src) => <a key={src} href={src} target="_blank" rel="noreferrer">источник</a>)}
                     {v.lead_id && <a href={`/crm/lead/${v.lead_id}`}>Лид #{v.lead_id} в CRM</a>}
                     {r.email && <a href={`mailto:${r.email}`}>{r.email}</a>}
                   </div>
@@ -301,8 +355,7 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
                       {r.evidence_short?.map((f, k) => <p key={k}>• {f}</p>)}
                       {r.mobile_note && <p><b>390px:</b> {r.mobile_note}</p>}
                       {r.unresolved?.length ? <p><b>Не установлено:</b> {r.unresolved.join("; ")}</p> : null}
-                      {r.observed && <p>{r.observed}</p>}
-                      {r.hypothesis && <p><b>Гипотеза:</b> {r.hypothesis}</p>}
+                      {r.hypothesis && <p><b>Почему это гипотеза:</b> {r.hypothesis}</p>}
                     </details>
                   )}
 
@@ -317,6 +370,7 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
                     exhibitor={r}
                     visit={v}
                     fairTitle={fair.title}
+                    venue={fair.venue || ""}
                     onDone={({ note, leadId }) => {
                       const merged = [v.note.trim(), note].filter(Boolean).join("\n");
                       setVisits((s) => ({ ...s, [r.id]: { ...getVisit(r.id), note: merged, lead_id: leadId, status: "talked" } }));
@@ -325,7 +379,7 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
                   />
                   <div className="m-actions">
                     <button className="pink" onClick={() => setOpenFlow(openFlow === `2:${r.id}` ? null : `2:${r.id}`)}>
-                      {v.email_sent ? "✉️✉️ Ещё два письма" : "✉️✉️ Два письма: сейчас + на дату"}
+                      {v.email_sent ? "✉️ Ещё письмо" : "✉️ Письмо сейчас + черновик"}
                     </button>
                     <button style={{ flex: "0 0 auto" }} title="Визитка → лид → одно письмо" onClick={() => setOpenFlow(openFlow === r.id ? null : r.id)}>📷</button>
                   </div>
@@ -341,9 +395,14 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
                       exhibitor={r}
                       visit={v}
                       fairTitle={fair.title}
+                      venue={fair.venue || ""}
+                      talkDateLabel={fair.talkDateLabel || ""}
                       onLead={(leadId) => void save(r.id, { lead_id: leadId, status: "talked" })}
-                      onDone={({ secondDate }) => {
-                        const merged = [v.note.trim(), `✉️ 1 ушло · ✉️ 2 → ${secondDate.slice(8, 10)}.${secondDate.slice(5, 7)}`].filter(Boolean).join("\n");
+                      onDone={({ mode, secondDate }) => {
+                        const mark = mode === "scheduled" && secondDate
+                          ? `✉️ 1 ушло · ✉️ 2 → ${secondDate.slice(8, 10)}.${secondDate.slice(5, 7)}`
+                          : "✉️ 1 ушло · ✉️ 2 на проверке";
+                        const merged = [v.note.trim(), mark].filter(Boolean).join("\n");
                         setVisits((s) => ({ ...s, [r.id]: { ...getVisit(r.id), note: merged, email_sent: true, status: "talked" } }));
                         void save(r.id, { note: merged, email_sent: true, status: "talked" });
                       }}
@@ -355,6 +414,7 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
                       exhibitor={r}
                       visit={v}
                       fairTitle={fair.title}
+                      venue={fair.venue || ""}
                       onLead={(leadId) => void save(r.id, { lead_id: leadId, status: "talked" })}
                       onEmailSent={() => void save(r.id, { email_sent: true, status: "talked" })}
                       onClose={() => setOpenFlow(null)}
@@ -380,25 +440,33 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
   );
 }
 
-/** Схема этажей по номерам стендов — покрытие обхода. Это порядок номеров, не геометрия зала. */
+/** Группы стендов. Для BLICKFANG это EG/OG по номерам, не чертёж зала. Для другой выставки — буквы зон, не этажи. */
 function FloorPlan({ fair, getVisit, onPick, matchIds, filterOn, label }: { fair: FairData; getVisit: (id: string) => FairVisit; onPick: (id: string) => void; matchIds: Set<string>; filterOn: boolean; label: string }) {
+  const zones = fair.layout === "zones";
   const floors = useMemo(() => {
     const m = new Map<string, Exhibitor[]>();
     for (const r of fair.rows) {
-      const f = r.floor || "Уточнить";
+      const f = r.floor || (zones ? "без номера" : "Уточнить");
       if (!m.has(f)) m.set(f, []);
       m.get(f)!.push(r);
     }
-    for (const list of m.values()) list.sort((a, b) => a.booth.localeCompare(b.booth) || a.name.localeCompare(b.name));
-    const order = ["EG", "OG"];
-    return [...m.entries()].sort((a, b) => (order.indexOf(a[0]) + 10) % 10 - (order.indexOf(b[0]) + 10) % 10);
-  }, [fair]);
+    for (const list of m.values()) list.sort((a, b) => a.booth.localeCompare(b.booth, "de") || a.name.localeCompare(b.name, "de"));
+    const order = zones ? ["EH", "AH", "AHA", "AHB", "GH", "GHA", "EC", "WL", "без номера"] : ["EG", "OG"];
+    return [...m.entries()].sort((a, b) => {
+      const ia = order.indexOf(a[0]);
+      const ib = order.indexOf(b[0]);
+      return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+    });
+  }, [fair, zones]);
 
   return (
     <>
       <div className="m-note">
-        <b>{label}.</b> Яркие плитки — стенды этой вкладки, остальные приглушены. EG — нижний уровень (001–066), OG — верхний (070–140);
-        плитки идут по номерам, не по геометрии зала. Розовая рамка — приоритет A. Нажми плитку — откроется карточка.
+        <b>{label}.</b>{" "}
+        {zones
+          ? "Группы стендов из каталога (EH, AH, GH, EC, WL). Это не этажи и не чертёж зала. Буквенные суффиксы сохранены, пустой номер допустим."
+          : "EG — нижний уровень (001–066), OG — верхний (070–140). Плитки идут по номерам, не по геометрии зала."}
+        {" "}Розовая рамка — приоритет A. Нажми плитку — откроется карточка.
       </div>
       <div className="m-legend">
         <span><i style={{ background: "#fff" }} />не посещён</span>
@@ -412,8 +480,8 @@ function FloorPlan({ fair, getVisit, onPick, matchIds, filterOn, label }: { fair
         const done = inSel.filter((r) => getVisit(r.id).status !== "todo").length;
         return (
           <section key={floor} className="m-floor">
-            <h2>{floor === "EG" ? "EG — нижний уровень" : floor === "OG" ? "OG — верхний уровень" : "Этаж уточнить"}</h2>
-            <div className="sub">отмечено {done} из {inSel.length}{filterOn ? ` на этом этаже (всего стендов ${list.length})` : ""}</div>
+            <h2>{zones ? `Группа ${floor}` : floor === "EG" ? "EG — нижний уровень" : floor === "OG" ? "OG — верхний уровень" : floor}</h2>
+            <div className="sub">отмечено {done} из {inSel.length}{filterOn ? ` в этой группе (всего ${list.length})` : ""}</div>
             <div className="m-grid">
               {list.map((r) => {
                 const v = getVisit(r.id);
