@@ -81,6 +81,8 @@ export interface FairVisit {
   lead_id: number | null;
   email_sent: boolean;
   updated_at: string;
+  /** Пути фото стенда в репозитории. Показ через /api/crm/messe/photo. */
+  photos?: string[];
 }
 
 const blickfang = blickfangRaw as FairData;

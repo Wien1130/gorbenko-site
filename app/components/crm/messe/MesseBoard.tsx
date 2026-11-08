@@ -6,7 +6,7 @@ import { FAIR_SWITCH, VISIT_STATUS_LABEL } from "../../../lib/crm/messe/data";
 import CardFlow from "./CardFlow";
 import VoiceNote from "./VoiceNote";
 import TwoLetters from "./TwoLetters";
-import type { ToastKind } from "./toast";
+import { toast, type ToastKind } from "./toast";
 
 const BLICKFANG_TABS: FairTab[] = [
   { id: "first", label: "⚡ Маршрут 1", note: "Маршрут 1 — кому идти сразу. Отбор по сайтам всех 156: не одиночка (юрлицо, UID, команда, дилеры/showroom, средний чек, работающий магазин) и есть повод (сайт A/B, закрыт, мобилка) или Вена/Мюнхен. Порядок — как идти ногами: EG по номерам стендов, затем OG. Четыре с мёртвым сайтом стоят здесь без оценки размера — смотри на стенд." },
@@ -40,13 +40,44 @@ function boothHit(query: string, booth: string): boolean {
 const CITY_ORDER = (c: string) => (c === "München" ? 0 : c === "Wien" ? 1 : 2);
 const PRIO_ORDER = (p: string) => (p === "A" ? 0 : p === "B" ? 1 : 2);
 
+function parsePhotos(raw: unknown): string[] {
+  if (Array.isArray(raw)) return raw.filter((x) => typeof x === "string");
+  if (typeof raw === "string" && raw.startsWith("[")) {
+    try {
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed.filter((x) => typeof x === "string") : [];
+    } catch {
+      return [];
+    }
+  }
+  return [];
+}
+
+async function shrinkPhoto(file: File): Promise<File> {
+  try {
+    const bmp = await createImageBitmap(file);
+    const max = 1600;
+    const scale = Math.min(1, max / Math.max(bmp.width, bmp.height));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.max(1, Math.round(bmp.width * scale));
+    canvas.height = Math.max(1, Math.round(bmp.height * scale));
+    canvas.getContext("2d")?.drawImage(bmp, 0, 0, canvas.width, canvas.height);
+    bmp.close();
+    const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.72));
+    if (blob) return new File([blob], "stand.jpg", { type: "image/jpeg" });
+  } catch {
+    /* снимок с телефона иногда не сжимается — отправим как есть, если он небольшой */
+  }
+  return file;
+}
+
 function emptyVisit(event: string, id: string): FairVisit {
   return { event, exhibitor_id: id, status: "todo", note: "", lead_id: null, email_sent: false, updated_at: "" };
 }
 
 export default function MesseBoard({ fair, initialVisits }: { fair: FairData; initialVisits: FairVisit[] }) {
   const [visits, setVisits] = useState<Record<string, FairVisit>>(() =>
-    Object.fromEntries(initialVisits.map((v) => [v.exhibitor_id, v])),
+    Object.fromEntries(initialVisits.map((v) => [v.exhibitor_id, { ...v, photos: parsePhotos(v.photos) }])),
   );
   const tabs = fair.tabs?.length ? fair.tabs : BLICKFANG_TABS;
   const [tab, setTab] = useState(tabs[0]?.id ?? "first");
@@ -57,6 +88,7 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
   const [openFlow, setOpenFlow] = useState<string | null>(null);
   const [error, setError] = useState("");
   const [toastMsg, setToastMsg] = useState<{ kind: ToastKind; text: string } | null>(null);
+  const [photoBusy, setPhotoBusy] = useState<string | null>(null);
   const noteTimers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -213,6 +245,29 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
       }
     } catch (e) {
       setError(String(e instanceof Error ? e.message : e));
+    }
+  }
+
+  async function addPhoto(id: string, file: File) {
+    setPhotoBusy(id);
+    toast("busy", "Сохраняю фото на карточку…");
+    try {
+      const small = await shrinkPhoto(file);
+      const fd = new FormData();
+      fd.append("photo", small);
+      fd.append("event", fair.event);
+      fd.append("exhibitor_id", id);
+      const leadId = getVisit(id).lead_id;
+      if (leadId) fd.append("lead_id", String(leadId));
+      const res = await fetch("/api/crm/messe/photo", { method: "POST", body: fd });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || `HTTP ${res.status}`);
+      setVisits((s) => ({ ...s, [id]: { ...getVisit(id), photos: json.photos as string[] } }));
+      toast("ok", "Фото на карточке");
+    } catch (e) {
+      toast("err", String(e instanceof Error ? e.message : e));
+    } finally {
+      setPhotoBusy(null);
     }
   }
 
@@ -401,6 +456,27 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
                       {v.email_sent ? "✉️ Ещё письмо" : "✉️ Письмо сейчас + черновик"}
                     </button>
                     <button style={{ flex: "0 0 auto" }} title="Визитка → лид → одно письмо" onClick={() => setOpenFlow(openFlow === r.id ? null : r.id)}>📷</button>
+                  </div>
+                  <div className="m-shots">
+                    {(v.photos ?? []).map((path) => (
+                      <a key={path} href={`/api/crm/messe/photo?path=${encodeURIComponent(path)}`} target="_blank" rel="noreferrer">
+                        <img src={`/api/crm/messe/photo?path=${encodeURIComponent(path)}`} alt="" />
+                      </a>
+                    ))}
+                    <label className={`m-shot-add ${photoBusy === r.id ? "busy" : ""}`}>
+                      {photoBusy === r.id ? "…" : "📷 Фото"}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        capture="environment"
+                        disabled={photoBusy === r.id}
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          e.target.value = "";
+                          if (file) void addPhoto(r.id, file);
+                        }}
+                      />
+                    </label>
                   </div>
                   <div className="m-notefield">
                     <textarea placeholder="Заметка: имя, задача, контакт, когда написать…" value={v.note} onChange={(e) => setNote(r.id, e.target.value)} />

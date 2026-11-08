@@ -79,6 +79,11 @@ export default function MesseStyles() {
       .m-toast.busy { background:var(--ink); }
       .m-notefield { margin-top:8px; }
       .m-notefield textarea { min-height:44px; font-size:14px; }
+      .m-shots { display:flex; gap:8px; overflow-x:auto; margin-top:10px; }
+      .m-shots img { width:84px; height:84px; object-fit:cover; border-radius:10px; background:#eee; display:block; }
+      .m-shot-add { flex:0 0 auto; width:84px; height:84px; border:2px dashed #bcc8d0; border-radius:10px; display:flex; align-items:center; justify-content:center; text-align:center; font-size:12px; font-weight:700; color:var(--muted); background:#fff; cursor:pointer; }
+      .m-shot-add input { display:none; }
+      .m-shot-add.busy { opacity:.5; }
 
       .m-flow { margin-top:12px; border-top:1px dashed var(--line); padding-top:12px; }
       .m-steps { display:flex; gap:6px; font-size:12px; color:var(--muted); margin-bottom:10px; }
