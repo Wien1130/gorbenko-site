@@ -22,6 +22,21 @@ type StatusFilter = "all" | "todo" | "talked" | "revisit" | "done";
 const SITE_HEAD = ["38974", "13686", "40565", "36962", "35229"];
 const SITE_GRADE = (p: string) => (p === "A" ? 0 : p === "B" ? 1 : p === "U" ? 2 : 3);
 
+/** «18» = «018», «eh01» = «EH01», «31» находит и GH31, и GH31A. Пусто, если это не номер стенда. */
+function parseBooth(raw: string): { prefix: string; num: string; suffix: string } | null {
+  const m = raw.trim().toLowerCase().replace(/[\s-]+/g, "").match(/^([a-zäöü]*)(\d+)([a-zäöü]*)$/);
+  if (!m) return null;
+  return { prefix: m[1], num: String(Number(m[2])), suffix: m[3] };
+}
+function boothHit(query: string, booth: string): boolean {
+  const q = parseBooth(query);
+  const b = parseBooth(booth);
+  if (!q || !b || q.num !== b.num) return false;
+  if (q.prefix && q.prefix !== b.prefix) return false;
+  if (q.suffix && q.suffix !== b.suffix) return false;
+  return true;
+}
+
 const CITY_ORDER = (c: string) => (c === "München" ? 0 : c === "Wien" ? 1 : 2);
 const PRIO_ORDER = (p: string) => (p === "A" ? 0 : p === "B" ? 1 : 2);
 
@@ -125,7 +140,9 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
   const tabDone = (t: string) => (tabRows[t] ?? []).filter((r) => getVisit(r.id).status !== "todo").length;
   const tabLabel = (t: string) => tabs.find((x) => x.id === t)?.label ?? t;
 
+  const boothLookup = parseBooth(q) !== null;
   const filtered = useMemo(() => {
+    if (boothLookup) return fair.rows.filter((r) => boothHit(q, r.booth));
     const needle = q.trim().toLowerCase();
     const base = tabRows[tab] ?? [];
     return base.filter((r) => {
@@ -141,7 +158,7 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
       return true;
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tabRows, visits, tab, status, q]);
+  }, [tabRows, visits, tab, status, q, boothLookup, fair.rows]);
 
   const counts = useMemo(() => {
     const c = { total: fair.rows.length, talked: 0, revisit: 0, skip: 0, mails: 0, leads: 0 };
@@ -280,7 +297,7 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
         </div>
         {!plan && (
           <div className="m-search">
-            <input placeholder="Бренд, стенд, город, продукт…" value={q} onChange={(e) => setQ(e.target.value)} />
+            <input inputMode="search" placeholder="Номер стенда: 18 или EH01" value={q} onChange={(e) => setQ(e.target.value)} />
           </div>
         )}
       </div>
@@ -300,8 +317,10 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
         ) : (
           <>
             <div className="m-note">
-              {tabs.find((t) => t.id === tab)?.note}{" "}
-              Отмечено {tabDone(tab)} из {(tabRows[tab] ?? []).length}{filtered.length !== (tabRows[tab] ?? []).length ? `, показано ${filtered.length}` : ""}.
+              {boothLookup
+                ? (filtered.length ? `Стенд ${q.trim()} — по всем участникам, не только эта вкладка.` : `Стенда ${q.trim()} нет.`)
+                : tabs.find((t) => t.id === tab)?.note}{" "}
+              {boothLookup ? "" : <>Отмечено {tabDone(tab)} из {(tabRows[tab] ?? []).length}{filtered.length !== (tabRows[tab] ?? []).length ? `, показано ${filtered.length}` : ""}.</>}
             </div>
             {filtered.map((r, i) => {
               const v = getVisit(r.id);
