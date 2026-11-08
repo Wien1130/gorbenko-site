@@ -17,6 +17,8 @@ export interface Exhibitor {
   observed: string;
   hypothesis: string;
   website: string;
+  /** Профиль Instagram, снятый со ссылки на сайте при обходе. Посты и reels сюда не пишутся. */
+  instagram?: string;
   email: string;
   rank: number | null;
   profile_url: string;

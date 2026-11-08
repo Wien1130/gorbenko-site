@@ -71,6 +71,19 @@ async function shrinkPhoto(file: File): Promise<File> {
   return file;
 }
 
+function lookAt(r: Exhibitor): { site: string; siteKnown: boolean; instagram: string; instagramKnown: boolean; reviews: string } {
+  const siteKnown = !!r.website && !/instagram\.com/i.test(r.website);
+  const instagramKnown = r.instagram || (/instagram\.com/i.test(r.website) ? r.website : "");
+  const q = (extra: string) => encodeURIComponent([r.name, r.city, extra].filter(Boolean).join(" "));
+  return {
+    site: siteKnown ? r.website : `https://www.google.com/search?q=${q("")}`,
+    siteKnown,
+    instagram: instagramKnown || `https://www.google.com/search?q=${q("instagram")}`,
+    instagramKnown: !!instagramKnown,
+    reviews: `https://www.google.com/maps/search/?api=1&query=${q("")}`,
+  };
+}
+
 function emptyVisit(event: string, id: string): FairVisit {
   return { event, exhibitor_id: id, status: "todo", note: "", lead_id: null, email_sent: false, updated_at: "" };
 }
@@ -379,6 +392,7 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
             </div>
             {filtered.map((r, i) => {
               const v = getVisit(r.id);
+              const look = lookAt(r);
               return (
                 <article key={r.id} id={`ex-${r.id}`} className={`m-card ${v.status}`}>
                   <div className="m-top">
@@ -387,6 +401,11 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
                       <div className="m-sub">{[r.city, r.category].filter(Boolean).join(" · ")}</div>
                     </div>
                     <div className="m-booth">{r.booth || "—"}<small>{r.floor}</small></div>
+                  </div>
+                  <div className="m-look">
+                    <a className={look.siteKnown ? "" : "miss"} href={look.site} target="_blank" rel="noreferrer" title={look.siteKnown ? "Открыть сайт" : "Сайта в каталоге нет — поиск"}>Сайт</a>
+                    <a className={look.instagramKnown ? "" : "miss"} href={look.instagram} target="_blank" rel="noreferrer" title={look.instagramKnown ? "Открыть Instagram" : "Ссылки на Instagram при обходе не было — поиск"}>Instagram</a>
+                    <a href={look.reviews} target="_blank" rel="noreferrer" title="Открыть место в Google Картах, отзывы там">Отзывы</a>
                   </div>
                   <div className="m-chips">
                     <span className={`m-chip ${r.priority}`}>Приоритет {r.priority}</span>
@@ -416,7 +435,6 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
                     </div>
                   )}
                   <div className="m-links">
-                    {r.website && <a href={r.website} target="_blank" rel="noreferrer">Сайт</a>}
                     {r.profile_url && <a href={r.profile_url} target="_blank" rel="noreferrer">{fair.profileLinkLabel || "Профиль"}</a>}
                     {r.sources?.slice(0, 3).map((src) => <a key={src} href={src} target="_blank" rel="noreferrer">источник</a>)}
                     {v.lead_id && <a href={`/crm/lead/${v.lead_id}`}>Лид #{v.lead_id} в CRM</a>}

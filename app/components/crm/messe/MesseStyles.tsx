@@ -58,6 +58,9 @@ export default function MesseStyles() {
       .m-label { font-size:11px; text-transform:uppercase; letter-spacing:.07em; color:#687a89; display:block; margin-bottom:2px; }
       .m-q { background:#f2f5f6; border-radius:8px; padding:9px 10px; font-size:14px; display:flex; gap:8px; align-items:flex-start; }
       .m-q span { flex:1; }
+      .m-look { display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; margin-top:10px; }
+      .m-look a { display:flex; align-items:center; justify-content:center; min-height:44px; padding:8px 4px; border-radius:10px; background:#17343a; color:#fff; font-weight:700; font-size:13px; text-decoration:none; text-align:center; line-height:1.15; }
+      .m-look a.miss { background:#fff; color:#5c6b73; border:1px dashed #bcc8d0; }
       .m-links { display:flex; gap:12px; flex-wrap:wrap; font-size:13px; margin-top:8px; }
       .m-card details { margin-top:8px; font-size:13px; color:#485b6d; }
       .m-card summary { cursor:pointer; font-weight:600; color:var(--ink); }
