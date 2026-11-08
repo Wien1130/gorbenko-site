@@ -5,7 +5,7 @@ import type { Exhibitor, FairVisit } from "../../../lib/crm/messe/data";
 import type { VisitProposal } from "../../../lib/crm/types";
 import { toast } from "./toast";
 
-type Step = "photo" | "reading" | "confirm" | "saving" | "drafting" | "email" | "sending" | "sent";
+type Step = "photo" | "reading" | "confirm" | "saving" | "saved" | "drafting" | "email" | "sending" | "sent";
 
 /**
  * «Визитка → лид → письмо» прямо на карточке участника.
@@ -112,7 +112,6 @@ export default function CardFlow({
       if (p.next_action) setNextAction(p.next_action);
       if (p.reminder_date && p.reminder_date > today()) {
         setReminderDate(p.reminder_date);
-        setSendDate(p.reminder_date);
       }
       if (step === "photo") setStep("confirm");
     } catch (e) {
@@ -146,7 +145,7 @@ export default function CardFlow({
     }
   }
 
-  async function saveLead() {
+  async function saveLead(then: "stay" | "email") {
     setError("");
     setStep("saving");
     try {
@@ -169,9 +168,9 @@ export default function CardFlow({
           contact_name: contact.name,
           contact_email: contact.email,
           contact_phone: contact.phone,
-          next_action: nextAction || "Отправить 2 конкретные идеи, предложить 15-минутный разговор",
-          reminder_date: reminderDate || nextWorkday(),
-          reminder_text: `Follow-up после ${fairTitle}: ${r.name}${nextAction ? ` — ${nextAction}` : ""}`,
+          next_action: reminderDate ? `Составить и отправить письмо ${fmtDate(reminderDate)}` : (nextAction || "Написать, когда будет повод"),
+          reminder_date: reminderDate,
+          reminder_text: reminderDate ? `Составить и отправить письмо: ${r.name}, стенд ${r.booth}` : "",
           notes,
           summary: fullSummary,
           transcript: talk.trim(),
@@ -184,7 +183,8 @@ export default function CardFlow({
       setLeadId(json.lead_id);
       setTo(contact.email);
       onLead(json.lead_id);
-      setStep("drafting");
+      toast("ok", reminderDate ? `Лид #${json.lead_id} сохранён. ${fmtDate(reminderDate)} напомню написать письмо.` : `Лид #${json.lead_id} сохранён, без напоминания.`);
+      setStep(then === "email" ? "drafting" : "saved");
     } catch (e) {
       setError(String(e instanceof Error ? e.message : e));
       setStep("confirm");
@@ -260,9 +260,9 @@ export default function CardFlow({
   return (
     <div className="m-flow">
       <div className="m-steps">
-        <b>{stepIdx <= 1 ? "1 Визитка" : "1 ✓"}</b><i>›</i>
-        <b style={{ color: stepIdx >= 2 ? undefined : "#b4bfc8" }}>{stepIdx <= 3 ? "2 Лид" : "2 ✓"}</b><i>›</i>
-        <b style={{ color: stepIdx >= 4 ? undefined : "#b4bfc8" }}>{step === "sent" ? "3 ✓ Отправлено" : "3 Письмо"}</b>
+        <b>{step === "saved" || stepIdx > 1 ? "1 ✓" : "1 Визитка"}</b><i>›</i>
+        <b style={{ color: step === "saved" || stepIdx >= 2 ? undefined : "#b4bfc8" }}>{step === "saved" || stepIdx > 3 ? "2 ✓" : "2 Лид"}</b><i>›</i>
+        <b style={{ color: step === "saved" ? "#b4bfc8" : stepIdx >= 4 ? undefined : "#b4bfc8" }}>{step === "sent" ? "3 ✓ Отправлено" : "3 Письмо"}</b>
         <span style={{ flex: 1 }} />
         <button className="ghost" onClick={onClose}>закрыть</button>
       </div>
@@ -274,7 +274,7 @@ export default function CardFlow({
           <button className={`m-mic ${recording ? "rec" : ""}`} onClick={() => void toggleRecord()} disabled={listening}>
             {listening ? "Слушаю и разбираю…" : recording ? `■ Стоп · ${seconds}s` : "🎤 Надиктовать разговор"}
           </button>
-          <div className="m-hint">Скажи по-русски: с кем говорил, что обсудили, когда он просил написать. Контакт, дата и письмо заполнятся сами.</div>
+          <div className="m-hint">Скажи по-русски: с кем говорил, что обсудили и когда напомнить тебе написать. Письмо само не отправится.</div>
           <label className="m-filelabel">
             📷 Сфотографировать визитку
             <input ref={fileRef} type="file" accept="image/*" capture="environment" onChange={(e) => e.target.files?.[0] && void onFile(e.target.files[0])} />
@@ -307,8 +307,8 @@ export default function CardFlow({
           {summary && <div className="m-hint"><b>Итог:</b> {summary}{nextAction ? ` · Дальше: ${nextAction}` : ""}</div>}
           <div className="row">
             <div className="field">
-              <span className="m-label">Напомнить / написать</span>
-              <input type="date" value={reminderDate} min={today()} onChange={(e) => { setReminderDate(e.target.value); setSendDate(e.target.value); }} />
+              <span className="m-label">Напомнить мне написать</span>
+              <input type="date" value={reminderDate} min={today()} onChange={(e) => setReminderDate(e.target.value)} />
             </div>
             <div className="field" style={{ justifyContent: "flex-end" }}>
               <button className={`m-mic small ${recording ? "rec" : ""}`} onClick={() => void toggleRecord()} disabled={listening || step === "saving"}>
@@ -316,14 +316,32 @@ export default function CardFlow({
               </button>
             </div>
           </div>
+          <div className="m-hint">
+            {reminderDate
+              ? `${fmtDate(reminderDate)} утром придёт напоминание в Telegram: составить и отправить письмо. Само оно не уйдёт.`
+              : "Дату не ставь — напоминания не будет. Письмо отсюда не отправляется."}
+          </div>
           <div className="m-actions">
             {!preview && <button onClick={() => fileRef.current?.click()}>📷 Визитка</button>}
             <input ref={fileRef} type="file" accept="image/*" capture="environment" style={{ display: "none" }} onChange={(e) => e.target.files?.[0] && void onFile(e.target.files[0])} />
-            <button className="pink" disabled={step === "saving" || listening || recording} onClick={() => void saveLead()}>
-              {step === "saving" ? "Сохраняю…" : "Сохранить лид → письмо"}
+            <button disabled={step === "saving" || listening || recording} onClick={() => void saveLead("email")}>
+              Сохранить и написать письмо
+            </button>
+            <button className="pink" disabled={step === "saving" || listening || recording} onClick={() => void saveLead("stay")}>
+              {step === "saving" ? "Сохраняю…" : "Сохранить лид"}
             </button>
           </div>
         </>
+      )}
+
+      {step === "saved" && (
+        <div className="m-ok">
+          Лид #{leadId} сохранён.{reminderDate ? ` ${fmtDate(reminderDate)} напомню составить письмо.` : " Напоминание не ставил."}
+          <div className="m-actions">
+            <button onClick={() => setStep("drafting")}>Написать письмо сейчас</button>
+            <button className="pink" onClick={onClose}>Готово</button>
+          </div>
+        </div>
       )}
 
       {step === "drafting" && <div className="m-busy">Пишу письмо по-немецки…</div>}
