@@ -1,11 +1,30 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ChangeEvent } from "react";
 import type { Exhibitor, FairVisit } from "../../../lib/crm/messe/data";
 import type { VisitProposal } from "../../../lib/crm/types";
 import { toast } from "./toast";
 
 type Step = "photo" | "reading" | "confirm" | "saving" | "saved" | "drafting" | "email" | "sending" | "sent";
+
+/** Скриншот с телефона бывает на несколько мегабайт. Ужимаем, текст визитки остаётся читаемым. */
+async function shrinkCard(file: File): Promise<File> {
+  try {
+    const bmp = await createImageBitmap(file);
+    const max = 2000;
+    const scale = Math.min(1, max / Math.max(bmp.width, bmp.height));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.max(1, Math.round(bmp.width * scale));
+    canvas.height = Math.max(1, Math.round(bmp.height * scale));
+    canvas.getContext("2d")?.drawImage(bmp, 0, 0, canvas.width, canvas.height);
+    bmp.close();
+    const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.82));
+    if (blob) return new File([blob], "card.jpg", { type: "image/jpeg" });
+  } catch {
+    /* отправим как есть */
+  }
+  return file;
+}
 
 /**
  * «Визитка → лид → письмо» прямо на карточке участника.
@@ -53,6 +72,7 @@ export default function CardFlow({
   const [seconds, setSeconds] = useState(0);
   const [listening, setListening] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
+  const shotRef = useRef<HTMLInputElement>(null);
   const draftedFor = useRef<number | null>(null);
   const recRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
@@ -122,13 +142,20 @@ export default function CardFlow({
     }
   }
 
+  function take(e: ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (file) void onFile(file);
+  }
+
   async function onFile(file: File) {
     setError("");
-    setPreview(URL.createObjectURL(file));
+    const image = await shrinkCard(file);
+    setPreview(URL.createObjectURL(image));
     setStep("reading");
     try {
       const fd = new FormData();
-      fd.append("photo", file);
+      fd.append("photo", image);
       fd.append("text", `${context} Это визитка. Вытащи имя, email, телефон. Название бизнеса: «${r.name}».`);
       fd.append("outcome", "warm_followup");
       const res = await fetch("/api/crm/capture", { method: "POST", body: fd });
@@ -276,9 +303,14 @@ export default function CardFlow({
           </button>
           <div className="m-hint">Скажи по-русски: с кем говорил, что обсудили и когда напомнить тебе написать. Письмо само не отправится.</div>
           <label className="m-filelabel">
-            📷 Сфотографировать визитку
-            <input ref={fileRef} type="file" accept="image/*" capture="environment" onChange={(e) => e.target.files?.[0] && void onFile(e.target.files[0])} />
+            📷 Сфотографировать
+            <input ref={fileRef} type="file" accept="image/*" capture="environment" onChange={(e) => take(e)} />
           </label>
+          <label className="m-filelabel">
+            🖼️ Загрузить скриншот
+            <input ref={shotRef} type="file" accept="image/*" onChange={(e) => take(e)} />
+          </label>
+          <div className="m-hint">Камера или готовая картинка визитки — разберу имя, email и телефон.</div>
           <div style={{ textAlign: "center", marginTop: 8 }}>
             <button className="ghost" onClick={() => setStep("confirm")}>Ввести контакт вручную</button>
           </div>
@@ -322,8 +354,10 @@ export default function CardFlow({
               : "Дату не ставь — напоминания не будет. Письмо отсюда не отправляется."}
           </div>
           <div className="m-actions">
-            {!preview && <button onClick={() => fileRef.current?.click()}>📷 Визитка</button>}
-            <input ref={fileRef} type="file" accept="image/*" capture="environment" style={{ display: "none" }} onChange={(e) => e.target.files?.[0] && void onFile(e.target.files[0])} />
+            {!preview && <button onClick={() => fileRef.current?.click()}>📷 Камера</button>}
+            {!preview && <button onClick={() => shotRef.current?.click()}>🖼️ Скриншот</button>}
+            <input ref={fileRef} type="file" accept="image/*" capture="environment" style={{ display: "none" }} onChange={(e) => take(e)} />
+            <input ref={shotRef} type="file" accept="image/*" style={{ display: "none" }} onChange={(e) => take(e)} />
             <button disabled={step === "saving" || listening || recording} onClick={() => void saveLead("email")}>
               Сохранить и написать письмо
             </button>

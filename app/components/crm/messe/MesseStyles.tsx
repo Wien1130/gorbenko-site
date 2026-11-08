@@ -100,6 +100,7 @@ export default function MesseStyles() {
       .m-sig { color:var(--muted); font-size:12.5px; white-space:pre-wrap; margin-top:4px; }
       .m-thumb { width:100%; max-height:160px; object-fit:cover; border-radius:8px; border:1px solid var(--line); margin-bottom:8px; }
       .m-filelabel { display:block; border:2px dashed #bcc8d0; border-radius:12px; padding:18px; text-align:center; font-weight:700; cursor:pointer; background:#fff; }
+      .m-filelabel + .m-filelabel { margin-top:8px; background:#f4f7f8; }
       .m-filelabel input { display:none; }
       .m-mic { display:block; width:100%; margin-bottom:10px; padding:18px; border-radius:12px; border:2px solid var(--pink); background:var(--pink); color:#fff; font-weight:800; font-size:16px; }
       .m-mic.rec { background:#fff; color:var(--pink); animation:mpulse 1.2s ease-in-out infinite; }
