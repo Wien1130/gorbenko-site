@@ -14,8 +14,12 @@ export default function FeaturedProjects() {
             <div>
               <SectionLabel>Projekte</SectionLabel>
               <h2 className="font-display mt-3 text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
-                Ausgewählte Projekte
+                Sichtbare Arbeiten
               </h2>
+              <p className="mt-3 max-w-xl text-[var(--muted)]">
+                Zwei Websites für Nagl, Shop in Arbeit für Rubberik, Mopeds,
+                Parfümerie — zuerst das Bild, dann der Fall.
+              </p>
             </div>
             <Link
               href="/projekte"
@@ -26,10 +30,14 @@ export default function FeaturedProjects() {
           </div>
         </Reveal>
 
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
+        <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-6">
           {featured.map((p, i) => (
-            <Reveal key={p.slug} delay={i * 0.1}>
-              <ProjectCard project={p} />
+            <Reveal
+              key={p.slug}
+              delay={i * 0.08}
+              className={i < 2 ? "lg:col-span-3" : "lg:col-span-2"}
+            >
+              <ProjectCard project={p} large={i < 2} />
             </Reveal>
           ))}
         </div>

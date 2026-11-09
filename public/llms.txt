@@ -24,10 +24,11 @@
 
 ## Projekte (Referenzen in Wien)
 
-- [Messerschmiede Stefan Nagl](https://gorbenko.at/projekte/nagl): Landingpage (custom.nagl-messer.at), KI-Assistent, virale Reels, Google & Meta Ads für eine Wiener Messerschmiede.
-- [Rubberik](https://gorbenko.at/projekte/rubberik): Neuer Online-Shop mit Produkt-Konfigurator (Material, Maße, Live-Preis) für ein Wiener Mode-Atelier.
-- [G-Bike Wien](https://gorbenko.at/projekte/gbike): Shopify-Shop für E-Scooter (gbikewien.at) plus TikTok-Einstieg.
-- [Zum Eisbären](https://gorbenko.at/projekte/zum-eisbaeren): Shopify-Shop für eine Wiener Parfümerie mit über 50 Jahren Tradition (zum-eisbaeren.at).
+- [Messerschmiede Nagl — Messer](https://gorbenko.at/projekte/nagl): Landingpage und Shop (custom.nagl-messer.at), digitaler Assistent in Instagram, Reels aus der Werkstatt.
+- [Messerschmiede Nagl — Schleifen](https://gorbenko.at/projekte/nagl-service): Zweite Website (service.nagl-messer.at) — Schleifen für Zuhause und Betriebe, Bestell-Rechner, Kurier.
+- [Rubberik](https://gorbenko.at/projekte/rubberik): Neuer Shop in Arbeit — Konfigurator, Maße, Live-Preis, digitaler Assistent, Bestell-CRM.
+- [G-Bike Wien](https://gorbenko.at/projekte/gbike): Shopify-Shop für E-Mopeds (gbikewien.at) plus TikTok-Einstieg.
+- [Gewußt wie Zum Eisbären](https://gorbenko.at/projekte/zum-eisbaeren): Shopify-Shop für eine Wiener Parfümerie mit über 50 Jahren Tradition (zum-eisbaeren.at).
 
 ## Kontakt
 

@@ -4,11 +4,21 @@ import type { Project } from "../lib/content";
 import TiltGlowCard from "./ui/TiltGlowCard";
 
 /** Card used on homepage (featured) and /projekte overview. */
-export default function ProjectCard({ project }: { project: Project }) {
+export default function ProjectCard({
+  project,
+  large = false,
+}: {
+  project: Project;
+  large?: boolean;
+}) {
   return (
     <Link href={`/projekte/${project.slug}`} className="block h-full">
       <TiltGlowCard className="h-full rounded-2xl border border-[var(--border)] bg-[var(--card)] transition hover:border-[var(--foreground)]/15">
-        <div className="relative aspect-[16/10] overflow-hidden rounded-t-2xl border-b border-[var(--border)]">
+        <div
+          className={`relative overflow-hidden rounded-t-2xl border-b border-[var(--border)] ${
+            large ? "aspect-[16/9]" : "aspect-[16/10]"
+          }`}
+        >
           {project.screenshots.desktop ? (
             <Image
               src={project.screenshots.desktop}

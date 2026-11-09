@@ -13,6 +13,7 @@ import SectionLabel from "../../components/ui/SectionLabel";
 import LighthouseRow from "../../components/LighthouseRow";
 import ProjectCard from "../../components/ProjectCard";
 import MassFigureDemo from "../../components/demos/MassFigureDemo";
+import AssistantPreview from "../../components/demos/AssistantPreview";
 import { getProject, projects, SITE_URL } from "../../lib/content";
 
 export function generateStaticParams() {
@@ -45,7 +46,7 @@ export default async function ProjectPage({
   const project = getProject(slug);
   if (!project) notFound();
 
-  const others = projects.filter((p) => p.slug !== project.slug).slice(0, 3);
+  const others = projects.filter((p) => p.slug !== project.slug).slice(0, 4);
 
   const jsonLd: Record<string, unknown> = {
     "@context": "https://schema.org",
@@ -143,11 +144,11 @@ export default async function ProjectPage({
           <div className="mx-auto max-w-5xl px-6">
             <Reveal>
               <h2 className="font-display text-xl font-bold tracking-tight sm:text-2xl">
-                Aktueller Stand
+                {project.galleryTitle ?? "Weitere Ansichten"}
               </h2>
-              <p className="mt-2 text-sm text-[var(--muted)]">
-                Screenshots aus dem Shop in Arbeit — noch nicht öffentlich.
-              </p>
+              {project.gallerySub && (
+                <p className="mt-2 text-sm text-[var(--muted)]">{project.gallerySub}</p>
+              )}
             </Reveal>
             <div className="mt-8 grid gap-6 md:grid-cols-1">
               {project.gallery.map((item, i) => (
@@ -163,6 +164,27 @@ export default async function ProjectPage({
                   </BrowserFrame>
                 </Reveal>
               ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {project.assistant && (
+        <section className="pb-16">
+          <div className="mx-auto max-w-5xl px-6">
+            <div className="grid items-center gap-10 md:grid-cols-2">
+              <Reveal>
+                <h2 className="font-display text-xl font-bold tracking-tight sm:text-2xl">
+                  Digitaler Assistent in Instagram
+                </h2>
+                <p className="mt-3 leading-relaxed text-[var(--muted)]">
+                  Keine echte Kundendaten — so sieht die Antwort aus, wenn jemand
+                  schreibt, während die Werkstatt oder das Atelier arbeitet.
+                </p>
+              </Reveal>
+              <Reveal delay={0.08}>
+                <AssistantPreview id={project.assistant} />
+              </Reveal>
             </div>
           </div>
         </section>
@@ -322,7 +344,7 @@ export default async function ProjectPage({
               </Link>
             </div>
           </Reveal>
-          <div className="mt-10 grid gap-5 md:grid-cols-3">
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {others.map((p, i) => (
               <Reveal key={p.slug} delay={i * 0.08}>
                 <ProjectCard project={p} />

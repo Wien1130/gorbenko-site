@@ -122,6 +122,9 @@ export type Project = {
   screenshots: { desktop?: string; mobile?: string };
   /** optional extra screens (configurator, detail pages, …) */
   gallery?: { src: string; alt: string }[];
+  galleryTitle?: string;
+  gallerySub?: string;
+  assistant?: "nagl" | "rubberik";
   badge?: string;
   featured?: boolean;
   seoDescription: string;
@@ -761,74 +764,133 @@ export const services: Service[] = [
 export const projects: Project[] = [
   {
     slug: "nagl",
-    client: "Messerschmiede Stefan Nagl",
-    branch: "Handwerk · Messerschmiede",
+    client: "Messerschmiede Nagl — Messer",
+    branch: "Handwerk · Custom-Messer",
     location: "Wien 1140",
-    tags: ["Website", "KI-Chatbot", "Content & Reels", "Werbung"],
+    tags: ["Website", "Shop", "KI-Assistent", "Reels"],
     liveUrl: "https://custom.nagl-messer.at",
     liveLabel: "custom.nagl-messer.at",
     teaser:
-      "Eine traditionsreiche Wiener Messerschmiede wird digital: Landingpage, KI-Assistent, virale Reels und Werbung — alles aus einer Hand.",
-    headline: "Vom Handwerksbetrieb zum digitalen Auftritt",
+      "Landingpage und Shop für handgeschmiedete Einzelstücke — plus digitaler Assistent in Instagram und Reels aus der Werkstatt.",
+    headline: "Shop für Unikate, direkt aus der Schmiede",
     situation:
-      "Die Messerschmiede Nagl besteht seit über 40 Jahren, der Werkstattstandort hat eine über 150-jährige Handwerksgeschichte. Das Handwerk ist erstklassig — aber digital war der Betrieb kaum sichtbar. Das Geschäft mit handgefertigten Custom-Messern brauchte einen eigenen, modernen Auftritt.",
+      "Die Messerschmiede Nagl besteht seit über 40 Jahren, der Standort hat eine über 150-jährige Handwerksgeschichte. Das Custom-Geschäft brauchte einen eigenen Auftritt: nicht nur eine Visitenkarte, sondern einen Shop, in dem fertige Messer sichtbar und kaufbar sind.",
     steps: [
       {
         title: "Landingpage für Custom-Messer",
-        text: "Video-Hero mit Funkenflug aus der Werkstatt, Testimonials von Wiener Köchen, FAQ und WhatsApp-Direktkontakt — blitzschnell geladen, auf ein Ziel fokussiert: die kostenlose Beratung.",
+        text: "Video-Hero mit Funkenflug aus der Werkstatt, klarer Weg zur Beratung und WhatsApp — auf ein Ziel: das nächste Messer.",
       },
       {
-        title: "KI-Assistent",
-        text: "Beantwortet Anfragen zu Stahlsorten, Preisklassen und Lieferung — und nimmt Anfragen auf, auch wenn Stefan am Schmiedefeuer steht.",
+        title: "Shop für fertige Einzelstücke",
+        text: "Küche und Jagd, jedes Messer einmal da. Kunde sieht das Stück, den Stahl, den Preis — und kann bestellen.",
       },
       {
-        title: "Instagram & virale Reels",
-        text: "Drehtage mit professionellem Licht direkt in der Werkstatt: Funken, Handwerk, echte Geschichten. Drehbuch mit über 90 Reel-Ideen in 9 Rubriken.",
+        title: "Digitaler Assistent in Instagram",
+        text: "Beantwortet Anfragen zu Stahl, Preis und Lieferung — und nimmt die Anfrage auf, auch wenn Stefan am Feuer steht.",
       },
       {
-        title: "Google Ads & Meta-Kampagnen",
-        text: "Kampagnen für aktive Suche (Google) und Entdeckung (Instagram/Facebook), mit sauberem Conversion-Tracking.",
+        title: "Reels aus der Werkstatt",
+        text: "Drehtage mit Licht in der Schmiede. Drehbuch mit über 90 Reel-Ideen in 9 Rubriken — Funken, Handwerk, echte Stücke.",
       },
     ],
     metrics: [
+      { value: 2, label: "Websites für denselben Betrieb (Shop + Schleifen)" },
       { value: 9, suffix: "+", label: "Video-Clips & Interview produziert" },
       { value: 90, suffix: "+", label: "Reel-Ideen im Drehbuch" },
-      { value: 40, suffix: "+", label: "Jahre Handwerkstradition, digital sichtbar gemacht" },
     ],
     // Zitat entfernt 06.10.2026: Entwurf, von Stefan nie freigegeben.
-    // UWG § 2 / Anhang Z 23: nur echte, freigegebene Kundenstimmen veröffentlichen.
-    // Wieder einsetzen erst nach schriftlicher Freigabe (WhatsApp reicht, Screenshot ablegen).
     screenshots: {
-      desktop: "/portfolio/nagl/desktop.webp",
+      desktop: "/portfolio/nagl/shop.webp",
       mobile: "/portfolio/nagl/mobile.webp",
     },
+    gallery: [
+      {
+        src: "/portfolio/nagl/desktop.webp",
+        alt: "Landingpage custom.nagl-messer.at",
+      },
+    ],
+    galleryTitle: "Landingpage und Shop",
+    gallerySub: "Zwei Seiten, ein Betrieb: Custom-Messer kaufen oder nach Wunsch schmieden lassen.",
+    assistant: "nagl",
     featured: true,
     seoDescription:
-      "Case Study: Wiener Messerschmiede digital — Landingpage, KI-Assistent, virale Reels und Werbekampagnen für Messerschmiede Stefan Nagl.",
+      "Case Study: Shop und Landingpage für handgeschmiedete Messer — Messerschmiede Stefan Nagl, Wien. Digitaler Assistent und Reels aus der Werkstatt.",
+  },
+  {
+    slug: "nagl-service",
+    client: "Messerschmiede Nagl — Schleifen",
+    branch: "Handwerk · Schärfservice",
+    location: "Wien 1140",
+    tags: ["Website", "Bestell-Rechner", "Kurier"],
+    liveUrl: "https://service.nagl-messer.at",
+    liveLabel: "service.nagl-messer.at",
+    teaser:
+      "Zweite Website für denselben Betrieb: Messer schleifen zuhause und für Restaurants, Hotels, Friseure — mit Rechner und Abholung.",
+    headline: "Schleifen buchen, nicht nachfragen",
+    situation:
+      "Stefan schleift seit Jahren — privat und für Betriebe. Der Weg zur Bestellung war Telefon und Zuruf. Es brauchte eine eigene Seite, die nicht mit dem Custom-Shop vermischt: Abholung, Preis, erster Auftrag.",
+    steps: [
+      {
+        title: "Seite für Zuhause",
+        text: "Kurier holt Küchenmesser ab, schleift in der Werkstatt, bringt scharf zurück. 4+1, klares Fenster, WhatsApp daneben.",
+      },
+      {
+        title: "Seite für Betriebe",
+        text: "Restaurants, Hotels, Cafés, Friseure, Nagelstudios: Erstauftrag, Kurier, Leihmesser — ohne dass die Küche anrufen muss.",
+      },
+      {
+        title: "Bestell-Rechner",
+        text: "Messer und Scheren eintragen, Preis sehen, Abholung buchen. Der Weg ist die Seite, nicht das Telefon.",
+      },
+    ],
+    metrics: [
+      { value: 2, label: "Einstiege: Zuhause und Betriebe" },
+      { value: 0, text: "Rechner", label: "Preis vor der Buchung, nicht danach" },
+      { value: 0, text: "Kurier", label: "Abholung in Wien, Rückgabe am nächsten Werktag" },
+    ],
+    screenshots: {
+      desktop: "/portfolio/nagl-service/desktop.webp",
+      mobile: "/portfolio/nagl-service/mobile.webp",
+    },
+    gallery: [
+      {
+        src: "/portfolio/nagl-service/gastro.webp",
+        alt: "Gastro-Schärfservice für Wiener Betriebe",
+      },
+    ],
+    galleryTitle: "Für Betriebe",
+    gallerySub: "Dieselbe Seite, zweiter Einstieg: Küche, Friseur, Nagelstudio.",
+    featured: true,
+    seoDescription:
+      "Case Study: Website fürs Messerschleifen — privat und für Wiener Betriebe. Bestell-Rechner, Kurier, service.nagl-messer.at.",
   },
   {
     slug: "rubberik",
     client: "Rubberik",
     branch: "Mode · Maßanfertigung",
     location: "Wien",
-    tags: ["Online-Shop", "Konfigurator", "Werbung"],
+    tags: ["Online-Shop", "Konfigurator", "KI-Assistent", "CRM"],
     teaser:
-      "Neuer Shop für ein Wiener Latex-Atelier — gerade in Arbeit: Produkt-Konfigurator mit Materialwahl, Maßerfassung und Live-Preis. Screenshots vom aktuellen Stand.",
-    headline: "Online-Shop mit Maß-Konfigurator",
+      "Neuer Shop fürs Wiener Latex-Atelier — in Arbeit: Farben, Maße, Live-Preis, Bestell-CRM und digitaler Assistent in Instagram.",
+    headline: "Konfigurator, Maße, Bestellungen — ein Shop",
     situation:
-      "Das Atelier fertigt Latex-Mode nach Maß — der bisherige Shop war technisch veraltet und konnte den wichtigsten Schritt nicht abbilden: die individuelle Konfiguration. Jede Bestellung brauchte manuelle Abstimmung per E-Mail. Wir bauen den Shop gerade neu.",
+      "Das Atelier näht Latex nach Maß. Der alte Shop konnte den wichtigen Schritt nicht: Farbe, Ausstattung, Maße, Preis in einem Durchgang. Jede Bestellung lief über E-Mail. Wir bauen den Shop neu — Konfigurator steht, Atelier 2D/3D und Auftrags-CRM kommen als nächstes.",
     steps: [
       {
-        title: "Neuer Shop mit moderner Architektur",
-        text: "Headless-Aufbau (Medusa + Next.js): schnell, flexibel und bereit für den europäischen Markt — aktuell im Aufbau.",
+        title: "Shop und Konfigurator",
+        text: "Farbe und Ausstattung wählen, Preis live. Kein Pingpong, bevor jemand weiß, was das Kleid kostet.",
       },
       {
-        title: "Produkt-Konfigurator",
-        text: "Farbe und Ausstattung wählen, Maße online erfassen, Preis wird live berechnet — der komplette Bestellprozess ohne E-Mail-Pingpong.",
+        title: "Maße online",
+        text: "Maßblatt im Browser statt Foto per Chat. Die Bestellung trägt die Zahlen, nicht ein Screenshot.",
       },
       {
-        title: "Meta-Kampagnen",
-        text: "Laufende Werbung auf Instagram und Facebook für den DACH-Raum — parallel zum Shop-Relaunch.",
+        title: "Digitaler Assistent in Instagram",
+        text: "Antwortet auf Größe, Farbe, Lieferung — und übergibt an das Atelier, wenn es persönlich werden muss.",
+      },
+      {
+        title: "Als Nächstes: Atelier und Aufträge",
+        text: "2D-Anprobe, 3D-Prototyp, Bestell-CRM. Noch nicht öffentlich — der Konfigurator schon.",
       },
     ],
     metrics: [
@@ -853,22 +915,25 @@ export const projects: Project[] = [
         alt: "Interaktive Maßerfassung",
       },
     ],
+    galleryTitle: "Konfigurator — aktueller Stand",
+    gallerySub: "Noch nicht der öffentliche Shop — der Weg von der Farbe bis zur Maßzahl ist schon da.",
+    assistant: "rubberik",
     badge: "In Arbeit",
     featured: true,
     seoDescription:
-      "Case Study in Arbeit: Neuer Online-Shop mit Produkt-Konfigurator für ein Wiener Latex-Atelier — Materialwahl, Maßerfassung, Live-Preisberechnung.",
+      "Case Study in Arbeit: Neuer Online-Shop mit Produkt-Konfigurator für ein Wiener Latex-Atelier — Materialwahl, Maßerfassung, Live-Preis, digitaler Assistent.",
   },
   {
     slug: "gbike",
     client: "G-Bike Wien",
-    branch: "Handel · E-Mobilität",
+    branch: "Handel · E-Scooter & Mopeds",
     location: "Staglgasse 12, 1150 Wien",
     tags: ["Online-Shop", "TikTok"],
     liveUrl: "https://gbikewien.at",
     liveLabel: "gbikewien.at",
     teaser:
-      "E-Scooter-Store in Wien: Shopify-Shop mit komplettem Katalog und Bestellfunktion, plus Einstieg auf TikTok.",
-    headline: "Shopify-Shop für E-Scooter",
+      "Mopeds und E-Scooter aus Wien 1150 — Katalog, Preise, Bestellung online, Einstieg auf TikTok.",
+    headline: "Shopify-Shop für E-Mopeds",
     situation:
       "G-Bike verkauft E-Scooter und E-Bikes im Geschäft in Wien 1150 — aber online war der Betrieb nicht präsent. Kunden konnten weder das Sortiment sehen noch Preise vergleichen.",
     steps: [
@@ -896,7 +961,7 @@ export const projects: Project[] = [
   },
   {
     slug: "zum-eisbaeren",
-    client: "Zum Eisbären",
+    client: "Gewußt wie Zum Eisbären",
     branch: "Handel · Parfümerie & Kosmetik",
     location: "Hietzinger Hauptstraße 72, 1130 Wien",
     tags: ["Online-Shop"],
@@ -930,6 +995,7 @@ export const projects: Project[] = [
       desktop: "/portfolio/zum-eisbaeren/desktop.webp",
       mobile: "/portfolio/zum-eisbaeren/mobile.webp",
     },
+    featured: true,
     seoDescription:
       "Case Study: Shopify-Shop für die Wiener Parfümerie Zum Eisbären — 50 Jahre Tradition, jetzt mit Online-Sortiment, Events und Newsletter.",
   },

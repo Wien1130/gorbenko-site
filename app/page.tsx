@@ -16,9 +16,9 @@ export default function Home() {
       <SiteHeader />
       <HomeHero />
       <ClientMarquee />
+      <FeaturedProjects />
       <StatsRow />
       <ServicesBento />
-      <FeaturedProjects />
       <ConsultationSteps />
       <AboutTeaser />
       <HomeFaq />

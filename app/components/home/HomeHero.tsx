@@ -20,8 +20,8 @@ export default function HomeHero() {
               <span className="text-[var(--accent)]">Autopilot</span>.
             </h1>
             <p className="mt-6 max-w-lg text-lg leading-relaxed text-[var(--muted)]">
-              Ich baue Websites, KI-Chatbots, Content und Werbung für Wiener
-              Betriebe — alles aus einer Hand. Sie kümmern sich um Ihr
+              Ich baue Websites, digitale Assistenten, Content und Werbung für
+              Wiener Betriebe — alles aus einer Hand. Sie kümmern sich um Ihr
               Geschäft, die Technik übernehme ich.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">

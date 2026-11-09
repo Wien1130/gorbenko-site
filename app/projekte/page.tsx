@@ -10,7 +10,7 @@ import { projects } from "../lib/content";
 export const metadata: Metadata = {
   title: "Projekte — Websites, KI-Assistenten & Kampagnen für Wiener Betriebe",
   description:
-    "Echte Projekte für echte Betriebe in Wien: Messerschmiede Nagl, Rubberik, G-Bike, Zum Eisbären. Websites, KI-Assistenten, Reels, Werbung.",
+    "Echte Projekte für Betriebe in Wien: zwei Websites für Messerschmiede Nagl, Rubberik, G-Bike, Gewußt wie Zum Eisbären. Websites, digitale Assistenten, Reels.",
   alternates: { canonical: "/projekte" },
 };
 
