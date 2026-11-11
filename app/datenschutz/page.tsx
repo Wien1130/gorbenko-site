@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Logo from "../components/Logo";
 
 export const metadata: Metadata = {
   title: "Datenschutzerklärung | Gorbenko",
@@ -10,14 +9,7 @@ export const metadata: Metadata = {
 export default function DatenschutzPage() {
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-      {/* Header */}
-      <header className="border-b border-[var(--border)] bg-[var(--background)]/80 backdrop-blur-xl">
-        <div className="mx-auto flex h-16 max-w-4xl items-center px-6">
-          <a href="/"><Logo /></a>
-        </div>
-      </header>
-
-      <div className="mx-auto max-w-4xl px-6 py-16 md:py-24">
+      <div className="mx-auto max-w-4xl px-6 pb-16 pt-28 md:pb-24">
         <p className="mb-4 text-sm font-medium uppercase tracking-[0.2em] text-[var(--accent)]">
           Rechtliches
         </p>

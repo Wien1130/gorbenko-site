@@ -30,10 +30,7 @@ export default function SiteAssistantLauncher() {
   const hidden = HIDDEN_PREFIXES.some(
     (p) => pathname === p || pathname.startsWith(`${p}/`)
   );
-  // Hero already hosts the assistant — no FAB on home
-  const isHome = pathname === "/";
-
-  if (!mounted || hidden || isHome) return null;
+  if (!mounted || hidden) return null;
 
   return (
     <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3">

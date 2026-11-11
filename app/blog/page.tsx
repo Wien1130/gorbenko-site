@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import SiteHeader from "../components/SiteHeader";
-import SiteFooter from "../components/SiteFooter";
 import CTASection from "../components/ui/CTASection";
 import Reveal from "../components/ui/Reveal";
 import SectionLabel from "../components/ui/SectionLabel";
@@ -18,8 +16,6 @@ export default function BlogPage() {
   const sorted = [...posts].sort((a, b) => (a.date < b.date ? 1 : -1));
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-      <SiteHeader />
-
       <section className="relative overflow-hidden pb-16 pt-36">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-10%,var(--accent-dim),transparent_60%)]" />
         <div className="relative mx-auto max-w-6xl px-6">
@@ -69,7 +65,6 @@ export default function BlogPage() {
       </section>
 
       <CTASection />
-      <SiteFooter />
     </main>
   );
 }

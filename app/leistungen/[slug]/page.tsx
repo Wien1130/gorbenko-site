@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import SiteHeader from "../../components/SiteHeader";
-import SiteFooter from "../../components/SiteFooter";
 import CTASection from "../../components/ui/CTASection";
 import FAQ from "../../components/ui/FAQ";
 import MetricValue from "../../components/ui/MetricValue";
@@ -62,8 +60,6 @@ export default async function ServicePage({
 
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-      <SiteHeader />
-
       {/* Hero */}
       <section className="relative overflow-hidden pb-16 pt-36">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-10%,var(--accent-dim),transparent_60%)]" />
@@ -401,7 +397,6 @@ export default async function ServicePage({
       </section>
 
       <CTASection />
-      <SiteFooter />
 
       <script
         type="application/ld+json"
