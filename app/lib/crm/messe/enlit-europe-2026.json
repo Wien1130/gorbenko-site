@@ -56,17 +56,27 @@
   {
    "id": "ru",
    "label": "По-русски",
-   "note": "Вместе: русский материал компании и имена на публичном профиле, похожие на русские или украинские. Имя не доказывает язык человека на стенде. Болгарские фамилии и «Igor» при испанской фамилии сюда не ставил."
+   "note": "Сначала весь этот список. Залы, не этажи здания: B, потом C, потом A. Внутри зала — по букве ряда. Это не измеренный короткий путь. Имя не доказывает язык человека."
+  },
+  {
+   "id": "vienna",
+   "label": "Вена",
+   "note": "Город Вена, любой размер. Павильон Австрии сам по себе сюда не попадает. Крупные организации не приоритет продажи."
+  },
+  {
+   "id": "austria",
+   "label": "Австрия",
+   "note": "Австрия, но не подтверждённая Вена: Грац, павильон Австрии и названия со словом Austria. Город офиса, где не открыт, так и оставлен. Бавария сюда не входит."
+  },
+  {
+   "id": "de",
+   "label": "Начать по-немецки",
+   "note": "Начать по-немецки, если компания не вынесена во вкладки Вена и Австрия: Германия, Бавария и те, чей город не установлен. Личный язык не подтверждён."
   },
   {
    "id": "first",
    "label": "Сначала",
    "note": "Приоритет A в порядке залов B → C → A. Это рекомендация, с кем говорить раньше. Не длина проходов и не подтверждённый заказ."
-  },
-  {
-   "id": "de",
-   "label": "Начать по-немецки",
-   "note": "Рекомендация начать по-немецки по публичным сведениям о компании. Личный язык человека не установлен, пока не отмечен после разговора."
   },
   {
    "id": "video",
@@ -155,7 +165,7 @@
    ],
    "offer": "Ролик одного устройства: установка, путь данных до интерфейса, результат для интегратора; версии для дилеров и продаж. Сайт и контент уже существуют.",
    "opening_de": "Кто у вас делает продуктовые видео для интеграторов? Можно ли показать монтаж одного модуля и результат в интерфейсе за минуту?",
-   "observed": "Ретрофит-сенсоры и удалённый сбор показаний; опубликовано приглашение на эту выставку по-русски.",
+   "observed": "Профиль 11.11: страна Ukraine, стенд B.l90. Бренд Jooby входит в Infomir, штаб и производство на Украине. Есть русскоязычное приглашение на эту выставку.",
    "hypothesis": "",
    "website": "https://jooby.eu/",
    "email": "",
@@ -169,13 +179,14 @@
     "https://jooby.eu/ru/blog/jooby-predstavit-resheniya-dlya-umnoj-infrastruktury-na-enlit-europe-2026/"
    ],
    "language_group": "RU-public",
-   "language_evidence": "Есть официальная русскоязычная публикация именно об Enlit 2026. Язык сотрудников и присутствие указанного контакта не подтверждены.",
+   "language_evidence": "Есть официальная русскоязычная публикация именно об Enlit 2026. Страна на профиле — Ukraine. Это не язык человека на стенде.",
    "personal_language_confirmed": false,
    "site_quality": "Не проводился полный визуальный/мобильный аудит",
    "review_depth": "Профиль 2026 и выбранные официальные страницы; коммерческая гипотеза, бюджет и спрос не проверены.",
    "checked_at": "2026-11-11",
    "tier": "shortlist",
-   "name_cue": "ru-ua"
+   "name_cue": "ru-ua",
+   "place": "ukraine"
   },
   {
    "id": "enlit26-add-grup",
@@ -252,7 +263,8 @@
    "site_quality": "Не проводился полный визуальный/мобильный аудит",
    "review_depth": "Профиль 2026 и выбранные официальные страницы; коммерческая гипотеза, бюджет и спрос не проверены.",
    "checked_at": "2026-11-11",
-   "tier": "shortlist"
+   "tier": "shortlist",
+   "place": "austria"
   },
   {
    "id": "enlit26-gridoo",
@@ -291,7 +303,8 @@
    "site_quality": "Не проводился полный визуальный/мобильный аудит",
    "review_depth": "Профиль 2026 и выбранные официальные страницы; коммерческая гипотеза, бюджет и спрос не проверены.",
    "checked_at": "2026-11-11",
-   "tier": "shortlist"
+   "tier": "shortlist",
+   "place": "austria"
   },
   {
    "id": "enlit26-greenwood-power-gmbh-1",
@@ -348,7 +361,7 @@
    ],
    "offer": "Демонстрация одного сценария счётчик → платформа и материалы для интеграторов; язык спросить, не выводить по имени.",
    "opening_de": "Who creates the product demonstrations your partners use after the exhibition?",
-   "observed": "Smart metering/AMI; участие и маркетинговый контакт подтверждены каталогом. Русский язык не установлен.",
+   "observed": "Профиль 11.11: страна Czechia, стенд B.k121. Компания не украинская. Имя Alona Serhiienko на профиле — только повод спросить язык.",
    "hypothesis": "",
    "website": "https://nik-global.com",
    "email": "",
@@ -361,13 +374,14 @@
     "https://www.enlit.world/companies/nik-central-europe"
    ],
    "language_group": "unknown",
-   "language_evidence": "Язык не установлен. Не определять его по имени, гражданству или адресу.",
+   "language_evidence": "Страна на профиле — Czechia. Имя Alona Serhiienko похоже на украинское, но язык человека не подтверждён.",
    "personal_language_confirmed": false,
    "site_quality": "Не проводился полный визуальный/мобильный аудит",
    "review_depth": "Профиль 2026 и выбранные официальные страницы; коммерческая гипотеза, бюджет и спрос не проверены.",
    "checked_at": "2026-11-11",
    "tier": "shortlist",
-   "name_cue": "ru-ua"
+   "name_cue": "ru-ua",
+   "place": "czechia"
   },
   {
    "id": "enlit26-clever-pv",
@@ -670,7 +684,8 @@
    "site_quality": "Не проводился полный визуальный/мобильный аудит",
    "review_depth": "Профиль 2026 и выбранные официальные страницы; коммерческая гипотеза, бюджет и спрос не проверены.",
    "checked_at": "2026-11-11",
-   "tier": "shortlist"
+   "tier": "shortlist",
+   "place": "austria"
   },
   {
    "id": "enlit26-bayern-international",
@@ -740,7 +755,7 @@
     "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
     "https://www.enlit.world/companies/envelio-gmbh"
    ],
-   "language_group": "en",
+   "language_group": "EN",
    "language_evidence": "Заголовок главной на английском: «envelio • Power grid digitalization with smart grid solutions». Это не язык сотрудника.",
    "personal_language_confirmed": false,
    "site_quality": "Главная не аудировалась целиком",
@@ -778,7 +793,7 @@
     "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
     "https://www.enlit.world/companies/cuculus-gmbh"
    ],
-   "language_group": "de",
+   "language_group": "DE-market",
    "language_evidence": "Заголовок главной: «Start - Cuculus GmbH». Это язык сайта, не сотрудника.",
    "personal_language_confirmed": false,
    "site_quality": "Главная не аудировалась целиком",
@@ -816,7 +831,7 @@
     "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
     "https://www.enlit.world/companies/smight-gmbh"
    ],
-   "language_group": "en",
+   "language_group": "EN",
    "language_evidence": "Сайт в профиле открыт как /en/. Абзац профиля на английском. Это не язык сотрудника.",
    "personal_language_confirmed": false,
    "site_quality": "Главная не аудировалась целиком",
@@ -855,13 +870,14 @@
     "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/austria-pavilion",
     "https://www.enlit.world/companies/i2m"
    ],
-   "language_group": "en",
+   "language_group": "EN",
    "language_evidence": "Абзац профиля на английском и прямо говорит Graz / Austria. Это не язык сотрудника.",
    "personal_language_confirmed": false,
    "site_quality": "Главная не аудировалась целиком",
    "review_depth": "Заголовок главной пустой. В первых 25 КБ есть слова: video. Это не проверенный ролик.",
    "checked_at": "2026-11-11",
-   "tier": "reviewed"
+   "tier": "reviewed",
+   "place": "austria"
   },
   {
    "id": "enlit26-graphwise",
@@ -894,13 +910,14 @@
     "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/austria-pavilion",
     "https://www.enlit.world/companies/graphwise"
    ],
-   "language_group": "en",
+   "language_group": "EN",
    "language_evidence": "Абзац профиля на английском. Это не язык сотрудника.",
    "personal_language_confirmed": false,
    "site_quality": "Главная не аудировалась целиком",
    "review_depth": "Заголовок главной пустой. В первых 25 КБ слова demo/video не встретились. Страница целиком не читалась.",
    "checked_at": "2026-11-11",
-   "tier": "reviewed"
+   "tier": "reviewed",
+   "place": "austria"
   },
   {
    "id": "enlit26-cubro",
@@ -933,13 +950,14 @@
     "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/austria-pavilion",
     "https://www.enlit.world/companies/cubro-network-visibility"
    ],
-   "language_group": "en",
+   "language_group": "EN",
    "language_evidence": "Профиль и ссылка на сайт на английском. В тексте профиля штаб-квартира Vienna. Это не язык сотрудника.",
    "personal_language_confirmed": false,
    "site_quality": "Главная не аудировалась целиком",
    "review_depth": "Заголовок главной: «Network Visibility Solutions - Monitoring &amp; Analytics». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
    "checked_at": "2026-11-11",
-   "tier": "reviewed"
+   "tier": "reviewed",
+   "place": "wien"
   },
   {
    "id": "enlit26-insys",
@@ -1010,7 +1028,7 @@
     "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
     "https://www.enlit.world/companies/a.-eberle-gmbh-and-co.-kg"
    ],
-   "language_group": "en",
+   "language_group": "EN",
    "language_evidence": "Заголовок главной на английском. Это не язык сотрудника.",
    "personal_language_confirmed": false,
    "site_quality": "Главная не аудировалась целиком",
@@ -1048,7 +1066,7 @@
     "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
     "https://www.enlit.world/companies/liveeo-gmbh"
    ],
-   "language_group": "en",
+   "language_group": "EN",
    "language_evidence": "Заголовок главной на английском. Это не язык сотрудника.",
    "personal_language_confirmed": false,
    "site_quality": "Главная не аудировалась целиком",
@@ -1084,7 +1102,7 @@
     "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
     "https://www.enlit.world/companies/neo-messtechnik-gmbh"
    ],
-   "language_group": "en",
+   "language_group": "EN",
    "language_evidence": "Заголовок главной: «Home of Power Quality». Это не язык сотрудника.",
    "personal_language_confirmed": false,
    "site_quality": "Главная не аудировалась целиком",
@@ -1122,13 +1140,14 @@
     "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
     "https://www.enlit.world/companies/reisenbauer-solutions-gmbh"
    ],
-   "language_group": "de",
+   "language_group": "DE-market",
    "language_evidence": "Заголовок главной на немецком: «Reisenbauer Solutions – Technologie für eine nachhaltige Zukunft». Это язык сайта, не сотрудника.",
    "personal_language_confirmed": false,
    "site_quality": "Главная не аудировалась целиком",
    "review_depth": "Заголовок главной: «Reisenbauer Solutions &#8211; Technologie für eine nachhaltige Zukunft.». В первых 25 КБ слова demo/video не встретились. Страница целиком не читалась.",
    "checked_at": "2026-11-11",
-   "tier": "reviewed"
+   "tier": "reviewed",
+   "place": "wien"
   },
   {
    "id": "enlit26-delphi",
@@ -1160,7 +1179,7 @@
     "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
     "https://www.enlit.world/companies/delphi-data-labs-gmbh"
    ],
-   "language_group": "en",
+   "language_group": "EN",
    "language_evidence": "Заголовок главной на английском, адрес beta. Это не язык сотрудника.",
    "personal_language_confirmed": false,
    "site_quality": "Главная не аудировалась целиком",
@@ -1236,7 +1255,7 @@
     "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/innovators-zone",
     "https://www.enlit.world/companies/enfera"
    ],
-   "language_group": "en",
+   "language_group": "EN",
    "language_evidence": "Абзац профиля на английском. Сайт enfera.at. Это не язык сотрудника.",
    "personal_language_confirmed": false,
    "site_quality": "Главная не аудировалась целиком",
@@ -1273,7 +1292,7 @@
     "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/bavaria-pavilion",
     "https://www.enlit.world/companies/createch-engineering"
    ],
-   "language_group": "de",
+   "language_group": "DE-market",
    "language_evidence": "Заголовок главной на немецком: «Ingenieurdienstleistungen und Geoinformationslösungen». Это язык сайта, не сотрудника.",
    "personal_language_confirmed": false,
    "site_quality": "Главная не аудировалась целиком",
@@ -1312,7 +1331,7 @@
     "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/bavaria-pavilion",
     "https://www.enlit.world/companies/gustav-klein-gmbh-and-co.-kg"
    ],
-   "language_group": "de",
+   "language_group": "DE-market",
    "language_evidence": "Заголовок главной: «Startseite - Gustav Klein». Это язык сайта, не сотрудника.",
    "personal_language_confirmed": false,
    "site_quality": "Главная не аудировалась целиком",
@@ -1388,7 +1407,7 @@
     "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/bavaria-pavilion",
     "https://www.enlit.world/companies/pcvue-gmbh"
    ],
-   "language_group": "en",
+   "language_group": "EN",
    "language_evidence": "Заголовок главной: «HMI SCADA PcVue». Это не язык сотрудника.",
    "personal_language_confirmed": false,
    "site_quality": "Главная не аудировалась целиком",
@@ -1426,7 +1445,7 @@
     "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
     "https://www.enlit.world/companies/mte-meter-test-equipment-ag"
    ],
-   "language_group": "en",
+   "language_group": "EN",
    "language_evidence": "Текст профиля на английском. Адрес в профиле: Zug, Switzerland. Это не язык сотрудника.",
    "personal_language_confirmed": false,
    "site_quality": "Главная не аудировалась целиком",
@@ -1465,7 +1484,7 @@
     "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/innovators-zone",
     "https://www.enlit.world/companies/exnaton"
    ],
-   "language_group": "de",
+   "language_group": "DE-market",
    "language_evidence": "Заголовок главной на немецком: «Software für smarte Energieprodukte». Абзац профиля на английском. Это не язык сотрудника.",
    "personal_language_confirmed": false,
    "site_quality": "Главная не аудировалась целиком",
@@ -1504,13 +1523,14 @@
     "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/austria-pavilion",
     "https://www.enlit.world/companies/nobile"
    ],
-   "language_group": "de",
+   "language_group": "DE-market",
    "language_evidence": "Заголовок главной на немецком: «nobile | Ihre Neo-Utility». Это язык сайта, не сотрудника.",
    "personal_language_confirmed": false,
    "site_quality": "Главная не аудировалась целиком",
    "review_depth": "Заголовок главной: «nobile | Ihre Neo-Utility | Nobile». В первых 25 КБ есть слова: demo, video. Это не проверенный ролик.",
    "checked_at": "2026-11-11",
-   "tier": "reviewed"
+   "tier": "reviewed",
+   "place": "austria"
   },
   {
    "id": "enlit26-kuvag",
@@ -1543,13 +1563,14 @@
     "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/austria-pavilion",
     "https://www.enlit.world/companies/kuvag"
    ],
-   "language_group": "de",
+   "language_group": "DE-market",
    "language_evidence": "Заголовок главной: «Startseite - KUVAG GmbH & Co KG». Это язык сайта, не сотрудника.",
    "personal_language_confirmed": false,
    "site_quality": "Главная не аудировалась целиком",
    "review_depth": "Заголовок главной: «Startseite - KUVAG GmbH &amp; Co KG». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
    "checked_at": "2026-11-11",
-   "tier": "reviewed"
+   "tier": "reviewed",
+   "place": "austria"
   },
   {
    "id": "enlit26-weptech",
@@ -1579,7 +1600,7 @@
     "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
     "https://www.enlit.world/companies/weptech-elektronik-gmbh"
    ],
-   "language_group": "en",
+   "language_group": "EN",
    "language_evidence": "Ссылка профиля ведёт на /en/. Заголовок главной на английском. Это не язык сотрудника.",
    "personal_language_confirmed": false,
    "site_quality": "Главная не аудировалась целиком",
@@ -1616,7 +1637,7 @@
     "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/innovators-zone",
     "https://www.enlit.world/companies/caprikorn"
    ],
-   "language_group": "en",
+   "language_group": "EN",
    "language_evidence": "Заголовок главной на английском: «Caprikorn - To power and beyond». Страна на профиле не указана.",
    "personal_language_confirmed": false,
    "site_quality": "Главная не аудировалась целиком",
@@ -1880,6 +1901,302 @@
    "personal_language_confirmed": false,
    "site_quality": "Сайт компании не разбирался",
    "review_depth": "11.11 просмотрены публичные профили каталога, 634 страницы. Взято только имя с аватара. Продукт целиком не читался.",
+   "checked_at": "2026-11-11",
+   "tier": "catalog"
+  },
+  {
+   "id": "enlit26-wien-energie",
+   "name": "Wien Energie",
+   "booth": "B.b86",
+   "booths": [
+    "B.b86"
+   ],
+   "floor": "B",
+   "category": "",
+   "city": "Wien",
+   "priority": "B",
+   "site_priority": "",
+   "services": [],
+   "offer": "Оффер не сформулирован. На вкладке из-за города, не из-за гипотезы заказа.",
+   "opening_de": "",
+   "observed": "Каталог: стенд B.b86, тот же номер, что у Wiener Netze. Отдельная карточка. Крупная компания, в приоритет продажи не ставил.",
+   "hypothesis": "",
+   "website": "",
+   "email": "",
+   "rank": 90,
+   "profile_url": "https://www.enlit.world/companies/wien-energie",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "город",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/companies/wien-energie"
+   ],
+   "language_group": "unknown",
+   "language_evidence": "Язык сотрудников не устанавливался. Карточка про город, не про язык.",
+   "personal_language_confirmed": false,
+   "place": "wien",
+   "site_quality": "Сайт не разбирался",
+   "review_depth": "Строка каталога 11.11 и страница павильона. Профиль компании заново не разбирался.",
+   "checked_at": "2026-11-11",
+   "tier": "catalog"
+  },
+  {
+   "id": "enlit26-wiener-netze",
+   "name": "Wiener Netze",
+   "booth": "B.b86",
+   "booths": [
+    "B.b86"
+   ],
+   "floor": "B",
+   "category": "",
+   "city": "Wien",
+   "priority": "B",
+   "site_priority": "",
+   "services": [],
+   "offer": "Оффер не сформулирован. На вкладке из-за города, не из-за гипотезы заказа.",
+   "opening_de": "",
+   "observed": "Каталог: стенд B.b86, вместе с Wien Energie, не слито. Крупная компания, в приоритет продажи не ставил.",
+   "hypothesis": "",
+   "website": "",
+   "email": "",
+   "rank": 90,
+   "profile_url": "https://www.enlit.world/companies/wiener-netze",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "город",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/companies/wiener-netze"
+   ],
+   "language_group": "unknown",
+   "language_evidence": "Язык сотрудников не устанавливался. Карточка про город, не про язык.",
+   "personal_language_confirmed": false,
+   "place": "wien",
+   "site_quality": "Сайт не разбирался",
+   "review_depth": "Строка каталога 11.11 и страница павильона. Профиль компании заново не разбирался.",
+   "checked_at": "2026-11-11",
+   "tier": "catalog"
+  },
+  {
+   "id": "enlit26-ait",
+   "name": "Austrian Institute of Technology",
+   "booth": "B.b88",
+   "booths": [
+    "B.b88"
+   ],
+   "floor": "B",
+   "category": "",
+   "city": "Wien",
+   "priority": "B",
+   "site_priority": "",
+   "services": [],
+   "offer": "Оффер не сформулирован. На вкладке из-за города, не из-за гипотезы заказа.",
+   "opening_de": "",
+   "observed": "Штаб AIT в Вене. Город на странице профиля в этот заход не перечитывал. В приоритет продажи не ставил.",
+   "hypothesis": "",
+   "website": "",
+   "email": "",
+   "rank": 90,
+   "profile_url": "https://www.enlit.world/companies/austrian-institute-of-technology",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "город",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/companies/austrian-institute-of-technology"
+   ],
+   "language_group": "unknown",
+   "language_evidence": "Язык сотрудников не устанавливался. Карточка про город, не про язык.",
+   "personal_language_confirmed": false,
+   "place": "wien",
+   "site_quality": "Сайт не разбирался",
+   "review_depth": "Строка каталога 11.11 и страница павильона. Профиль компании заново не разбирался.",
+   "checked_at": "2026-11-11",
+   "tier": "catalog"
+  },
+  {
+   "id": "enlit26-aba",
+   "name": "Austrian Business Agency",
+   "booth": "A.e86",
+   "booths": [
+    "A.e86"
+   ],
+   "floor": "A",
+   "category": "",
+   "city": "Wien",
+   "priority": "B",
+   "site_priority": "",
+   "services": [],
+   "offer": "Оффер не сформулирован. На вкладке из-за города, не из-за гипотезы заказа.",
+   "opening_de": "",
+   "observed": "Агентство со штабом в Вене. Город на странице профиля в этот заход не перечитывал. В приоритет продажи не ставил.",
+   "hypothesis": "",
+   "website": "",
+   "email": "",
+   "rank": 90,
+   "profile_url": "https://www.enlit.world/companies/austrian-business-agency",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "город",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/companies/austrian-business-agency"
+   ],
+   "language_group": "unknown",
+   "language_evidence": "Язык сотрудников не устанавливался. Карточка про город, не про язык.",
+   "personal_language_confirmed": false,
+   "place": "wien",
+   "site_quality": "Сайт не разбирался",
+   "review_depth": "Строка каталога 11.11 и страница павильона. Профиль компании заново не разбирался.",
+   "checked_at": "2026-11-11",
+   "tier": "catalog"
+  },
+  {
+   "id": "enlit26-porsche-wien",
+   "name": "PORSCHE ZENTRUM WIEN NORD",
+   "booth": "C.d20",
+   "booths": [
+    "C.d20"
+   ],
+   "floor": "C",
+   "category": "",
+   "city": "Wien",
+   "priority": "B",
+   "site_priority": "",
+   "services": [],
+   "offer": "Оффер не сформулирован. На вкладке из-за города, не из-за гипотезы заказа.",
+   "opening_de": "",
+   "observed": "В названии каталога прямо Вена. Профиль не разбирался.",
+   "hypothesis": "",
+   "website": "",
+   "email": "",
+   "rank": 90,
+   "profile_url": "https://www.enlit.world/companies/porsche-zentrum-wien-nord",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "город",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/companies/porsche-zentrum-wien-nord"
+   ],
+   "language_group": "unknown",
+   "language_evidence": "Язык сотрудников не устанавливался. Карточка про город, не про язык.",
+   "personal_language_confirmed": false,
+   "place": "wien",
+   "site_quality": "Сайт не разбирался",
+   "review_depth": "Строка каталога 11.11 и страница павильона. Профиль компании заново не разбирался.",
+   "checked_at": "2026-11-11",
+   "tier": "catalog"
+  },
+  {
+   "id": "enlit26-andritz",
+   "name": "ANDRITZ HYDRO",
+   "booth": "A.e88",
+   "booths": [
+    "A.e88"
+   ],
+   "floor": "A",
+   "category": "",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [],
+   "offer": "Оффер не сформулирован. На вкладке из-за города, не из-за гипотезы заказа.",
+   "opening_de": "",
+   "observed": "Был на странице павильона Австрии. Город офиса на профиле не открывал, поэтому не Вена.",
+   "hypothesis": "",
+   "website": "",
+   "email": "",
+   "rank": 90,
+   "profile_url": "https://www.enlit.world/companies/andritz-hydro-gmbh",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "город",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/companies/andritz-hydro-gmbh"
+   ],
+   "language_group": "unknown",
+   "language_evidence": "Язык сотрудников не устанавливался. Карточка про город, не про язык.",
+   "personal_language_confirmed": false,
+   "place": "austria",
+   "site_quality": "Сайт не разбирался",
+   "review_depth": "Строка каталога 11.11 и страница павильона. Профиль компании заново не разбирался.",
+   "checked_at": "2026-11-11",
+   "tier": "catalog"
+  },
+  {
+   "id": "enlit26-cancom",
+   "name": "CANCOM Austria",
+   "booth": "A.e80",
+   "booths": [
+    "A.e80"
+   ],
+   "floor": "A",
+   "category": "",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [],
+   "offer": "Оффер не сформулирован. На вкладке из-за города, не из-за гипотезы заказа.",
+   "opening_de": "",
+   "observed": "В каталоге Austria, не Вена. Город офиса на профиле не открывал.",
+   "hypothesis": "",
+   "website": "",
+   "email": "",
+   "rank": 90,
+   "profile_url": "https://www.enlit.world/companies/cancom-austria-ag",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "город",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/companies/cancom-austria-ag"
+   ],
+   "language_group": "unknown",
+   "language_evidence": "Язык сотрудников не устанавливался. Карточка про город, не про язык.",
+   "personal_language_confirmed": false,
+   "place": "austria",
+   "site_quality": "Сайт не разбирался",
+   "review_depth": "Строка каталога 11.11 и страница павильона. Профиль компании заново не разбирался.",
+   "checked_at": "2026-11-11",
+   "tier": "catalog"
+  },
+  {
+   "id": "enlit26-cms",
+   "name": "CMS",
+   "booth": "B.b89",
+   "booths": [
+    "B.b89"
+   ],
+   "floor": "B",
+   "category": "",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [],
+   "offer": "Оффер не сформулирован. На вкладке из-за города, не из-за гипотезы заказа.",
+   "opening_de": "",
+   "observed": "Был на странице павильона Австрии. Город офиса не открывал, поэтому не Вена.",
+   "hypothesis": "",
+   "website": "",
+   "email": "",
+   "rank": 90,
+   "profile_url": "https://www.enlit.world/companies/cms",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "город",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/companies/cms"
+   ],
+   "language_group": "unknown",
+   "language_evidence": "Язык сотрудников не устанавливался. Карточка про город, не про язык.",
+   "personal_language_confirmed": false,
+   "place": "austria",
+   "site_quality": "Сайт не разбирался",
+   "review_depth": "Строка каталога 11.11 и страница павильона. Профиль компании заново не разбирался.",
    "checked_at": "2026-11-11",
    "tier": "catalog"
   }

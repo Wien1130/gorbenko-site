@@ -80,7 +80,7 @@ test("Enlit не смешивается с BLICKFANG и Erste", () => {
   assert.equal(blick.rows.length, 156);
   assert.equal(erste.rows.length, 48);
   assert.equal(enlit.event, "enlit-europe-2026");
-  assert.equal(enlit.rows.length, 46);
+  assert.equal(enlit.rows.length, 54);
   assert.equal(enlit.rows.filter((r: { tier?: string }) => r.tier === "shortlist").length, 15);
   assert.equal(enlit.rows.filter((r: { tier?: string }) => r.tier === "reviewed").length, 24);
   assert.equal(enlit.venue.includes("VIECON"), true);
@@ -90,7 +90,7 @@ test("Enlit не смешивается с BLICKFANG и Erste", () => {
   assert.equal(enlit.talkDateLabel, undefined);
   assert.equal(enlit.rows.some((r: { city?: string }) => r.city === "München"), false);
   const ids = enlit.rows.map((r: { id: string }) => r.id);
-  assert.equal(new Set(ids).size, 46);
+  assert.equal(new Set(ids).size, 54);
   const a40 = enlit.rows.filter((r: { booth: string }) => r.booth === "A.a40");
   assert.equal(a40.length, 8);
   const a40short = a40.filter((r: { tier?: string }) => r.tier === "shortlist");
@@ -113,15 +113,19 @@ test("Enlit не смешивается с BLICKFANG и Erste", () => {
   const ordered = enlit.route.map((id: string) => enlit.rows.find((r: { id: string }) => r.id === id));
   assert.deepEqual(
     exhibitorsForTab("ru", ordered, enlit.rows, enlit.route1, true).map((r: { id: string }) => r.id),
-    ["enlit26-jooby", "enlit26-add-grup", "enlit26-nik-central-europe"],
+    ["enlit26-add-grup", "enlit26-nik-central-europe", "enlit26-jooby"],
   );
   const full = [
     ...ordered,
     ...enlit.rows.filter((r: { id: string }) => !enlit.route.includes(r.id)),
   ];
   const ruTab = exhibitorsForTab("ru", full, enlit.rows, enlit.route1, true).map((r: { id: string }) => r.id);
-  assert.equal(ruTab[0], "enlit26-jooby");
-  assert.equal(ruTab.includes("enlit26-abb"), true);
+  assert.equal(ruTab[0], "enlit26-add-grup");
+  assert.equal(ruTab.at(-1), "enlit26-kraftblock");
+  const vienna = exhibitorsForTab("vienna", full, enlit.rows, enlit.route1, true).map((r: { id: string }) => r.id);
+  assert.equal(vienna.includes("enlit26-jooby"), false);
+  assert.equal(vienna.includes("enlit26-wien-energie"), true);
+  assert.equal(exhibitorsForTab("austria", full, enlit.rows, enlit.route1, true).some((r: { id: string }) => r.id === "enlit26-bayern-international"), false);
   assert.equal(JSON.stringify(enlit).includes("Igor Perez"), false);
   assert.equal(JSON.stringify(enlit).includes("Pöschl"), false);
   assert.equal(exhibitorsForTab("de", ordered, enlit.rows, enlit.route1, true).some((r: { language_group?: string }) => r.language_group !== "DE-market"), false);

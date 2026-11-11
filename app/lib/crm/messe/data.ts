@@ -30,6 +30,8 @@ export interface Exhibitor {
   language_group?: string;
   /** ru-ua: имя на публичном профиле похоже на русское или украинское. Язык человека не доказан. */
   name_cue?: string;
+  /** wien / austria / ukraine / czechia. Город офиса, не язык. */
+  place?: string;
   language_evidence?: string;
   personal_language_confirmed?: boolean;
   checked_at?: string;

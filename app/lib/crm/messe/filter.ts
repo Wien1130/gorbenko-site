@@ -32,6 +32,20 @@ export function isBoothQuery(query: string): boolean {
   return legacyBoothParts(q) !== null;
 }
 
+/** Залы B → C → A, внутри зала буква ряда. Не измеренный короткий путь и не этаж здания. */
+export function byHall<T extends { floor?: string; booth: string; name?: string }>(rows: T[]): T[] {
+  const hall = (floor?: string) => (floor === "B" ? 0 : floor === "C" ? 1 : floor === "A" ? 2 : 9);
+  const key = (booth: string) => {
+    const meeting = /mr/i.test(booth) ? 1 : 0;
+    const rest = (booth.split(".")[1] || "").toLowerCase();
+    const m = rest.match(/^([a-z]*)(\d+)?/);
+    return `${meeting}-${(m?.[1] || rest).padEnd(4, " ")}-${(m?.[2] || "").padStart(5, "0")}-${booth.toLowerCase()}`;
+  };
+  return [...rows].sort(
+    (a, b) => hall(a.floor) - hall(b.floor) || key(a.booth).localeCompare(key(b.booth)) || (a.name || "").localeCompare(b.name || ""),
+  );
+}
+
 export function boothsOf(row: Pick<Exhibitor, "booth" | "booths">): string[] {
   const extra = (row.booths ?? []).filter((b) => b && b !== row.booth);
   return [row.booth, ...extra].filter(Boolean);
@@ -52,13 +66,25 @@ export function exhibitorsForTab(
   const first = route1.map((id) => byId.get(id)).filter((r): r is Exhibitor => !!r);
   if (tabId === "all" || tabId === "route") return ordered;
   if (tabId === "first") return first;
-  if (tabId === "vienna") return ordered.filter((r) => r.city.startsWith("Wien") || r.city.includes("Вена"));
+  if (tabId === "vienna") return byHall(ordered.filter((r) => r.place === "wien" || r.city.startsWith("Wien") || r.city.includes("Вена")));
+  if (tabId === "austria") return byHall(ordered.filter((r) => r.place === "austria" || r.city === "Graz"));
   if (tabId === "munich") return ordered.filter((r) => r.city === "München");
   if (tabId === "three") return ordered.filter((r) => r.services.some((s) => s === "3D" || s === "конфигуратор") || r.configurator_fit === "yes");
   if (tabId === "video") return ordered.filter((r) => r.services.includes("видео"));
   if (tabId === "pages") return ordered.filter((r) => r.services.includes("проект"));
-  if (tabId === "ru") return ordered.filter((r) => r.language_group === "RU-public" || r.name_cue === "ru-ua");
-  if (tabId === "de") return ordered.filter((r) => r.language_group === "DE-market");
+  if (tabId === "ru") return byHall(ordered.filter((r) => r.language_group === "RU-public" || r.name_cue === "ru-ua"));
+  if (tabId === "de") {
+    return byHall(
+      ordered.filter(
+        (r) =>
+          r.language_group === "DE-market" &&
+          r.place !== "wien" &&
+          r.place !== "austria" &&
+          !r.city.startsWith("Wien") &&
+          r.city !== "Graz",
+      ),
+    );
+  }
   if (tabId === "en") return ordered.filter((r) => r.language_group === "EN");
   if (tabId === "lang-unknown") return ordered.filter((r) => !r.language_group || r.language_group === "unknown");
   return strict ? [] : ordered;
