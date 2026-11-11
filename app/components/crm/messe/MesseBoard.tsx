@@ -412,6 +412,11 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
                         {r.language_group === "RU-public" ? "RU: есть материалы" : r.language_group === "DE-market" ? "начать по-DE" : r.language_group === "EN" ? "начать по-EN" : "язык не установлен"}
                       </span>
                     )}
+                    {r.name_cue === "ru-ua" && (
+                      <span className="m-chip" title="Имя на публичном профиле похоже на русское или украинское. Язык человека и присутствие на стенде не подтверждены.">
+                        имя: возможно по-русски
+                      </span>
+                    )}
                     {r.geography_confidence && r.geography_confidence !== "high" && <span className="m-chip">гео: {r.geography_confidence}</span>}
                     {v.status !== "todo" && <span className={`m-chip st-${v.status}`}>{VISIT_STATUS_LABEL[v.status]}</span>}
                     {v.email_sent && <span className="m-chip st-mail">письмо 1 ✓</span>}

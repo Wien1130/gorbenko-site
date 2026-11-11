@@ -54,14 +54,14 @@
  ],
  "tabs": [
   {
+   "id": "ru",
+   "label": "По-русски",
+   "note": "Вместе: русский материал компании и имена на публичном профиле, похожие на русские или украинские. Имя не доказывает язык человека на стенде. Болгарские фамилии и «Igor» при испанской фамилии сюда не ставил."
+  },
+  {
    "id": "first",
    "label": "Сначала",
    "note": "Приоритет A в порядке залов B → C → A. Это рекомендация, с кем говорить раньше. Не длина проходов и не подтверждённый заказ."
-  },
-  {
-   "id": "ru",
-   "label": "Русский: есть материалы",
-   "note": "Только компании с публичным русскоязычным анонсом Enlit 2026. Это не язык сотрудника на стенде и не национальность."
   },
   {
    "id": "de",
@@ -174,7 +174,8 @@
    "site_quality": "Не проводился полный визуальный/мобильный аудит",
    "review_depth": "Профиль 2026 и выбранные официальные страницы; коммерческая гипотеза, бюджет и спрос не проверены.",
    "checked_at": "2026-11-11",
-   "tier": "shortlist"
+   "tier": "shortlist",
+   "name_cue": "ru-ua"
   },
   {
    "id": "enlit26-add-grup",
@@ -212,7 +213,8 @@
    "site_quality": "Не проводился полный визуальный/мобильный аудит",
    "review_depth": "Профиль 2026 и выбранные официальные страницы; коммерческая гипотеза, бюджет и спрос не проверены.",
    "checked_at": "2026-11-11",
-   "tier": "shortlist"
+   "tier": "shortlist",
+   "name_cue": "ru-ua"
   },
   {
    "id": "enlit26-enixi",
@@ -364,7 +366,8 @@
    "site_quality": "Не проводился полный визуальный/мобильный аудит",
    "review_depth": "Профиль 2026 и выбранные официальные страницы; коммерческая гипотеза, бюджет и спрос не проверены.",
    "checked_at": "2026-11-11",
-   "tier": "shortlist"
+   "tier": "shortlist",
+   "name_cue": "ru-ua"
   },
   {
    "id": "enlit26-clever-pv",
@@ -1620,6 +1623,265 @@
    "review_depth": "Заголовок главной: «Caprikorn - To power and beyond». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
    "checked_at": "2026-11-11",
    "tier": "reviewed"
+  },
+  {
+   "id": "enlit26-kraftblock",
+   "name": "Kraftblock",
+   "booth": "A.MR10",
+   "booths": [
+    "A.MR10"
+   ],
+   "floor": "A",
+   "category": "",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [],
+   "offer": "Оффер не сформулирован. Карточка из-за имени Fedor Leonov.",
+   "opening_de": "",
+   "observed": "В каталоге стенд A.MR10. Похоже на переговорную, по карте не сверял. Чем компания торгует, одной фразой со страницы не взял.",
+   "hypothesis": "",
+   "website": "",
+   "email": "",
+   "rank": 70,
+   "profile_url": "https://www.enlit.world/companies/kraftblock",
+   "fetch_status": "profile",
+   "ask_who": "Fedor Leonov — имя с публичного профиля. Присутствие на стенде не подтверждено.",
+   "review_label": "имя на профиле",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/companies/kraftblock"
+   ],
+   "language_group": "unknown",
+   "language_evidence": "Имя на публичном профиле похоже на русское или украинское. Язык человека и присутствие на стенде не подтверждены.",
+   "name_cue": "ru-ua",
+   "personal_language_confirmed": false,
+   "site_quality": "Сайт компании не разбирался",
+   "review_depth": "11.11 просмотрены публичные профили каталога, 634 страницы. Взято только имя с аватара. Продукт целиком не читался.",
+   "checked_at": "2026-11-11",
+   "tier": "catalog"
+  },
+  {
+   "id": "enlit26-asas",
+   "name": "ASAS ALUMINYUM",
+   "booth": "A.k60",
+   "booths": [
+    "A.k60"
+   ],
+   "floor": "A",
+   "category": "",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [],
+   "offer": "Оффер не сформулирован. Карточка из-за имени Maksym Zenchenko.",
+   "opening_de": "",
+   "observed": "Имя на публичном профиле. Описание продукта со страницы одной фразой не взял.",
+   "hypothesis": "",
+   "website": "",
+   "email": "",
+   "rank": 70,
+   "profile_url": "https://www.enlit.world/companies/asas-aluminyum",
+   "fetch_status": "profile",
+   "ask_who": "Maksym Zenchenko — имя с публичного профиля. Присутствие на стенде не подтверждено.",
+   "review_label": "имя на профиле",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/companies/asas-aluminyum"
+   ],
+   "language_group": "unknown",
+   "language_evidence": "Имя на публичном профиле похоже на русское или украинское. Язык человека и присутствие на стенде не подтверждены.",
+   "name_cue": "ru-ua",
+   "personal_language_confirmed": false,
+   "site_quality": "Сайт компании не разбирался",
+   "review_depth": "11.11 просмотрены публичные профили каталога, 634 страницы. Взято только имя с аватара. Продукт целиком не читался.",
+   "checked_at": "2026-11-11",
+   "tier": "catalog"
+  },
+  {
+   "id": "enlit26-optics11",
+   "name": "Optics11",
+   "booth": "A.e90",
+   "booths": [
+    "A.e90"
+   ],
+   "floor": "A",
+   "category": "",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [],
+   "offer": "Оффер не сформулирован. Сначала проверить, говорит ли Serhii по-русски.",
+   "opening_de": "",
+   "observed": "На профиле: помогают энергокомпаниям и производителям трансформаторов находить частичный разряд. Сайт целиком не читался.",
+   "hypothesis": "",
+   "website": "",
+   "email": "",
+   "rank": 70,
+   "profile_url": "https://www.enlit.world/companies/optics11-b.v.",
+   "fetch_status": "profile",
+   "ask_who": "Serhii Tankevych — имя с публичного профиля. Присутствие на стенде не подтверждено.",
+   "review_label": "имя на профиле",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/companies/optics11-b.v."
+   ],
+   "language_group": "unknown",
+   "language_evidence": "Имя на публичном профиле похоже на русское или украинское. Язык человека и присутствие на стенде не подтверждены.",
+   "name_cue": "ru-ua",
+   "personal_language_confirmed": false,
+   "site_quality": "Сайт компании не разбирался",
+   "review_depth": "11.11 просмотрены публичные профили каталога, 634 страницы. Взято только имя с аватара. Продукт целиком не читался.",
+   "checked_at": "2026-11-11",
+   "tier": "catalog"
+  },
+  {
+   "id": "enlit26-supergrid",
+   "name": "SuperGrid Institute",
+   "booth": "A.e40",
+   "booths": [
+    "A.e40"
+   ],
+   "floor": "A",
+   "category": "",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [],
+   "offer": "Оффер не сформулирован. Карточка из-за имени Konstantin Vershinin.",
+   "opening_de": "",
+   "observed": "Имя на публичном профиле института. Это не повод считать, что у института бюджет на ролик.",
+   "hypothesis": "",
+   "website": "",
+   "email": "",
+   "rank": 70,
+   "profile_url": "https://www.enlit.world/companies/supergrid-institute",
+   "fetch_status": "profile",
+   "ask_who": "Konstantin Vershinin — имя с публичного профиля. Присутствие на стенде не подтверждено.",
+   "review_label": "имя на профиле",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/companies/supergrid-institute"
+   ],
+   "language_group": "unknown",
+   "language_evidence": "Имя на публичном профиле похоже на русское или украинское. Язык человека и присутствие на стенде не подтверждены.",
+   "name_cue": "ru-ua",
+   "personal_language_confirmed": false,
+   "site_quality": "Сайт компании не разбирался",
+   "review_depth": "11.11 просмотрены публичные профили каталога, 634 страницы. Взято только имя с аватара. Продукт целиком не читался.",
+   "checked_at": "2026-11-11",
+   "tier": "catalog"
+  },
+  {
+   "id": "enlit26-tektelic",
+   "name": "TEKTELIC",
+   "booth": "B.f120",
+   "booths": [
+    "B.f120"
+   ],
+   "floor": "B",
+   "category": "",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [],
+   "offer": "Оффер не сформулирован. Сначала проверить, говорит ли Iryna по-русски.",
+   "opening_de": "",
+   "observed": "На профиле: IoT для энергокомпаний, учёта, городов и зданий. Сайт целиком не читался.",
+   "hypothesis": "",
+   "website": "",
+   "email": "",
+   "rank": 70,
+   "profile_url": "https://www.enlit.world/companies/tektelic",
+   "fetch_status": "profile",
+   "ask_who": "Iryna Shevchuk — имя с публичного профиля. Присутствие на стенде не подтверждено.",
+   "review_label": "имя на профиле",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/companies/tektelic"
+   ],
+   "language_group": "unknown",
+   "language_evidence": "Имя на публичном профиле похоже на русское или украинское. Язык человека и присутствие на стенде не подтверждены.",
+   "name_cue": "ru-ua",
+   "personal_language_confirmed": false,
+   "site_quality": "Сайт компании не разбирался",
+   "review_depth": "11.11 просмотрены публичные профили каталога, 634 страницы. Взято только имя с аватара. Продукт целиком не читался.",
+   "checked_at": "2026-11-11",
+   "tier": "catalog"
+  },
+  {
+   "id": "enlit26-zhengzhou-lp",
+   "name": "ZHENGZHOU LP INDUSTRY",
+   "booth": "A.j50",
+   "booths": [
+    "A.j50"
+   ],
+   "floor": "A",
+   "category": "",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [],
+   "offer": "Оффер не сформулирован. Карточка из-за имени Vladislav Duhovich.",
+   "opening_de": "",
+   "observed": "Компания в каталоге китайская. Имя на профиле славянское. Продукт со страницы одной фразой не взял.",
+   "hypothesis": "",
+   "website": "",
+   "email": "",
+   "rank": 70,
+   "profile_url": "https://www.enlit.world/companies/zhengzhou-lp-industry-co.-ltd.",
+   "fetch_status": "profile",
+   "ask_who": "Vladislav Duhovich — имя с публичного профиля. Присутствие на стенде не подтверждено.",
+   "review_label": "имя на профиле",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/companies/zhengzhou-lp-industry-co.-ltd."
+   ],
+   "language_group": "unknown",
+   "language_evidence": "Имя на публичном профиле похоже на русское или украинское. Язык человека и присутствие на стенде не подтверждены.",
+   "name_cue": "ru-ua",
+   "personal_language_confirmed": false,
+   "site_quality": "Сайт компании не разбирался",
+   "review_depth": "11.11 просмотрены публичные профили каталога, 634 страницы. Взято только имя с аватара. Продукт целиком не читался.",
+   "checked_at": "2026-11-11",
+   "tier": "catalog"
+  },
+  {
+   "id": "enlit26-abb",
+   "name": "ABB",
+   "booth": "C.f30",
+   "booths": [
+    "C.f30"
+   ],
+   "floor": "C",
+   "category": "",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [],
+   "offer": "Оффер не сформулирован. Это имя на профиле крупной компании, не гипотеза заказа.",
+   "opening_de": "",
+   "observed": "Имя на публичном профиле ABB. Компанию в приоритет продажи не ставлю.",
+   "hypothesis": "",
+   "website": "",
+   "email": "",
+   "rank": 70,
+   "profile_url": "https://www.enlit.world/companies/abb",
+   "fetch_status": "profile",
+   "ask_who": "Olha Tsymbaliuk — имя с публичного профиля. Присутствие на стенде не подтверждено.",
+   "review_label": "имя на профиле",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/companies/abb"
+   ],
+   "language_group": "unknown",
+   "language_evidence": "Имя на публичном профиле похоже на русское или украинское. Язык человека и присутствие на стенде не подтверждены.",
+   "name_cue": "ru-ua",
+   "personal_language_confirmed": false,
+   "site_quality": "Сайт компании не разбирался",
+   "review_depth": "11.11 просмотрены публичные профили каталога, 634 страницы. Взято только имя с аватара. Продукт целиком не читался.",
+   "checked_at": "2026-11-11",
+   "tier": "catalog"
   }
  ]
 }

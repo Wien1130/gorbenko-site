@@ -28,6 +28,8 @@ export interface Exhibitor {
   booths?: string[];
   /** RU-public / DE-market / EN / unknown. Это не язык конкретного сотрудника. */
   language_group?: string;
+  /** ru-ua: имя на публичном профиле похоже на русское или украинское. Язык человека не доказан. */
+  name_cue?: string;
   language_evidence?: string;
   personal_language_confirmed?: boolean;
   checked_at?: string;

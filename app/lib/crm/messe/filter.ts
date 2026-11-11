@@ -57,7 +57,7 @@ export function exhibitorsForTab(
   if (tabId === "three") return ordered.filter((r) => r.services.some((s) => s === "3D" || s === "конфигуратор") || r.configurator_fit === "yes");
   if (tabId === "video") return ordered.filter((r) => r.services.includes("видео"));
   if (tabId === "pages") return ordered.filter((r) => r.services.includes("проект"));
-  if (tabId === "ru") return ordered.filter((r) => r.language_group === "RU-public");
+  if (tabId === "ru") return ordered.filter((r) => r.language_group === "RU-public" || r.name_cue === "ru-ua");
   if (tabId === "de") return ordered.filter((r) => r.language_group === "DE-market");
   if (tabId === "en") return ordered.filter((r) => r.language_group === "EN");
   if (tabId === "lang-unknown") return ordered.filter((r) => !r.language_group || r.language_group === "unknown");
