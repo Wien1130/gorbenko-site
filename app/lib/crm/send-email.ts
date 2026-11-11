@@ -4,6 +4,9 @@ import { withSignature } from "./ai";
 import { buildEmailHtml } from "./email-html";
 import { pitchUrl, withUtm } from "./pitch";
 import { formatVienna } from "./vienna";
+import { canSendLang } from "./mail-lang";
+
+export { canSendLang };
 
 /** Gmail письмо принял, а запись в базе не подтвердилась. Повторно само не отправлять. */
 export class EmailPersistError extends Error {
@@ -87,7 +90,7 @@ export async function scheduleLeadEmail(leadId: number, mail: OutgoingEmail, sen
 }
 
 /** Черновик «нужно обдумать»: cron его не берёт. Повтор того же текста за 12 часов не плодит строку. */
-export async function holdLeadEmail(leadId: number, mail: OutgoingEmail) {
+export async function holdLeadEmail(leadId: number, mail: OutgoingEmail | { to: string; subject: string; body: string; lang: "en" }) {
   const sql = getSql();
   if (!sql) throw new Error("База не подключена");
   const lead = await fetchLead(leadId);
@@ -115,6 +118,7 @@ export async function scheduleExistingEmail(emailId: number, sendAt: Date) {
   const rows = (await sql`
     UPDATE emails SET status = 'scheduled', send_at = ${sendAt.toISOString()}
     WHERE id = ${emailId} AND status IN ('needs_review', 'scheduled', 'failed')
+      AND lang IN ('ru', 'de')
     RETURNING id, lead_id, subject`) as unknown as { id: number; lead_id: number; subject: string }[];
   if (!rows[0]) return null;
   const when = formatVienna(sendAt);
@@ -148,6 +152,7 @@ export async function sendDueScheduledEmails(limit = 10) {
     WITH due AS (
       SELECT id FROM emails
       WHERE status = 'scheduled' AND send_at IS NOT NULL AND send_at <= now()
+        AND lang IN ('ru', 'de')
       ORDER BY send_at
       LIMIT ${limit}
       FOR UPDATE SKIP LOCKED
@@ -163,7 +168,12 @@ export async function sendDueScheduledEmails(limit = 10) {
   const uncertain: number[] = [];
   for (const e of due) {
     try {
-      await sendLeadEmail(e.lead_id, { to: e.to_email, subject: e.subject, body: e.body, lang: e.lang === "ru" ? "ru" : "de" }, { emailRowId: e.id });
+      if (!canSendLang(e.lang)) {
+        await sql`UPDATE emails SET status = 'needs_review', send_at = NULL WHERE id = ${e.id} AND status = 'sending'`;
+        failed.push(`#${e.id}: язык без подписи, не отправляю`);
+        continue;
+      }
+      await sendLeadEmail(e.lead_id, { to: e.to_email, subject: e.subject, body: e.body, lang: e.lang }, { emailRowId: e.id });
       sent++;
     } catch (err) {
       if (err instanceof EmailPersistError) {

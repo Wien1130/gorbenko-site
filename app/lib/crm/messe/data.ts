@@ -1,5 +1,6 @@
 import blickfangRaw from "./blickfang-2026.json";
 import ersteRaw from "./erste-wohnmesse-2026.json";
+import enlitRaw from "./enlit-europe-2026.json";
 
 /** Один участник выставки — срез скрининга (статичные данные, см. ~/Documents/Codex/.../BLICKFANG-2026-leads.json). */
 export interface Exhibitor {
@@ -23,6 +24,17 @@ export interface Exhibitor {
   rank: number | null;
   profile_url: string;
   fetch_status: string;
+  /** Все места стенда. id компании не склеивается по номеру: A.a40 — несколько карточек. */
+  booths?: string[];
+  /** RU-public / DE-market / EN / unknown. Это не язык конкретного сотрудника. */
+  language_group?: string;
+  language_evidence?: string;
+  personal_language_confirmed?: boolean;
+  checked_at?: string;
+  review_depth?: string;
+  site_quality?: string;
+  /** shortlist — отобранные заранее; catalog — только строка каталога; reviewed — отдельно проверенные. */
+  tier?: "shortlist" | "catalog" | "reviewed";
   /** Поля браузерной проверки 07.11.2026 (добавляются tools/merge.py; могут отсутствовать) */
   verified?: boolean;
   content_fit?: string;
@@ -64,13 +76,39 @@ export interface FairData {
   dateLabel?: string;
   hours?: string;
   catalogUrl?: string;
-  /** floors = EG/OG BLICKFANG. zones = группы стендов без выдуманной карты. */
-  layout?: "floors" | "zones";
+  /** floors = EG/OG BLICKFANG. zones = группы стендов. halls = залы без координат на карте. */
+  layout?: "floors" | "zones" | "halls";
   talkDateLabel?: string;
   profileLinkLabel?: string;
   headerSub?: string;
   allTab?: string;
   tabs?: FairTab[];
+  mapUrl?: string;
+  /** Неизвестный id вкладки не подменяется всем списком. */
+  strictTabs?: boolean;
+  /** Черновик письма можно собрать на DE, EN или RU. EN отправляющий слой не шлёт. */
+  letterLangs?: boolean;
+  /** Дата разговора берётся в день визита, а не из фиксированной подписи вроде Mittwoch. */
+  flexibleTalkDate?: boolean;
+  trackSpokenLang?: boolean;
+  showShortlistCount?: boolean;
+  searchPlaceholder?: string;
+  planNote?: string;
+  dateStart?: string;
+  dateEnd?: string;
+  /** Часы только для дат, которые реально сверены. Остальные дни не дописывать. */
+  hoursByDate?: Record<string, string>;
+  visitPlan?: FairVisitPlan;
+}
+
+export interface FairVisitPlan {
+  validOn: string;
+  title: string;
+  note: string;
+  ruFirst: string[];
+  ruFirstNote: string;
+  steps: { hall: string; when: string; ids: string[]; note: string }[];
+  happyHour?: { booth: string; when: string; note: string; url?: string };
 }
 
 export type VisitStatus = "todo" | "talked" | "revisit" | "skip";
@@ -89,6 +127,7 @@ export interface FairVisit {
 
 const blickfang = blickfangRaw as FairData;
 const erste = ersteRaw as FairData;
+const enlit = enlitRaw as FairData;
 
 export const FAIRS: Record<string, FairData> = {
   "blickfang-2026": {
@@ -104,6 +143,7 @@ export const FAIRS: Record<string, FairData> = {
     allTab: "route",
   },
   "erste-wohnmesse-2026": erste,
+  "enlit-europe-2026": enlit,
 };
 
 export function getFair(event?: string | null): FairData {
@@ -116,6 +156,7 @@ export const FAIR: FairData = FAIRS["blickfang-2026"];
 export const FAIR_SWITCH = [
   { event: "blickfang-2026", title: "BLICKFANG" },
   { event: "erste-wohnmesse-2026", title: "Erste Wohnmesse" },
+  { event: "enlit-europe-2026", title: "Enlit" },
 ] as const;
 
 export const VISIT_STATUS_LABEL: Record<VisitStatus, string> = {

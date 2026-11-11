@@ -33,6 +33,7 @@ export default function MesseStyles() {
       .m-tabs button.plan { border-color:var(--pink); color:var(--pink); font-weight:700; }
       .m-tabs button.plan.on { background:var(--pink); color:#fff; }
       .m-search { margin-top:6px; }
+      .m-map { display:inline-block; background:#d42764; color:#fff !important; text-decoration:none; font-weight:700; border-radius:999px; padding:8px 14px; }
 
       .m-main { max-width:760px; margin:0 auto; padding:14px 14px 90px; }
       .m-note { background:#e5eeef; border-radius:10px; padding:10px 14px; font-size:13px; color:#2f4a5a; margin-bottom:12px; }

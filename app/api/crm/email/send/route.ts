@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { isCrmAuthed, unauthorized } from "../../../../lib/crm/api-auth";
 import { getSql } from "../../../../lib/crm/db";
+import { canSendLang } from "../../../../lib/crm/mail-lang";
 import { holdLeadEmail, scheduleLeadEmail, sendLeadEmail } from "../../../../lib/crm/send-email";
 import { parseSendAt } from "../../../../lib/crm/vienna";
 
@@ -20,7 +21,10 @@ export async function POST(req: NextRequest) {
   const to = (b.to ?? "").trim();
   const subject = (b.subject ?? "").trim();
   const body = (b.body ?? "").trim();
-  const lang: "ru" | "de" = b.lang === "ru" ? "ru" : "de";
+  const lang = b.lang === "ru" ? "ru" : b.lang === "en" ? "en" : "de";
+  if (lang === "en" && b.hold !== true) {
+    return Response.json({ error: "Английский черновик не отправляется: подпись есть только для немецкого и русского." }, { status: 400 });
+  }
   const leadId = Number(b.lead_id);
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)) return Response.json({ error: `Некорректный email: "${to}"` }, { status: 400 });
@@ -29,8 +33,11 @@ export async function POST(req: NextRequest) {
 
   try {
     if (b.hold === true) {
-      const r = await holdLeadEmail(leadId, { to, subject, body, lang });
+      const r = await holdLeadEmail(leadId, lang === "en" ? { to, subject, body, lang: "en" } : { to, subject, body, lang });
       return Response.json({ ok: true, held: true, duplicate: r.duplicate, email_id: r.id, status: "needs_review" });
+    }
+    if (!canSendLang(lang)) {
+      return Response.json({ error: "Этот язык нельзя поставить в отправку." }, { status: 400 });
     }
     const sendAt = parseSendAt(b.send_at);
     if (sendAt && sendAt.getTime() > Date.now() + 60_000) {

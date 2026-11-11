@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { isCrmAuthed, unauthorized } from "../../../lib/crm/api-auth";
 import { getSql } from "../../../lib/crm/db";
-import { cancelScheduledEmail, scheduleExistingEmail, sendLeadEmail } from "../../../lib/crm/send-email";
+import { canSendLang, cancelScheduledEmail, scheduleExistingEmail, sendLeadEmail } from "../../../lib/crm/send-email";
 import { parseSendAt } from "../../../lib/crm/vienna";
 
 export const dynamic = "force-dynamic";
@@ -64,6 +64,10 @@ export async function POST(req: NextRequest) {
   }
 
   if (action === "schedule") {
+    const existing = (await sql`SELECT lang FROM emails WHERE id = ${id}`) as unknown as { lang: string }[];
+    if (existing[0] && !canSendLang(existing[0].lang)) {
+      return Response.json({ error: "Английский черновик не ставится в отправку: подписи для него нет." }, { status: 400 });
+    }
     const sendAt = parseSendAt(b.send_at);
     if (!sendAt || sendAt.getTime() < Date.now() + 60_000) return Response.json({ error: "Нужна будущая дата" }, { status: 400 });
     const row = await scheduleExistingEmail(id, sendAt);
@@ -78,11 +82,14 @@ export async function POST(req: NextRequest) {
       { id: number; lead_id: number; to_email: string; subject: string; body: string; lang: string; status: string }[];
     const row = rows[0];
     if (!row) return Response.json({ error: "Отправлять можно только черновик или сбой" }, { status: 409 });
+    if (!canSendLang(row.lang)) {
+      return Response.json({ error: "Английский черновик не отправляется: подпись есть только для немецкого и русского." }, { status: 400 });
+    }
     const { gmailId } = await sendLeadEmail(row.lead_id, {
       to: row.to_email,
       subject: row.subject,
       body: row.body,
-      lang: row.lang === "ru" ? "ru" : "de",
+      lang: row.lang,
     }, { emailRowId: row.id });
     return Response.json({ ok: true, gmail_id: gmailId });
   }

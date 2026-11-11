@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Exhibitor, FairData, FairTab, FairVisit, VisitStatus } from "../../../lib/crm/messe/data";
 import { FAIR_SWITCH, VISIT_STATUS_LABEL } from "../../../lib/crm/messe/data";
+import { boothsOf, exhibitorsForTab, isBoothQuery, matchBooth, readSpoken, stripSpoken, withSpoken } from "../../../lib/crm/messe/filter";
 import CardFlow from "./CardFlow";
 import VoiceNote from "./VoiceNote";
 import TwoLetters from "./TwoLetters";
@@ -21,21 +22,6 @@ type StatusFilter = "all" | "todo" | "talked" | "revisit" | "done";
 /** Пять стендов с подтверждённой бедой сайта — их обходить первыми. */
 const SITE_HEAD = ["38974", "13686", "40565", "36962", "35229"];
 const SITE_GRADE = (p: string) => (p === "A" ? 0 : p === "B" ? 1 : p === "U" ? 2 : 3);
-
-/** «18» = «018», «eh01» = «EH01», «31» находит и GH31, и GH31A. Пусто, если это не номер стенда. */
-function parseBooth(raw: string): { prefix: string; num: string; suffix: string } | null {
-  const m = raw.trim().toLowerCase().replace(/[\s-]+/g, "").match(/^([a-zäöü]*)(\d+)([a-zäöü]*)$/);
-  if (!m) return null;
-  return { prefix: m[1], num: String(Number(m[2])), suffix: m[3] };
-}
-function boothHit(query: string, booth: string): boolean {
-  const q = parseBooth(query);
-  const b = parseBooth(booth);
-  if (!q || !b || q.num !== b.num) return false;
-  if (q.prefix && q.prefix !== b.prefix) return false;
-  if (q.suffix && q.suffix !== b.suffix) return false;
-  return true;
-}
 
 const CITY_ORDER = (c: string) => (c === "München" ? 0 : c === "Wien" ? 1 : 2);
 const PRIO_ORDER = (p: string) => (p === "A" ? 0 : p === "B" ? 1 : 2);
@@ -144,11 +130,12 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
     const byId = new Map(fair.rows.map((r) => [r.id, r]));
     const head = fair.route.map((id) => byId.get(id)).filter(Boolean) as Exhibitor[];
     const headIds = new Set(head.map((r) => r.id));
+    const cityRank = fair.layout === "halls" ? () => 0 : CITY_ORDER;
     const rest = fair.rows
       .filter((r) => !headIds.has(r.id))
       .sort(
         (a, b) =>
-          CITY_ORDER(a.city) - CITY_ORDER(b.city) ||
+          cityRank(a.city) - cityRank(b.city) ||
           PRIO_ORDER(a.priority) - PRIO_ORDER(b.priority) ||
           (a.rank ?? 999) - (b.rank ?? 999) ||
           a.booth.localeCompare(b.booth),
@@ -158,7 +145,6 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
 
   /** Состав каждой вкладки (без фильтра статуса и поиска) — для счётчиков и плана. */
   const tabRows = useMemo<Record<string, Exhibitor[]>>(() => {
-    const byId = new Map(fair.rows.map((r) => [r.id, r]));
     const sites = fair.rows
       .filter((r) => r.site_priority === "A" || r.site_priority === "B" || r.site_priority === "U")
       .sort(
@@ -167,17 +153,9 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
           ((SITE_HEAD.indexOf(a.id) + 99) % 99) - ((SITE_HEAD.indexOf(b.id) + 99) % 99) ||
           (a.rank ?? 999) - (b.rank ?? 999),
       );
-    const first = (fair.route1 ?? []).map((id) => byId.get(id)).filter(Boolean) as Exhibitor[];
     const pick = (id: string): Exhibitor[] => {
-      if (id === "all" || id === "route") return ordered;
-      if (id === "first") return first;
       if (id === "sites") return sites;
-      if (id === "vienna") return ordered.filter((r) => r.city.startsWith("Wien") || r.city.includes("Вена"));
-      if (id === "munich") return ordered.filter((r) => r.city === "München");
-      if (id === "three") return ordered.filter((r) => r.services.some((s) => s === "3D" || s === "конфигуратор") || r.configurator_fit === "yes");
-      if (id === "video") return ordered.filter((r) => r.services.includes("видео"));
-      if (id === "pages") return ordered.filter((r) => r.services.includes("проект"));
-      return ordered;
+      return exhibitorsForTab(id, ordered, fair.rows, fair.route1 ?? [], !!fair.strictTabs);
     };
     return Object.fromEntries(tabs.map((t) => [t.id, pick(t.id)]));
   }, [fair, ordered, tabs]);
@@ -185,9 +163,9 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
   const tabDone = (t: string) => (tabRows[t] ?? []).filter((r) => getVisit(r.id).status !== "todo").length;
   const tabLabel = (t: string) => tabs.find((x) => x.id === t)?.label ?? t;
 
-  const boothLookup = parseBooth(q) !== null;
+  const boothLookup = isBoothQuery(q);
   const filtered = useMemo(() => {
-    if (boothLookup) return fair.rows.filter((r) => boothHit(q, r.booth));
+    if (boothLookup) return fair.rows.filter((r) => boothsOf(r).some((b) => matchBooth(q, b)));
     const needle = q.trim().toLowerCase();
     const base = tabRows[tab] ?? [];
     return base.filter((r) => {
@@ -335,7 +313,10 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
         <div className="sub">
           {fair.headerSub || "Статусы и лиды сохраняются в CRM."}{" "}
           {fair.catalogUrl && <a href={fair.catalogUrl} target="_blank" rel="noreferrer">каталог</a>}
+          {fair.mapUrl && <> · <a href={fair.mapUrl} target="_blank" rel="noreferrer">официальная карта</a></>}
+          {fair.hoursByDate?.[viennaToday()] ? ` · сегодня ${fair.hoursByDate[viennaToday()]}` : ""}
         </div>
+        {fair.showShortlistCount && <ShortlistCount rows={fair.rows} />}
         <div className="m-stats">
           <div className="m-stat"><b>{counts.talked}</b>поговорил</div>
           <div className="m-stat"><b>{counts.mails}</b>писем</div>
@@ -365,13 +346,14 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
         </div>
         {!plan && (
           <div className="m-search">
-            <input inputMode="search" placeholder="Номер стенда: 18 или EH01" value={q} onChange={(e) => setQ(e.target.value)} />
+            <input inputMode="search" placeholder={fair.searchPlaceholder || "Номер стенда: 18 или EH01"} value={q} onChange={(e) => setQ(e.target.value)} />
           </div>
         )}
       </div>
 
       <div className="m-main">
         {error && <div className="m-err">{error}</div>}
+        {fair.visitPlan && <TodayRoute fair={fair} />}
 
         {plan ? (
           <FloorPlan
@@ -386,7 +368,11 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
           <>
             <div className="m-note">
               {boothLookup
-                ? (filtered.length ? `Стенд ${q.trim()} — по всем участникам, не только эта вкладка.` : `Стенда ${q.trim()} нет.`)
+                ? (filtered.length
+                  ? (new Set(filtered.map((r) => r.booth)).size === 1 && filtered.length > 1
+                    ? `Стенд ${filtered[0].booth} — ${filtered.length} отдельные карточки. Номер общий, компании разные.`
+                    : `Стенд ${q.trim()} — по всем участникам, не только эта вкладка.`)
+                  : `Стенда ${q.trim()} нет.`)
                 : tabs.find((t) => t.id === tab)?.note}{" "}
               {boothLookup ? "" : <>Отмечено {tabDone(tab)} из {(tabRows[tab] ?? []).length}{filtered.length !== (tabRows[tab] ?? []).length ? `, показано ${filtered.length}` : ""}.</>}
             </div>
@@ -400,7 +386,7 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
                       <div className="m-name"><span className="m-order">{i + 1}.</span>{r.name}</div>
                       <div className="m-sub">{[r.city, r.category].filter(Boolean).join(" · ")}</div>
                     </div>
-                    <div className="m-booth">{r.booth || "—"}<small>{r.floor}</small></div>
+                    <div className="m-booth">{r.booth || "—"}<small>{fair.layout === "halls" && r.floor ? `зал ${r.floor}` : r.floor}</small></div>
                   </div>
                   <div className="m-look">
                     <a className={look.siteKnown ? "" : "miss"} href={look.site} target="_blank" rel="noreferrer" title={look.siteKnown ? "Открыть сайт" : "Сайта в каталоге нет — поиск"}>Сайт</a>
@@ -421,10 +407,16 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
                     {r.review_label
                       ? <span className="m-chip">{r.review_label}</span>
                       : r.verified ? <span className="m-chip">браузер ✓</span> : <span className="m-chip">не открыт</span>}
+                    {r.language_group && (
+                      <span className="m-chip" title={r.language_evidence || ""}>
+                        {r.language_group === "RU-public" ? "RU: есть материалы" : r.language_group === "DE-market" ? "начать по-DE" : r.language_group === "EN" ? "начать по-EN" : "язык не установлен"}
+                      </span>
+                    )}
                     {r.geography_confidence && r.geography_confidence !== "high" && <span className="m-chip">гео: {r.geography_confidence}</span>}
                     {v.status !== "todo" && <span className={`m-chip st-${v.status}`}>{VISIT_STATUS_LABEL[v.status]}</span>}
                     {v.email_sent && <span className="m-chip st-mail">письмо 1 ✓</span>}
                   </div>
+                  {r.language_evidence && <div className="m-offer"><span className="m-label">Откуда язык</span>{r.language_evidence}</div>}
                   {r.ask_who && <div className="m-offer"><span className="m-label">Кого спросить (каталог, не факт разговора)</span>{r.ask_who}</div>}
                   {r.observed && <div className="m-offer"><span className="m-label">Факт</span>{r.observed}</div>}
                   <div className="m-offer"><span className="m-label">Гипотеза предложения</span>{r.offer}</div>
@@ -436,10 +428,13 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
                   )}
                   <div className="m-links">
                     {r.profile_url && <a href={r.profile_url} target="_blank" rel="noreferrer">{fair.profileLinkLabel || "Профиль"}</a>}
-                    {r.sources?.slice(0, 3).map((src) => <a key={src} href={src} target="_blank" rel="noreferrer">источник</a>)}
+                    {r.sources?.slice(0, 4).map((src) => <a key={src} href={src} target="_blank" rel="noreferrer">{sourceLabel(src)}</a>)}
                     {v.lead_id && <a href={`/crm/lead/${v.lead_id}`}>Лид #{v.lead_id} в CRM</a>}
                     {r.email && <a href={`mailto:${r.email}`}>{r.email}</a>}
                   </div>
+                  {(r.checked_at || r.review_depth) && (
+                    <div className="m-sub">{[r.checked_at ? `Проверено ${r.checked_at}` : "", r.review_depth || ""].filter(Boolean).join(" · ")}</div>
+                  )}
                   {(r.observed || r.hypothesis || r.evidence_short?.length) && (
                     <details>
                       <summary>Что найдено и гипотеза</summary>
@@ -496,8 +491,25 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
                       />
                     </label>
                   </div>
+                  {fair.trackSpokenLang && (
+                    <div className="m-status" title="Фактический язык этого разговора. Каталог его не задаёт.">
+                      {(["", "de", "en", "ru"] as const).map((code) => (
+                        <button
+                          key={code || "none"}
+                          className={readSpoken(v.note) === code ? "on" : ""}
+                          onClick={() => setNote(r.id, withSpoken(v.note, code))}
+                        >
+                          {code === "" ? "язык не отмечен" : code.toUpperCase()}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                   <div className="m-notefield">
-                    <textarea placeholder="Заметка: имя, задача, контакт, когда написать…" value={v.note} onChange={(e) => setNote(r.id, e.target.value)} />
+                    <textarea
+                      placeholder={fair.trackSpokenLang ? "Фактический собеседник, роль, язык, следующий шаг. Имя из каталога само не пишется." : "Заметка: имя, задача, контакт, когда написать…"}
+                      value={fair.trackSpokenLang ? stripSpoken(v.note) : v.note}
+                      onChange={(e) => setNote(r.id, fair.trackSpokenLang ? withSpoken(e.target.value, readSpoken(v.note)) : e.target.value)}
+                    />
                     {v.lead_id && (
                       <button className="ghost" style={{ marginTop: 4, fontSize: 13 }} onClick={() => void undo(r.id, v.lead_id!)}>↩ Отменить запись</button>
                     )}
@@ -510,14 +522,19 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
                       fairTitle={fair.title}
                       venue={fair.venue || ""}
                       talkDateLabel={fair.talkDateLabel || ""}
+                      flexibleTalkDate={!!fair.flexibleTalkDate}
+                      letterLangs={!!fair.letterLangs}
+                      languageGroup={r.language_group || ""}
                       onLead={(leadId) => void save(r.id, { lead_id: leadId, status: "talked" })}
                       onDone={({ mode, secondDate }) => {
-                        const mark = mode === "scheduled" && secondDate
-                          ? `✉️ 1 ушло · ✉️ 2 → ${secondDate.slice(8, 10)}.${secondDate.slice(5, 7)}`
-                          : "✉️ 1 ушло · ✉️ 2 на проверке";
+                        const mark = mode === "draft"
+                          ? "✉️ черновик, не отправлен"
+                          : mode === "scheduled" && secondDate
+                            ? `✉️ 1 ушло · ✉️ 2 → ${secondDate.slice(8, 10)}.${secondDate.slice(5, 7)}`
+                            : "✉️ 1 ушло · ✉️ 2 на проверке";
                         const merged = [v.note.trim(), mark].filter(Boolean).join("\n");
-                        setVisits((s) => ({ ...s, [r.id]: { ...getVisit(r.id), note: merged, email_sent: true, status: "talked" } }));
-                        void save(r.id, { note: merged, email_sent: true, status: "talked" });
+                        setVisits((s) => ({ ...s, [r.id]: { ...getVisit(r.id), note: merged, email_sent: mode !== "draft", status: "talked" } }));
+                        void save(r.id, { note: merged, email_sent: mode !== "draft", status: "talked" });
                       }}
                       onClose={() => setOpenFlow(null)}
                     />
@@ -555,31 +572,38 @@ export default function MesseBoard({ fair, initialVisits }: { fair: FairData; in
 
 /** Группы стендов. Для BLICKFANG это EG/OG по номерам, не чертёж зала. Для другой выставки — буквы зон, не этажи. */
 function FloorPlan({ fair, getVisit, onPick, matchIds, filterOn, label }: { fair: FairData; getVisit: (id: string) => FairVisit; onPick: (id: string) => void; matchIds: Set<string>; filterOn: boolean; label: string }) {
+  const halls = fair.layout === "halls";
   const zones = fair.layout === "zones";
   const floors = useMemo(() => {
     const m = new Map<string, Exhibitor[]>();
     for (const r of fair.rows) {
-      const f = r.floor || (zones ? "без номера" : "Уточнить");
+      const f = r.floor || (zones || halls ? "без номера" : "Уточнить");
       if (!m.has(f)) m.set(f, []);
       m.get(f)!.push(r);
     }
-    for (const list of m.values()) list.sort((a, b) => a.booth.localeCompare(b.booth, "de") || a.name.localeCompare(b.name, "de"));
-    const order = zones ? ["EH", "AH", "AHA", "AHB", "GH", "GHA", "EC", "WL", "без номера"] : ["EG", "OG"];
+    for (const list of m.values()) list.sort((a, b) => a.booth.localeCompare(b.booth, "en") || a.name.localeCompare(b.name, "en"));
+    const order = halls ? ["A", "B", "C"] : zones ? ["EH", "AH", "AHA", "AHB", "GH", "GHA", "EC", "WL", "без номера"] : ["EG", "OG"];
     return [...m.entries()].sort((a, b) => {
       const ia = order.indexOf(a[0]);
       const ib = order.indexOf(b[0]);
       return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
     });
-  }, [fair, zones]);
+  }, [fair, zones, halls]);
 
   return (
     <>
       <div className="m-note">
         <b>{label}.</b>{" "}
-        {zones
-          ? "Группы стендов из каталога (EH, AH, GH, EC, WL). Это не этажи и не чертёж зала. Буквенные суффиксы сохранены, пустой номер допустим."
-          : "EG — нижний уровень (001–066), OG — верхний (070–140). Плитки идут по номерам, не по геометрии зала."}
+        {fair.planNote
+          || (zones
+            ? "Группы стендов из каталога (EH, AH, GH, EC, WL). Это не этажи и не чертёж зала. Буквенные суффиксы сохранены, пустой номер допустим."
+            : "EG — нижний уровень (001–066), OG — верхний (070–140). Плитки идут по номерам, не по геометрии зала.")}
         {" "}Розовая рамка — приоритет A. Нажми плитку — откроется карточка.
+        {fair.mapUrl && (
+          <div style={{ marginTop: 8 }}>
+            <a className="m-map" href={fair.mapUrl} target="_blank" rel="noreferrer">Официальная карта</a>
+          </div>
+        )}
       </div>
       <div className="m-legend">
         <span><i style={{ background: "#fff" }} />не посещён</span>
@@ -593,7 +617,7 @@ function FloorPlan({ fair, getVisit, onPick, matchIds, filterOn, label }: { fair
         const done = inSel.filter((r) => getVisit(r.id).status !== "todo").length;
         return (
           <section key={floor} className="m-floor">
-            <h2>{zones ? `Группа ${floor}` : floor === "EG" ? "EG — нижний уровень" : floor === "OG" ? "OG — верхний уровень" : floor}</h2>
+            <h2>{halls ? `Зал ${floor}` : zones ? `Группа ${floor}` : floor === "EG" ? "EG — нижний уровень" : floor === "OG" ? "OG — верхний уровень" : floor}</h2>
             <div className="sub">отмечено {done} из {inSel.length}{filterOn ? ` в этой группе (всего ${list.length})` : ""}</div>
             <div className="m-grid">
               {list.map((r) => {
@@ -615,5 +639,67 @@ function FloorPlan({ fair, getVisit, onPick, matchIds, filterOn, label }: { fair
         );
       })}
     </>
+  );
+}
+
+function viennaToday() {
+  return new Date().toLocaleDateString("sv-SE", { timeZone: "Europe/Vienna" });
+}
+
+function sourceLabel(url: string) {
+  try {
+    const u = new URL(url);
+    const tail = u.pathname.split("/").filter(Boolean).slice(-1)[0] || u.hostname;
+    return tail.length > 28 ? u.hostname.replace(/^www\./, "") : tail.replace(/-/g, " ");
+  } catch {
+    return "источник";
+  }
+}
+
+function ShortlistCount({ rows }: { rows: Exhibitor[] }) {
+  const selected = rows.filter((r) => r.tier === "shortlist").length;
+  const loaded = rows.length;
+  return (
+    <div className="sub">
+      <b>{selected} отобранных</b>
+      {loaded !== selected ? ` · загружено ${loaded}` : ""}. Не полный каталог и не список покупателей.
+    </div>
+  );
+}
+
+function TodayRoute({ fair }: { fair: FairData }) {
+  const plan = fair.visitPlan;
+  if (!plan) return null;
+  const today = viennaToday();
+  const byId = new Map(fair.rows.map((r) => [r.id, r]));
+  const line = (id: string) => {
+    const r = byId.get(id);
+    return r ? `${r.name} ${r.booth}` : id;
+  };
+  if (today > plan.validOn) {
+    if (fair.dateEnd && today <= fair.dateEnd) {
+      return <div className="m-note">Расписание {plan.validOn} уже не сегодняшнее. Разговор можно записать сегодняшней датой. Встречи на это время не бронировались.</div>;
+    }
+    return null;
+  }
+  if (today < plan.validOn) {
+    return <div className="m-note">{plan.title} откроется {plan.validOn}. Это рекомендация, не встречи.</div>;
+  }
+  return (
+    <div className="m-note">
+      <b>{plan.title}.</b> {plan.note}
+      <div style={{ marginTop: 6 }}>{plan.ruFirstNote} {plan.ruFirst.map(line).join(" → ")}.</div>
+      {plan.steps.map((step) => (
+        <div key={step.hall} style={{ marginTop: 6 }}>
+          <b>Зал {step.hall}</b> {step.when}: {step.ids.map(line).join(" → ")}. {step.note}
+        </div>
+      ))}
+      {plan.happyHour && (
+        <div style={{ marginTop: 6 }}>
+          <b>Happy Hour {plan.happyHour.booth}</b> {plan.happyHour.when}. {plan.happyHour.note}{" "}
+          {plan.happyHour.url && <a href={plan.happyHour.url} target="_blank" rel="noreferrer">страница события</a>}
+        </div>
+      )}
+    </div>
   );
 }

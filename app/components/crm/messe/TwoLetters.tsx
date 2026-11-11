@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import type { Exhibitor, FairVisit } from "../../../lib/crm/messe/data";
+import { readSpoken, stripSpoken } from "../../../lib/crm/messe/filter";
 import { toast } from "./toast";
 
 type Step = "input" | "drafting" | "review" | "sending" | "done";
+type LetterLang = "de" | "en" | "ru";
 
 /**
  * «Два письма» прямо на стенде:
@@ -17,6 +19,9 @@ export default function TwoLetters({
   fairTitle,
   venue,
   talkDateLabel,
+  flexibleTalkDate,
+  letterLangs,
+  languageGroup,
   onLead,
   onDone,
   onClose,
@@ -26,22 +31,30 @@ export default function TwoLetters({
   fairTitle: string;
   venue: string;
   talkDateLabel: string;
+  flexibleTalkDate?: boolean;
+  letterLangs?: boolean;
+  languageGroup?: string;
   onLead: (leadId: number) => void;
-  onDone: (info: { mode: "held" | "scheduled"; secondDate?: string }) => void;
+  onDone: (info: { mode: "held" | "scheduled" | "draft"; secondDate?: string }) => void;
   onClose: () => void;
 }) {
+  const spoken = readSpoken(visit.note);
   const [step, setStep] = useState<Step>("input");
   const [error, setError] = useState("");
   const [talk, setTalk] = useState(stripMeta(visit.note));
   const [to, setTo] = useState(r.email || "");
   const [name, setName] = useState(r.imprint_name || "");
   const [date2, setDate2] = useState(nextMonday());
+  const [talkIso, setTalkIso] = useState(() => new Date().toLocaleDateString("sv-SE", { timeZone: "Europe/Vienna" }));
+  const [letterLang, setLetterLang] = useState<LetterLang | "">(spoken || suggestLang(languageGroup));
   const [l1, setL1] = useState({ subject: "", body: "" });
   const [l2, setL2] = useState({ subject: "", body: "" });
   const [signature, setSignature] = useState("");
+  const [limit, setLimit] = useState("");
   const [leadId, setLeadId] = useState<number | null>(visit.lead_id);
   const [letter1Sent, setLetter1Sent] = useState(false);
   const [result, setResult] = useState("");
+  const activeLang: LetterLang = letterLang || "de";
 
   async function ensureLead(): Promise<number> {
     if (leadId) return leadId;
@@ -72,16 +85,19 @@ export default function TwoLetters({
 
   async function draft() {
     setError("");
+    if (letterLangs && !letterLang) { setError("Выбери язык письма. Каталог его не подставляет."); return; }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)) { setError("Нужен email — спроси на стенде или сфотографируй визитку."); return; }
     setStep("drafting");
-    toast("busy", "Пишу оба письма по-немецки… ~10 секунд");
+    const langLabel = activeLang === "ru" ? "по-русски" : activeLang === "en" ? "по-английски, черновик" : "по-немецки";
+    toast("busy", `Пишу оба письма ${langLabel}… ~10 секунд`);
+    const talkDate = flexibleTalkDate ? formatTalk(talkIso, activeLang) : talkDateLabel;
     try {
       await ensureLead();
       const res = await fetch("/api/crm/messe/letters", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          fair_title: fairTitle, venue, talk_date: talkDateLabel,
+          fair_title: fairTitle, venue, talk_date: talkDate, lang: letterLangs ? activeLang : "de",
           booth: r.booth, exhibitor: r.name, city: r.city, offer: r.offer, opening_de: r.opening_de,
           contact_name: name, talk, second_date: date2,
         }),
@@ -91,7 +107,8 @@ export default function TwoLetters({
       setL1({ subject: json.letter1_subject, body: json.letter1_body });
       setL2({ subject: json.letter2_subject, body: json.letter2_body });
       setSignature(json.signature || "");
-      toast("ok", "Оба письма готовы — проверь и отправь");
+      setLimit(json.limit || "");
+      toast("ok", activeLang === "en" ? "Черновик готов — он не отправится" : "Оба письма готовы — проверь и отправь");
       setStep("review");
     } catch (e) {
       const msg = String(e instanceof Error ? e.message : e);
@@ -102,10 +119,12 @@ export default function TwoLetters({
   }
 
   async function postMail(subject: string, body: string, sendAt: string, hold: boolean) {
+    const lang = letterLangs ? activeLang : "de";
+    if (lang === "en" && !hold) throw new Error("Английский черновик не отправляется");
     const res = await fetch("/api/crm/email/send", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ lead_id: leadId, to, subject, body, lang: "de", send_at: hold ? "" : sendAt, hold }),
+      body: JSON.stringify({ lead_id: leadId, to, subject, body, lang, send_at: hold ? "" : sendAt, hold }),
     });
     const j = await res.json();
     if (!res.ok) throw new Error(j.error || `HTTP ${res.status}`);
@@ -156,6 +175,26 @@ export default function TwoLetters({
     }
   }
 
+  async function holdEnglish() {
+    if (!leadId) return;
+    setError("");
+    setStep("sending");
+    try {
+      toast("busy", "Сохраняю английский черновик, без отправки…");
+      await postMail(l1.subject, l1.body, "", true);
+      await postMail(l2.subject, l2.body, "", true);
+      setResult("Оба письма сохранены как черновик. Английский отсюда не уходит: подписи для него нет.");
+      toast("ok", "Черновик сохранён, письмо не отправлялось");
+      onDone({ mode: "draft" });
+      setStep("done");
+    } catch (e) {
+      const msg = String(e instanceof Error ? e.message : e);
+      setError(msg);
+      toast("err", msg);
+      setStep("review");
+    }
+  }
+
   return (
     <div className="m-flow">
       <div className="m-steps">
@@ -173,9 +212,31 @@ export default function TwoLetters({
             <textarea value={talk} onChange={(e) => setTalk(e.target.value)} placeholder="Напр.: хочет видео-ролики про ракетки, сайт не продаёт комплекты, решает сам" />
           </div>
           <div className="row">
-            <div className="field"><span className="m-label">Имя (для обращения)</span><input value={name} onChange={(e) => setName(e.target.value)} placeholder="Christoph Maier" /></div>
+          <div className="field">
+            <span className="m-label">Имя человека, с которым говорили</span>
+            <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Не из каталога" />
+          </div>
             <div className="field"><span className="m-label">Email</span><input type="email" value={to} onChange={(e) => setTo(e.target.value)} /></div>
           </div>
+          {r.ask_who && <div className="m-sub">В каталоге: {r.ask_who}. В письмо попадёт только имя, которое впишешь сам.</div>}
+          {letterLangs && (
+            <div className="m-when">
+              <span className="m-label">Язык черновика{spoken ? " — отмечен после разговора" : " — подсказка по материалам, не язык сотрудника"}</span>
+              <div className="m-when-row">
+                {(["de", "en", "ru"] as const).map((code) => (
+                  <button key={code} className={letterLang === code ? "on" : ""} onClick={() => setLetterLang(code)}>{code.toUpperCase()}</button>
+                ))}
+              </div>
+              {letterLang === "en" && <div className="m-sub">Английский сохранится как черновик и не отправится.</div>}
+              {letterLang === "ru" && !spoken && <div className="m-sub">Русский здесь — из-за материалов компании, не потому что сотрудник это подтвердил.</div>}
+            </div>
+          )}
+          {flexibleTalkDate && (
+            <div className="m-when">
+              <span className="m-label">Дата разговора (фактическая, не фиксированный день недели)</span>
+              <input type="date" value={talkIso} onChange={(e) => e.target.value && setTalkIso(e.target.value)} />
+            </div>
+          )}
           <div className="m-when">
             <span className="m-label">Ориентир для письма 2 (само не отправится)</span>
             <div className="m-when-row">
@@ -196,7 +257,7 @@ export default function TwoLetters({
       {(step === "review" || step === "sending") && (
         <>
           <div className="m-letter">
-            <div className="m-letter-head">Письмо 1 — <b>уйдёт сейчас</b> на {to}</div>
+            <div className="m-letter-head">Письмо 1 — {activeLang === "en" ? <b>черновик, не уйдёт</b> : <b>уйдёт сейчас</b>} на {to}</div>
             <input value={l1.subject} onChange={(e) => setL1({ ...l1, subject: e.target.value })} />
             <textarea style={{ minHeight: 120 }} value={l1.body} onChange={(e) => setL1({ ...l1, body: e.target.value })} />
           </div>
@@ -205,15 +266,24 @@ export default function TwoLetters({
             <input value={l2.subject} onChange={(e) => setL2({ ...l2, subject: e.target.value })} />
             <textarea style={{ minHeight: 200 }} value={l2.body} onChange={(e) => setL2({ ...l2, body: e.target.value })} />
           </div>
-          <div className="m-sig">{signature}</div>
+          {limit && <div className="m-err">{limit}</div>}
+          {signature ? <div className="m-sig">{signature}</div> : <div className="m-sub">Подпись к английскому тексту не добавляется.</div>}
           <div className="m-actions">
             <button onClick={() => setStep("input")} disabled={step === "sending"}>← Поправить вводные</button>
-            <button className="pink" disabled={step === "sending" || !l1.subject || !l1.body || !l2.subject || !l2.body} onClick={() => void sendFirstAndHoldSecond()}>
-              {step === "sending" ? "Отправляю…" : letter1Sent ? "Сохранить письмо 2 на проверку" : "Отправить 1 сейчас, 2 сохранить"}
-            </button>
-            <button disabled={step === "sending" || !l2.subject || !l2.body} onClick={() => void scheduleSecond()}>
-              Запланировать 2 на {fmt(date2)}
-            </button>
+            {activeLang === "en" ? (
+              <button className="pink" disabled={step === "sending" || !l1.subject || !l1.body || !l2.subject || !l2.body} onClick={() => void holdEnglish()}>
+                {step === "sending" ? "Сохраняю…" : "Сохранить оба как черновик"}
+              </button>
+            ) : (
+              <>
+                <button className="pink" disabled={step === "sending" || !l1.subject || !l1.body || !l2.subject || !l2.body} onClick={() => void sendFirstAndHoldSecond()}>
+                  {step === "sending" ? "Отправляю…" : letter1Sent ? "Сохранить письмо 2 на проверку" : "Отправить 1 сейчас, 2 сохранить"}
+                </button>
+                <button disabled={step === "sending" || !l2.subject || !l2.body} onClick={() => void scheduleSecond()}>
+                  Запланировать 2 на {fmt(date2)}
+                </button>
+              </>
+            )}
           </div>
           {error && <div className="m-err">{error}</div>}
         </>
@@ -237,5 +307,18 @@ function nextMonday() { return nextWeekday(1); }
 function fmt(iso: string) { const [y, m, d] = iso.split("-"); return y && m && d ? `${d}.${m}` : iso; }
 /** Из заметки на карточке убираем служебные строки («→ … · дата», «Контакт: …»), оставляем суть разговора. */
 function stripMeta(note: string) {
-  return (note || "").split("\n").filter((l) => !/^(→|Контакт:|✉️)/.test(l.trim())).join("\n").trim();
+  return stripSpoken(note).split("\n").filter((l) => !/^(→|Контакт:|✉️)/.test(l.trim())).join("\n").trim();
+}
+function suggestLang(group?: string): LetterLang | "" {
+  if (group === "RU-public") return "ru";
+  if (group === "DE-market") return "de";
+  if (group === "EN") return "en";
+  return "";
+}
+function formatTalk(iso: string, lang: LetterLang) {
+  const [y, m, d] = iso.split("-").map(Number);
+  if (!y || !m || !d) return iso;
+  const dt = new Date(Date.UTC(y, m - 1, d, 12));
+  const locale = lang === "de" ? "de-AT" : lang === "en" ? "en-GB" : "ru-RU";
+  return new Intl.DateTimeFormat(locale, { weekday: "long", day: "2-digit", month: "2-digit", year: "numeric", timeZone: "UTC" }).format(dt);
 }

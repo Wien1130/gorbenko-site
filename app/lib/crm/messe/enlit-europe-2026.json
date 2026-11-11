@@ -1,0 +1,1625 @@
+{
+ "event": "enlit-europe-2026",
+ "title": "Enlit Europe 2026",
+ "date": "2026-11-10 — 2026-11-12",
+ "dateStart": "2026-11-10",
+ "dateEnd": "2026-11-12",
+ "venue": "VIECON – Vienna Congress & Convention Center",
+ "address": "Messeplatz 1, 1020 Wien, Entrance A",
+ "dateLabel": "10–12 ноября 2026",
+ "hoursByDate": {
+  "2026-11-11": "09:00–18:30"
+ },
+ "catalogUrl": "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+ "mapUrl": "https://enlit-europe-2026.expofp.com/",
+ "layout": "halls",
+ "profileLinkLabel": "Профиль Enlit",
+ "headerSub": "Залы A, B и C. Статусы пишутся в ту же CRM. Это не покупатели и не аудит сайтов.",
+ "allTab": "all",
+ "strictTabs": true,
+ "letterLangs": true,
+ "flexibleTalkDate": true,
+ "trackSpokenLang": true,
+ "showShortlistCount": true,
+ "searchPlaceholder": "Стенд: B.l90 или C.g10-P11",
+ "planNote": "Залы по буквам. Вход со стороны A, B в центре, C справа, общий коридор. Плитки не стоят по координатам и это не кратчайший маршрут.",
+ "route": [
+  "enlit26-jooby",
+  "enlit26-add-grup",
+  "enlit26-enixi",
+  "enlit26-gridoo",
+  "enlit26-greenwood-power-gmbh-1",
+  "enlit26-nik-central-europe",
+  "enlit26-clever-pv",
+  "enlit26-augmenterra-gmbh",
+  "enlit26-weeteq",
+  "enlit26-cybros-labs",
+  "enlit26-enliteai",
+  "enlit26-fa-battery-engineering",
+  "enlit26-alitiq-gmbh",
+  "enlit26-smart-grids-austria",
+  "enlit26-bayern-international"
+ ],
+ "route1": [
+  "enlit26-jooby",
+  "enlit26-add-grup",
+  "enlit26-enixi",
+  "enlit26-gridoo",
+  "enlit26-greenwood-power-gmbh-1",
+  "enlit26-clever-pv",
+  "enlit26-augmenterra-gmbh",
+  "enlit26-enliteai",
+  "enlit26-fa-battery-engineering",
+  "enlit26-alitiq-gmbh"
+ ],
+ "tabs": [
+  {
+   "id": "first",
+   "label": "Сначала",
+   "note": "Приоритет A в порядке залов B → C → A. Это рекомендация, с кем говорить раньше. Не длина проходов и не подтверждённый заказ."
+  },
+  {
+   "id": "ru",
+   "label": "Русский: есть материалы",
+   "note": "Только компании с публичным русскоязычным анонсом Enlit 2026. Это не язык сотрудника на стенде и не национальность."
+  },
+  {
+   "id": "de",
+   "label": "Начать по-немецки",
+   "note": "Рекомендация начать по-немецки по публичным сведениям о компании. Личный язык человека не установлен, пока не отмечен после разговора."
+  },
+  {
+   "id": "video",
+   "label": "Видео / демо",
+   "note": "Гипотеза короткого продуктового видео или демонстрации. Не обещание заказа и не оценка их текущего ролика."
+  },
+  {
+   "id": "three",
+   "label": "3D",
+   "note": "Гипотеза простой анимации или разреза, где продукт трудно объяснить фотографией. Не цифровой двойник сети."
+  },
+  {
+   "id": "all",
+   "label": "Все загруженные",
+   "note": "Сначала 15 отобранных в порядке разговоров B → C → A, затем компании, у которых 11.11 открыт профиль. Это не полный каталог выставки."
+  }
+ ],
+ "visitPlan": {
+  "validOn": "2026-11-11",
+  "title": "Маршрут 11.11",
+  "note": "Рекомендация на сегодня: залы B → C → A. Это не забронированные встречи и не кратчайший путь по карте.",
+  "ruFirst": [
+   "enlit26-jooby",
+   "enlit26-add-grup"
+  ],
+  "ruFirstNote": "Если удобнее начать с русского: сначала Jooby, затем ADD GRUP. Русский подтверждён материалами компании, не сотрудником на стенде.",
+  "steps": [
+   {
+    "hall": "B",
+    "when": "11:15–13:00",
+    "ids": [
+     "enlit26-jooby",
+     "enlit26-add-grup",
+     "enlit26-enixi",
+     "enlit26-gridoo",
+     "enlit26-greenwood-power-gmbh-1",
+     "enlit26-nik-central-europe"
+    ],
+    "note": "NIK — резерв. Порядок разговоров в зале B, не траектория проходов."
+   },
+   {
+    "hall": "C",
+    "when": "13:00–14:15",
+    "ids": [
+     "enlit26-clever-pv",
+     "enlit26-augmenterra-gmbh",
+     "enlit26-weeteq",
+     "enlit26-cybros-labs"
+    ],
+    "note": "cybros labs — резерв. Перерыв до возвращения в A."
+   },
+   {
+    "hall": "A",
+    "when": "14:15–16:30",
+    "ids": [
+     "enlit26-enliteai",
+     "enlit26-fa-battery-engineering",
+     "enlit26-alitiq-gmbh",
+     "enlit26-smart-grids-austria"
+    ],
+    "note": "FA Battery и alitiq можно оставить на Happy Hour. Smart Grids — знакомство, не первый покупатель."
+   }
+  ],
+  "happyHour": {
+   "booth": "A.a40",
+   "when": "11.11, 16:30–18:00",
+   "note": "Bavaria Pavilion. Сначала Bayern International — попросить познакомить с alitiq и FA Battery. На A.a40 несколько отдельных карточек.",
+   "url": "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/bavaria-pavilion?day=2026-11-11"
+  }
+ },
+ "rows": [
+  {
+   "id": "enlit26-jooby",
+   "name": "Jooby",
+   "booth": "B.l90",
+   "booths": [
+    "B.l90"
+   ],
+   "floor": "B",
+   "category": "",
+   "city": "",
+   "priority": "A",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "Ролик одного устройства: установка, путь данных до интерфейса, результат для интегратора; версии для дилеров и продаж. Сайт и контент уже существуют.",
+   "opening_de": "Кто у вас делает продуктовые видео для интеграторов? Можно ли показать монтаж одного модуля и результат в интерфейсе за минуту?",
+   "observed": "Ретрофит-сенсоры и удалённый сбор показаний; опубликовано приглашение на эту выставку по-русски.",
+   "hypothesis": "",
+   "website": "https://jooby.eu/",
+   "email": "",
+   "rank": 1,
+   "profile_url": "https://www.enlit.world/companies/jooby",
+   "fetch_status": "shortlist",
+   "ask_who": "Igor Oklander — Marketing Manager; Aleksander Vlasenko — Remote Data Collection",
+   "review_label": "отобран",
+   "sources": [
+    "https://www.enlit.world/companies/jooby",
+    "https://jooby.eu/ru/blog/jooby-predstavit-resheniya-dlya-umnoj-infrastruktury-na-enlit-europe-2026/"
+   ],
+   "language_group": "RU-public",
+   "language_evidence": "Есть официальная русскоязычная публикация именно об Enlit 2026. Язык сотрудников и присутствие указанного контакта не подтверждены.",
+   "personal_language_confirmed": false,
+   "site_quality": "Не проводился полный визуальный/мобильный аудит",
+   "review_depth": "Профиль 2026 и выбранные официальные страницы; коммерческая гипотеза, бюджет и спрос не проверены.",
+   "checked_at": "2026-11-11",
+   "tier": "shortlist"
+  },
+  {
+   "id": "enlit26-add-grup",
+   "name": "ADD GRUP",
+   "booth": "B.c100",
+   "booths": [
+    "B.c100"
+   ],
+   "floor": "B",
+   "category": "",
+   "city": "",
+   "priority": "A",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "После согласования показать новое решение в коротком демонстрационном ролике; интервью продакт-специалиста и материалы для партнёров.",
+   "opening_de": "Кто отвечает за материалы к новому продукту после выставки? Нужен ли вам короткий ролик, который продавцы смогут отправлять после встречи?",
+   "observed": "Официальный анонс Enlit 2026 есть на русском и немецком; заявлена премьера нового решения smart metering.",
+   "hypothesis": "",
+   "website": "https://addgrup.com/",
+   "email": "",
+   "rank": 2,
+   "profile_url": "https://www.enlit.world/companies/add-grup",
+   "fetch_status": "shortlist",
+   "ask_who": "Руководитель продуктового маркетинга; Iurii Bushilo — Head of Implementation and Support (технический контакт)",
+   "review_label": "отобран",
+   "sources": [
+    "https://www.enlit.world/companies/add-grup",
+    "https://addgrup.com/ru/news/add-grup-to-unveil-new-innovation-at-enlit-europe-2026-in-vienna/"
+   ],
+   "language_group": "RU-public",
+   "language_evidence": "Есть официальная русскоязычная публикация именно об Enlit 2026. Язык сотрудников и присутствие указанного контакта не подтверждены.",
+   "personal_language_confirmed": false,
+   "site_quality": "Не проводился полный визуальный/мобильный аудит",
+   "review_depth": "Профиль 2026 и выбранные официальные страницы; коммерческая гипотеза, бюджет и спрос не проверены.",
+   "checked_at": "2026-11-11",
+   "tier": "shortlist"
+  },
+  {
+   "id": "enlit26-enixi",
+   "name": "enixi",
+   "booth": "B.b83",
+   "booths": [
+    "B.b83"
+   ],
+   "floor": "B",
+   "category": "",
+   "city": "",
+   "priority": "A",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "Один понятный видеосценарий для управляющей компании или муниципалитета: подключение сообщества → распределение → расчёт. Сценарий проверяет их эксперт.",
+   "opening_de": "Welche Frage müssen Sie neuen Energiegemeinschaften immer wieder erklären?",
+   "observed": "Программная платформа для energy sharing; немецкий сайт с Core, Whitelabel, API и FAQ.",
+   "hypothesis": "",
+   "website": "https://enixi.io",
+   "email": "",
+   "rank": 3,
+   "profile_url": "https://www.enlit.world/companies/enixi",
+   "fetch_status": "shortlist",
+   "ask_who": "Matthias Nadrag — Founder/CEO",
+   "review_label": "отобран",
+   "sources": [
+    "https://www.enlit.world/companies/enixi",
+    "https://enixi.io"
+   ],
+   "language_group": "DE-market",
+   "language_evidence": "Основание: австрийское/немецкое позиционирование в официальном профиле; у части проверен DE-сайт. Это рекомендация начать по-немецки, не подтверждённый язык конкретного сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Не проводился полный визуальный/мобильный аудит",
+   "review_depth": "Профиль 2026 и выбранные официальные страницы; коммерческая гипотеза, бюджет и спрос не проверены.",
+   "checked_at": "2026-11-11",
+   "tier": "shortlist"
+  },
+  {
+   "id": "enlit26-gridoo",
+   "name": "gridoo",
+   "booth": "B.b84",
+   "booths": [
+    "B.b84"
+   ],
+   "floor": "B",
+   "category": "",
+   "city": "",
+   "priority": "A",
+   "site_priority": "",
+   "services": [
+    "видео",
+    "3D"
+   ],
+   "offer": "Анимация пути сигнала и одного сценария применения, плюс демонстрация продукта для партнёров.",
+   "opening_de": "Wie erklären Sie einem neuen Partner in einer Minute, was zwischen dem Gerät und Ihrer Plattform passiert?",
+   "observed": "Австрийское решение связывает устройства и цифровую инфраструктуру энергосети; сайт доступен на DE/EN.",
+   "hypothesis": "",
+   "website": "https://www.gridoo.com/",
+   "email": "",
+   "rank": 4,
+   "profile_url": "https://www.enlit.world/companies/gridoo",
+   "fetch_status": "shortlist",
+   "ask_who": "Product Marketing / Business Development; имя не установлено",
+   "review_label": "отобран",
+   "sources": [
+    "https://www.enlit.world/companies/gridoo",
+    "https://www.gridoo.com/"
+   ],
+   "language_group": "DE-market",
+   "language_evidence": "Основание: австрийское/немецкое позиционирование в официальном профиле; у части проверен DE-сайт. Это рекомендация начать по-немецки, не подтверждённый язык конкретного сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Не проводился полный визуальный/мобильный аудит",
+   "review_depth": "Профиль 2026 и выбранные официальные страницы; коммерческая гипотеза, бюджет и спрос не проверены.",
+   "checked_at": "2026-11-11",
+   "tier": "shortlist"
+  },
+  {
+   "id": "enlit26-greenwood-power-gmbh-1",
+   "name": "Greenwood Power",
+   "booth": "B.b140",
+   "booths": [
+    "B.b140"
+   ],
+   "floor": "B",
+   "category": "",
+   "city": "",
+   "priority": "A",
+   "site_priority": "",
+   "services": [
+    "видео",
+    "3D"
+   ],
+   "offer": "Макросъёмка датчика и 3D-разрез по предоставленной модели, который показывает монтаж и отличие одного продукта.",
+   "opening_de": "Welches Detail Ihres Sensors lässt sich mit einem Foto allein schwer erklären?",
+   "observed": "Австрийский производитель датчиков для распределительных сетей; аппаратные решения для разных условий установки.",
+   "hypothesis": "",
+   "website": "https://www.greenwood-power.com/",
+   "email": "",
+   "rank": 8,
+   "profile_url": "https://www.enlit.world/companies/greenwood-power-gmbh-1",
+   "fetch_status": "shortlist",
+   "ask_who": "Werner Hingerl — Director Global Sales; Norbert Juschicz — CEO/Co-Founder",
+   "review_label": "отобран",
+   "sources": [
+    "https://www.enlit.world/companies/greenwood-power-gmbh-1"
+   ],
+   "language_group": "DE-market",
+   "language_evidence": "Основание: австрийское/немецкое позиционирование в официальном профиле; у части проверен DE-сайт. Это рекомендация начать по-немецки, не подтверждённый язык конкретного сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Не проводился полный визуальный/мобильный аудит",
+   "review_depth": "Профиль 2026 и выбранные официальные страницы; коммерческая гипотеза, бюджет и спрос не проверены.",
+   "checked_at": "2026-11-11",
+   "tier": "shortlist"
+  },
+  {
+   "id": "enlit26-nik-central-europe",
+   "name": "NIK Central Europe",
+   "booth": "B.k121",
+   "booths": [
+    "B.k121"
+   ],
+   "floor": "B",
+   "category": "",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "Демонстрация одного сценария счётчик → платформа и материалы для интеграторов; язык спросить, не выводить по имени.",
+   "opening_de": "Who creates the product demonstrations your partners use after the exhibition?",
+   "observed": "Smart metering/AMI; участие и маркетинговый контакт подтверждены каталогом. Русский язык не установлен.",
+   "hypothesis": "",
+   "website": "https://nik-global.com",
+   "email": "",
+   "rank": 12,
+   "profile_url": "https://www.enlit.world/companies/nik-central-europe",
+   "fetch_status": "shortlist",
+   "ask_who": "Alona Serhiienko — Marketing Officer",
+   "review_label": "отобран",
+   "sources": [
+    "https://www.enlit.world/companies/nik-central-europe"
+   ],
+   "language_group": "unknown",
+   "language_evidence": "Язык не установлен. Не определять его по имени, гражданству или адресу.",
+   "personal_language_confirmed": false,
+   "site_quality": "Не проводился полный визуальный/мобильный аудит",
+   "review_depth": "Профиль 2026 и выбранные официальные страницы; коммерческая гипотеза, бюджет и спрос не проверены.",
+   "checked_at": "2026-11-11",
+   "tier": "shortlist"
+  },
+  {
+   "id": "enlit26-clever-pv",
+   "name": "clever-PV",
+   "booth": "C.g10-S01",
+   "booths": [
+    "C.g10-S01"
+   ],
+   "floor": "C",
+   "category": "",
+   "city": "",
+   "priority": "A",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "Два сценария видео: предложение энергокомпании и понятная инструкция конечному пользователю.",
+   "opening_de": "Welche Inhalte brauchen Ihre White-Label-Partner, damit Kunden die App tatsächlich nutzen?",
+   "observed": "Облачное управление домашней энергией, white-label app и API; по профилю есть команда в Германии и действующие партнёры.",
+   "hypothesis": "",
+   "website": "https://www.clever-pv.com",
+   "email": "",
+   "rank": 10,
+   "profile_url": "https://www.enlit.world/companies/clever-pv",
+   "fetch_status": "shortlist",
+   "ask_who": "Willi Appler — Co-Founder/CCO; Yannick Dischinger — Marketing Lead",
+   "review_label": "отобран",
+   "sources": [
+    "https://www.enlit.world/companies/clever-pv"
+   ],
+   "language_group": "DE-market",
+   "language_evidence": "Основание: австрийское/немецкое позиционирование в официальном профиле; у части проверен DE-сайт. Это рекомендация начать по-немецки, не подтверждённый язык конкретного сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Не проводился полный визуальный/мобильный аудит",
+   "review_depth": "Профиль 2026 и выбранные официальные страницы; коммерческая гипотеза, бюджет и спрос не проверены.",
+   "checked_at": "2026-11-11",
+   "tier": "shortlist"
+  },
+  {
+   "id": "enlit26-augmenterra-gmbh",
+   "name": "AUGMENTERRA",
+   "booth": "C.g10-P11",
+   "booths": [
+    "C.g10-P11"
+   ],
+   "floor": "C",
+   "category": "",
+   "city": "",
+   "priority": "A",
+   "site_priority": "",
+   "services": [
+    "видео",
+    "3D"
+   ],
+   "offer": "Анимация одного конкретного объекта: измерение → изменение → решение; короткое интервью основателя с утверждённым сценарием.",
+   "opening_de": "Wie zeigen Sie einem neuen Kunden den Weg vom Satellitensignal zu einer konkreten Entscheidung?",
+   "observed": "Salzburg; Observer переводит спутниковые измерения движения инфраструктуры в аналитику. На сайте DE/EN; слот доклада 15:15–15:23 в Hall A.",
+   "hypothesis": "",
+   "website": "https://www.augmenterra.com/en",
+   "email": "",
+   "rank": 9,
+   "profile_url": "https://www.enlit.world/companies/augmenterra-gmbh",
+   "fetch_status": "shortlist",
+   "ask_who": "Markus Dörfler — Co-Founder/Chief Sales Officer; Dominic Hemmer — Business Development",
+   "review_label": "отобран",
+   "sources": [
+    "https://www.enlit.world/companies/augmenterra-gmbh",
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list?page=6",
+    "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/belgium-pavilion?day=2026-11-11",
+    "https://www.augmenterra.com/en"
+   ],
+   "language_group": "DE-market",
+   "language_evidence": "Основание: австрийское/немецкое позиционирование в официальном профиле; у части проверен DE-сайт. Это рекомендация начать по-немецки, не подтверждённый язык конкретного сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Не проводился полный визуальный/мобильный аудит",
+   "review_depth": "Профиль 2026 и выбранные официальные страницы; коммерческая гипотеза, бюджет и спрос не проверены.",
+   "checked_at": "2026-11-11",
+   "tier": "shortlist"
+  },
+  {
+   "id": "enlit26-weeteq",
+   "name": "Weeteq",
+   "booth": "C.g10-P09",
+   "booths": [
+    "C.g10-P09"
+   ],
+   "floor": "C",
+   "category": "",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [
+    "видео",
+    "3D"
+   ],
+   "offer": "Анимация сравнения двух режимов по их реальным данным + записанное демо для OEM-покупателей.",
+   "opening_de": "What part of Ultra Edge do buyers only understand after seeing a live demonstration?",
+   "observed": "Ultra Edge — управление и коррекция на уровне микроконтроллера; сложное поведение продукта трудно увидеть без демонстрации.",
+   "hypothesis": "",
+   "website": "https://weeteq.com",
+   "email": "",
+   "rank": 11,
+   "profile_url": "https://www.enlit.world/companies/weeteq",
+   "fetch_status": "shortlist",
+   "ask_who": "Lewis Gallagher — Marketing Manager; Nick Noble — Strategic Advisor",
+   "review_label": "отобран",
+   "sources": [
+    "https://www.enlit.world/companies/weeteq"
+   ],
+   "language_group": "EN",
+   "language_evidence": "Практический вариант начать по-английски. Языки конкретного сотрудника не проверены.",
+   "personal_language_confirmed": false,
+   "site_quality": "Не проводился полный визуальный/мобильный аудит",
+   "review_depth": "Профиль 2026 и выбранные официальные страницы; коммерческая гипотеза, бюджет и спрос не проверены.",
+   "checked_at": "2026-11-11",
+   "tier": "shortlist"
+  },
+  {
+   "id": "enlit26-cybros-labs",
+   "name": "cybros labs",
+   "booth": "C.d22",
+   "booths": [
+    "C.d22"
+   ],
+   "floor": "C",
+   "category": "",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "Серия коротких обучающих видео по одному рабочему процессу; сценарий согласовать с техническим специалистом.",
+   "opening_de": "Which onboarding task generates the most repeated questions from your customers?",
+   "observed": "Команда 10+ по профилю; OuroPlatform объединяет HES/MDM, есть мобильный клиент монтажа/считывания.",
+   "hypothesis": "",
+   "website": "https://www.cybroslabs.com/",
+   "email": "",
+   "rank": 13,
+   "profile_url": "https://www.enlit.world/companies/cybros-labs",
+   "fetch_status": "shortlist",
+   "ask_who": "Dalibor Janckulik — CEO; Vendula Lucáková — Technical Documentation Specialist",
+   "review_label": "отобран",
+   "sources": [
+    "https://www.enlit.world/companies/cybros-labs"
+   ],
+   "language_group": "EN",
+   "language_evidence": "Практический вариант начать по-английски. Языки конкретного сотрудника не проверены.",
+   "personal_language_confirmed": false,
+   "site_quality": "Не проводился полный визуальный/мобильный аудит",
+   "review_depth": "Профиль 2026 и выбранные официальные страницы; коммерческая гипотеза, бюджет и спрос не проверены.",
+   "checked_at": "2026-11-11",
+   "tier": "shortlist"
+  },
+  {
+   "id": "enlit26-enliteai",
+   "name": "EnliteAI",
+   "booth": "A.k70",
+   "booths": [
+    "A.k70"
+   ],
+   "floor": "A",
+   "category": "",
+   "city": "",
+   "priority": "A",
+   "site_priority": "",
+   "services": [
+    "видео",
+    "3D"
+   ],
+   "offer": "Объясняющая анимация одного сценария FLEX и запись демо; не разработка цифрового двойника электрической сети.",
+   "opening_de": "Welche Funktion von FLEX verstehen Entscheider erst, wenn Sie sie live demonstrieren?",
+   "observed": "Венская компания; FLEX использует модели сети и AI для помощи сетевым операторам.",
+   "hypothesis": "",
+   "website": "https://www.enlite.ai/",
+   "email": "",
+   "rank": 7,
+   "profile_url": "https://www.enlit.world/companies/enliteai",
+   "fetch_status": "shortlist",
+   "ask_who": "Product Marketing / коммерческий руководитель",
+   "review_label": "отобран",
+   "sources": [
+    "https://www.enlit.world/companies/enliteai"
+   ],
+   "language_group": "DE-market",
+   "language_evidence": "Основание: австрийское/немецкое позиционирование в официальном профиле; у части проверен DE-сайт. Это рекомендация начать по-немецки, не подтверждённый язык конкретного сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Не проводился полный визуальный/мобильный аудит",
+   "review_depth": "Профиль 2026 и выбранные официальные страницы; коммерческая гипотеза, бюджет и спрос не проверены.",
+   "checked_at": "2026-11-11",
+   "tier": "shortlist"
+  },
+  {
+   "id": "enlit26-fa-battery-engineering",
+   "name": "FA Battery Engineering",
+   "booth": "A.a40",
+   "booths": [
+    "A.a40"
+   ],
+   "floor": "A",
+   "category": "",
+   "city": "",
+   "priority": "A",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "Короткое screen-demo существующего BESSizer с одним типовым сценарием клиента. Не предлагать новый инженерный калькулятор поверх готового.",
+   "opening_de": "Wie zeigen Sie Interessenten den BESSizer vor dem ersten Beratungsgespräch?",
+   "observed": "Инженерная компания по батарейным системам; уже продвигает инструмент BESSizer. Общий Bavaria Pavilion.",
+   "hypothesis": "",
+   "website": "https://www.fa-battery.com/",
+   "email": "",
+   "rank": 5,
+   "profile_url": "https://www.enlit.world/companies/fa-battery-engineering",
+   "fetch_status": "shortlist",
+   "ask_who": "Dr. Alexander Farmann — Managing Director",
+   "review_label": "отобран",
+   "sources": [
+    "https://www.enlit.world/companies/fa-battery-engineering"
+   ],
+   "language_group": "DE-market",
+   "language_evidence": "Основание: австрийское/немецкое позиционирование в официальном профиле; у части проверен DE-сайт. Это рекомендация начать по-немецки, не подтверждённый язык конкретного сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Не проводился полный визуальный/мобильный аудит",
+   "review_depth": "Профиль 2026 и выбранные официальные страницы; коммерческая гипотеза, бюджет и спрос не проверены.",
+   "checked_at": "2026-11-11",
+   "tier": "shortlist"
+  },
+  {
+   "id": "enlit26-alitiq-gmbh",
+   "name": "alitiq",
+   "booth": "A.a40",
+   "booths": [
+    "A.a40"
+   ],
+   "floor": "A",
+   "category": "",
+   "city": "",
+   "priority": "A",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "Один кейс с согласованными клиентскими данными: прогноз → решение оператора → измеренный результат; короткие фрагменты для LinkedIn/продаж.",
+   "opening_de": "Welcher Anwendungsfall zeigt Ihren Nutzen am verständlichsten – Wärme, PV oder Lastprognose?",
+   "observed": "Прогнозы нагрузки/генерации на основе погоды; сайт уже содержит savings calculator. Общий Bavaria Pavilion.",
+   "hypothesis": "",
+   "website": "https://alitiq.com/en",
+   "email": "",
+   "rank": 6,
+   "profile_url": "https://www.enlit.world/companies/alitiq-gmbh",
+   "fetch_status": "shortlist",
+   "ask_who": "Matthias Habel — CEO; Jelena Kapulica — Junior Sales Manager",
+   "review_label": "отобран",
+   "sources": [
+    "https://www.enlit.world/companies/alitiq-gmbh",
+    "https://alitiq.com/en"
+   ],
+   "language_group": "DE-market",
+   "language_evidence": "Основание: австрийское/немецкое позиционирование в официальном профиле; у части проверен DE-сайт. Это рекомендация начать по-немецки, не подтверждённый язык конкретного сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Не проводился полный визуальный/мобильный аудит",
+   "review_depth": "Профиль 2026 и выбранные официальные страницы; коммерческая гипотеза, бюджет и спрос не проверены.",
+   "checked_at": "2026-11-11",
+   "tier": "shortlist"
+  },
+  {
+   "id": "enlit26-smart-grids-austria",
+   "name": "Smart Grids Austria",
+   "booth": "A.e82",
+   "booths": [
+    "A.e82"
+   ],
+   "floor": "A",
+   "category": "",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "Контакт для знакомства с 2–3 компаниями, которым нужен внешний видеопродакшен; отдельно спросить про интервью участников сети.",
+   "opening_de": "Welche Ihrer Mitgliedsfirmen suchen gerade Unterstützung bei Produktvideos oder verständlicher Kommunikation?",
+   "observed": "Отраслевая платформа и сеть австрийских участников.",
+   "hypothesis": "",
+   "website": "https://www.smartgrids.at",
+   "email": "",
+   "rank": 14,
+   "profile_url": "https://www.enlit.world/companies/smart-grids-austria",
+   "fetch_status": "shortlist",
+   "ask_who": "Christoph Wanzenböck — MD",
+   "review_label": "отобран",
+   "sources": [
+    "https://www.enlit.world/companies/smart-grids-austria"
+   ],
+   "language_group": "DE-market",
+   "language_evidence": "Основание: австрийское/немецкое позиционирование в официальном профиле; у части проверен DE-сайт. Это рекомендация начать по-немецки, не подтверждённый язык конкретного сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Не проводился полный визуальный/мобильный аудит",
+   "review_depth": "Профиль 2026 и выбранные официальные страницы; коммерческая гипотеза, бюджет и спрос не проверены.",
+   "checked_at": "2026-11-11",
+   "tier": "shortlist"
+  },
+  {
+   "id": "enlit26-bayern-international",
+   "name": "Bayern International",
+   "booth": "A.a40",
+   "booths": [
+    "A.a40"
+   ],
+   "floor": "A",
+   "category": "",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "Попросить представление двум участникам с потребностью в материалах для продаж. Это партнёрский контакт, не первоочередной покупатель сайта.",
+   "opening_de": "Welche Firmen hier am Gemeinschaftsstand sind offen für externe Unterstützung bei Produktvideos?",
+   "observed": "Организатор совместного стенда баварских компаний; Happy Hour 11.11, 16:30–18:00.",
+   "hypothesis": "",
+   "website": "https://www.bayern-international.org/",
+   "email": "",
+   "rank": 15,
+   "profile_url": "https://www.enlit.world/companies/bayern-international",
+   "fetch_status": "shortlist",
+   "ask_who": "Verena Lohner — Senior Manager Trade fairs & Conferences",
+   "review_label": "отобран",
+   "sources": [
+    "https://www.enlit.world/companies/bayern-international",
+    "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/bavaria-pavilion?day=2026-11-11"
+   ],
+   "language_group": "DE-market",
+   "language_evidence": "Основание: австрийское/немецкое позиционирование в официальном профиле; у части проверен DE-сайт. Это рекомендация начать по-немецки, не подтверждённый язык конкретного сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Не проводился полный визуальный/мобильный аудит",
+   "review_depth": "Профиль 2026 и выбранные официальные страницы; коммерческая гипотеза, бюджет и спрос не проверены.",
+   "checked_at": "2026-11-11",
+   "tier": "shortlist"
+  },
+  {
+   "id": "enlit26-envelio",
+   "name": "envelio",
+   "booth": "A.b21",
+   "booths": [
+    "A.b21"
+   ],
+   "floor": "A",
+   "category": "софт для сетей",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "Гипотеза: короткий разбор одного уже существующего экрана. Не новая модель сети.",
+   "opening_de": "",
+   "observed": "Профиль: intelligent grids. Заголовок главной: «envelio • Power grid digitalization with smart grid solutions». В первых 25 КБ слова demo/video не встретились. Страница целиком не читалась.",
+   "hypothesis": "",
+   "website": "https://envelio.com/",
+   "email": "",
+   "rank": 80,
+   "profile_url": "https://www.enlit.world/companies/envelio-gmbh",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "профиль",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/companies/envelio-gmbh"
+   ],
+   "language_group": "en",
+   "language_evidence": "Заголовок главной на английском: «envelio • Power grid digitalization with smart grid solutions». Это не язык сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Главная не аудировалась целиком",
+   "review_depth": "Заголовок главной: «envelio • Power grid digitalization with smart grid solutions». В первых 25 КБ слова demo/video не встретились. Страница целиком не читалась.",
+   "checked_at": "2026-11-11",
+   "tier": "reviewed"
+  },
+  {
+   "id": "enlit26-cuculus",
+   "name": "Cuculus",
+   "booth": "B.d71",
+   "booths": [
+    "B.d71"
+   ],
+   "floor": "B",
+   "category": "платформа учёта",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "Платформа ZONOS уже есть. Гипотеза: ролик одного сценария счётчик → платформа.",
+   "opening_de": "",
+   "observed": "Профиль: ZONOS IoT Platform для smart metering. Заголовок главной: «Start - Cuculus GmbH». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "hypothesis": "",
+   "website": "https://www.cuculus.com/",
+   "email": "",
+   "rank": 80,
+   "profile_url": "https://www.enlit.world/companies/cuculus-gmbh",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "профиль",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/companies/cuculus-gmbh"
+   ],
+   "language_group": "de",
+   "language_evidence": "Заголовок главной: «Start - Cuculus GmbH». Это язык сайта, не сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Главная не аудировалась целиком",
+   "review_depth": "Заголовок главной: «Start - Cuculus GmbH». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "checked_at": "2026-11-11",
+   "tier": "reviewed"
+  },
+  {
+   "id": "enlit26-smight",
+   "name": "Smight",
+   "booth": "A.h20",
+   "booths": [
+    "A.h20"
+   ],
+   "floor": "A",
+   "category": "датчики сети",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "Гипотеза: ролик одного датчика и одного экрана. Не новая система мониторинга.",
+   "opening_de": "",
+   "observed": "Профиль: SMIGHT Grid2, датчики в подстанциях. Заголовок главной: «Network monitoring for distribution networks». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "hypothesis": "",
+   "website": "https://www.smight.com/en",
+   "email": "",
+   "rank": 80,
+   "profile_url": "https://www.enlit.world/companies/smight-gmbh",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "профиль",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/companies/smight-gmbh"
+   ],
+   "language_group": "en",
+   "language_evidence": "Сайт в профиле открыт как /en/. Абзац профиля на английском. Это не язык сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Главная не аудировалась целиком",
+   "review_depth": "Заголовок главной: «Network monitoring for distribution networks». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "checked_at": "2026-11-11",
+   "tier": "reviewed"
+  },
+  {
+   "id": "enlit26-i2m",
+   "name": "i2m",
+   "booth": "A.e83",
+   "booths": [
+    "A.e83"
+   ],
+   "floor": "A",
+   "category": "энергоменеджмент",
+   "city": "Graz",
+   "priority": "B",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "Гипотеза: один сценарий для SME. Город взят из текста профиля.",
+   "opening_de": "",
+   "observed": "Austria Pavilion. Профиль: energy management и батареи для SME. Заголовок главной пустой. В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "hypothesis": "",
+   "website": "https://www.i2m.at/",
+   "email": "",
+   "rank": 80,
+   "profile_url": "https://www.enlit.world/companies/i2m",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "профиль",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/austria-pavilion",
+    "https://www.enlit.world/companies/i2m"
+   ],
+   "language_group": "en",
+   "language_evidence": "Абзац профиля на английском и прямо говорит Graz / Austria. Это не язык сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Главная не аудировалась целиком",
+   "review_depth": "Заголовок главной пустой. В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "checked_at": "2026-11-11",
+   "tier": "reviewed"
+  },
+  {
+   "id": "enlit26-graphwise",
+   "name": "Graphwise",
+   "booth": "B.b82",
+   "booths": [
+    "B.b82"
+   ],
+   "floor": "B",
+   "category": "софт для данных",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "Гипотеза: одно объясняющее видео пути данных. Не обещать внедрение AI.",
+   "opening_de": "",
+   "observed": "Austria Pavilion. Профиль: semantic layer для поиска и аналитики. Заголовок главной пустой. В первых 25 КБ слова demo/video не встретились. Страница целиком не читалась.",
+   "hypothesis": "",
+   "website": "https://graphwise.ai/",
+   "email": "",
+   "rank": 80,
+   "profile_url": "https://www.enlit.world/companies/graphwise",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "профиль",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/austria-pavilion",
+    "https://www.enlit.world/companies/graphwise"
+   ],
+   "language_group": "en",
+   "language_evidence": "Абзац профиля на английском. Это не язык сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Главная не аудировалась целиком",
+   "review_depth": "Заголовок главной пустой. В первых 25 КБ слова demo/video не встретились. Страница целиком не читалась.",
+   "checked_at": "2026-11-11",
+   "tier": "reviewed"
+  },
+  {
+   "id": "enlit26-cubro",
+   "name": "Cubro",
+   "booth": "A.e87",
+   "booths": [
+    "A.e87"
+   ],
+   "floor": "A",
+   "category": "сетевое оборудование",
+   "city": "Wien",
+   "priority": "B",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "Гипотеза: короткое видео одного прибора. Сначала открыть сайт: слово video на главной уже встречалось.",
+   "opening_de": "",
+   "observed": "Austria Pavilion. Производитель network visibility, Вена в тексте профиля. Заголовок главной: «Network Visibility Solutions - Monitoring &amp; Analytics». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "hypothesis": "",
+   "website": "https://www.cubro.com/en/",
+   "email": "",
+   "rank": 80,
+   "profile_url": "https://www.enlit.world/companies/cubro-network-visibility",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "профиль",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/austria-pavilion",
+    "https://www.enlit.world/companies/cubro-network-visibility"
+   ],
+   "language_group": "en",
+   "language_evidence": "Профиль и ссылка на сайт на английском. В тексте профиля штаб-квартира Vienna. Это не язык сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Главная не аудировалась целиком",
+   "review_depth": "Заголовок главной: «Network Visibility Solutions - Monitoring &amp; Analytics». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "checked_at": "2026-11-11",
+   "tier": "reviewed"
+  },
+  {
+   "id": "enlit26-insys",
+   "name": "INSYS icom",
+   "booth": "A.a40",
+   "booths": [
+    "A.a40"
+   ],
+   "floor": "A",
+   "category": "роутеры",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "Гипотеза: ролик одного роутера и экрана софта. Сайт не открылся, дубликат ролика не проверен.",
+   "opening_de": "",
+   "observed": "Bavaria Pavilion. Профиль: промышленные роутеры и софт своей разработки. Главная сайта в этом проходе не открылась.",
+   "hypothesis": "",
+   "website": "https://www.insys-icom.com/",
+   "email": "",
+   "rank": 80,
+   "profile_url": "https://www.enlit.world/companies/insys-icom-gmbh",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "профиль",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/bavaria-pavilion",
+    "https://www.enlit.world/companies/insys-icom-gmbh"
+   ],
+   "language_group": "unknown",
+   "language_evidence": "Главная insys-icom.com в этом проходе не открылась. Язык не установлен.",
+   "personal_language_confirmed": false,
+   "site_quality": "Главная не аудировалась целиком",
+   "review_depth": "Главная сайта в этом проходе не открылась.",
+   "checked_at": "2026-11-11",
+   "tier": "reviewed"
+  },
+  {
+   "id": "enlit26-eberle",
+   "name": "A. Eberle",
+   "booth": "A.j71",
+   "booths": [
+    "A.j71"
+   ],
+   "floor": "A",
+   "category": "измерения",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "Гипотеза: короткое видео одного измерительного прибора.",
+   "opening_de": "",
+   "observed": "Профиль: measurement and control technology для энергетики и промышленности. Заголовок главной: «Measurement and Control Technology | A. EBERLE». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "hypothesis": "",
+   "website": "https://www.a-eberle.com/",
+   "email": "",
+   "rank": 80,
+   "profile_url": "https://www.enlit.world/companies/a.-eberle-gmbh-and-co.-kg",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "профиль",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/companies/a.-eberle-gmbh-and-co.-kg"
+   ],
+   "language_group": "en",
+   "language_evidence": "Заголовок главной на английском. Это не язык сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Главная не аудировалась целиком",
+   "review_depth": "Заголовок главной: «Measurement and Control Technology | A. EBERLE». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "checked_at": "2026-11-11",
+   "tier": "reviewed"
+  },
+  {
+   "id": "enlit26-liveeo",
+   "name": "LiveEO",
+   "booth": "B.h21",
+   "booths": [
+    "B.h21"
+   ],
+   "floor": "B",
+   "category": "спутниковый мониторинг",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "Рядом по задаче с AUGMENTERRA. Гипотеза: один уже существующий сценарий, не второй спутниковый продукт.",
+   "opening_de": "",
+   "observed": "Профиль: спутниковый мониторинг сетей, трубопроводов и железных дорог. Заголовок главной: «LiveEO l Business-Ready Risk Intelligence From Space». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "hypothesis": "",
+   "website": "https://www.live-eo.com/",
+   "email": "",
+   "rank": 80,
+   "profile_url": "https://www.enlit.world/companies/liveeo-gmbh",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "профиль",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/companies/liveeo-gmbh"
+   ],
+   "language_group": "en",
+   "language_evidence": "Заголовок главной на английском. Это не язык сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Главная не аудировалась целиком",
+   "review_depth": "Заголовок главной: «LiveEO l Business-Ready Risk Intelligence From Space». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "checked_at": "2026-11-11",
+   "tier": "reviewed"
+  },
+  {
+   "id": "enlit26-neo",
+   "name": "NEO Messtechnik",
+   "booth": "C.g10-S05",
+   "booths": [
+    "C.g10-S05"
+   ],
+   "floor": "C",
+   "category": "",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [],
+   "offer": "Оффер не сформулирован: продукт с профиля не виден.",
+   "opening_de": "",
+   "observed": "На профиле нет отдельного абзаца о продукте. Ссылка подписана www.neo-messtechnik.com. Заголовок главной: «Home of Power Quality - NEO Messtechnik». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "hypothesis": "",
+   "website": "https://www.neo-messtechnik.com/",
+   "email": "",
+   "rank": 80,
+   "profile_url": "https://www.enlit.world/companies/neo-messtechnik-gmbh",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "профиль без описания",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/companies/neo-messtechnik-gmbh"
+   ],
+   "language_group": "en",
+   "language_evidence": "Заголовок главной: «Home of Power Quality». Это не язык сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Главная не аудировалась целиком",
+   "review_depth": "Заголовок главной: «Home of Power Quality - NEO Messtechnik». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "checked_at": "2026-11-11",
+   "tier": "reviewed"
+  },
+  {
+   "id": "enlit26-reisenbauer",
+   "name": "Reisenbauer Solutions",
+   "booth": "A.e81",
+   "booths": [
+    "A.e81"
+   ],
+   "floor": "A",
+   "category": "софт",
+   "city": "Wien",
+   "priority": "B",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "Платформа уже есть. Гипотеза: один экран для энергосообщества или e-mobility.",
+   "opening_de": "",
+   "observed": "Профиль: венская софтверная компания, energy management и e-mobility, своя платформа больше 16 лет. Заголовок главной: «Reisenbauer Solutions &#8211; Technologie für eine nachhaltige Zukunft.». В первых 25 КБ слова demo/video не встретились. Страница целиком не читалась.",
+   "hypothesis": "",
+   "website": "https://reisenbauer.solutions/",
+   "email": "",
+   "rank": 80,
+   "profile_url": "https://www.enlit.world/companies/reisenbauer-solutions-gmbh",
+   "fetch_status": "profile",
+   "ask_who": "В тексте профиля названы Stefan и Hermann Reisenbauer как основатели. Присутствие на стенде не подтверждено.",
+   "review_label": "профиль",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/companies/reisenbauer-solutions-gmbh"
+   ],
+   "language_group": "de",
+   "language_evidence": "Заголовок главной на немецком: «Reisenbauer Solutions – Technologie für eine nachhaltige Zukunft». Это язык сайта, не сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Главная не аудировалась целиком",
+   "review_depth": "Заголовок главной: «Reisenbauer Solutions &#8211; Technologie für eine nachhaltige Zukunft.». В первых 25 КБ слова demo/video не встретились. Страница целиком не читалась.",
+   "checked_at": "2026-11-11",
+   "tier": "reviewed"
+  },
+  {
+   "id": "enlit26-delphi",
+   "name": "Delphi Data Labs",
+   "booth": "C.g10-P15",
+   "booths": [
+    "C.g10-P15"
+   ],
+   "floor": "C",
+   "category": "market intelligence",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "Гипотеза: один короткий разбор экрана. Сайт помечен как beta.",
+   "opening_de": "",
+   "observed": "Профиль: Market intelligence, rebuilt for humans and AI. Заголовок главной: «Request beta access | Delphi Dashboard | Delphidata». В первых 25 КБ слова demo/video не встретились. Страница целиком не читалась.",
+   "hypothesis": "",
+   "website": "https://beta.delphidata.com/",
+   "email": "",
+   "rank": 80,
+   "profile_url": "https://www.enlit.world/companies/delphi-data-labs-gmbh",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "профиль",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/companies/delphi-data-labs-gmbh"
+   ],
+   "language_group": "en",
+   "language_evidence": "Заголовок главной на английском, адрес beta. Это не язык сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Главная не аудировалась целиком",
+   "review_depth": "Заголовок главной: «Request beta access | Delphi Dashboard | Delphidata». В первых 25 КБ слова demo/video не встретились. Страница целиком не читалась.",
+   "checked_at": "2026-11-11",
+   "tier": "reviewed"
+  },
+  {
+   "id": "enlit26-arkensight",
+   "name": "Arkensight",
+   "booth": "C.g10-S09",
+   "booths": [
+    "C.g10-S09"
+   ],
+   "floor": "C",
+   "category": "",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [],
+   "offer": "Оффер не сформулирован: страна и продукт с профиля не видны.",
+   "opening_de": "",
+   "observed": "Innovators Zone. Ссылка arkensight.com. Заголовок главной пустой. В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "hypothesis": "",
+   "website": "https://arkensight.com/",
+   "email": "",
+   "rank": 80,
+   "profile_url": "https://www.enlit.world/companies/arkensight",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "профиль без описания",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/innovators-zone",
+    "https://www.enlit.world/companies/arkensight"
+   ],
+   "language_group": "unknown",
+   "language_evidence": "Отдельного описания и страны на профиле нет. Язык не установлен.",
+   "personal_language_confirmed": false,
+   "site_quality": "Главная не аудировалась целиком",
+   "review_depth": "Заголовок главной пустой. В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "checked_at": "2026-11-11",
+   "tier": "reviewed"
+  },
+  {
+   "id": "enlit26-enfera",
+   "name": "Enfera",
+   "booth": "C.g10-P04",
+   "booths": [
+    "C.g10-P04"
+   ],
+   "floor": "C",
+   "category": "софт для гибкости",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "Гипотеза: один сценарий для энергосообщества. Не предлагать им то же, что enixi и nobile, как новую платформу.",
+   "opening_de": "",
+   "observed": "Innovators Zone. Профиль: координация PV, батарей, тепловых насосов, EV. Заголовок главной: «EnFera · Get more from your energy». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "hypothesis": "",
+   "website": "https://www.enfera.at/",
+   "email": "",
+   "rank": 80,
+   "profile_url": "https://www.enlit.world/companies/enfera",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "профиль",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/innovators-zone",
+    "https://www.enlit.world/companies/enfera"
+   ],
+   "language_group": "en",
+   "language_evidence": "Абзац профиля на английском. Сайт enfera.at. Это не язык сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Главная не аудировалась целиком",
+   "review_depth": "Заголовок главной: «EnFera · Get more from your energy». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "checked_at": "2026-11-11",
+   "tier": "reviewed"
+  },
+  {
+   "id": "enlit26-createch",
+   "name": "CreaTech Engineering",
+   "booth": "A.a40",
+   "booths": [
+    "A.a40"
+   ],
+   "floor": "A",
+   "category": "",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [],
+   "offer": "Оффер не сформулирован.",
+   "opening_de": "",
+   "observed": "Bavaria Pavilion. Отдельного описания на профиле нет. Заголовок главной: «Ingenieurdienstleistungen und Geoinformationslösungen». В первых 25 КБ слова demo/video не встретились. Страница целиком не читалась.",
+   "hypothesis": "",
+   "website": "https://www.createch.gmbh/",
+   "email": "",
+   "rank": 80,
+   "profile_url": "https://www.enlit.world/companies/createch-engineering",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "профиль без описания",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/bavaria-pavilion",
+    "https://www.enlit.world/companies/createch-engineering"
+   ],
+   "language_group": "de",
+   "language_evidence": "Заголовок главной на немецком: «Ingenieurdienstleistungen und Geoinformationslösungen». Это язык сайта, не сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Главная не аудировалась целиком",
+   "review_depth": "Заголовок главной: «Ingenieurdienstleistungen und Geoinformationslösungen». В первых 25 КБ слова demo/video не встретились. Страница целиком не читалась.",
+   "checked_at": "2026-11-11",
+   "tier": "reviewed"
+  },
+  {
+   "id": "enlit26-gustav-klein",
+   "name": "Gustav Klein",
+   "booth": "A.a40",
+   "booths": [
+    "A.a40"
+   ],
+   "floor": "A",
+   "category": "электроника",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "Гипотеза: короткое видео одного блока, если дадут снять.",
+   "opening_de": "",
+   "observed": "Bavaria Pavilion. Профиль: силовая электроника и блоки питания. Заголовок главной: «Startseite - Gustav Klein». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "hypothesis": "",
+   "website": "https://www.gustav-klein.com/",
+   "email": "",
+   "rank": 80,
+   "profile_url": "https://www.enlit.world/companies/gustav-klein-gmbh-and-co.-kg",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "профиль",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/bavaria-pavilion",
+    "https://www.enlit.world/companies/gustav-klein-gmbh-and-co.-kg"
+   ],
+   "language_group": "de",
+   "language_evidence": "Заголовок главной: «Startseite - Gustav Klein». Это язык сайта, не сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Главная не аудировалась целиком",
+   "review_depth": "Заголовок главной: «Startseite - Gustav Klein». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "checked_at": "2026-11-11",
+   "tier": "reviewed"
+  },
+  {
+   "id": "enlit26-agf",
+   "name": "AGF Energiesysteme",
+   "booth": "A.a40",
+   "booths": [
+    "A.a40"
+   ],
+   "floor": "A",
+   "category": "EMS",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "Система enertune уже есть. Гипотеза: один ролик потока энергии, не второй EMS.",
+   "opening_de": "",
+   "observed": "Bavaria Pavilion. Профиль: enertune, EMS на объекте, электричество, тепло и холод. Заголовок главной: «enertune.de». В первых 25 КБ слова demo/video не встретились. Страница целиком не читалась.",
+   "hypothesis": "",
+   "website": "https://enertune.de/",
+   "email": "",
+   "rank": 80,
+   "profile_url": "https://www.enlit.world/companies/agf-energiesysteme-gmbh",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "профиль",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/bavaria-pavilion",
+    "https://www.enlit.world/companies/agf-energiesysteme-gmbh"
+   ],
+   "language_group": "unknown",
+   "language_evidence": "Заголовок главной только «enertune.de». Язык страницы по заголовку не виден.",
+   "personal_language_confirmed": false,
+   "site_quality": "Главная не аудировалась целиком",
+   "review_depth": "Заголовок главной: «enertune.de». В первых 25 КБ слова demo/video не встретились. Страница целиком не читалась.",
+   "checked_at": "2026-11-11",
+   "tier": "reviewed"
+  },
+  {
+   "id": "enlit26-pcvue",
+   "name": "PcVue",
+   "booth": "A.a40",
+   "booths": [
+    "A.a40"
+   ],
+   "floor": "A",
+   "category": "SCADA",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [],
+   "offer": "Оффер не сформулирован. По заголовку сайта это существующий HMI/SCADA, не пустой стартап.",
+   "opening_de": "",
+   "observed": "Bavaria Pavilion. Отдельного описания на профиле нет. Ссылка подписана как сайт компании. Заголовок главной: «HMI SCADA PcVue». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "hypothesis": "",
+   "website": "https://www.pcvue.com/",
+   "email": "",
+   "rank": 80,
+   "profile_url": "https://www.enlit.world/companies/pcvue-gmbh",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "профиль без описания",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/bavaria-pavilion",
+    "https://www.enlit.world/companies/pcvue-gmbh"
+   ],
+   "language_group": "en",
+   "language_evidence": "Заголовок главной: «HMI SCADA PcVue». Это не язык сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Главная не аудировалась целиком",
+   "review_depth": "Заголовок главной: «HMI SCADA PcVue». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "checked_at": "2026-11-11",
+   "tier": "reviewed"
+  },
+  {
+   "id": "enlit26-mte",
+   "name": "MTE",
+   "booth": "B.g50",
+   "booths": [
+    "B.g50"
+   ],
+   "floor": "B",
+   "category": "поверка счётчиков",
+   "city": "Zug",
+   "priority": "B",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "Гипотеза: короткое видео одного стенда поверки.",
+   "opening_de": "",
+   "observed": "Профиль: оборудование для поверки счётчиков, анализаторы качества и мониторинг трансформаторов. Заголовок главной: «MTE Meter Test Equipment AG». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "hypothesis": "",
+   "website": "https://www.mte.ch/",
+   "email": "",
+   "rank": 80,
+   "profile_url": "https://www.enlit.world/companies/mte-meter-test-equipment-ag",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "профиль",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/companies/mte-meter-test-equipment-ag"
+   ],
+   "language_group": "en",
+   "language_evidence": "Текст профиля на английском. Адрес в профиле: Zug, Switzerland. Это не язык сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Главная не аудировалась целиком",
+   "review_depth": "Заголовок главной: «MTE Meter Test Equipment AG». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "checked_at": "2026-11-11",
+   "tier": "reviewed"
+  },
+  {
+   "id": "enlit26-exnaton",
+   "name": "exnaton",
+   "booth": "C.g10-P06",
+   "booths": [
+    "C.g10-P06"
+   ],
+   "floor": "C",
+   "category": "софт для utilities",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "Софт уже есть. На главной встречались слова demo и webinar. Гипотеза только после просмотра, не второй продукт и не обещание продаж.",
+   "opening_de": "",
+   "observed": "Innovators Zone. ETH Zurich spin-off, софт для utilities поверх существующих систем. Заголовок главной: «Software für smarte Energieprodukte | exnaton». В первых 25 КБ есть слова: demo, webinar. Это не проверенный ролик.",
+   "hypothesis": "",
+   "website": "https://www.exnaton.ai/",
+   "email": "",
+   "rank": 80,
+   "profile_url": "https://www.enlit.world/companies/exnaton",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "профиль",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/innovators-zone",
+    "https://www.enlit.world/companies/exnaton"
+   ],
+   "language_group": "de",
+   "language_evidence": "Заголовок главной на немецком: «Software für smarte Energieprodukte». Абзац профиля на английском. Это не язык сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Главная не аудировалась целиком",
+   "review_depth": "Заголовок главной: «Software für smarte Energieprodukte | exnaton». В первых 25 КБ есть слова: demo, webinar. Это не проверенный ролик.",
+   "checked_at": "2026-11-11",
+   "tier": "reviewed"
+  },
+  {
+   "id": "enlit26-nobile",
+   "name": "nobile",
+   "booth": "B.b81",
+   "booths": [
+    "B.b81"
+   ],
+   "floor": "B",
+   "category": "energy sharing",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "На главной есть слова demo и video. Сначала посмотреть их. Гипотеза: не второй ролик energy sharing рядом с enixi.",
+   "opening_de": "",
+   "observed": "Austria Pavilion. Профиль: поставка, local energy sharing, PPA. Заголовок главной: «nobile | Ihre Neo-Utility | Nobile». В первых 25 КБ есть слова: demo, video. Это не проверенный ролик.",
+   "hypothesis": "",
+   "website": "https://nobile.energy/",
+   "email": "",
+   "rank": 80,
+   "profile_url": "https://www.enlit.world/companies/nobile",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "профиль",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/austria-pavilion",
+    "https://www.enlit.world/companies/nobile"
+   ],
+   "language_group": "de",
+   "language_evidence": "Заголовок главной на немецком: «nobile | Ihre Neo-Utility». Это язык сайта, не сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Главная не аудировалась целиком",
+   "review_depth": "Заголовок главной: «nobile | Ihre Neo-Utility | Nobile». В первых 25 КБ есть слова: demo, video. Это не проверенный ролик.",
+   "checked_at": "2026-11-11",
+   "tier": "reviewed"
+  },
+  {
+   "id": "enlit26-kuvag",
+   "name": "Kuvag",
+   "booth": "A.e85",
+   "booths": [
+    "A.e85"
+   ],
+   "floor": "A",
+   "category": "изоляция",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [
+    "видео"
+   ],
+   "offer": "Гипотеза: короткое видео одного изделия, если его можно показать.",
+   "opening_de": "",
+   "observed": "Austria Pavilion. Профиль: изоляционные решения для энергии, транспорта и промышленности. Заголовок главной: «Startseite - KUVAG GmbH &amp; Co KG». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "hypothesis": "",
+   "website": "https://www.kuvag.com/",
+   "email": "",
+   "rank": 80,
+   "profile_url": "https://www.enlit.world/companies/kuvag",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "профиль",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/austria-pavilion",
+    "https://www.enlit.world/companies/kuvag"
+   ],
+   "language_group": "de",
+   "language_evidence": "Заголовок главной: «Startseite - KUVAG GmbH & Co KG». Это язык сайта, не сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Главная не аудировалась целиком",
+   "review_depth": "Заголовок главной: «Startseite - KUVAG GmbH &amp; Co KG». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "checked_at": "2026-11-11",
+   "tier": "reviewed"
+  },
+  {
+   "id": "enlit26-weptech",
+   "name": "WEPTECH",
+   "booth": "B.g10",
+   "booths": [
+    "B.g10"
+   ],
+   "floor": "B",
+   "category": "электроника",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [],
+   "offer": "Оффер не сформулирован. Заголовок сайта: электроника и wireless.",
+   "opening_de": "",
+   "observed": "Отдельного описания на профиле нет. Заголовок главной: «WEPTECH - Your expert in electronics and wireless technology - WEPTECH elektronik GmbH». В первых 25 КБ слова demo/video не встретились. Страница целиком не читалась.",
+   "hypothesis": "",
+   "website": "https://www.weptech.de/en/",
+   "email": "",
+   "rank": 80,
+   "profile_url": "https://www.enlit.world/companies/weptech-elektronik-gmbh",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "профиль без описания",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/companies/weptech-elektronik-gmbh"
+   ],
+   "language_group": "en",
+   "language_evidence": "Ссылка профиля ведёт на /en/. Заголовок главной на английском. Это не язык сотрудника.",
+   "personal_language_confirmed": false,
+   "site_quality": "Главная не аудировалась целиком",
+   "review_depth": "Заголовок главной: «WEPTECH - Your expert in electronics and wireless technology - WEPTECH elektronik GmbH». В первых 25 КБ слова demo/video не встретились. Страница целиком не читалась.",
+   "checked_at": "2026-11-11",
+   "tier": "reviewed"
+  },
+  {
+   "id": "enlit26-caprikorn",
+   "name": "Caprikorn",
+   "booth": "C.g10-S04",
+   "booths": [
+    "C.g10-S04"
+   ],
+   "floor": "C",
+   "category": "",
+   "city": "",
+   "priority": "B",
+   "site_priority": "",
+   "services": [],
+   "offer": "Оффер не сформулирован. Страна не установлена.",
+   "opening_de": "",
+   "observed": "Innovators Zone. Отдельного описания нет. Заголовок главной: «Caprikorn - To power and beyond». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "hypothesis": "",
+   "website": "https://www.caprikorn.com/",
+   "email": "",
+   "rank": 80,
+   "profile_url": "https://www.enlit.world/companies/caprikorn",
+   "fetch_status": "profile",
+   "ask_who": "",
+   "review_label": "профиль без описания",
+   "sources": [
+    "https://www.enlit.world/enlit-europe/exhibition/exhibitor-list",
+    "https://www.enlit.world/enlit-europe/exhibition/zones-pavilions/innovators-zone",
+    "https://www.enlit.world/companies/caprikorn"
+   ],
+   "language_group": "en",
+   "language_evidence": "Заголовок главной на английском: «Caprikorn - To power and beyond». Страна на профиле не указана.",
+   "personal_language_confirmed": false,
+   "site_quality": "Главная не аудировалась целиком",
+   "review_depth": "Заголовок главной: «Caprikorn - To power and beyond». В первых 25 КБ есть слова: video. Это не проверенный ролик.",
+   "checked_at": "2026-11-11",
+   "tier": "reviewed"
+  }
+ ]
+}
